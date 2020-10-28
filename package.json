@@ -1,0 +1,76 @@
+{
+  "name": "@majidh1/jalalidatepicker",
+  "description": "A simple jalali datepicker.",
+  "license": "MIT",
+  "author": {
+    "name": "Majid Hooshiyar"
+  },
+  "version": "0.0.1",
+  "keywords": [
+    "date",
+    "picker",
+    "datepicker",
+    "jalali",
+    "persian",
+    "jalalidatepicker",
+    "persiandatepicker",
+    "farsi",
+    "javascript",
+    "front-end",
+    "web"
+  ],
+  "scripts": {
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "lessc src/index.less dist/jalalidatepicker.css",
+    "build:js": "rollup -c",
+    "clear": "del-cli dist",
+    "compress": "npm run compress:css && npm run compress:js",
+    "compress:css": "postcss dist/jalalidatepicker.css -u cssnano -o dist/jalalidatepicker.min.css --no-map",
+    "compress:js": "uglifyjs dist/jalalidatepicker.js -o dist/jalalidatepicker.min.js -c -m --comments /^!/",
+    "lint": "npm run lint:js && npm run lint:css",
+    "lint:css": "stylelint src/index.less --fix",
+    "lint:js": "eslint src *.js --fix",
+    "release": "npm run clear && npm run lint && npm run build && npm run compress",
+    "start": "npm-run-all --parallel watch:*",
+    "watch:css": "lessc src/index.less docs/css/datepicker.css -m -w",
+    "watch:js": "rollup -c -m -w"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "@rollup/plugin-babel": "^5.2.1",
+    "@rollup/plugin-commonjs": "^16.0.0",
+    "@rollup/plugin-node-resolve": "^10.0.0",
+    "@types/babel__core": "^7.1.10",
+    "create-banner": "^1.0.0",
+    "cssnano": "^4.1.10",
+    "eslint": "^7.12.1",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.1",
+    "lint-staged": "^10.5.0",
+    "postcss": "^8.1.4",
+    "postcss-cli": "^8.1.0",
+    "postcss-header": "^3.0.1",
+    "postcss-import": "^13.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "less": "^2.7.1",
+    "rollup": "^2.32.1",
+    "stylelint": "^13.7.2",
+    "stylelint-config-standard": "^20.0.0",
+    "stylelint-order": "^4.1.0",
+    "uglify-js": "^3.11.4"
+  },
+  "lint-staged": {
+    "{src,test}/**/*.js|*.conf*.js": [
+      "eslint --fix",
+      "git add"
+    ],
+    "{src,docs}/**/*.{css,scss,html}": [
+      "stylelint --fix",
+      "git add"
+    ]
+  }
+}
