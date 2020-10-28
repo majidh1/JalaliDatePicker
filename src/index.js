@@ -1,5 +1,7 @@
 import {
   NAMESPACE,
 } from './js/constants';
+import JalaliDatepicker from './js/jalaliDatepicker';
 
-window.console.warn(NAMESPACE);
+const datepicker = new JalaliDatepicker(element, options);
+window.console.warn(NAMESPACE, datepicker);
