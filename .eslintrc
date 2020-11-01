@@ -5,6 +5,11 @@
   },
   "rules": {
     "no-param-reassign": "off",
-    "no-restricted-properties": "off"
+    "no-restricted-properties": "off",
+    "no-plusplus": [
+      2,
+      { "allowForLoopAfterthoughts": true }
+    ],
+    "prefer-rest-params": "warn" 
   }
 }

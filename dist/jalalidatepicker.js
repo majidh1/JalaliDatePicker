@@ -5,7 +5,7 @@
  * Copyright 2020-present Majid Hooshiyar
  * Released under the MIT license
  *
- * Date: 2020-10-28T13:36:40.010Z
+ * Date: 2020-11-01T11:37:30.147Z
  */
 
 (function (factory) {
@@ -13,10 +13,21 @@
   factory();
 }((function () { 'use strict';
 
-  var IS_BROWSER = typeof window !== 'undefined';
-  var WINDOW = IS_BROWSER ? window : {};
-  var IS_TOUCH_DEVICE = IS_BROWSER ? 'ontouchstart' in WINDOW.document.documentElement : false;
-  var NAMESPACE = 'datepicker';
+  function _typeof(obj) {
+    "@babel/helpers - typeof";
+
+    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+      _typeof = function (obj) {
+        return typeof obj;
+      };
+    } else {
+      _typeof = function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+    }
+
+    return _typeof(obj);
+  }
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -24,53 +35,20 @@
     }
   }
 
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
     }
-
-    return obj;
   }
 
-  function ownKeys(object, enumerableOnly) {
-    var keys = Object.keys(object);
-
-    if (Object.getOwnPropertySymbols) {
-      var symbols = Object.getOwnPropertySymbols(object);
-      if (enumerableOnly) symbols = symbols.filter(function (sym) {
-        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-      });
-      keys.push.apply(keys, symbols);
-    }
-
-    return keys;
-  }
-
-  function _objectSpread2(target) {
-    for (var i = 1; i < arguments.length; i++) {
-      var source = arguments[i] != null ? arguments[i] : {};
-
-      if (i % 2) {
-        ownKeys(Object(source), true).forEach(function (key) {
-          _defineProperty(target, key, source[key]);
-        });
-      } else if (Object.getOwnPropertyDescriptors) {
-        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-      } else {
-        ownKeys(Object(source)).forEach(function (key) {
-          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-        });
-      }
-    }
-
-    return target;
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
   }
 
   var defaults = {
@@ -91,18 +69,190 @@
     // The offset top or bottom of the datepicker from the element
     offset: 10,
     // The `z-index` of the datepicker
-    zIndex: 1000
+    zIndex: 1000,
+    // The template of the datepicker
+    template: "<div class=\"jdp-container\">\n            <div class=\"jdp-panel\" data-view=\"years picker\">\n                <ul>\n                    <li data-view=\"years prev\">&lsaquo;</li>\n                    <li data-view=\"years current\"></li>\n                    <li data-view=\"years next\">&rsaquo;</li>\n                </ul>\n                <ul data-view=\"years\"></ul>\n            </div>\n            <div class=\"jdp-panel\" data-view=\"months picker\">\n                <ul>\n                    <li data-view=\"year prev\">&lsaquo;</li>\n                    <li data-view=\"year current\"></li>\n                    <li data-view=\"year next\">&rsaquo;</li>\n                </ul>\n                <ul data-view=\"months\"></ul>\n            </div>\n            <div class=\"jdp-panel\" data-view=\"days picker\">\n                <ul>\n                    <li data-view=\"month prev\">&lsaquo;</li>\n                    <li data-view=\"month current\"></li>\n                    <li data-view=\"month next\">&rsaquo;</li>\n                </ul>\n                <ul data-view=\"week\"></ul>\n                <ul data-view=\"days\"></ul>\n            </div>\n        </div>",
+    // The parent of the datepicker
+    container: 'body'
   };
 
-  var JalaliDatepicker = function JalaliDatepicker(element) {
-    var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+  var IS_BROWSER = typeof window !== 'undefined';
+  var WINDOW = IS_BROWSER ? window : {};
+  var IS_TOUCH_DEVICE = IS_BROWSER ? 'ontouchstart' in WINDOW.document.documentElement : false;
+  var NAMESPACE = 'jalalidatepicker';
+  var EVENT_HIDE = new Event("hide.".concat(NAMESPACE));
+  var EVENT_SHOW = new Event("show.".concat(NAMESPACE));
 
-    _classCallCheck(this, JalaliDatepicker);
+  var methods = {
+    // Show the datepicker
+    show: function show() {
+      this.shown = true;
+      this.element.dispatchEvent(EVENT_SHOW);
+    },
+    // Hide the datepicker
+    hide: function hide() {
+      this.shown = false;
+      this.element.dispatchEvent(EVENT_HIDE);
+    },
+    toggle: function toggle() {
+      if (this.shown) {
+        this.hide();
+      } else {
+        this.show();
+      }
+    },
+    // Update the datepicker with the current input value
+    update: function update() {
+      var value = this.getValue();
 
-    this.options = _objectSpread2(_objectSpread2({}, defaults), options);
+      if (value === this.oldValue) {
+        return;
+      }
+
+      this.setDate(value, true);
+      this.oldValue = value;
+    }
   };
 
-  var datepicker = new JalaliDatepicker(element, options);
-  window.console.warn(NAMESPACE, datepicker);
+  function isPlainObject(obj) {
+    // Detect obvious negatives
+    // Use toString instead of jQuery.type to catch host objects
+    if (!obj || toString.call(obj) !== '[object Object]') {
+      return false;
+    }
+
+    var proto = WINDOW.Object.getPrototypeOf(obj); // Objects with no prototype (e.g., `Object.create( null )`) are plain
+
+    if (!proto) {
+      return true;
+    } // Objects with prototype are plain iff they were constructed by a global Object function
+
+
+    var ctor = {}.hasOwnProperty.call(proto, 'constructor') && proto.constructor;
+    return typeof ctor === 'function';
+  }
+
+  function extend() {
+    var options;
+    var src;
+    var copy;
+    var copyIsArray;
+    var clone;
+    var target = arguments[0] || {};
+    var i = 1;
+    var length = arguments.length;
+    var deep = false; // Handle a deep copy situation
+
+    if (typeof target === 'boolean') {
+      deep = target; // Skip the boolean and the target
+
+      target = arguments[i] || {};
+      i += 1;
+    } // Handle case when target is a string or something (possible in deep copy)
+
+
+    if (_typeof(target) !== 'object' && typeof target !== 'function') {
+      target = {};
+    } // Extend jQuery itself if only one argument is passed
+
+
+    if (i === length) {
+      target = this;
+      i -= 1;
+    }
+
+    for (; i < length; i++) {
+      options = arguments[i]; // Only deal with non-null/undefined values
+
+      if (options !== null) {
+        // Extend the base object
+        for (var j = 0; j < WINDOW.Object.keys(options).length; j++) {
+          var name = WINDOW.Object.keys(options)[j];
+
+          if (Object.prototype.hasOwnProperty.call(options, name)) {
+            copy = options[name]; // Prevent Object.prototype pollution
+            // Prevent never-ending loop
+
+            if (name === '__proto__' || target === copy) {
+              return true;
+            }
+
+            copyIsArray = Array.isArray(copy); // Recurse if we're merging plain objects or arrays
+
+            if (deep && copy && (isPlainObject(copy) || copyIsArray)) {
+              src = target[name]; // Ensure proper type for the source value
+
+              if (copyIsArray && !Array.isArray(src)) {
+                clone = [];
+              } else if (!copyIsArray && !isPlainObject(src)) {
+                clone = {};
+              } else {
+                clone = src;
+              } // Never move original objects, clone them
+
+
+              target[name] = extend(deep, clone, copy); // Don't bring in undefined values
+            } else if (copy !== undefined) {
+              target[name] = copy;
+            }
+          }
+        }
+      }
+    } // Return the modified object
+
+
+    return target;
+  }
+  function createElement(tag, parent) {
+    var element = WINDOW.document.createElement(tag);
+    parent.appendChild(element);
+    return element;
+  }
+
+  function createJalaliDatePickerElement() {
+    if (!this.jalaliDatePickerElement) {
+      this.jalaliDatePickerElement = createElement('div', defaults.container);
+    }
+
+    return this.jalaliDatePickerElement;
+  }
+
+  var render = {
+    draw: function draw(year, month, day) {
+      WINDOW.console.log(year, month, day);
+      var jdpEl = createJalaliDatePickerElement();
+      jdpEl.innerHTML = defaults.template;
+    }
+  };
+
+  var JalaliDatepicker = /*#__PURE__*/function () {
+    function JalaliDatepicker(element) {
+      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+
+      _classCallCheck(this, JalaliDatepicker);
+
+      this.options = extend(defaults, options);
+      this.element = element;
+      this.init();
+      return this;
+    }
+
+    _createClass(JalaliDatepicker, [{
+      key: "init",
+      value: function init() {
+        this.element.jalaliDatepicker = this;
+      }
+    }]);
+
+    return JalaliDatepicker;
+  }();
+
+  console.log(JalaliDatepicker.prototype);
+  JalaliDatepicker.prototype = extend(JalaliDatepicker.prototype, methods, render);
+  console.log(JalaliDatepicker.prototype);
+
+  window.jalaliDatepicker = function (element, options) {
+    return new JalaliDatepicker(element, options);
+  };
 
 })));
