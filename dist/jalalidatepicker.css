@@ -1,3 +1,7 @@
-body .jalalidatepicker {
-  background-color: red;
+.jalalidatepicker-container [data-jalalidatepicker="years"] {
+  max-height: 100px;
+  overflow: scroll;
+}
+.jalalidatepicker-container .current {
+  background-color: yellow;
 }

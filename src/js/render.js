@@ -1,18 +1,38 @@
-import defaults from './defaults';
-import { createElement } from './utilities';
-import { WINDOW } from './constants';
-
-function createJalaliDatePickerElement() {
-  if (!this.jalaliDatePickerElement) {
-    this.jalaliDatePickerElement = createElement('div', defaults.container);
-  }
-  return this.jalaliDatePickerElement;
-}
+import { findElement, createItems } from './utilities';
+import { DATA_ATTR_YEARS, DATA_ATTR_MONTHS, DATA_ATTR_DAYS } from './constants';
 
 export default {
-  draw(year, month, day) {
-    WINDOW.console.log(year, month, day);
-    const jdpEl = createJalaliDatePickerElement();
-    jdpEl.innerHTML = defaults.template;
+  render() {
+    this.renderYears();
+    this.renderMonths();
+    this.renderDays();
+  },
+  renderYears() {
+    createItems(
+      findElement(this.getJalaliDatePickerElement(), DATA_ATTR_YEARS),
+      this.getMinYear(),
+      this.getMaxYear(),
+      this.options.itemTagname,
+      this.getYear(),
+    );
+  },
+  renderMonths() {
+    createItems(
+      findElement(this.getJalaliDatePickerElement(), DATA_ATTR_MONTHS),
+      this.getMinMonth(),
+      this.getMaxMonth(),
+      this.options.itemTagname,
+      this.getMonth(),
+      this.options.months,
+    );
+  },
+  renderDays() {
+    createItems(
+      findElement(this.getJalaliDatePickerElement(), DATA_ATTR_DAYS),
+      1,
+      31,
+      this.options.itemTagname,
+      this.getDay(),
+    );
   },
 };

@@ -1,10 +1,16 @@
-import { WINDOW } from './constants';
-
-export const isNaN = Number.isNaN || WINDOW.isNaN;
+export const isNaN = Number.isNaN || window.isNaN;
 export function isNumber(value) {
   return typeof value === 'number' && !isNaN(value);
 }
-
+export function isObject(value) {
+  return typeof value === 'object';
+}
+export function isUndefined(value) {
+  return typeof value === 'undefined';
+}
+export function isString(value) {
+  return typeof value === 'string';
+}
 export function isLeapYear(year) {
   return (((((year - 474) % 2820) + 512) * 682) % 2816) < 682;
 }
@@ -18,7 +24,7 @@ export function getDaysInMonth(year, month) {
 }
 
 export function mod(a, b) {
-  return WINDOW.Math.abs(a - (b * WINDOW.Math.floor(a / b)));
+  return window.Math.abs(a - (b * window.Math.floor(a / b)));
 }
 
 export function getDays(month, day) {
@@ -41,42 +47,8 @@ export function getWeekDay(year, month, day) {
   return mod(getDiffDays(1392, 3, 25, year, month, day), 7);
 }
 
-const formatParts = /(y|m|d)+/g;
-export function parseFormat(format) {
-  const source = String(format).toLowerCase();
-  const parts = source.match(formatParts);
-
-  if (!parts || parts.length === 0) {
-    throw new Error('Invalid date format.');
-  }
-
-  format = {
-    source,
-    parts,
-  };
-
-  for (let i = 0; i < parts.length; i++) {
-    switch (parts[i]) {
-      case 'dd':
-      case 'd':
-        format.hasDay = true;
-        break;
-
-      case 'mm':
-      case 'm':
-        format.hasMonth = true;
-        break;
-
-      case 'yyyy':
-      case 'yy':
-        format.hasYear = true;
-        break;
-
-      default:
-    }
-  }
-
-  return format;
+export function getYears(month, day) {
+  return 6 * 31 + (month - 7) * 30 + day;
 }
 
 export function addLeadingZero(value, length = 1) {
@@ -103,7 +75,7 @@ function isPlainObject(obj) {
     return false;
   }
 
-  const proto = WINDOW.Object.getPrototypeOf(obj);
+  const proto = window.Object.getPrototypeOf(obj);
 
   // Objects with no prototype (e.g., `Object.create( null )`) are plain
   if (!proto) {
@@ -132,7 +104,7 @@ export function extend() {
   }
 
   // Handle case when target is a string or something (possible in deep copy)
-  if (typeof target !== 'object' && typeof target !== 'function') {
+  if (!isObject(target) && typeof target !== 'function') {
     target = {};
   }
 
@@ -147,8 +119,8 @@ export function extend() {
     // Only deal with non-null/undefined values
     if (options !== null) {
       // Extend the base object
-      for (let j = 0; j < WINDOW.Object.keys(options).length; j++) {
-        const name = WINDOW.Object.keys(options)[j];
+      for (let j = 0; j < window.Object.keys(options).length; j++) {
+        const name = window.Object.keys(options)[j];
         if (Object.prototype.hasOwnProperty.call(options, name)) {
           copy = options[name];
           // Prevent Object.prototype pollution
@@ -174,7 +146,7 @@ export function extend() {
             target[name] = extend(deep, clone, copy);
 
             // Don't bring in undefined values
-          } else if (copy !== undefined) {
+          } else if (!isUndefined(copy)) {
             target[name] = copy;
           }
         }
@@ -187,7 +159,60 @@ export function extend() {
 }
 
 export function createElement(tag, parent) {
-  const element = WINDOW.document.createElement(tag);
-  parent.appendChild(element);
+  const element = window.document.createElement(tag);
+  if (isString(parent)) {
+    window.document.querySelector(parent).appendChild(element);
+  } else {
+    parent.appendChild(element);
+  }
   return element;
+}
+
+export function findElement(element, querySelector) {
+  if (querySelector.indexOf('=') > -1 && querySelector.indexOf('[') == -1) {
+    querySelector = `[${querySelector}]`;
+  }
+  return element.querySelector(querySelector);
+}
+
+export function jalaliToday(sepChar) {
+  const date = new Date();
+  let gy = date.getFullYear();
+  const gm = date.getMonth();
+  const gd = date.getDay();
+
+  let jy; let
+    days;
+  const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+  if (gy > 1600) {
+    jy = 979;
+    gy -= 1600;
+  } else {
+    jy = 0;
+    gy -= 621;
+  }
+  const gy2 = (gm > 2) ? (gy + 1) : gy;
+  days = (365 * gy) + window.parent((gy2 + 3) / 4, true) - window.parent((gy2 + 99) / 100, true) + window.parent((gy2 + 399) / 400, true) - 80 + gd + gdm[gm - 1];
+  jy += 33 * window.parent(days / 12053, true);
+  days %= 12053;
+  jy += 4 * window.parent(days / 1461, true);
+  days %= 1461;
+  if (days > 365) {
+    jy += window.parent((days - 1) / 365, true);
+    days = (days - 1) % 365;
+  }
+  const jm = (days < 186) ? 1 + window.parent(days / 31, true) : 7 + window.parent((days - 186) / 30, true);
+  const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
+  const result = [jy, jm, jd];
+  return sepChar ? result.join(sepChar) : result;
+}
+
+export function createItems(parent, min, max, itemTagname, current, stringList) {
+  for (let item = min; item <= max; item++) {
+    const itemEl = createElement(itemTagname, parent);
+    itemEl.innerHTML = stringList ? stringList[item - 1] : item;
+    if (item === current) {
+      itemEl.className = 'current';
+    }
+  }
 }
