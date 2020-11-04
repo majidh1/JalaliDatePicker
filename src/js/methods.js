@@ -15,13 +15,13 @@ export default {
     }
     this.render();
     this.shown = true;
-    this.element.dispatchEvent(EVENT_SHOW);
+        this.input.trigger(EVENT_SHOW);
   },
 
   // Hide the datepicker
   hide() {
     this.shown = false;
-    this.element.dispatchEvent(EVENT_HIDE);
+    this.input.trigger(EVENT_HIDE);
   },
 
   toggle() {
@@ -87,6 +87,6 @@ export default {
   },
 
   getSplitValue() {
-    return this.getSplitDate(this.element.value).map((a) => window.parseInt(a));
+    return this.getSplitDate(this.input.value).map((a) => window.parseInt(a));
   },
 };

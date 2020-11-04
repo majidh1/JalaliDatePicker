@@ -169,42 +169,43 @@ export function createElement(tag, parent) {
 }
 
 export function findElement(element, querySelector) {
-  if (querySelector.indexOf('=') > -1 && querySelector.indexOf('[') == -1) {
+  if (querySelector.indexOf('=') > -1 && querySelector.indexOf('[') === -1) {
     querySelector = `[${querySelector}]`;
   }
   return element.querySelector(querySelector);
 }
 
 export function jalaliToday(sepChar) {
-  const date = new Date();
-  let gy = date.getFullYear();
-  const gm = date.getMonth();
-  const gd = date.getDay();
+    const date = new Date();
+    var gy = window.parseInt(date.getFullYear());
+    const gm = window.parseInt(date.getMonth())+1;
+    const gd = window.parseInt(date.getDate());
 
-  let jy; let
-    days;
-  const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-  if (gy > 1600) {
-    jy = 979;
-    gy -= 1600;
-  } else {
-    jy = 0;
-    gy -= 621;
-  }
-  const gy2 = (gm > 2) ? (gy + 1) : gy;
-  days = (365 * gy) + window.parent((gy2 + 3) / 4, true) - window.parent((gy2 + 99) / 100, true) + window.parent((gy2 + 399) / 400, true) - 80 + gd + gdm[gm - 1];
-  jy += 33 * window.parent(days / 12053, true);
-  days %= 12053;
-  jy += 4 * window.parent(days / 1461, true);
-  days %= 1461;
-  if (days > 365) {
-    jy += window.parent((days - 1) / 365, true);
-    days = (days - 1) % 365;
-  }
-  const jm = (days < 186) ? 1 + window.parent(days / 31, true) : 7 + window.parent((days - 186) / 30, true);
-  const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
-  const result = [jy, jm, jd];
-  return sepChar ? result.join(sepChar) : result;
+    var jy, days;
+    const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    if (gy > 1600) {
+        jy = 979;
+        gy -= 1600;
+    } else {
+        jy = 0;
+        gy -= 621;
+    }
+    const gy2 = (gm > 2) ? (gy + 1) : gy;
+    days = (365 * gy) + window.parseInt((gy2 + 3) / 4) - window.parseInt((gy2 + 99) / 100) + window.parseInt((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];
+    jy += 33 * window.parseInt(days / 12053);
+    days %= 12053;
+    jy += 4 * window.parseInt(days / 1461);
+    days %= 1461;
+    if (days > 365) {
+        jy += window.parseInt((days - 1) / 365);
+        days = (days - 1) % 365;
+    }
+    const jm = (days < 186) ? 1 + window.parseInt(days / 31) : 7 + window.parseInt((days - 186) / 30);
+    const jd = 1 + ((days < 186) ? (days % 31) : ((days - 186) % 30));
+
+
+    const result = [jy, jm, jd];
+    return sepChar ? result.join(sepChar) : result;
 }
 
 export function createItems(parent, min, max, itemTagname, current, stringList) {
