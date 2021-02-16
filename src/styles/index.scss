@@ -8,7 +8,7 @@ $daysWidth: ($daySize*7 + $dayMargin*14 + $padding*2 + 2);
 $calendarWidth: $daysWidth;
 $calendarBorderColor: #e6e6e6;
 $controls-parent-width: 45%;
-$controls-btn-size: 1rem;
+$controls-btn-size: 1.5rem;
 $controls-btn-padding: $controls-btn-size/4;
 $monthBackground: transparent;
 $invertedBg: invert($calendarBackground);
@@ -32,6 +32,10 @@ jdp-container {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+
+    *, *::after, *::before {
+        box-sizing: border-box;
+    }
 
     .jdp {
         &-icon {
@@ -83,7 +87,7 @@ jdp-container {
         &-year, &-month {
             &, input, select {
                 width: 100%;
-                height: $controls-btn-size+$controls-btn-padding*2;
+                height: $controls-btn-size;
                 text-align: center;
                 background: $monthBackground;
                 border: none;
@@ -186,6 +190,7 @@ jdp-container {
 
             &:not(:empty) {
                 cursor: pointer;
+                border-radius: 3px;
 
                 &:hover {
                     background: color.change($invertedBg, $alpha: 0.1);
@@ -194,6 +199,7 @@ jdp-container {
         }
 
         &-day-name {
+            border-radius: 0;
             font-weight: 900;
             font-size: 90%;
             background-color: color.change($invertedBg, $alpha: 0.1);

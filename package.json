@@ -1,12 +1,12 @@
 {
   "name": "@majidh1/jalalidatepicker",
-  "description": "A simple jalali datepicker.",
+  "description": "A lightweight and simple jalali datepicker.",
   "license": "MIT",
   "author": {
     "name": "Majid Hooshiyar"
   },
   "main": "dist/jalaliDatepicker.min.js",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "keywords": [
     "date",
     "picker",
@@ -14,6 +14,7 @@
     "jalali",
     "persian",
     "jalalidatepicker",
+    "calendar",
     "persiandatepicker",
     "farsi",
     "javascript",
@@ -25,7 +26,7 @@
     "url": "https://github.com/majidh1/JalaliDatePicker.git"
   },
   "scripts": {
-    "test": "node-qunit-phantomjs test/index.html --timeout 10",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint . --ext .js",
     "debug": "npm run lint && webpack --mode=development",
     "release": "npm run lint && webpack --mode=production",

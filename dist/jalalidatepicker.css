@@ -1,4 +1,4 @@
-jalalidatepicker-container {
+jdp-container {
   position: fixed;
   max-width: 307.875px;
   background: #ffffff;
@@ -17,7 +17,10 @@ jalalidatepicker-container {
   -ms-user-select: none;
   user-select: none;
 }
-jalalidatepicker-container .jalalidatepicker-icon-plus, jalalidatepicker-container .jalalidatepicker-icon-minus {
+jdp-container *, jdp-container *::after, jdp-container *::before {
+  box-sizing: border-box;
+}
+jdp-container .jdp-icon-plus, jdp-container .jdp-icon-minus {
   display: inline-block;
   text-align: center;
   cursor: pointer;
@@ -27,18 +30,18 @@ jalalidatepicker-container .jalalidatepicker-icon-plus, jalalidatepicker-contain
   text-decoration: none;
   border: 1px solid #e6e6e6;
 }
-jalalidatepicker-container .jalalidatepicker-icon-plus svg, jalalidatepicker-container .jalalidatepicker-icon-minus svg {
-  width: 1rem;
-  height: 1rem;
-  padding: 0.25rem;
+jdp-container .jdp-icon-plus svg, jdp-container .jdp-icon-minus svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0.375rem;
 }
-jalalidatepicker-container .jalalidatepicker-icon-plus.not-in-range, jalalidatepicker-container .jalalidatepicker-icon-minus.not-in-range {
+jdp-container .jdp-icon-plus.not-in-range, jdp-container .jdp-icon-minus.not-in-range {
   cursor: not-allowed;
 }
-jalalidatepicker-container .jalalidatepicker-icon-plus.not-in-range svg, jalalidatepicker-container .jalalidatepicker-icon-minus.not-in-range svg {
+jdp-container .jdp-icon-plus.not-in-range svg, jdp-container .jdp-icon-minus.not-in-range svg {
   opacity: 0.3;
 }
-jalalidatepicker-container .jalalidatepicker-years, jalalidatepicker-container .jalalidatepicker-months {
+jdp-container .jdp-years, jdp-container .jdp-months {
   display: -webkit-inline-box;
   display: -webkit-flex;
   display: -ms-inline-flexbox;
@@ -48,13 +51,13 @@ jalalidatepicker-container .jalalidatepicker-years, jalalidatepicker-container .
   color: rgba(0, 0, 0, 0.8);
   fill: rgba(0, 0, 0, 0.8);
 }
-jalalidatepicker-container .jalalidatepicker-months {
+jdp-container .jdp-months {
   width: 55%;
 }
-jalalidatepicker-container .jalalidatepicker-years {
+jdp-container .jdp-years {
   width: 35%;
 }
-jalalidatepicker-container .jalalidatepicker-year, jalalidatepicker-container .jalalidatepicker-year input, jalalidatepicker-container .jalalidatepicker-year select, jalalidatepicker-container .jalalidatepicker-month, jalalidatepicker-container .jalalidatepicker-month input, jalalidatepicker-container .jalalidatepicker-month select {
+jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year select, jdp-container .jdp-month, jdp-container .jdp-month input, jdp-container .jdp-month select {
   width: 100%;
   height: 1.5rem;
   text-align: center;
@@ -74,30 +77,30 @@ jalalidatepicker-container .jalalidatepicker-year, jalalidatepicker-container .j
   line-height: inherit;
   outline: none;
 }
-jalalidatepicker-container .jalalidatepicker-year:focus, jalalidatepicker-container .jalalidatepicker-year:active, jalalidatepicker-container .jalalidatepicker-year input:focus, jalalidatepicker-container .jalalidatepicker-year input:active, jalalidatepicker-container .jalalidatepicker-year select:focus, jalalidatepicker-container .jalalidatepicker-year select:active, jalalidatepicker-container .jalalidatepicker-month:focus, jalalidatepicker-container .jalalidatepicker-month:active, jalalidatepicker-container .jalalidatepicker-month input:focus, jalalidatepicker-container .jalalidatepicker-month input:active, jalalidatepicker-container .jalalidatepicker-month select:focus, jalalidatepicker-container .jalalidatepicker-month select:active {
+jdp-container .jdp-year:focus, jdp-container .jdp-year:active, jdp-container .jdp-year input:focus, jdp-container .jdp-year input:active, jdp-container .jdp-year select:focus, jdp-container .jdp-year select:active, jdp-container .jdp-month:focus, jdp-container .jdp-month:active, jdp-container .jdp-month input:focus, jdp-container .jdp-month input:active, jdp-container .jdp-month select:focus, jdp-container .jdp-month select:active {
   outline: none;
 }
-jalalidatepicker-container .jalalidatepicker-year:hover, jalalidatepicker-container .jalalidatepicker-year input:hover, jalalidatepicker-container .jalalidatepicker-year select:hover, jalalidatepicker-container .jalalidatepicker-month:hover, jalalidatepicker-container .jalalidatepicker-month input:hover, jalalidatepicker-container .jalalidatepicker-month select:hover {
+jdp-container .jdp-year:hover, jdp-container .jdp-year input:hover, jdp-container .jdp-year select:hover, jdp-container .jdp-month:hover, jdp-container .jdp-month input:hover, jdp-container .jdp-month select:hover {
   background: rgba(0, 0, 0, 0.05);
 }
-jalalidatepicker-container .jalalidatepicker-year input, jalalidatepicker-container .jalalidatepicker-month input {
+jdp-container .jdp-year input, jdp-container .jdp-month input {
   cursor: text;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
   -webkit-appearance: none;
 }
-jalalidatepicker-container .jalalidatepicker-year input::-webkit-outer-spin-button, jalalidatepicker-container .jalalidatepicker-year input::-webkit-inner-spin-button, jalalidatepicker-container .jalalidatepicker-month input::-webkit-outer-spin-button, jalalidatepicker-container .jalalidatepicker-month input::-webkit-inner-spin-button {
+jdp-container .jdp-year input::-webkit-outer-spin-button, jdp-container .jdp-year input::-webkit-inner-spin-button, jdp-container .jdp-month input::-webkit-outer-spin-button, jdp-container .jdp-month input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
-jalalidatepicker-container .jalalidatepicker-year select, jalalidatepicker-container .jalalidatepicker-month select {
+jdp-container .jdp-year select, jdp-container .jdp-month select {
   cursor: pointer;
   position: relative;
   -webkit-appearance: menulist;
   -moz-appearance: menulist;
   appearance: menulist;
 }
-jalalidatepicker-container .jalalidatepicker-days {
+jdp-container .jdp-days {
   padding: 0.5rem 0 0 0;
   outline: 0;
   text-align: left;
@@ -113,7 +116,7 @@ jalalidatepicker-container .jalalidatepicker-days {
   -ms-flex-pack: justify;
   justify-content: space-around;
 }
-jalalidatepicker-container .jalalidatepicker-day, jalalidatepicker-container .jalalidatepicker-day-name {
+jdp-container .jdp-day, jdp-container .jdp-day-name {
   background: none;
   border: 1px solid transparent;
   box-sizing: border-box;
@@ -129,26 +132,28 @@ jalalidatepicker-container .jalalidatepicker-day, jalalidatepicker-container .ja
   justify-content: center;
   text-align: center;
 }
-jalalidatepicker-container .jalalidatepicker-day.today, jalalidatepicker-container .jalalidatepicker-day-name.today {
+jdp-container .jdp-day.today, jdp-container .jdp-day-name.today {
   border-color: rgba(0, 0, 0, 0.3);
 }
-jalalidatepicker-container .jalalidatepicker-day.selected, jalalidatepicker-container .jalalidatepicker-day-name.selected {
+jdp-container .jdp-day.selected, jdp-container .jdp-day-name.selected {
   background-color: #569ff7 !important;
   color: #fff !important;
 }
-jalalidatepicker-container .jalalidatepicker-day.last-week, jalalidatepicker-container .jalalidatepicker-day-name.last-week {
+jdp-container .jdp-day.last-week, jdp-container .jdp-day-name.last-week {
   color: red;
 }
-jalalidatepicker-container .jalalidatepicker-day:empty {
+jdp-container .jdp-day:empty {
   background: rgba(0, 0, 0, 0.06);
 }
-jalalidatepicker-container .jalalidatepicker-day:not(:empty) {
+jdp-container .jdp-day:not(:empty) {
   cursor: pointer;
+  border-radius: 3px;
 }
-jalalidatepicker-container .jalalidatepicker-day:not(:empty):hover {
+jdp-container .jdp-day:not(:empty):hover {
   background: rgba(0, 0, 0, 0.1);
 }
-jalalidatepicker-container .jalalidatepicker-day-name {
+jdp-container .jdp-day-name {
+  border-radius: 0;
   font-weight: 900;
   font-size: 90%;
   background-color: rgba(0, 0, 0, 0.1);
