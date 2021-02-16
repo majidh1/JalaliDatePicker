@@ -1,7 +1,157 @@
-.jalalidatepicker-container [data-jalalidatepicker="years"] {
-  max-height: 100px;
-  overflow: scroll;
+jalalidatepicker-container {
+  position: fixed;
+  max-width: 307.875px;
+  background: #ffffff;
+  display: block;
+  direction: rtl;
+  padding: 0.5rem 0;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  border-radius: 4px;
+  overflow: hidden;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-.jalalidatepicker-container .current {
-  background-color: yellow;
+jalalidatepicker-container .jalalidatepicker-icon-plus, jalalidatepicker-container .jalalidatepicker-icon-minus {
+  display: inline-block;
+  text-align: center;
+  cursor: pointer;
+  vertical-align: middle;
+  overflow: hidden;
+  flex: none;
+  text-decoration: none;
+  border: 1px solid #e6e6e6;
+}
+jalalidatepicker-container .jalalidatepicker-icon-plus svg, jalalidatepicker-container .jalalidatepicker-icon-minus svg {
+  width: 1rem;
+  height: 1rem;
+  padding: 0.25rem;
+}
+jalalidatepicker-container .jalalidatepicker-icon-plus.not-in-range, jalalidatepicker-container .jalalidatepicker-icon-minus.not-in-range {
+  cursor: not-allowed;
+}
+jalalidatepicker-container .jalalidatepicker-icon-plus.not-in-range svg, jalalidatepicker-container .jalalidatepicker-icon-minus.not-in-range svg {
+  opacity: 0.3;
+}
+jalalidatepicker-container .jalalidatepicker-years, jalalidatepicker-container .jalalidatepicker-months {
+  display: -webkit-inline-box;
+  display: -webkit-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  margin: 0 2.5%;
+  font-size: 120%;
+  color: rgba(0, 0, 0, 0.8);
+  fill: rgba(0, 0, 0, 0.8);
+}
+jalalidatepicker-container .jalalidatepicker-months {
+  width: 55%;
+}
+jalalidatepicker-container .jalalidatepicker-years {
+  width: 35%;
+}
+jalalidatepicker-container .jalalidatepicker-year, jalalidatepicker-container .jalalidatepicker-year input, jalalidatepicker-container .jalalidatepicker-year select, jalalidatepicker-container .jalalidatepicker-month, jalalidatepicker-container .jalalidatepicker-month input, jalalidatepicker-container .jalalidatepicker-month select {
+  width: 100%;
+  height: 1.5rem;
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  display: inline-block;
+  font-size: inherit;
+  font-family: inherit;
+  vertical-align: initial;
+  font-weight: 300;
+  color: inherit;
+  line-height: inherit;
+  outline: none;
+}
+jalalidatepicker-container .jalalidatepicker-year:focus, jalalidatepicker-container .jalalidatepicker-year:active, jalalidatepicker-container .jalalidatepicker-year input:focus, jalalidatepicker-container .jalalidatepicker-year input:active, jalalidatepicker-container .jalalidatepicker-year select:focus, jalalidatepicker-container .jalalidatepicker-year select:active, jalalidatepicker-container .jalalidatepicker-month:focus, jalalidatepicker-container .jalalidatepicker-month:active, jalalidatepicker-container .jalalidatepicker-month input:focus, jalalidatepicker-container .jalalidatepicker-month input:active, jalalidatepicker-container .jalalidatepicker-month select:focus, jalalidatepicker-container .jalalidatepicker-month select:active {
+  outline: none;
+}
+jalalidatepicker-container .jalalidatepicker-year:hover, jalalidatepicker-container .jalalidatepicker-year input:hover, jalalidatepicker-container .jalalidatepicker-year select:hover, jalalidatepicker-container .jalalidatepicker-month:hover, jalalidatepicker-container .jalalidatepicker-month input:hover, jalalidatepicker-container .jalalidatepicker-month select:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+jalalidatepicker-container .jalalidatepicker-year input, jalalidatepicker-container .jalalidatepicker-month input {
+  cursor: text;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+jalalidatepicker-container .jalalidatepicker-year input::-webkit-outer-spin-button, jalalidatepicker-container .jalalidatepicker-year input::-webkit-inner-spin-button, jalalidatepicker-container .jalalidatepicker-month input::-webkit-outer-spin-button, jalalidatepicker-container .jalalidatepicker-month input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+jalalidatepicker-container .jalalidatepicker-year select, jalalidatepicker-container .jalalidatepicker-month select {
+  cursor: pointer;
+  position: relative;
+  -webkit-appearance: menulist;
+  -moz-appearance: menulist;
+  appearance: menulist;
+}
+jalalidatepicker-container .jalalidatepicker-days {
+  padding: 0.5rem 0 0 0;
+  outline: 0;
+  text-align: left;
+  width: 307.875px;
+  min-width: 307.875px;
+  max-width: 307.875px;
+  box-sizing: border-box;
+  display: inline-block;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  -ms-flex-pack: justify;
+  justify-content: space-around;
+}
+jalalidatepicker-container .jalalidatepicker-day, jalalidatepicker-container .jalalidatepicker-day-name {
+  background: none;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  font-weight: 400;
+  width: 14.2857143%;
+  flex-basis: 14.2857143%;
+  max-width: 39px;
+  height: 31px;
+  line-height: 31px;
+  margin: 2px 0;
+  display: inline-block;
+  position: relative;
+  justify-content: center;
+  text-align: center;
+}
+jalalidatepicker-container .jalalidatepicker-day.today, jalalidatepicker-container .jalalidatepicker-day-name.today {
+  border-color: rgba(0, 0, 0, 0.3);
+}
+jalalidatepicker-container .jalalidatepicker-day.selected, jalalidatepicker-container .jalalidatepicker-day-name.selected {
+  background-color: #569ff7 !important;
+  color: #fff !important;
+}
+jalalidatepicker-container .jalalidatepicker-day.last-week, jalalidatepicker-container .jalalidatepicker-day-name.last-week {
+  color: red;
+}
+jalalidatepicker-container .jalalidatepicker-day:empty {
+  background: rgba(0, 0, 0, 0.06);
+}
+jalalidatepicker-container .jalalidatepicker-day:not(:empty) {
+  cursor: pointer;
+}
+jalalidatepicker-container .jalalidatepicker-day:not(:empty):hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+jalalidatepicker-container .jalalidatepicker-day-name {
+  font-weight: 900;
+  font-size: 90%;
+  background-color: rgba(0, 0, 0, 0.1);
+  max-width: unset;
+  cursor: default;
 }

@@ -1,24 +1,20 @@
-﻿<!DOCTYPE html>
-<html>
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Jalali Datepicker</title>
-    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.11.2.css">
-    <link rel="stylesheet" href="../dist/jalalidatepicker.css">
+    <title>Test</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <script src="../dist/jalaliDatepicker.min.js"></script>
+    <link rel="stylesheet" href="../dist/jalaliDatepicker.css" />
 </head>
 <body>
-    <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
-    <div style="max-width: 420px; margin: auto;">
-        <input type="text" id="input" />
+    <div style="max-width: 100px; margin: auto">
+        <input value="1399/11/27" data-jdp data-jdp-min-date="1398/11/10" data-jdp-max-date="1399/11/10"/>
     </div>
-
-    <script src="https://code.jquery.com/qunit/qunit-2.11.2.js"></script>
-    <script src="../dist/jalalidatepicker.js"></script>
-    <script src="main/main.js"></script>
-    <script src="method/show.js"></script>
-    <script src="events/show.js"></script>
+    <script>
+        jalaliDatepicker.startWatch({
+            minDate: "attr",
+            maxDate: { year: 1399, month: 11, day: 10 }
+            });
+    </script>
 </body>
 </html>

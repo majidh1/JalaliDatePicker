@@ -1,387 +1,134 @@
-/*!
- * Jalalidatepicker v0.0.1
- * undefined
- *
- * Copyright 2020-present Majid Hooshiyar
- * Released under the MIT license
- *
- * Date: 2020-11-02T14:10:31.072Z
+/*
+ * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
+ * This devtool is neither made for production nor for readable output files.
+ * It uses "eval()" calls to create a separate source file in the browser devtools.
+ * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
+ * or disable the default devtool with "devtool: false".
+ * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
  */
+/******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ({
 
-(function (factory) {
-  typeof define === 'function' && define.amd ? define(factory) :
-  factory();
-}((function () { 'use strict';
+/***/ "./src/constants.js":
+/*!**************************!*\
+  !*** ./src/constants.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-  function _typeof(obj) {
-    "@babel/helpers - typeof";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"NAMESPACE\": () => (/* binding */ NAMESPACE),\n/* harmony export */   \"CONTAINER_ELM_QUERY\": () => (/* binding */ CONTAINER_ELM_QUERY),\n/* harmony export */   \"YEARS_ELM_QUERY\": () => (/* binding */ YEARS_ELM_QUERY),\n/* harmony export */   \"YEAR_ELM_QUERY\": () => (/* binding */ YEAR_ELM_QUERY),\n/* harmony export */   \"MONTHS_ELM_QUERY\": () => (/* binding */ MONTHS_ELM_QUERY),\n/* harmony export */   \"MONTH_ELM_QUERY\": () => (/* binding */ MONTH_ELM_QUERY),\n/* harmony export */   \"DAYS_ELM_QUERY\": () => (/* binding */ DAYS_ELM_QUERY),\n/* harmony export */   \"DAY_ELM_QUERY\": () => (/* binding */ DAY_ELM_QUERY),\n/* harmony export */   \"DAY_NAME_ELM_QUERY\": () => (/* binding */ DAY_NAME_ELM_QUERY),\n/* harmony export */   \"PLUS_ICON_ELM_QUERY\": () => (/* binding */ PLUS_ICON_ELM_QUERY),\n/* harmony export */   \"MINUS_ICON_ELM_QUERY\": () => (/* binding */ MINUS_ICON_ELM_QUERY),\n/* harmony export */   \"SELECTED_CLASS_NAME\": () => (/* binding */ SELECTED_CLASS_NAME),\n/* harmony export */   \"TODAY_CLASS_NAME\": () => (/* binding */ TODAY_CLASS_NAME),\n/* harmony export */   \"LAST_WEEK_CLASS_NAME\": () => (/* binding */ LAST_WEEK_CLASS_NAME),\n/* harmony export */   \"DISABLE_CLASS_NAME\": () => (/* binding */ DISABLE_CLASS_NAME),\n/* harmony export */   \"EVENT_CHANGE_INPUT\": () => (/* binding */ EVENT_CHANGE_INPUT),\n/* harmony export */   \"EVENT_CHANGE_MONTH_DROPDOWN_STR\": () => (/* binding */ EVENT_CHANGE_MONTH_DROPDOWN_STR),\n/* harmony export */   \"EVENT_CHANGE_YEAR_INPUT_STR\": () => (/* binding */ EVENT_CHANGE_YEAR_INPUT_STR),\n/* harmony export */   \"MIN_MAX_TODAY_SETTING\": () => (/* binding */ MIN_MAX_TODAY_SETTING),\n/* harmony export */   \"MIN_MAX_ATTR_SETTING\": () => (/* binding */ MIN_MAX_ATTR_SETTING),\n/* harmony export */   \"MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME\": () => (/* binding */ MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME),\n/* harmony export */   \"MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME\": () => (/* binding */ MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME),\n/* harmony export */   \"EVENT_CLICK_STR\": () => (/* binding */ EVENT_CLICK_STR),\n/* harmony export */   \"EVENT_FOCUS_STR\": () => (/* binding */ EVENT_FOCUS_STR),\n/* harmony export */   \"DATA_ATTR\": () => (/* binding */ DATA_ATTR)\n/* harmony export */ });\nvar NAMESPACE = \"jalalidatepicker\";\nvar CONTAINER_ELM_QUERY = \"\".concat(NAMESPACE, \"-container\");\nvar YEARS_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-years\");\nvar YEAR_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-year\");\nvar MONTHS_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-months\");\nvar MONTH_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-month\");\nvar DAYS_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-days\");\nvar DAY_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-day\");\nvar DAY_NAME_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-day-name\");\nvar PLUS_ICON_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-icon-plus\");\nvar MINUS_ICON_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-icon-minus\");\nvar SELECTED_CLASS_NAME = \"selected\";\nvar TODAY_CLASS_NAME = \"today\";\nvar LAST_WEEK_CLASS_NAME = \"last-week\";\nvar DISABLE_CLASS_NAME = \"not-in-range\";\nvar EVENT_CHANGE_INPUT = new Event(\"change\");\nvar EVENT_CHANGE_MONTH_DROPDOWN_STR = \"change\";\nvar EVENT_CHANGE_YEAR_INPUT_STR = \"keyup change\";\nvar MIN_MAX_TODAY_SETTING = \"today\";\nvar MIN_MAX_ATTR_SETTING = \"attr\";\nvar MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME = \"data-jdp-max-date\";\nvar MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME = \"data-jdp-min-date\";\nvar EVENT_CLICK_STR = \"click\";\nvar EVENT_FOCUS_STR = \"focus\";\nvar DATA_ATTR = \"data-\".concat(NAMESPACE);\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/constants.js?");
 
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
+/***/ }),
 
-    return _typeof(obj);
-  }
+/***/ "./src/defaults.js":
+/*!*************************!*\
+  !*** ./src/defaults.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (__WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({\n  days: [\"ش\", \"ی\", \"د\", \"س\", \"چ\", \"پ\", \"ج\"],\n  months: [\"فروردین\", \"اردیبهشت\", \"خرداد\", \"تیر\", \"مرداد\", \"شهریور\", \"مهر\", \"آبان\", \"آذر\", \"دی\", \"بهمن\", \"اسفند\"],\n  initDate: null,\n  //sample {year:1399,month:11,day:29} || today || attr\n  minDate: {},\n  //sample {year:1400,month:11,day:29} || today || attr\n  maxDate: {},\n  separatorChar: \"/\",\n  zIndex: 1000,\n  container: \"body\",\n  dpContainer: null,\n  selector: \"input[data-jdp]\",\n  autoShow: true,\n  autoHide: true,\n  plusHtml: \"<svg viewBox=\\\"0 0 1024 1024\\\"><g><path d=\\\"M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z\\\"></path></g></svg>\",\n  minusHtml: \"<svg viewBox=\\\"0 0 1024 1024\\\"><g><path d=\\\"M810 554h-596v-84h596v84z\\\"></path></g></svg>\"\n});\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/defaults.js?");
 
-  function _defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
+/***/ }),
 
-  function _createClass(Constructor, protoProps, staticProps) {
-    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) _defineProperties(Constructor, staticProps);
-    return Constructor;
-  }
+/***/ "./src/draw.js":
+/*!*********************!*\
+  !*** ./src/draw.js ***!
+  \*********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-  var NAMESPACE = 'jalalidatepicker';
-  var EVENT_HIDE = new Event("hide.".concat(NAMESPACE));
-  var EVENT_SHOW = new Event("show.".concat(NAMESPACE));
-  var DATA_ATTR = "data-".concat(NAMESPACE);
-  var DATA_ATTR_YEARS = "".concat(DATA_ATTR, "=\"years\"");
-  var DATA_ATTR_YEAR_PICKER = "".concat(DATA_ATTR, "=\"year-picker\"");
-  var DATA_ATTR_YEAR_PREV = "".concat(DATA_ATTR, "=\"year-prev\"");
-  var DATA_ATTR_YEAR_CURRENT = "".concat(DATA_ATTR, "=\"year-current\"");
-  var DATA_ATTR_YEAR_NEXT = "".concat(DATA_ATTR, "=\"year-next\"");
-  var DATA_ATTR_MONTHS = "".concat(DATA_ATTR, "=\"months\"");
-  var DATA_ATTR_MONTH_PICKER = "".concat(DATA_ATTR, "=\"month-picker\"");
-  var DATA_ATTR_MONTH_PREV = "".concat(DATA_ATTR, "=\"month-prev\"");
-  var DATA_ATTR_MONTH_CURRENT = "".concat(DATA_ATTR, "=\"month-current\"");
-  var DATA_ATTR_MONTH_NEXT = "".concat(DATA_ATTR, "=\"month-next\"");
-  var DATA_ATTR_DAYS = "".concat(DATA_ATTR, "=\"days\"");
-  var DATA_ATTR_DAYS_TITLE = "".concat(DATA_ATTR, "=\"days-title\"");
-  var DATA_ATTR_DAY_PICKER = "".concat(DATA_ATTR, "=\"day-picker\"");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"default\": () => (/* export default binding */ __WEBPACK_DEFAULT_EXPORT__)\n/* harmony export */ });\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ \"./src/constants.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/utils.js\");\n\n\n\nvar getLastWeekClassIfNessesary = function getLastWeekClassIfNessesary(dayOfWeek) {\n  return dayOfWeek === 6 ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.LAST_WEEK_CLASS_NAME) : \"\";\n};\n\nvar createElementPlus = function createElementPlus(container, isYear) {\n  (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.PLUS_ICON_ELM_QUERY + (isYear ? jdp.options.maxDate.year === jdp.initDate.year ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\" : jdp.options.maxDate.year === jdp.initDate.year && jdp.options.maxDate.month === jdp.initDate.month ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\"), container, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, isYear ? function () {\n    jdp.increaseYear();\n  } : function () {\n    jdp.increaseMonth();\n  }, jdp.options.plusHtml);\n};\n\nvar createElementMinus = function createElementMinus(container, isYear) {\n  (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.MINUS_ICON_ELM_QUERY + (isYear ? jdp.options.minDate.year === jdp.initDate.year ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\" : jdp.options.minDate.year === jdp.initDate.year && jdp.options.minDate.month === jdp.initDate.month ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\"), container, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, isYear ? function () {\n    jdp.decreaseYear();\n  } : function () {\n    jdp.decreaseMonth();\n  }, jdp.options.minusHtml);\n};\n\nvar render = function render() {\n  (0,_utils__WEBPACK_IMPORTED_MODULE_1__.setInnerHTML)(jdp.dpContainer, \"\");\n  renderYear();\n  renderMonths();\n  renderDays();\n};\n\nvar renderYear = function renderYear() {\n  var yearsContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.YEARS_ELM_QUERY, jdp.dpContainer);\n  createElementPlus(yearsContainer, true);\n  var yearContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.YEAR_ELM_QUERY, yearsContainer);\n  createElementMinus(yearsContainer, true);\n  var yearInputContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(\"input\", yearContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CHANGE_YEAR_INPUT_STR, function (e) {\n    jdp.yearChange(e.target.value);\n  });\n  yearInputContainer.tabIndex = -1;\n  yearInputContainer.value = jdp.initDate.year;\n  yearInputContainer.type = \"number\";\n};\n\nvar renderMonths = function renderMonths() {\n  var monthsContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.MONTHS_ELM_QUERY, jdp.dpContainer);\n  createElementPlus(monthsContainer, false);\n  var monthContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.MONTH_ELM_QUERY, monthsContainer);\n  createElementMinus(monthsContainer, false);\n  var monthDropDownContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(\"select\", monthContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CHANGE_MONTH_DROPDOWN_STR, function (e) {\n    jdp.monthChange(e.target.value);\n  });\n  monthDropDownContainer.tabIndex = -1;\n  var months = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getValidMonths)(jdp.initDate, jdp.options.minDate, jdp.options.maxDate);\n  var monthsName = jdp.options.months;\n\n  for (var i = 0; i < months.length; i++) {\n    var optionElm = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(\"option\", monthDropDownContainer);\n    optionElm.value = months[i];\n    optionElm.text = monthsName[months[i] - 1];\n    optionElm.selected = months[i] === jdp.initDate.month;\n  }\n};\n\nvar renderDays = function renderDays() {\n  var daysContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.DAYS_ELM_QUERY, jdp.dpContainer);\n\n  for (var i = 0; i < 7; i++) {\n    (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i), daysContainer, null, null, jdp.options.days[i]);\n  }\n\n  var daysInMonth = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getDaysInMonth)(jdp.initDate.year, jdp.initDate.month);\n  var firstWeekDay = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getWeekDay)(jdp.initDate.year, jdp.initDate.month, 1);\n  var maxDaysInCalendar = 7 * Math.ceil((firstWeekDay + daysInMonth) / 7) - 1;\n  var dayInMonth = 1;\n\n  var _loop = function _loop(_i) {\n    var weekDay = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getWeekDay)(jdp.initDate.year, jdp.initDate.month, dayInMonth);\n    var validDay = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.isValidDay)(jdp.initDate, dayInMonth, jdp.options.minDate, jdp.options.maxDate);\n\n    if (dayInMonth < weekDay && _i < weekDay || dayInMonth > daysInMonth) {\n      (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.DAY_ELM_QUERY, daysContainer);\n      return \"continue\";\n    }\n\n    if (!validDay) {\n      (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.DAY_ELM_QUERY, daysContainer);\n      dayInMonth += 1;\n      return \"continue\";\n    }\n\n    var className = getLastWeekClassIfNessesary(weekDay);\n\n    if (jdp.valueDate.day === dayInMonth && jdp.valueDate.year === jdp.initDate.year && jdp.valueDate.month === jdp.initDate.month) {\n      className += \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.SELECTED_CLASS_NAME);\n    }\n\n    if (jdp.today.day === dayInMonth && jdp.today.year === jdp.initDate.year && jdp.today.month === jdp.initDate.month) {\n      className += \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.TODAY_CLASS_NAME);\n    }\n\n    var dayContainer = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.DAY_ELM_QUERY + className, daysContainer, null, null, dayInMonth);\n    dayContainer.day = dayInMonth;\n    dayContainer.addEventListener(_constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, function () {\n      jdp.setValue(jdp.initDate.year, jdp.initDate.month, dayContainer.day);\n    });\n    dayInMonth += 1;\n  };\n\n  for (var _i = 0; _i <= maxDaysInCalendar; _i++) {\n    var _ret = _loop(_i);\n\n    if (_ret === \"continue\") continue;\n  }\n};\n\nvar jdp = null;\n/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {\n  jdp = this;\n  render();\n}\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/draw.js?");
 
-  var defaults = {
-    // Show the datepicker automatically when initialized
-    autoShow: false,
-    // Hide the datepicker automatically when picked
-    autoHide: false,
-    // The date string format
-    separatorChar: '/',
-    // The initial view date
-    initDate: null,
-    // The min view date
-    minDate: null,
-    // The max view date
-    maxDate: null,
-    // Days' name of the week.
-    days: ['شنبه', 'یکشنبه', 'دوشنبه', 'سه‌شنبه‌', 'چهارشنبه', 'پنجشنبه‌', 'جمعه'],
-    // Months' name
-    months: ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'],
-    // The offset top or bottom of the datepicker from the element
-    offset: 10,
-    // The `z-index` of the datepicker
-    zIndex: 1000,
-    // The template of the datepicker
-    template: "<div class=\"".concat(NAMESPACE, "-container\">\n            <div class=\"").concat(NAMESPACE, "-panel\" ").concat(DATA_ATTR_YEAR_PICKER, ">\n                <ul>\n                    <li ").concat(DATA_ATTR_YEAR_PREV, ">&lsaquo;</li>\n                    <li ").concat(DATA_ATTR_YEAR_CURRENT, "></li>\n                    <li ").concat(DATA_ATTR_YEAR_NEXT, ">&rsaquo;</li>\n                </ul>\n                <ul ").concat(DATA_ATTR_YEARS, "></ul>\n            </div>\n            <div class=\"").concat(NAMESPACE, "-panel\" ").concat(DATA_ATTR_MONTH_PICKER, ">\n                <ul>\n                    <li ").concat(DATA_ATTR_MONTH_PREV, ">&lsaquo;</li>\n                    <li ").concat(DATA_ATTR_MONTH_CURRENT, "></li>\n                    <li ").concat(DATA_ATTR_MONTH_NEXT, ">&rsaquo;</li>\n                </ul>\n                <ul ").concat(DATA_ATTR_MONTHS, "></ul>\n            </div>\n            <div class=\"").concat(NAMESPACE, "-panel\" ").concat(DATA_ATTR_DAY_PICKER, ">\n                <ul ").concat(DATA_ATTR_DAYS_TITLE, "></ul>\n                <ul ").concat(DATA_ATTR_DAYS, "></ul>\n            </div>\n        </div>"),
-    // The item tagname for template
-    itemTagname: 'li',
-    // The parent of the datepicker
-    container: 'body'
-  };
+/***/ }),
 
-  function isObject(value) {
-    return _typeof(value) === 'object';
-  }
-  function isUndefined(value) {
-    return typeof value === 'undefined';
-  }
-  function isString(value) {
-    return typeof value === 'string';
-  }
+/***/ "./src/index.js":
+/*!**********************!*\
+  !*** ./src/index.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-  function isPlainObject(obj) {
-    // Detect obvious negatives
-    // Use toString instead of jQuery.type to catch host objects
-    if (!obj || toString.call(obj) !== '[object Object]') {
-      return false;
-    }
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ \"./src/utils.js\");\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./constants */ \"./src/constants.js\");\n/* harmony import */ var _draw__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./draw */ \"./src/draw.js\");\n/* harmony import */ var _defaults__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./defaults */ \"./src/defaults.js\");\n\n\n\n\nvar visible = \"visible\";\nvar hidden = \"hidden\";\nvar jalaliDatepicker = {\n  init: function init(options) {\n    this.options = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.extend)(_defaults__WEBPACK_IMPORTED_MODULE_3__.default, options);\n    this.options = normalizeOptions(this.options);\n    window.onresize = windowResize;\n    if (this.options.autoHide) document.body.onclick = documentClick;\n    if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);\n  },\n  options: _defaults__WEBPACK_IMPORTED_MODULE_3__.default,\n  input: null,\n\n  get dpContainer() {\n    this._dpContainer = this._dpContainer || (0,_utils__WEBPACK_IMPORTED_MODULE_0__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_1__.CONTAINER_ELM_QUERY, this.options.container);\n    return this._dpContainer;\n  },\n\n  get today() {\n    this._today = this._today || (0,_utils__WEBPACK_IMPORTED_MODULE_0__.jalaliToday)();\n    return this._today;\n  },\n\n  get valueDate() {\n    this._valueDate = this._valueDate || (0,_utils__WEBPACK_IMPORTED_MODULE_0__.clon)(this.input.value);\n\n    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isString)(this._valueDate)) {\n      if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidDateString)(this._valueDate, this.options.separatorChar)) {\n        this._valueDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getDateFromString)(this._valueDate, this.options.separatorChar);\n      } else {\n        this._valueDate = {};\n      }\n    }\n\n    return this._valueDate;\n  },\n\n  get initDate() {\n    this._initDate = this._initDate || (0,_utils__WEBPACK_IMPORTED_MODULE_0__.clon)(this.valueDate);\n\n    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isString)(this._initDate) && (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidDateString)(this._initDate, this.options.separatorChar)) {\n      this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getDateFromString)(this._initDate, this.options.separatorChar);\n    }\n\n    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(this._initDate)) {\n      this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.clon)(this.today);\n    }\n\n    return this._initDate;\n  },\n\n  _draw: _draw__WEBPACK_IMPORTED_MODULE_2__.default,\n  show: function show(input) {\n    this.input = input;\n\n    this._draw();\n\n    this.setPosition();\n  },\n  hide: function hide() {\n    this.dpContainer.style.visibility = hidden;\n  },\n  setPosition: function setPosition() {\n    var left = 0;\n    var top = 0;\n    var parent = this.input;\n\n    while (parent.offsetParent) {\n      left += parent.offsetLeft;\n      top += parent.offsetTop;\n      parent = parent.offsetParent;\n    }\n\n    if (left + this.dpContainer.offsetWidth > window.innerWidth) {\n      left = (window.innerWidth - this.dpContainer.offsetWidth) / 2;\n    }\n\n    this.dpContainer.style.zIndex = this.options.zIndex;\n    this.dpContainer.style.left = left + \"px\";\n    this.dpContainer.style.top = top + this.input.offsetHeight + \"px\";\n    this.dpContainer.style.visibility = visible;\n  },\n  setValue: function setValue(year, month, day) {\n    this._valueDate.year = year;\n    this._valueDate.month = month;\n    this._valueDate.day = day;\n    this.input.value = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getDateToString)(year, month, day, this.options.separatorChar);\n    this.hide();\n    this.input.dispatchEvent(_constants__WEBPACK_IMPORTED_MODULE_1__.EVENT_CHANGE_INPUT);\n  },\n  increaseMonth: function increaseMonth() {\n    this.monthChange(this._initDate.month === 12 ? 1 : this._initDate.month + 1);\n  },\n  decreaseMonth: function decreaseMonth() {\n    this.monthChange(this._initDate.month === 1 ? 12 : this._initDate.month - 1);\n  },\n  monthChange: function monthChange(month) {\n    this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.normalizeMinMaxDate)(this._initDate.year, month, this._initDate.day, this._initDate, this.options.minDate, this.options.maxDate);\n\n    this._draw();\n  },\n  increaseYear: function increaseYear() {\n    this.yearChange(this._initDate.year + 1);\n  },\n  decreaseYear: function decreaseYear() {\n    this.yearChange(this._initDate.year - 1);\n  },\n  yearChange: function yearChange(year) {\n    this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.normalizeMinMaxDate)(year, this._initDate.month, this._initDate.day, this._initDate, this.options.minDate, this.options.maxDate);\n\n    this._draw();\n  }\n};\n\nvar normalizeOptions = function normalizeOptions(options) {\n  if (options.minDate === _constants__WEBPACK_IMPORTED_MODULE_1__.MIN_MAX_TODAY_SETTING) options.minDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.clon)(jalaliDatepicker.today);\n  if (options.maxDate === _constants__WEBPACK_IMPORTED_MODULE_1__.MIN_MAX_TODAY_SETTING) options.maxDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.clon)(jalaliDatepicker.today);\n\n  if (options.minDate === _constants__WEBPACK_IMPORTED_MODULE_1__.MIN_MAX_ATTR_SETTING) {\n    delete options.minDate;\n    window.Object.defineProperty(options, \"minDate\", {\n      get: function get() {\n        return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getDateFromString)(jalaliDatepicker.input.getAttribute(_constants__WEBPACK_IMPORTED_MODULE_1__.MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME), options.separatorChar);\n      }\n    });\n  }\n\n  if (options.maxDate === _constants__WEBPACK_IMPORTED_MODULE_1__.MIN_MAX_ATTR_SETTING) {\n    delete options.maxDate;\n    window.Object.defineProperty(options, \"maxDate\", {\n      get: function get() {\n        return (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getDateFromString)(jalaliDatepicker.input.getAttribute(_constants__WEBPACK_IMPORTED_MODULE_1__.MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME), options.separatorChar);\n      }\n    });\n  }\n\n  return options;\n};\n\nfunction documentClick(e) {\n  if (jalaliDatepicker.dpContainer.style.visibility !== visible || e.path.indexOf(jalaliDatepicker.dpContainer) !== -1 || e.path.indexOf(jalaliDatepicker.input) !== -1) {\n    return;\n  }\n\n  jalaliDatepicker.hide();\n}\n\nfunction windowResize() {\n  jalaliDatepicker.setPosition();\n}\n\nfunction addEventListenerOnInputs(querySelector) {\n  document.querySelectorAll(querySelector).forEach(function (item) {\n    item.addEventListener(_constants__WEBPACK_IMPORTED_MODULE_1__.EVENT_FOCUS_STR, function () {\n      jalaliDatepicker.show(item);\n    });\n  });\n}\n\nwindow.jalaliDatepicker = {\n  startWatch: function startWatch() {\n    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n    jalaliDatepicker.init(options);\n  },\n  show: function show(input) {\n    jalaliDatepicker.show(input);\n  },\n  hide: function hide() {\n    jalaliDatepicker.hide();\n  }\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/index.js?");
 
-    var proto = window.Object.getPrototypeOf(obj); // Objects with no prototype (e.g., `Object.create( null )`) are plain
+/***/ }),
 
-    if (!proto) {
-      return true;
-    } // Objects with prototype are plain iff they were constructed by a global Object function
+/***/ "./src/utils.js":
+/*!**********************!*\
+  !*** ./src/utils.js ***!
+  \**********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"isNaN\": () => (/* binding */ isNaN),\n/* harmony export */   \"isNumber\": () => (/* binding */ isNumber),\n/* harmony export */   \"isUndefined\": () => (/* binding */ isUndefined),\n/* harmony export */   \"isString\": () => (/* binding */ isString),\n/* harmony export */   \"clon\": () => (/* binding */ clon),\n/* harmony export */   \"isLeapYear\": () => (/* binding */ isLeapYear),\n/* harmony export */   \"getDaysInMonth\": () => (/* binding */ getDaysInMonth),\n/* harmony export */   \"mod\": () => (/* binding */ mod),\n/* harmony export */   \"getDays\": () => (/* binding */ getDays),\n/* harmony export */   \"getDiffDays\": () => (/* binding */ getDiffDays),\n/* harmony export */   \"getWeekDay\": () => (/* binding */ getWeekDay),\n/* harmony export */   \"getYears\": () => (/* binding */ getYears),\n/* harmony export */   \"addLeadingZero\": () => (/* binding */ addLeadingZero),\n/* harmony export */   \"isPlainObject\": () => (/* binding */ isPlainObject),\n/* harmony export */   \"extend\": () => (/* binding */ extend),\n/* harmony export */   \"createElement\": () => (/* binding */ createElement),\n/* harmony export */   \"addListenerMulti\": () => (/* binding */ addListenerMulti),\n/* harmony export */   \"setInnerHTML\": () => (/* binding */ setInnerHTML),\n/* harmony export */   \"normalizeMinMaxDate\": () => (/* binding */ normalizeMinMaxDate),\n/* harmony export */   \"getValidMonths\": () => (/* binding */ getValidMonths),\n/* harmony export */   \"isValidDay\": () => (/* binding */ isValidDay),\n/* harmony export */   \"setClassName\": () => (/* binding */ setClassName),\n/* harmony export */   \"isValidDateString\": () => (/* binding */ isValidDateString),\n/* harmony export */   \"getDateFromString\": () => (/* binding */ getDateFromString),\n/* harmony export */   \"getDateToString\": () => (/* binding */ getDateToString),\n/* harmony export */   \"jalaliToday\": () => (/* binding */ jalaliToday)\n/* harmony export */ });\nvar _this = undefined;\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nvar isNaN = Number.isNaN || window.isNaN;\nvar isNumber = function isNumber(value) {\n  return typeof value === \"number\" && !isNaN(value);\n};\nvar isUndefined = function isUndefined(value) {\n  return typeof value === \"undefined\";\n};\nvar isString = function isString(value) {\n  return typeof value === \"string\";\n};\nvar clon = function clon(a) {\n  return JSON.parse(JSON.stringify(a));\n};\nvar isLeapYear = function isLeapYear(year) {\n  return ((year - 474) % 2820 + 512) * 682 % 2816 < 682;\n};\nvar getDaysInMonth = function getDaysInMonth(year, month) {\n  return [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];\n};\nvar mod = function mod(a, b) {\n  return window.Math.abs(a - b * window.Math.floor(a / b));\n};\nvar getDays = function getDays(month, day) {\n  if (month < 8) return (month - 1) * 31 + day;\n  return 6 * 31 + (month - 7) * 30 + day;\n};\nvar getDiffDays = function getDiffDays(year1, month1, day1, year2, month2, day2) {\n  var diffDays = getDays(month2, day2) - getDays(month1, day1);\n  var y1 = year1 < year2 ? year1 : year2;\n  var y2 = year1 < year2 ? year2 : year1;\n\n  for (var y = y1; y < y2; y++) {\n    if (isLeapYear(y)) diffDays += year1 < year2 ? 366 : -366;else diffDays += year1 < year2 ? 365 : -365;\n  }\n\n  return diffDays;\n};\nvar getWeekDay = function getWeekDay(year, month, day) {\n  return mod(getDiffDays(1392, 3, 25, year, month, day), 7);\n};\nvar getYears = function getYears(month, day) {\n  return 6 * 31 + (month - 7) * 30 + day;\n};\nvar addLeadingZero = function addLeadingZero(value) {\n  var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;\n  var str = String(Math.abs(value));\n  var i = str.length;\n  var result = \"\";\n\n  if (value < 0) {\n    result += \"-\";\n  }\n\n  while (i < length) {\n    i += 1;\n    result += \"0\";\n  }\n\n  return result + str;\n};\nvar isPlainObject = function isPlainObject(obj) {\n  if (!obj || !obj.constructor || obj.nodeType) {\n    return false;\n  }\n\n  try {\n    return JSON.stringify(obj) === \"{}\";\n  } catch (e) {\n    return true;\n  }\n};\nvar extend = function extend() {\n  var options;\n  var src;\n  var copy;\n  var copyIsArray;\n  var clone;\n\n  for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {\n    params[_key] = arguments[_key];\n  }\n\n  var target = params[0] || {};\n  var i = 1;\n  var length = params.length;\n  var deep = false; // Handle a deep copy situation\n\n  if (typeof target === \"boolean\") {\n    deep = target; // Skip the boolean and the target\n\n    target = params[i] || {};\n    i += 1;\n  } // Handle case when target is a string or something (possible in deep copy)\n\n\n  if (_typeof(target) !== \"object\" && typeof target !== \"function\") {\n    target = {};\n  } // Extend jQuery itself if only one argument is passed\n\n\n  if (i === length) {\n    target = _this;\n    i -= 1;\n  }\n\n  for (; i < length; i++) {\n    options = params[i]; // Only deal with non-null/undefined values\n\n    if (!isUndefined(options) && options !== null) {\n      // Extend the base object\n      for (var j = 0; j < window.Object.keys(options).length; j++) {\n        var name = window.Object.keys(options)[j];\n\n        if (Object.prototype.hasOwnProperty.call(options, name)) {\n          copy = options[name]; // Prevent Object.prototype pollution\n          // Prevent never-ending loop\n\n          if (name === \"__proto__\" || target === copy) {\n            return true;\n          }\n\n          copyIsArray = Array.isArray(copy); // Recurse if we're merging plain objects or arrays\n\n          if (deep && copy && (isPlainObject(copy) || copyIsArray)) {\n            src = target[name]; // Ensure proper type for the source value\n\n            if (copyIsArray && !Array.isArray(src)) {\n              clone = [];\n            } else if (!copyIsArray && !isPlainObject(src)) {\n              clone = {};\n            } else {\n              clone = src;\n            } // Never move original objects, clone them\n\n\n            target[name] = extend(deep, clone, copy); // Don't bring in undefined values\n          } else if (!isUndefined(copy)) {\n            target[name] = copy;\n          }\n        }\n      }\n    }\n  } // Return the modified object\n\n\n  return target;\n};\nvar createElement = function createElement(tag, parent, eventNames, event, content) {\n  var splits = tag.split(\".\");\n  tag = splits.shift() || \"div\";\n  var className = splits;\n  var element = window.document.createElement(tag);\n\n  if (isString(parent)) {\n    window.document.querySelector(parent).appendChild(element);\n  } else {\n    parent.appendChild(element);\n  }\n\n  if (className.length) {\n    element.className = className.join(\" \");\n  }\n\n  if (eventNames && event) {\n    addListenerMulti(element, eventNames, event);\n  }\n\n  if (!isUndefined(content)) {\n    setInnerHTML(element, content);\n  }\n\n  return element;\n};\nvar addListenerMulti = function addListenerMulti(element, eventNames, listener) {\n  var events = eventNames.split(\" \");\n\n  for (var i = 0, iLen = events.length; i < iLen; i++) {\n    element.addEventListener(events[i], listener, false);\n  }\n};\nvar setInnerHTML = function setInnerHTML(element, html) {\n  element.innerHTML = html;\n};\nvar normalizeMinMaxDate = function normalizeMinMaxDate(year, month, day, initDate, minDate, maxDate) {\n  if (isNaN(year) || year < 1000 || year > 10000) {\n    year = initDate.year;\n  } else {\n    if (year < minDate.year) {\n      year = minDate.year;\n    } else if (year > maxDate.year) {\n      year = maxDate.year;\n    }\n  }\n\n  if (isNaN(month) || month < 1 || month > 12) {\n    month = initDate.month;\n  } else {\n    if (year <= minDate.year && month < minDate.month) {\n      month = minDate.month;\n    } else if (year >= maxDate.year && month > maxDate.month) {\n      month = maxDate.month;\n    }\n  }\n\n  if (isNaN(day) || day < 1 || day > 12) {\n    day = initDate.day;\n  } else {\n    if (month <= minDate.month && day < minDate.day) {\n      day = minDate.day;\n    } else if (month >= maxDate.month && day > maxDate.day) {\n      day = maxDate.day;\n    }\n  }\n\n  return {\n    year: parseInt(year),\n    month: parseInt(month),\n    day: parseInt(day)\n  };\n};\nvar getValidMonths = function getValidMonths(initDate, minDate, maxDate) {\n  var months = [];\n  var start = 1;\n  var finish = 12;\n\n  if (initDate.year === minDate.year) {\n    start = minDate.month;\n\n    if (initDate.year === maxDate.year) {\n      finish = maxDate.month;\n    }\n  } else if (initDate.year === maxDate.year) {\n    start = 1;\n    finish = maxDate.month;\n  }\n\n  for (var i = start; i <= finish; i++) {\n    months.push(i);\n  }\n\n  return months;\n};\nvar isValidDay = function isValidDay(initDate, day, minDate, maxDate) {\n  if (initDate.year === minDate.year && initDate.month === minDate.month) {\n    return day >= minDate.day;\n  }\n\n  if (initDate.year === maxDate.year && initDate.month === maxDate.month) {\n    return day <= maxDate.day;\n  }\n\n  return true;\n};\nvar setClassName = function setClassName(element, className) {\n  element.className = className;\n};\nvar isValidDateString = function isValidDateString(str, sepChar) {\n  if (!str) {\n    return false;\n  }\n\n  var date = str.split(sepChar);\n  return date.length === 3 && date[0].length === 4 && date[1].length === 2 && date[2].length === 2;\n};\nvar getDateFromString = function getDateFromString(str, sepChar) {\n  var date = str.split(sepChar);\n  return {\n    year: parseInt(date[0]),\n    month: parseInt(date[1]),\n    day: parseInt(date[2])\n  };\n};\nvar getDateToString = function getDateToString(y, m, d, sepChar) {\n  return y + sepChar + addLeadingZero(m) + sepChar + addLeadingZero(d);\n};\nvar jalaliToday = function jalaliToday() {\n  var date = new Date();\n  var gy = parseInt(date.getFullYear());\n  var gm = parseInt(date.getMonth()) + 1;\n  var gd = parseInt(date.getDate());\n  var jy, days;\n  var gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];\n\n  if (gy > 1600) {\n    jy = 979;\n    gy -= 1600;\n  } else {\n    jy = 0;\n    gy -= 621;\n  }\n\n  var gy2 = gm > 2 ? gy + 1 : gy;\n  days = 365 * gy + parseInt((gy2 + 3) / 4) - parseInt((gy2 + 99) / 100) + parseInt((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];\n  jy += 33 * parseInt(days / 12053);\n  days %= 12053;\n  jy += 4 * parseInt(days / 1461);\n  days %= 1461;\n\n  if (days > 365) {\n    jy += parseInt((days - 1) / 365);\n    days = (days - 1) % 365;\n  }\n\n  var jm = days < 186 ? 1 + parseInt(days / 31) : 7 + parseInt((days - 186) / 30);\n  var jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);\n  return {\n    year: jy,\n    month: jm,\n    day: jd\n  };\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/utils.js?");
 
-    var ctor = {}.hasOwnProperty.call(proto, 'constructor') && proto.constructor;
-    return typeof ctor === 'function';
-  }
+/***/ }),
 
-  function extend() {
-    var options;
-    var src;
-    var copy;
-    var copyIsArray;
-    var clone;
-    var target = arguments[0] || {};
-    var i = 1;
-    var length = arguments.length;
-    var deep = false; // Handle a deep copy situation
+/***/ "./src/styles/index.scss":
+/*!*******************************!*\
+  !*** ./src/styles/index.scss ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-    if (typeof target === 'boolean') {
-      deep = target; // Skip the boolean and the target
+eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/styles/index.scss?");
 
-      target = arguments[i] || {};
-      i += 1;
-    } // Handle case when target is a string or something (possible in deep copy)
+/***/ })
 
-
-    if (!isObject(target) && typeof target !== 'function') {
-      target = {};
-    } // Extend jQuery itself if only one argument is passed
-
-
-    if (i === length) {
-      target = this;
-      i -= 1;
-    }
-
-    for (; i < length; i++) {
-      options = arguments[i]; // Only deal with non-null/undefined values
-
-      if (options !== null) {
-        // Extend the base object
-        for (var j = 0; j < window.Object.keys(options).length; j++) {
-          var name = window.Object.keys(options)[j];
-
-          if (Object.prototype.hasOwnProperty.call(options, name)) {
-            copy = options[name]; // Prevent Object.prototype pollution
-            // Prevent never-ending loop
-
-            if (name === '__proto__' || target === copy) {
-              return true;
-            }
-
-            copyIsArray = Array.isArray(copy); // Recurse if we're merging plain objects or arrays
-
-            if (deep && copy && (isPlainObject(copy) || copyIsArray)) {
-              src = target[name]; // Ensure proper type for the source value
-
-              if (copyIsArray && !Array.isArray(src)) {
-                clone = [];
-              } else if (!copyIsArray && !isPlainObject(src)) {
-                clone = {};
-              } else {
-                clone = src;
-              } // Never move original objects, clone them
-
-
-              target[name] = extend(deep, clone, copy); // Don't bring in undefined values
-            } else if (!isUndefined(copy)) {
-              target[name] = copy;
-            }
-          }
-        }
-      }
-    } // Return the modified object
-
-
-    return target;
-  }
-  function createElement(tag, parent) {
-    var element = window.document.createElement(tag);
-
-    if (isString(parent)) {
-      window.document.querySelector(parent).appendChild(element);
-    } else {
-      parent.appendChild(element);
-    }
-
-    return element;
-  }
-  function findElement(element, querySelector) {
-    if (querySelector.indexOf("=") > -1 && querySelector.indexOf("[") == -1) {
-      querySelector = "[".concat(querySelector, "]");
-    }
-
-    return element.querySelector(querySelector);
-  }
-  function jalaliToday(sepChar) {
-    var date = new Date();
-    var gy = date.getFullYear();
-    var gm = date.getMonth() + 1;
-    var gd = date.getDay();
-    var gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
-    var jy = gy <= 1600 ? 0 : 979;
-    gy -= gy <= 1600 ? 621 : 1600;
-    var gy2 = gm > 2 ? gy + 1 : gy;
-    var days = 365 * gy + window.parseInt((gy2 + 3) / 4) - window.parseInt((gy2 + 99) / 100) + window.parseInt((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];
-    jy += 33 * window.parseInt(days / 12053);
-    days %= 12053;
-    jy += 4 * window.parseInt(days / 1461);
-    days %= 1461;
-    jy += window.parseInt((days - 1) / 365);
-    if (days > 365) days = (days - 1) % 365;
-    var jm = days < 186 ? 1 + window.parseInt(days / 31) : 7 + window.parseInt((days - 186) / 30);
-    var jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
-    var result = [jy, jm, jd];
-    return sepChar ? result.join(sepChar) : result;
-  }
-  function createItems(parent, min, max, itemTagname, current, stringList) {
-    for (var item = min; item <= max; item++) {
-      var itemEl = createElement(itemTagname, parent);
-      itemEl.innerHTML = stringList ? stringList[item - 1] : item;
-
-      if (item === current) {
-        itemEl.className = "current";
-      }
-    }
-  }
-
-  var methods = {
-    // Show the datepicker
-    show: function show() {
-      if (this.shown) {
-        return;
-      }
-
-      this.render();
-      this.shown = true;
-      this.element.dispatchEvent(EVENT_SHOW);
-    },
-    // Hide the datepicker
-    hide: function hide() {
-      this.shown = false;
-      this.element.dispatchEvent(EVENT_HIDE);
-    },
-    toggle: function toggle() {
-      if (this.shown) {
-        this.hide();
-      } else {
-        this.show();
-      }
-    },
-    // Update the datepicker with the current input value
-    update: function update() {
-      var value = this.getValue();
-
-      if (value === this.oldValue) {
-        return;
-      }
-
-      this.setDate(value, true);
-      this.oldValue = value;
-    },
-    getJalaliDatePickerElement: function getJalaliDatePickerElement() {
-      if (isUndefined(this.jalaliDatePickerElement)) {
-        this.jalaliDatePickerElement = createElement('div', this.options.container);
-        this.jalaliDatePickerElement.innerHTML = this.options.template;
-      }
-
-      return this.jalaliDatePickerElement;
-    },
-    getSplitDate: function getSplitDate(date) {
-      return date.split(this.options.separatorChar);
-    },
-    getYear: function getYear() {
-      return this.getSplitValue()[0];
-    },
-    getMinYear: function getMinYear() {
-      var minDate = this.options.minDate;
-      return minDate ? this.getSplitDate(minDate)[0] : 1300;
-    },
-    getMaxYear: function getMaxYear() {
-      var maxDate = this.options.maxDate;
-      return maxDate ? this.getSplitDate(maxDate)[0] : 1500;
-    },
-    getMinMonth: function getMinMonth() {
-      var minDate = this.options.minDate;
-      return minDate ? this.getSplitDate(minDate)[1] : 1;
-    },
-    getMaxMonth: function getMaxMonth() {
-      var maxDate = this.options.maxDate;
-      return maxDate ? this.getSplitDate(maxDate)[1] : 12;
-    },
-    getMonth: function getMonth() {
-      return this.getSplitValue()[1];
-    },
-    getDay: function getDay() {
-      return this.getSplitValue()[2];
-    },
-    getSplitValue: function getSplitValue() {
-      return this.getSplitDate(this.element.value).map(function (a) {
-        return window.parseInt(a);
-      });
-    }
-  };
-
-  var render = {
-    render: function render() {
-      this.renderYears();
-      this.renderMonths();
-      this.renderDays();
-    },
-    renderYears: function renderYears() {
-      createItems(findElement(this.getJalaliDatePickerElement(), DATA_ATTR_YEARS), this.getMinYear(), this.getMaxYear(), this.options.itemTagname, this.getYear());
-    },
-    renderMonths: function renderMonths() {
-      createItems(findElement(this.getJalaliDatePickerElement(), DATA_ATTR_MONTHS), this.getMinMonth(), this.getMaxMonth(), this.options.itemTagname, this.getMonth(), this.options.months);
-    },
-    renderDays: function renderDays() {
-      createItems(findElement(this.getJalaliDatePickerElement(), DATA_ATTR_DAYS), 1, 31, this.options.itemTagname, this.getDay());
-    }
-  };
-
-  var handlers = {
-    click: function click(e) {
-      window.console.log(e.target.dataset.view);
-    }
-  };
-
-  var JalaliDatepicker = /*#__PURE__*/function () {
-    function JalaliDatepicker(element) {
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-      _classCallCheck(this, JalaliDatepicker);
-
-      this.options = extend(defaults, options);
-      this.element = element;
-      this.init();
-      return this;
-    }
-
-    _createClass(JalaliDatepicker, [{
-      key: "init",
-      value: function init() {
-        this.element.jalaliDatepicker = this;
-        var options = this.options;
-        this.element.value = options.initDate || jalaliToday(this.options.separatorChar);
-      } /// / Destroy the datepicker and remove the instance from the target element
-      // destroy() {
-      // }
-
-    }]);
-
-    return JalaliDatepicker;
-  }();
-
-  JalaliDatepicker.prototype = extend(JalaliDatepicker.prototype, methods, render, handlers);
-
-  window.jalaliDatepicker = function (element, options) {
-    return new JalaliDatepicker(element, options);
-  };
-
-  window.jalaliDatepicker = function (element, options) {
-    return new JalaliDatepicker(element, options);
-  };
-
-})));
+/******/ 	});
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		if(__webpack_module_cache__[moduleId]) {
+/******/ 			return __webpack_module_cache__[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	/* webpack/runtime/define property getters */
+/******/ 	(() => {
+/******/ 		// define getter functions for harmony exports
+/******/ 		__webpack_require__.d = (exports, definition) => {
+/******/ 			for(var key in definition) {
+/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
+/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
+/******/ 				}
+/******/ 			}
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
+/******/ 	(() => {
+/******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
+/******/ 	})();
+/******/ 	
+/******/ 	/* webpack/runtime/make namespace object */
+/******/ 	(() => {
+/******/ 		// define __esModule on exports
+/******/ 		__webpack_require__.r = (exports) => {
+/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 			}
+/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 		};
+/******/ 	})();
+/******/ 	
+/************************************************************************/
+/******/ 	// startup
+/******/ 	// Load entry module
+/******/ 	__webpack_require__("./src/index.js");
+/******/ 	// This entry module used 'exports' so it can't be inlined
+/******/ 	__webpack_require__("./src/styles/index.scss");
+/******/ })()
+;
