@@ -3,18 +3,23 @@
     <title>Test</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
-    <script src="../dist/jalaliDatepicker.min.js"></script>
+    <script src="../dist/jalaliDatepicker.js"></script>
     <link rel="stylesheet" href="../dist/jalaliDatepicker.css" />
 </head>
 <body>
-    <div style="max-width: 100px; margin: auto">
-        <input value="1399/11/27" data-jdp data-jdp-min-date="1398/11/10" data-jdp-max-date="1399/11/10"/>
+    <div style="max-width: 100px; margin: auto; padding: 700px 0;">
+        <input placeholder="no jdp" />
+        <input data-jdp placeholder="has jdp" />
+        <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" data-jdp-max-date="1399/11/10" />
+        <input data-jdp data-jdp-min-date="1398/11/10" data-jdp-max-date="today" />
+        <input data-jdp data-jdp-min-date="today" data-jdp-max-date="1401/11/10" />
     </div>
     <script>
         jalaliDatepicker.startWatch({
+            separatorChar: "/",
             minDate: "attr",
-            maxDate: { year: 1399, month: 11, day: 10 }
-            });
+            maxDate:"attr"
+        });
     </script>
 </body>
 </html>

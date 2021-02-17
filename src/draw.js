@@ -89,7 +89,7 @@ const renderDays = () => {
         const weekDay = getWeekDay(jdp.initDate.year, jdp.initDate.month, dayInMonth);
         const validDay = isValidDay(jdp.initDate, dayInMonth, jdp.options.minDate, jdp.options.maxDate);
 
-        if ((dayInMonth < weekDay && i < weekDay) || dayInMonth > daysInMonth) {
+        if ((dayInMonth <= weekDay && i < weekDay) || dayInMonth > daysInMonth) {
             createElement(DAY_ELM_QUERY, daysContainer);
             continue;
         }

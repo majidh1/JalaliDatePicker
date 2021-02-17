@@ -26,7 +26,7 @@ const jalaliDatepicker = {
         return this._today;
     },
     get valueDate() {
-        this._valueDate = this._valueDate || clon(this.input.value);
+        this._valueDate = clon(this.input.value);
 
         if (isString(this._valueDate)) {
             if (isValidDateString(this._valueDate, this.options.separatorChar)) {
@@ -41,26 +41,30 @@ const jalaliDatepicker = {
     get initDate() {
         this._initDate = this._initDate || clon(this.valueDate);
 
+        if (isPlainObject(this._initDate)) {
+            this._initDate = this.options.initDate || clon(this.today);
+        }
         if (isString(this._initDate) && isValidDateString(this._initDate, this.options.separatorChar)) {
             this._initDate = getDateFromString(this._initDate, this.options.separatorChar);
         }
-        if (isPlainObject(this._initDate)) {
-            this._initDate = clon(this.today);
-        }
-
-        return this._initDate;
+        return normalizeMinMaxDate(this._initDate.year, this._initDate.month, this._initDate.day, this._initDate, this.options.minDate, this.options.maxDate);
     },
     _draw: draw,
     show(input) {
+        this._initDate = null;
+        this._valueDate = null;
         this.input = input;
         this._draw();
-
+        this.dpContainer.style.visibility = visible;
         this.setPosition();
     },
     hide() {
         this.dpContainer.style.visibility = hidden;
     },
     setPosition() {
+        if (this.dpContainer.style.visibility !== visible) {
+            return;
+        }
         let left = 0;
         let top = 0;
         let parent = this.input;
@@ -76,7 +80,6 @@ const jalaliDatepicker = {
         this.dpContainer.style.zIndex = this.options.zIndex;
         this.dpContainer.style.left = left + "px";
         this.dpContainer.style.top = top + this.input.offsetHeight + "px";
-        this.dpContainer.style.visibility = visible;
     },
     setValue(year, month, day) {
         this._valueDate.year = year;
@@ -108,17 +111,38 @@ const jalaliDatepicker = {
     }
 };
 
+const getDefaultFromAttr = (attrName, sepChar) => {
+    let dateAttrVal = jalaliDatepicker.input.getAttribute(attrName);
+    if (dateAttrVal === MIN_MAX_TODAY_SETTING) {
+        dateAttrVal = clon(jalaliDatepicker.today);
+    } else if (isString(dateAttrVal) && isValidDateString(dateAttrVal, sepChar)) {
+        dateAttrVal = getDateFromString(dateAttrVal, sepChar);
+    } else {
+        dateAttrVal = {};
+    }
+
+    return dateAttrVal;
+};
+
 const normalizeOptions = (options) => {
     if (options.minDate === MIN_MAX_TODAY_SETTING) options.minDate = clon(jalaliDatepicker.today);
     if (options.maxDate === MIN_MAX_TODAY_SETTING) options.maxDate = clon(jalaliDatepicker.today);
 
     if (options.minDate === MIN_MAX_ATTR_SETTING) {
         delete options.minDate;
-        window.Object.defineProperty(options, "minDate", { get: () => { return getDateFromString(jalaliDatepicker.input.getAttribute(MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME), options.separatorChar); } });
+        window.Object.defineProperty(options, "minDate", {
+            get: () => {
+                return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME, options.separatorChar);
+            }
+        });
     }
     if (options.maxDate === MIN_MAX_ATTR_SETTING) {
         delete options.maxDate;
-        window.Object.defineProperty(options, "maxDate", { get: () => { return getDateFromString(jalaliDatepicker.input.getAttribute(MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME), options.separatorChar); } });
+        window.Object.defineProperty(options, "maxDate", {
+            get: () => {
+                return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME, options.separatorChar);
+            }
+        });
     }
 
     return options;

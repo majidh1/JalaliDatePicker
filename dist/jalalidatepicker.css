@@ -1,7 +1,7 @@
 jdp-container {
-  position: fixed;
+  position: absolute;
   max-width: 307.875px;
-  background: #ffffff;
+  background: #fff;
   display: block;
   direction: rtl;
   padding: 0.5rem 0;
@@ -29,6 +29,7 @@ jdp-container .jdp-icon-plus, jdp-container .jdp-icon-minus {
   flex: none;
   text-decoration: none;
   border: 1px solid #e6e6e6;
+  border-radius: 4px;
 }
 jdp-container .jdp-icon-plus svg, jdp-container .jdp-icon-minus svg {
   width: 1.5rem;
@@ -131,6 +132,7 @@ jdp-container .jdp-day, jdp-container .jdp-day-name {
   position: relative;
   justify-content: center;
   text-align: center;
+  color: rgba(0, 0, 0, 0.8);
 }
 jdp-container .jdp-day.today, jdp-container .jdp-day-name.today {
   border-color: rgba(0, 0, 0, 0.3);
@@ -140,17 +142,19 @@ jdp-container .jdp-day.selected, jdp-container .jdp-day-name.selected {
   color: #fff !important;
 }
 jdp-container .jdp-day.last-week, jdp-container .jdp-day-name.last-week {
-  color: red;
+  color: #f44336;
 }
 jdp-container .jdp-day:empty {
   background: rgba(0, 0, 0, 0.06);
 }
 jdp-container .jdp-day:not(:empty) {
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 4px;
+  transition: linear 0.1s;
 }
 jdp-container .jdp-day:not(:empty):hover {
   background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.15);
 }
 jdp-container .jdp-day-name {
   border-radius: 0;

@@ -1,0 +1,4 @@
+# Only package the dist output for npm. Developers who want sources/tests can get them from the JDP repo.
+*
+!dist
+!dist/**/*

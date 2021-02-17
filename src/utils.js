@@ -214,7 +214,7 @@ export const normalizeMinMaxDate = (year, month, day, initDate, minDate, maxDate
         }
     }
 
-    if (isNaN(day) || day < 1 || day > 12) {
+    if (isNaN(day) || day < 1) {
         day = initDate.day;
     } else {
         if (month <= minDate.month && day < minDate.day) {
