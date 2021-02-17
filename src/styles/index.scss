@@ -89,7 +89,7 @@ jdp-container {
         &-year, &-month {
             &, input, select {
                 width: 100%;
-                height: $controls-btn-size;
+                height: auto;
                 text-align: center;
                 background: $monthBackground;
                 border: none;
