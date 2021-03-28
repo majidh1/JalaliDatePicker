@@ -4,9 +4,6 @@
     "browser": true,
     "node": true
   },
-  "globals": {
-    "app": true
-  },
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module"

@@ -330,3 +330,17 @@ export const jalaliToday = () => {
     };
 };
 
+export const getScrollParent = (node) => {
+    if (["html", "body", "#document"].indexOf((node.nodeName || "").toLowerCase()) >= 0) {
+        return node.ownerDocument.body;
+    }
+
+    if (node instanceof HTMLElement) {
+        const { overflow, overflowX, overflowY } = window.getComputedStyle(node);
+        if (/auto|scroll|overlay|hidden/.test(overflow + overflowY + overflowX)) {
+            return node;
+        }
+    }
+
+    return getScrollParent(node.parentNode);
+};

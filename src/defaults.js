@@ -25,5 +25,10 @@
     autoHide: true,
 
     plusHtml: "<svg viewBox=\"0 0 1024 1024\"><g><path d=\"M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z\"></path></g></svg>",
-    minusHtml: "<svg viewBox=\"0 0 1024 1024\"><g><path d=\"M810 554h-596v-84h596v84z\"></path></g></svg>"
+    minusHtml: "<svg viewBox=\"0 0 1024 1024\"><g><path d=\"M810 554h-596v-84h596v84z\"></path></g></svg>",
+
+    changeMonthRotateYear: false,
+
+    showTodayBtn: true,
+    showEmptyBtn: true
 };

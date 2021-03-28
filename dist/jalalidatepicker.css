@@ -16,6 +16,8 @@ jdp-container {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
+  animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 jdp-container *, jdp-container *::after, jdp-container *::before {
   box-sizing: border-box;
@@ -105,9 +107,7 @@ jdp-container .jdp-days {
   padding: 0.5rem 0 0 0;
   outline: 0;
   text-align: left;
-  width: 307.875px;
-  min-width: 307.875px;
-  max-width: 307.875px;
+  width: 100%;
   box-sizing: border-box;
   display: inline-block;
   display: -ms-flexbox;
@@ -124,7 +124,6 @@ jdp-container .jdp-day, jdp-container .jdp-day-name {
   font-weight: 400;
   width: 14.2857143%;
   flex-basis: 14.2857143%;
-  max-width: 39px;
   height: 31px;
   line-height: 31px;
   margin: 2px 0;
@@ -145,7 +144,8 @@ jdp-container .jdp-day.last-week, jdp-container .jdp-day-name.last-week {
   color: #f44336;
 }
 jdp-container .jdp-day:empty {
-  background: rgba(0, 0, 0, 0.06);
+  background: rgba(0, 0, 0, 0.05);
+  border-color: #fff;
 }
 jdp-container .jdp-day:not(:empty) {
   cursor: pointer;
@@ -155,12 +155,56 @@ jdp-container .jdp-day:not(:empty) {
 jdp-container .jdp-day:not(:empty):hover {
   background: rgba(0, 0, 0, 0.1);
   transform: scale(1.15);
+  z-index: 1;
 }
 jdp-container .jdp-day-name {
   border-radius: 0;
   font-weight: 900;
   font-size: 90%;
   background-color: rgba(0, 0, 0, 0.1);
-  max-width: unset;
   cursor: default;
+}
+jdp-container .jdp-footer {
+  padding: 0.5rem 0.5rem 0 0.5rem;
+  outline: 0;
+  width: 100%;
+  display: inline-block;
+  display: -ms-flexbox;
+  display: flex;
+  flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+}
+jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty {
+  background: #569ff7;
+  font-size: 90%;
+  padding: 0.3em 0.6em;
+  border-radius: 5px;
+  font-weight: 400;
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+}
+
+@-webkit-keyframes jdpOpenAnimation {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes jdpOpenAnimation {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

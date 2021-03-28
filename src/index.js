@@ -1,10 +1,12 @@
-import { extend, createElement, jalaliToday, isValidDateString, getDateFromString, getDateToString, isString, clon, isPlainObject, normalizeMinMaxDate } from "./utils";
+import { extend, createElement, jalaliToday, isValidDateString, getDateFromString, getDateToString, isString, clon, isPlainObject, normalizeMinMaxDate, getScrollParent } from "./utils";
 import { CONTAINER_ELM_QUERY, EVENT_FOCUS_STR, EVENT_CHANGE_INPUT, MIN_MAX_TODAY_SETTING, MIN_MAX_ATTR_SETTING, MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME, MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME } from "./constants";
 import draw from "./draw";
 import defaults from "./defaults";
 
 const visible = "visible";
 const hidden = "hidden";
+const displayBlock = "block";
+const displayHidden = "none";
 
 const jalaliDatepicker = {
     init(options) {
@@ -56,10 +58,14 @@ const jalaliDatepicker = {
         this.input = input;
         this._draw();
         this.dpContainer.style.visibility = visible;
+        this.dpContainer.style.display = displayBlock;
+        this.dpContainer.style.zIndex = this.options.zIndex;
         this.setPosition();
+        setScrollOnParent(input);
     },
     hide() {
         this.dpContainer.style.visibility = hidden;
+        this.dpContainer.style.display = displayHidden;
     },
     setPosition() {
         if (this.dpContainer.style.visibility !== visible) {
@@ -68,16 +74,18 @@ const jalaliDatepicker = {
         let left = 0;
         let top = 0;
         let parent = this.input;
+        const scrollParent = getScrollParent(this.input);
         while (parent.offsetParent) {
             left += parent.offsetLeft;
             top += parent.offsetTop;
             parent = parent.offsetParent;
         }
-        if (left + this.dpContainer.offsetWidth > window.innerWidth) {
-            left = (window.innerWidth - this.dpContainer.offsetWidth) / 2;
+        if (left + this.dpContainer.offsetWidth >= window.document.body.offsetWidth) {
+            left -= (left + this.dpContainer.offsetWidth) - (window.document.body.offsetWidth+10);
         }
-
-        this.dpContainer.style.zIndex = this.options.zIndex;
+        if (scrollParent) {
+            top -= scrollParent.scrollTop;
+        }
         this.dpContainer.style.left = left + "px";
         this.dpContainer.style.top = top + this.input.offsetHeight + "px";
     },
@@ -85,14 +93,24 @@ const jalaliDatepicker = {
         this._valueDate.year = year;
         this._valueDate.month = month;
         this._valueDate.day = day;
-        this.input.value = getDateToString(year, month, day, this.options.separatorChar);
         this.hide();
+        if (isNaN(year + month + day)) {
+            this.input.value = "";
+        } else {
+            this.input.value = getDateToString(year, month, day, this.options.separatorChar);
+        }
         this.input.dispatchEvent(EVENT_CHANGE_INPUT);
     },
     increaseMonth() {
+        if (this.options.changeMonthRotateYear && this._initDate.month === 12) {
+            this.increaseYear();
+        }
         this.monthChange(this._initDate.month === 12 ? 1 : this._initDate.month + 1);
     },
     decreaseMonth() {
+        if (this.options.changeMonthRotateYear && this._initDate.month === 1) {
+            this.decreaseYear();
+        }
         this.monthChange(this._initDate.month === 1 ? 12 : this._initDate.month - 1);
     },
     monthChange(month) {
@@ -160,6 +178,12 @@ function documentClick(e) {
 
 function windowResize() {
     jalaliDatepicker.setPosition();
+}
+
+function setScrollOnParent(input) {
+    getScrollParent(input).addEventListener("scroll", function () {
+        jalaliDatepicker.setPosition();
+    }, { passive: true });
 }
 
 function addEventListenerOnInputs(querySelector) {

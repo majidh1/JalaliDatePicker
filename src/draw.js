@@ -14,7 +14,10 @@
     TODAY_CLASS_NAME,
     SELECTED_CLASS_NAME,
     LAST_WEEK_CLASS_NAME,
-    DISABLE_CLASS_NAME
+    DISABLE_CLASS_NAME,
+    FOOTER_ELM_QUERY,
+    TODAY_BTN_ELM_QUERY,
+    EMPTY_BTN_ELM_QUERY
 } from "./constants";
 
 import {
@@ -41,6 +44,7 @@ const render = () => {
     renderYear();
     renderMonths();
     renderDays();
+    renderFooterBtns();
 };
 
 const renderYear = () => {
@@ -69,7 +73,7 @@ const renderMonths = () => {
     for (let i = 0; i < months.length; i++) {
         const optionElm = createElement("option", monthDropDownContainer);
         optionElm.value = months[i];
-        optionElm.text = monthsName[months[i]-1];
+        optionElm.text = monthsName[months[i] - 1];
         optionElm.selected = months[i] === jdp.initDate.month;
     }
 };
@@ -118,6 +122,16 @@ const renderDays = () => {
         });
 
         dayInMonth += 1;
+    }
+};
+
+const renderFooterBtns = () => {
+    const footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer);
+    if (jdp.options.showTodayBtn) {
+        createElement(TODAY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => { jdp.setValue(jdp.today.year, jdp.today.month, jdp.today.day); },"امروز");
+    }
+    if (jdp.options.showEmptyBtn) {
+        createElement(EMPTY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => { jdp.setValue(); }, "خالی");
     }
 };
 
