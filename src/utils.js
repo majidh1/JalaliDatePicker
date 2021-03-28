@@ -254,7 +254,13 @@ export const getValidMonths = (initDate, minDate, maxDate) => {
     return months;
 };
 
-export const isValidDay = (initDate,day, minDate, maxDate) => {
+export const isValidDay = (initDate, day, minDate, maxDate) => {
+    if (isPlainObject(minDate) && isPlainObject(maxDate)) {
+        return true;
+    }
+    if (minDate.year === maxDate.year && minDate.month === maxDate.month) {
+        return day >= minDate.day && day <= maxDate.day;
+    }
     if (initDate.year === minDate.year && initDate.month === minDate.month) {
         return day >= minDate.day;
     }
