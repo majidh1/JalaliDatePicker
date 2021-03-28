@@ -18,7 +18,7 @@ export const TODAY_CLASS_NAME = "today";
 export const LAST_WEEK_CLASS_NAME = "last-week";
 export const DISABLE_CLASS_NAME = "not-in-range";
 
-export const EVENT_CHANGE_INPUT = new CustomEvent(`${NAMESPACE}:change`);
+export const EVENT_CHANGE_INPUT = new CustomEvent(`${NAMESPACE}:change`, { "bubbles": true });
 export const EVENT_CHANGE_MONTH_DROPDOWN_STR = "change";
 export const EVENT_CHANGE_YEAR_INPUT_STR = "keyup change";
 export const EVENT_CLICK_STR = "click";
