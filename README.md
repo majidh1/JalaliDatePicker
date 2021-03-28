@@ -77,5 +77,7 @@ key | default | description
 `zIndex` | 1000 | zIndex مربوط به datepicker
 `days` | ["ش", "ی", "د", "س", "چ", "پ", "ج"] | نام روزهای هفته
 `months` | ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"] | نام ماه‌های موجود
-
+`changeMonthRotateYear` | false | با تغییر ماه سال نیز کم یا زیاد شود
+`showTodayBtn` | true | نمایش دکمه امروز
+`showEmptyBtn` | true | نمایش دکمه پاکسازی
 </div>
