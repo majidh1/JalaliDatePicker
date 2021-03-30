@@ -3,11 +3,11 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=plastic)](https://raw.githubusercontent.com/majidh1/JalaliDatePicker/main/LICENSE)
 <div dir="rtl">
  
-![image](res/sample1.PNG)
-![image](res/sample2.PNG)
-![image](res/sample3.PNG)
-![image](res/sample4.PNG)
-![image](res/sample5.PNG)
+![image](res/sample1.png)
+![image](res/sample2.png)
+![image](res/sample3.png)
+![image](res/sample4.png)
+![image](res/sample5.png)
 
 ## نصب و استفاده
  1- با استفاده از npm یا فولدر dist در همین مخزن آخرین نسخه را دریافت کنید
