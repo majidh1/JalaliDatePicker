@@ -1,6 +1,8 @@
 # JalaliDatePicker
 [![npm version](https://badge.fury.io/js/%40majidh1%2Fjalalidatepicker.svg)](https://www.npmjs.com/package/@majidh1/jalalidatepicker)
+<img src="res/filesize.png" width="77px"/>
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=plastic)](https://raw.githubusercontent.com/majidh1/JalaliDatePicker/main/LICENSE)
+
 <div dir="rtl">
  
 <img src="res/sample1.png" width="32%"/>
