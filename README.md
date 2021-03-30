@@ -4,8 +4,8 @@
 <div dir="rtl">
  
 <img src="res/sample1.png" width="32%"/>
-<img src="res/sample2.png" width="32%"/>
 <img src="res/sample5.png" width="32%"/>
+<img src="res/sample2.png" width="32%"/>
 <img src="res/sample3.png" width="32%"/>
 <img src="res/sample4.png" width="32%"/>
 
