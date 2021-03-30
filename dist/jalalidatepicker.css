@@ -89,9 +89,7 @@ jdp-container .jdp-year:hover, jdp-container .jdp-year input:hover, jdp-containe
 jdp-container .jdp-year input, jdp-container .jdp-month input {
   cursor: text;
   -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  -webkit-appearance: none;
+  -moz-appearance: textfield;
 }
 jdp-container .jdp-year input::-webkit-outer-spin-button, jdp-container .jdp-year input::-webkit-inner-spin-button, jdp-container .jdp-month input::-webkit-outer-spin-button, jdp-container .jdp-month input::-webkit-inner-spin-button {
   -webkit-appearance: none;

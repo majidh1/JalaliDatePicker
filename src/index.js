@@ -81,7 +81,7 @@ const jalaliDatepicker = {
             parent = parent.offsetParent;
         }
         if (left + this.dpContainer.offsetWidth >= window.document.body.offsetWidth) {
-            left -= (left + this.dpContainer.offsetWidth) - (window.document.body.offsetWidth+10);
+            left -= (left + this.dpContainer.offsetWidth) - (window.document.body.offsetWidth + 10);
         }
         if (scrollParent) {
             top -= scrollParent.scrollTop;
@@ -167,9 +167,10 @@ const normalizeOptions = (options) => {
 };
 
 function documentClick(e) {
+    const path = e.path || (e.composedPath && e.composedPath()) || [e.target];
     if (jalaliDatepicker.dpContainer.style.visibility !== visible ||
-        e.path.indexOf(jalaliDatepicker.dpContainer) !== -1 ||
-        e.path.indexOf(jalaliDatepicker.input) !== -1
+        path.indexOf(jalaliDatepicker.dpContainer) !== -1 ||
+        path.indexOf(jalaliDatepicker.input) !== -1
     ) {
         return;
     }

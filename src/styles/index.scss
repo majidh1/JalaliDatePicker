@@ -122,9 +122,7 @@ jdp-container {
             input {
                 cursor: text;
                 -webkit-appearance: none;
-                -moz-appearance: none;
-                appearance: none;
-                -webkit-appearance: none;
+                -moz-appearance: textfield;
 
                 &::-webkit-outer-spin-button,
                 &::-webkit-inner-spin-button {
