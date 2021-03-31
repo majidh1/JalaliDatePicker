@@ -1,4 +1,4 @@
-import { extend, createElement, jalaliToday, isValidDateString, getDateFromString, getDateToString, isString, clon, isPlainObject, normalizeMinMaxDate, getScrollParent } from "./utils";
+import { extend, createElement, jalaliToday, isValidDateString, getDateFromString, getDateToString, isString, clon, isPlainObject, normalizeMinMaxDate, getScrollParent, getEventTarget, containsDom } from "./utils";
 import { CONTAINER_ELM_QUERY, EVENT_FOCUS_STR, EVENT_CHANGE_INPUT, MIN_MAX_TODAY_SETTING, MIN_MAX_ATTR_SETTING, MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME, MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME } from "./constants";
 import draw from "./draw";
 import defaults from "./defaults";
@@ -167,10 +167,9 @@ const normalizeOptions = (options) => {
 };
 
 function documentClick(e) {
-    const path = e.path || (e.composedPath && e.composedPath()) || [e.target];
     if (jalaliDatepicker.dpContainer.style.visibility !== visible ||
-        path.indexOf(jalaliDatepicker.dpContainer) !== -1 ||
-        path.indexOf(jalaliDatepicker.input) !== -1
+        containsDom(jalaliDatepicker.dpContainer, e) ||
+        getEventTarget(e) === jalaliDatepicker.input
     ) {
         return;
     }

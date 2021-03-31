@@ -350,3 +350,23 @@ export const getScrollParent = (node) => {
 
     return getScrollParent(node.parentNode);
 };
+
+export const getEventTarget=(event)=> {
+    try {
+        if (typeof event.composedPath === "function") {
+            return event.composedPath()[0];
+        }
+        return event.target;
+    }
+    catch (error) {
+        return event.target;
+    }
+};
+
+export const containsDom = (parent,event) => {
+    const path = event.path || (event.composedPath && event.composedPath()) || false;
+    if (!path) {
+        return parent.outerHTML.indexOf(event.target.outerHTML) > -1;
+    }
+    return path.indexOf(parent) !== -1;
+};

@@ -7,6 +7,7 @@ module.exports = (env, argv) => {
     const prefixFiles = devMode ? "" : ".min";
 
     return {
+        target: "es5",
         entry: {
             jalaliDatepicker: ["./src/index.js", "./src/styles/index.scss"]
         },
