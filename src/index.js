@@ -187,10 +187,16 @@ function setScrollOnParent(input) {
 }
 
 function addEventListenerOnInputs(querySelector) {
-    document.querySelectorAll(querySelector).forEach((item) => {
-        item.addEventListener(EVENT_FOCUS_STR, () => {
-            jalaliDatepicker.show(item);
-        });
+    Element.prototype.matches =
+        Element.prototype.matchesSelector ||
+        Element.prototype.mozMatchesSelector ||
+        Element.prototype.msMatchesSelector ||
+        Element.prototype.oMatchesSelector ||
+        Element.prototype.webkitMatchesSelector;
+    document.body.addEventListener(EVENT_FOCUS_STR, (e) => {
+        if (e.target && e.target.matches(querySelector)) {
+            jalaliDatepicker.show(e.target);
+        }
     });
 }
 
