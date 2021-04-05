@@ -1,3 +1,6 @@
+import { EVENT_CHANGE_INPUT_STR,STYLE_POSITION_FIXED } from "./constants";
+
+
 export const isNaN = Number.isNaN || window.isNaN;
 
 export const isNumber = (value) => {
@@ -6,7 +9,9 @@ export const isNumber = (value) => {
 export const isUndefined = (value) => {
     return typeof value === "undefined";
 };
-
+export const isFunction = (value) => {
+    return typeof value === "function";
+};
 export const isString = (value) => {
     return typeof value === "string";
 };
@@ -105,7 +110,7 @@ export const extend = (...params) => {
     }
 
     // Handle case when target is a string or something (possible in deep copy)
-    if (typeof target !== "object" && typeof target !== "function") {
+    if (typeof target !== "object" && isFunction(target)) {
         target = {};
     }
 
@@ -353,7 +358,7 @@ export const getScrollParent = (node) => {
 
 export const getEventTarget=(event)=> {
     try {
-        if (typeof event.composedPath === "function") {
+        if (isFunction(event.composedPath)) {
             return event.composedPath()[0];
         }
         return event.target;
@@ -371,20 +376,27 @@ export const containsDom = (parent,event) => {
     return path.indexOf(parent) !== -1;
 };
 
-export const getCustomEvent = (name) => {
-    (function () {
-        if (typeof window.CustomEvent === "function") return false; //If not IE
+export const createEvent = (name) => {
+    const e = document.createEvent("Event");
+    e.initEvent(name, true, true);
+    return e;
+};
 
-        function CustomEvent(event, params) {
-            params = params || { bubbles: false, cancelable: false, detail: undefined };
-            const evt = document.createEvent("CustomEvent");
-            evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-            return evt;
-        }
+export const triggerEvent = (elm, event) => {
+    if (!elm) return;
+    elm.dispatchEvent(createEvent(event));
+    if (event === EVENT_CHANGE_INPUT_STR) {
+        elm.dispatchEvent(createEvent("change"));
+        elm.dispatchEvent(createEvent("input"));
+    }
+};
 
-        CustomEvent.prototype = window.Event.prototype;
-
-        window.CustomEvent = CustomEvent;
-    })();
-    return new CustomEvent(`${name}`, { "bubbles": true });
+export const hasPositionFixedParent=(elm)=> {
+    let parent = elm;
+    let result = false;
+    while (result === false && parent && parent.style) {
+        result = window.getComputedStyle(parent).position === STYLE_POSITION_FIXED;
+        parent = parent.parentElement;
+    }
+    return result;
 };
