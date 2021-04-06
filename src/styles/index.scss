@@ -28,16 +28,17 @@ jdp-container {
     overflow: hidden;
     -ms-touch-action: manipulation;
     touch-action: manipulation;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
     -moz-user-select: none;
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    -moz-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
     -webkit-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
     animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
 
-    *, *::after, *::before {
+    &, *, *::after, *::before {
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
         box-sizing: border-box;
     }
 
@@ -97,8 +98,6 @@ jdp-container {
                 background: $monthBackground;
                 border: none;
                 border-radius: 0;
-                box-sizing: border-box;
-                -webkit-box-sizing: border-box;
                 padding: 0;
                 margin: 0;
                 display: inline-block;
@@ -135,7 +134,6 @@ jdp-container {
                 position: relative;
                 -webkit-appearance: menulist;
                 -moz-appearance: menulist;
-                appearance: menulist;
             }
         }
 
@@ -144,7 +142,6 @@ jdp-container {
             outline: 0;
             text-align: left;
             width: 100%;
-            box-sizing: border-box;
             display: inline-block;
             display: -ms-flexbox;
             display: flex;
@@ -157,7 +154,6 @@ jdp-container {
         &-day, &-day-name {
             background: none;
             border: 1px solid transparent;
-            box-sizing: border-box;
             font-weight: 400;
             width: 14.2857143%;
             flex-basis: 14.2857143%;
@@ -261,5 +257,11 @@ jdp-container {
     to {
         opacity: 1;
         transform: scale(1);
+    }
+}
+
+@media only screen and (max-width: $calendarWidth ){
+    jdp-container {
+        max-width: 90%;
     }
 }

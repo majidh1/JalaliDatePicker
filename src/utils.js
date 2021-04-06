@@ -199,7 +199,7 @@ export const setInnerHTML = (element, html) => {
 };
 
 export const normalizeMinMaxDate = (year, month, day, initDate, minDate, maxDate) => {
-    if (isNaN(year) || year < 1000 || year > 10000) {
+    if (isNaN(year) || year < 1000 || year > 1999) {
         year = initDate.year;
     } else {
         if (year < minDate.year) {

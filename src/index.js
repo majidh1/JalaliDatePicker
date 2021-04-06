@@ -89,16 +89,18 @@ const jalaliDatepicker = {
         triggerEvent(this.input,EVENT_CHANGE_INPUT_STR);
     },
     increaseMonth() {
-        if (this.options.changeMonthRotateYear && this._initDate.month === 12) {
+        const isLastMonth = this._initDate.month === 12;
+        if (this.options.changeMonthRotateYear && isLastMonth) {
             this.increaseYear();
         }
-        this.monthChange(this._initDate.month === 12 ? 1 : this._initDate.month + 1);
+        this.monthChange(isLastMonth ? 1 : this._initDate.month + 1);
     },
     decreaseMonth() {
-        if (this.options.changeMonthRotateYear && this._initDate.month === 1) {
+        const isFirstMonth = this._initDate.month === 1;
+        if (this.options.changeMonthRotateYear && isFirstMonth) {
             this.decreaseYear();
         }
-        this.monthChange(this._initDate.month === 1 ? 12 : this._initDate.month - 1);
+        this.monthChange(isFirstMonth ? 12 : this._initDate.month - 1);
     },
     monthChange(month) {
         this._initDate = normalizeMinMaxDate(this._initDate.year, month, this._initDate.day, this._initDate, this.options.minDate, this.options.maxDate);
