@@ -1,6 +1,6 @@
 # JalaliDatePicker
 [![npm version](https://badge.fury.io/js/%40majidh1%2Fjalalidatepicker.svg)](https://www.npmjs.com/package/@majidh1/jalalidatepicker)
-<img src="res/filesizegzip.svg" width="87px"/>
+<img src="res/filesizegzip.svg" width="102px"/>
 <img src="res/filesize.svg" width="87px"/>
 <img src="https://shields.io/badge/build-passing-blue"/>
 <img src="https://shields.io/badge/analyze-passing-blue"/>
