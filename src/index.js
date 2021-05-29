@@ -1,5 +1,5 @@
-import { extend, createElement, triggerEvent, jalaliToday, isValidDateString, getDateFromString, getDateToString, isString, clon, isPlainObject, normalizeMinMaxDate, getScrollParent, getEventTarget, containsDom, hasPositionFixedParent } from "./utils";
-import { CONTAINER_ELM_QUERY, EVENT_FOCUS_STR, EVENT_CHANGE_INPUT_STR, MIN_MAX_TODAY_SETTING, MIN_MAX_ATTR_SETTING, MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME, MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME, STYLE_VISIBILITY_VISIBLE, STYLE_VISIBILITY_HIDDEN, STYLE_DISPLAY_BLOCK, STYLE_DISPLAY_HIDDEN, STYLE_POSITION_FIXED, STYLE_POSITION_ABSOLUTE } from "./constants";
+import { extend, createElement, triggerEvent, jalaliToday, isValidDateString, getDateFromString, getDateToString, isString, clon, isPlainObject, normalizeMinMaxDate, getScrollParent, getEventTarget, containsDom } from "./utils";
+import { CONTAINER_ELM_QUERY, EVENT_FOCUS_STR, EVENT_CHANGE_INPUT_STR, MIN_MAX_TODAY_SETTING, MIN_MAX_ATTR_SETTING, MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME, MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME, STYLE_VISIBILITY_VISIBLE, STYLE_VISIBILITY_HIDDEN, STYLE_DISPLAY_BLOCK, STYLE_DISPLAY_HIDDEN, STYLE_POSITION_FIXED } from "./constants";
 import draw from "./draw";
 import defaults from "./defaults";
 
@@ -68,11 +68,15 @@ const jalaliDatepicker = {
         }
         const inputBounds = this.input.getBoundingClientRect();
         let left = inputBounds.left;
-        const top = inputBounds.top;
+        let top = inputBounds.top;
+        const inputHeight = inputBounds.height;
         if (left + this.dpContainer.offsetWidth >= window.document.body.offsetWidth) {
             left -= (left + this.dpContainer.offsetWidth) - (window.document.body.offsetWidth + 10);
         }
-        this.dpContainer.style.position = hasPositionFixedParent(this.input) ? STYLE_POSITION_FIXED : STYLE_POSITION_ABSOLUTE;
+        if (top + this.dpContainer.offsetHeight >= window.innerHeight) {
+            top -= this.dpContainer.offsetHeight + inputHeight;
+        }
+        this.dpContainer.style.position = STYLE_POSITION_FIXED;
         this.dpContainer.style.left = left + "px";
         this.dpContainer.style.top = top + this.input.offsetHeight + "px";
     },

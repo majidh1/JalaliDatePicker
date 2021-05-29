@@ -1,4 +1,4 @@
-import { EVENT_CHANGE_INPUT_STR,STYLE_POSITION_FIXED } from "./constants";
+import { EVENT_CHANGE_INPUT_STR } from "./constants";
 
 
 export const isNaN = Number.isNaN || window.isNaN;
@@ -343,7 +343,7 @@ export const jalaliToday = () => {
 
 export const getScrollParent = (node) => {
     if (["html", "body", "#document"].indexOf((node.nodeName || "").toLowerCase()) >= 0) {
-        return node.ownerDocument.body;
+        return window;
     }
 
     if (node instanceof HTMLElement) {
@@ -389,14 +389,4 @@ export const triggerEvent = (elm, event) => {
         elm.dispatchEvent(createEvent("change"));
         elm.dispatchEvent(createEvent("input"));
     }
-};
-
-export const hasPositionFixedParent=(elm)=> {
-    let parent = elm;
-    let result = false;
-    while (result === false && parent && parent.style) {
-        result = window.getComputedStyle(parent).position === STYLE_POSITION_FIXED;
-        parent = parent.parentElement;
-    }
-    return result;
 };

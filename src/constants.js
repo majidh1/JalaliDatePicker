@@ -36,4 +36,3 @@ export const STYLE_VISIBILITY_HIDDEN = "hidden";
 export const STYLE_DISPLAY_BLOCK = "block";
 export const STYLE_DISPLAY_HIDDEN = "none";
 export const STYLE_POSITION_FIXED = "fixed";
-export const STYLE_POSITION_ABSOLUTE ="absolute";
