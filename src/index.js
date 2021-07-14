@@ -57,6 +57,7 @@ const jalaliDatepicker = {
         this.dpContainer.style.zIndex = this.options.zIndex;
         this.setPosition();
         setScrollOnParent(input);
+        setReadOnly(input, this.options);
     },
     hide() {
         this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
@@ -70,11 +71,15 @@ const jalaliDatepicker = {
         let left = inputBounds.left;
         let top = inputBounds.top;
         const inputHeight = inputBounds.height;
-        if (left + this.dpContainer.offsetWidth >= window.document.body.offsetWidth) {
-            left -= (left + this.dpContainer.offsetWidth) - (window.document.body.offsetWidth + 10);
+        const windowHeight = window.document.body.offsetWidth;
+        const dpContainerWidth = this.dpContainer.offsetWidth;
+        const dpContainerHeight = this.dpContainer.offsetHeight;
+
+        if (left + dpContainerWidth >= windowHeight) {
+            left -= (left + dpContainerWidth) - (windowHeight + 10);
         }
-        if (top + this.dpContainer.offsetHeight >= window.innerHeight) {
-            top -= this.dpContainer.offsetHeight + inputHeight;
+        if (top >= dpContainerHeight&&top + dpContainerHeight >= window.innerHeight) {
+            top -= dpContainerHeight + inputHeight;
         }
         this.dpContainer.style.position = STYLE_POSITION_FIXED;
         this.dpContainer.style.left = left + "px";
@@ -90,7 +95,7 @@ const jalaliDatepicker = {
         } else {
             this.input.value = getDateToString(year, month, day, this.options.separatorChar);
         }
-        triggerEvent(this.input,EVENT_CHANGE_INPUT_STR);
+        triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
     },
     increaseMonth() {
         const isLastMonth = this._initDate.month === 12;
@@ -177,6 +182,10 @@ function setScrollOnParent(input) {
     getScrollParent(input).addEventListener("scroll", function () {
         jalaliDatepicker.setPosition();
     }, { passive: true });
+}
+
+function setReadOnly(input, options) {
+    if (options.autoReadOnlyInput && !input.readOnly) input.readOnly = true;
 }
 
 function addEventListenerOnInputs(querySelector) {

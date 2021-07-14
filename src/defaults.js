@@ -30,5 +30,7 @@
     changeMonthRotateYear: false,
 
     showTodayBtn: true,
-    showEmptyBtn: true
+    showEmptyBtn: true,
+
+    autoReadOnlyInput: ((window.innerWidth <= 800) && (window.innerHeight <= 600))
 };
