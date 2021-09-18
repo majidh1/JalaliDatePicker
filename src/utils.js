@@ -20,8 +20,27 @@ export const clon = (a) => {
     return JSON.parse(JSON.stringify(a));
 };
 
-export const isLeapYear = (year) => {
-    return (((((year - 474) % 2820) + 512) * 682) % 2816) < 682;
+export const isLeapYear = (jy) => {
+    function div(a, b) {
+        return ~~(a / b);
+    }
+    const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178],
+        bl = breaks.length;
+    let jump=0, leapJ = -14, jp = breaks[0], leap;
+    for (let i = 1; i < bl; i += 1) {
+        const jm = breaks[i];
+        jump = jm - jp;
+        if (jy < jm)
+            break;
+        leapJ = leapJ + div(jump, 33) * 8 + div(mod(jump, 33), 4);
+        jp = jm;
+    }
+    let n = jy - jp;
+    if (jump - n < 6)
+        n = n - jump + div(jump + 4, 33) * 33;
+    leap = mod(mod(n + 1, 33) - 1, 4);
+    if (leap === -1) leap = 4;
+    return leap === 0;
 };
 
 export const getDaysInMonth = (year, month) => {
@@ -356,7 +375,7 @@ export const getScrollParent = (node) => {
     return getScrollParent(node.parentNode);
 };
 
-export const getEventTarget=(event)=> {
+export const getEventTarget = (event) => {
     try {
         if (isFunction(event.composedPath)) {
             return event.composedPath()[0];
@@ -368,7 +387,7 @@ export const getEventTarget=(event)=> {
     }
 };
 
-export const containsDom = (parent,event) => {
+export const containsDom = (parent, event) => {
     const path = event.path || (event.composedPath && event.composedPath()) || false;
     if (!path) {
         return parent.outerHTML.indexOf(event.target.outerHTML) > -1;
