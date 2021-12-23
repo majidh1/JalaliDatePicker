@@ -59,10 +59,10 @@ jdp-container .jdp-years, jdp-container .jdp-months {
   fill: rgba(0, 0, 0, 0.8);
 }
 jdp-container .jdp-months {
-  width: 55%;
+  width: 50%;
 }
 jdp-container .jdp-years {
-  width: 35%;
+  width: 40%;
 }
 jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year select, jdp-container .jdp-month, jdp-container .jdp-month input, jdp-container .jdp-month select {
   width: 100%;

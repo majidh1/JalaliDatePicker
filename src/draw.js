@@ -25,6 +25,7 @@ import {
     setInnerHTML,
     getDaysInMonth,
     getWeekDay,
+    getValidYears,
     getValidMonths,
     isValidDay
 } from "./utils";
@@ -33,10 +34,18 @@ const getLastWeekClassIfNessesary = (dayOfWeek) => {
     return dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}` : "";
 };
 const createElementPlus = (container, isYear) => {
-    createElement(PLUS_ICON_ELM_QUERY + (isYear ? (jdp.options.maxDate.year === jdp.initDate.year ? `.${DISABLE_CLASS_NAME}` : "") : (jdp.options.maxDate.year === jdp.initDate.year && jdp.options.maxDate.month === jdp.initDate.month ? `.${DISABLE_CLASS_NAME}` : "")), container, EVENT_CLICK_STR, isYear ? () => { jdp.increaseYear(); } : () => { jdp.increaseMonth(); }, jdp.options.plusHtml);
+    createElement(PLUS_ICON_ELM_QUERY + (isYear ? (jdp.options.maxDate.year === jdp.initDate.year ? `.${DISABLE_CLASS_NAME}` : "") : (jdp.options.maxDate.year === jdp.initDate.year && jdp.options.maxDate.month === jdp.initDate.month ? `.${DISABLE_CLASS_NAME}` : "")), container, EVENT_CLICK_STR, isYear ? () => {
+        jdp.increaseYear();
+    } : () => {
+        jdp.increaseMonth();
+    }, jdp.options.plusHtml);
 };
 const createElementMinus = (container, isYear) => {
-    createElement(MINUS_ICON_ELM_QUERY + (isYear ? (jdp.options.minDate.year === jdp.initDate.year ? `.${DISABLE_CLASS_NAME}` : "") : (jdp.options.minDate.year === jdp.initDate.year && jdp.options.minDate.month === jdp.initDate.month ? `.${DISABLE_CLASS_NAME}` : "")), container, EVENT_CLICK_STR, isYear ? () => { jdp.decreaseYear(); } : () => { jdp.decreaseMonth(); }, jdp.options.minusHtml);
+    createElement(MINUS_ICON_ELM_QUERY + (isYear ? (jdp.options.minDate.year === jdp.initDate.year ? `.${DISABLE_CLASS_NAME}` : "") : (jdp.options.minDate.year === jdp.initDate.year && jdp.options.minDate.month === jdp.initDate.month ? `.${DISABLE_CLASS_NAME}` : "")), container, EVENT_CLICK_STR, isYear ? () => {
+        jdp.decreaseYear();
+    } : () => {
+        jdp.decreaseMonth();
+    }, jdp.options.minusHtml);
 };
 
 const render = () => {
@@ -53,10 +62,25 @@ const renderYear = () => {
     const yearContainer = createElement(YEAR_ELM_QUERY, yearsContainer);
     createElementMinus(yearsContainer, true);
 
-    const yearInputContainer = createElement("input", yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, (e) => { jdp.yearChange(e.target.value); });
-    yearInputContainer.tabIndex = -1;
-    yearInputContainer.value = jdp.initDate.year;
-    yearInputContainer.type = "number";
+    const useDropDownYears = jdp.options.useDropDownYears;
+    const yearInputTagName = useDropDownYears ? "select" : "input";
+    const yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, (e) => {
+        if (e.target.value < 1000 || e.target.value > 2000) return;
+        jdp.yearChange(e.target.value);
+    });
+    if (useDropDownYears) {
+        const validYears = getValidYears(jdp);
+        for (let i = validYears.min; i <= validYears.max; i++) {
+            const optionElm = createElement("option", yearInput);
+            optionElm.value = i;
+            optionElm.text = i;
+            optionElm.selected = i === jdp.initDate.year;
+        }
+    } else {
+        yearInput.tabIndex = -1;
+        yearInput.value = jdp.initDate.year;
+        yearInput.type = "number";
+    }
 };
 
 const renderMonths = () => {
@@ -65,10 +89,12 @@ const renderMonths = () => {
     const monthContainer = createElement(MONTH_ELM_QUERY, monthsContainer);
     createElementMinus(monthsContainer, false);
 
-    const monthDropDownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, (e) => { jdp.monthChange(e.target.value); });
+    const monthDropDownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, (e) => {
+        jdp.monthChange(e.target.value);
+    });
     monthDropDownContainer.tabIndex = -1;
 
-    const months = getValidMonths(jdp.initDate, jdp.options.minDate, jdp.options.maxDate);
+    const months = getValidMonths(jdp);
     const monthsName = jdp.options.months;
     for (let i = 0; i < months.length; i++) {
         const optionElm = createElement("option", monthDropDownContainer);
@@ -91,7 +117,7 @@ const renderDays = () => {
 
     for (let i = 0; i <= maxDaysInCalendar; i++) {
         const weekDay = getWeekDay(jdp.initDate.year, jdp.initDate.month, dayInMonth);
-        const validDay = isValidDay(jdp.initDate, dayInMonth, jdp.options.minDate, jdp.options.maxDate);
+        const validDay = isValidDay(jdp, dayInMonth);
 
         if ((dayInMonth <= weekDay && i < weekDay) || dayInMonth > daysInMonth) {
             createElement(DAY_ELM_QUERY, daysContainer);
@@ -128,10 +154,14 @@ const renderDays = () => {
 const renderFooterBtns = () => {
     const footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer);
     if (jdp.options.showTodayBtn) {
-        createElement(TODAY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => { jdp.setValue(jdp.today.year, jdp.today.month, jdp.today.day); },"امروز");
+        createElement(TODAY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
+            jdp.setValue(jdp.today.year, jdp.today.month, jdp.today.day);
+        }, "امروز");
     }
     if (jdp.options.showEmptyBtn) {
-        createElement(EMPTY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => { jdp.setValue(); }, "خالی");
+        createElement(EMPTY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
+            jdp.setValue();
+        }, "خالی");
     }
 };
 

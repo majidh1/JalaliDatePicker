@@ -84,11 +84,11 @@ jdp-container {
         }
 
         &-months {
-            width: $controls-parent-width + 10;
+            width: $controls-parent-width + 5;
         }
 
         &-years {
-            width: $controls-parent-width - 10;
+            width: $controls-parent-width - 5;
         }
 
         &-year, &-month {

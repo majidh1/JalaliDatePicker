@@ -255,18 +255,33 @@ export const normalizeMinMaxDate = (year, month, day, initDate, minDate, maxDate
     };
 };
 
-export const getValidMonths = (initDate, minDate, maxDate) => {
+export const getValidYears = (jdp) => {
+    function rnd(val){return Math.round(val/100)*100;}
+
+    const initYear=jdp.initDate.year;
+    const min=jdp.options.minDate.year || rnd(initYear - 200);
+    const max=jdp.options.maxDate.year|| rnd(initYear + 200);
+    return {
+        min,
+        max
+    };
+};
+
+export const getValidMonths = (jdp) => {
+    const initYear=jdp.initDate.year;
+    const minDate=jdp.options.minDate;
+    const maxDate=jdp.options.maxDate;
     const months = [];
     let start = 1;
     let finish = 12;
 
-    if (initDate.year === minDate.year) {
+    if (initYear === minDate.year) {
         start = minDate.month;
-        if (initDate.year === maxDate.year) {
+        if (initYear === maxDate.year) {
             finish = maxDate.month;
         }
     }
-    else if (initDate.year === maxDate.year) {
+    else if (initYear === maxDate.year) {
         start = 1;
         finish = maxDate.month;
     }
@@ -278,7 +293,11 @@ export const getValidMonths = (initDate, minDate, maxDate) => {
     return months;
 };
 
-export const isValidDay = (initDate, day, minDate, maxDate) => {
+export const isValidDay = (jdp, day) => {
+    const initDate=jdp.initDate;
+    const minDate=jdp.options.minDate;
+    const maxDate=jdp.options.maxDate;
+
     if (isPlainObject(minDate) && isPlainObject(maxDate)) {
         return true;
     }
