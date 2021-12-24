@@ -78,6 +78,7 @@ key | default | description
 ----|---------|------------
 `autoShow` | true | نمایش خودکار
 `autoHide` | true | مخفی شدن خودکار
+`useDropDownYears` | true | انتخاب سال به صورت DropDown
 `separatorChar` | `"/"` | جداکننده بین سال، ماه و روز
 `minDate` | null | مشخص کننده حداقل تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-min-date` attrubute  است
 `maxDate` | null | مشخص کننده حداکثر تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-max-date` attrubute  است
@@ -93,4 +94,5 @@ key | default | description
 `changeMonthRotateYear` | false | با تغییر ماه سال نیز کم یا زیاد شود
 `showTodayBtn` | true | نمایش دکمه امروز
 `showEmptyBtn` | true | نمایش دکمه پاکسازی
+`autoReadOnlyInput` | `dynamic` | فقط خواندنی شدن input دارای datePicker
 </div>
