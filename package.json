@@ -5,7 +5,7 @@
   "author": {
     "name": "Majid Hooshiyar"
   },
-  "main": "dist/jalaliDatepicker.min.js",
+  "main": "dist/jalalidatepicker.min.js",
   "version": "0.4.0",
   "keywords": [
     "date",
