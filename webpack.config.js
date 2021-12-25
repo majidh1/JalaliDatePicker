@@ -9,7 +9,7 @@ module.exports = (env, argv) => {
     return {
         target: "es5",
         entry: {
-            jalaliDatepicker: ["./src/index.js", "./src/styles/index.scss"]
+            jalalidatepicker: ["./src/index.js", "./src/styles/index.scss"]
         },
         output: {
             filename: `[name]${prefixFiles}.js`
