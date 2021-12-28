@@ -6,6 +6,8 @@ Change Year
 Added:
 Parametric DropDown Year
 
+<img src="res/DropDownAdded.png" />
+
 ## نسخه 0.3.1
 ## نسخه 0.2.9
 ## نسخه 0.2.7
