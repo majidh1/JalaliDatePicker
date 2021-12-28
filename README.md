@@ -13,7 +13,9 @@
 <img src="res/sample2.png" width="32%"/>
 <img src="res/sample3.png" width="32%"/>
 <img src="res/sample4.png" width="32%"/>
-
+ 
+* [ChangeLog](https://github.com/majidh1/JalaliDatePicker/blob/main/ChangeLog.md)
+ 
 ## نصب و استفاده
  1- با استفاده از npm یا فولدر dist در همین مخزن آخرین نسخه را دریافت کنید
  <br/>
