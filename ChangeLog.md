@@ -4,7 +4,9 @@ Fixed:
 Change Year
 
 Added:
-Parametric DropDown Year
+Parametric DropDown Year 
+[issue10](https://github.com/majidh1/JalaliDatePicker/issues/10#issue-957473182)
+[issue8](https://github.com/majidh1/JalaliDatePicker/issues/8#issue-941977061)
 
 <img src="res/DropDownAdded.png" />
 
