@@ -144,6 +144,10 @@ jdp-container .jdp-day:empty {
   background: rgba(0, 0, 0, 0.05);
   border-color: #fff;
 }
+jdp-container .jdp-day:empty:after {
+  content: "0";
+  visibility: hidden;
+}
 jdp-container .jdp-day:not(:empty) {
   cursor: pointer;
   border-radius: 4px;

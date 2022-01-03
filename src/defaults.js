@@ -32,6 +32,6 @@
     showTodayBtn: true,
     showEmptyBtn: true,
 
-    autoReadOnlyInput: ((window.innerWidth <= 800) && (window.innerHeight <= 600)),
+    autoReadOnlyInput: (/iphone|ipod|android|ie|blackberry|fennec/).test(window.navigator?.userAgent?.toLowerCase()),
     useDropDownYears: true
 };

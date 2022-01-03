@@ -185,6 +185,10 @@ jdp-container {
             &:empty {
                 background: color.change($invertedBg, $alpha: 0.05);
                 border-color: $calendarBackground;
+                &:after {
+                    content:"0";
+                    visibility:hidden;
+                }
             }
 
             &:not(:empty) {
