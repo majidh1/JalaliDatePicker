@@ -11,7 +11,7 @@ $calendarWidth: $daysWidth;
 $calendarBorderColor: #e6e6e6;
 $controls-parent-width: 45%;
 $controls-btn-size: 1.5rem;
-$controls-btn-padding: math.div($controls-btn-size,4);
+$controls-btn-padding: math.div($controls-btn-size,6);
 $monthBackground: transparent;
 $invertedBg: invert($calendarBackground);
 $calendarForeground: color.change($invertedBg, $alpha: 0.8);
@@ -60,6 +60,7 @@ jdp-container {
                     width: $controls-btn-size;
                     height: $controls-btn-size;
                     padding: $controls-btn-padding;
+                    vertical-align: middle;
                 }
 
                 &.not-in-range {

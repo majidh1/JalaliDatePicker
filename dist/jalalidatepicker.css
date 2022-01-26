@@ -40,7 +40,8 @@ jdp-container .jdp-icon-plus, jdp-container .jdp-icon-minus {
 jdp-container .jdp-icon-plus svg, jdp-container .jdp-icon-minus svg {
   width: 1.5rem;
   height: 1.5rem;
-  padding: 0.375rem;
+  padding: 0.25rem;
+  vertical-align: middle;
 }
 jdp-container .jdp-icon-plus.not-in-range, jdp-container .jdp-icon-minus.not-in-range {
   cursor: not-allowed;
