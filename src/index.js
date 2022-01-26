@@ -128,7 +128,7 @@ const jalaliDatepicker = {
 };
 
 const getDefaultFromAttr = (attrName, sepChar) => {
-    let dateAttrVal = jalaliDatepicker.input.getAttribute(attrName);
+    let dateAttrVal = jalaliDatepicker.input?.getAttribute(attrName);
     if (dateAttrVal === MIN_MAX_TODAY_SETTING) {
         dateAttrVal = clon(jalaliDatepicker.today);
     } else if (isString(dateAttrVal) && isValidDateString(dateAttrVal, sepChar)) {
