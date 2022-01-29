@@ -68,22 +68,22 @@ const jalaliDatepicker = {
             return;
         }
         const inputBounds = this.input.getBoundingClientRect();
-        let left = inputBounds.left;
-        let top = inputBounds.top;
         const inputHeight = inputBounds.height;
-        const windowHeight = window.document.body.offsetWidth;
+        let left = inputBounds.left;
+        let top = inputBounds.top + inputHeight;
+        const windowWidth = window.document.body.offsetWidth;
         const dpContainerWidth = this.dpContainer.offsetWidth;
         const dpContainerHeight = this.dpContainer.offsetHeight;
 
-        if (left + dpContainerWidth >= windowHeight) {
-            left -= (left + dpContainerWidth) - (windowHeight + 10);
+        if (left + dpContainerWidth >= windowWidth) {
+            left -= (left + dpContainerWidth) - (windowWidth + 10);
         }
-        if (top >= dpContainerHeight&&top + dpContainerHeight >= window.innerHeight) {
+        if (top-inputHeight >= dpContainerHeight&&top + dpContainerHeight >= window.innerHeight) {
             top -= dpContainerHeight + inputHeight;
         }
         this.dpContainer.style.position = STYLE_POSITION_FIXED;
         this.dpContainer.style.left = left + "px";
-        this.dpContainer.style.top = top + this.input.offsetHeight + "px";
+        this.dpContainer.style.top = top + "px";
     },
     setValue(year, month, day) {
         this._valueDate.year = year;
