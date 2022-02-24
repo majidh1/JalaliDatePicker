@@ -297,13 +297,9 @@ export const isValidDate = (jdp, year,month,day) => {
     let minDate=jdp.options.minDate;
     let maxDate=jdp.options.maxDate;
     
-    if (isPlainObject(minDate) && isPlainObject(maxDate)) {
-        return true;
-    }
-
     const date=getDateToString(year,month,day);
-    minDate=getDateToString(minDate.year,minDate.month,minDate.day);
-    maxDate=getDateToString(maxDate.year,maxDate.month,maxDate.day);
+    minDate=isPlainObject(minDate) ? date : getDateToString(minDate.year,minDate.month,minDate.day);
+    maxDate=isPlainObject(maxDate) ? date : getDateToString(maxDate.year,maxDate.month,maxDate.day);
     return date <= maxDate && date >= minDate;
 };
 
