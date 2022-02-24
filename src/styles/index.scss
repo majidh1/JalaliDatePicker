@@ -187,10 +187,10 @@ jdp-container {
 
         &-day {
             &.not-in-month {
-                opacity: .5;
+                opacity: .4;
             }
             &.disabled-day {
-                opacity: .2;
+                opacity: .15;
                 cursor: not-allowed;
             }
 
@@ -239,6 +239,10 @@ jdp-container {
                 text-align: center;
                 color: #fff;
                 cursor: pointer;
+                &.disabled-btn{
+                    opacity: .2;
+                    cursor: not-allowed;
+                }
             }
         }
     }

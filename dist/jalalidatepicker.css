@@ -145,10 +145,10 @@ jdp-container .jdp-day.last-week, jdp-container .jdp-day-name.last-week {
   color: #f44336;
 }
 jdp-container .jdp-day.not-in-month {
-  opacity: 0.5;
+  opacity: 0.4;
 }
 jdp-container .jdp-day.disabled-day {
-  opacity: 0.2;
+  opacity: 0.15;
   cursor: not-allowed;
 }
 jdp-container .jdp-day:not(.disabled-day) {
@@ -190,6 +190,10 @@ jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty {
   text-align: center;
   color: #fff;
   cursor: pointer;
+}
+jdp-container .jdp-btn-today.disabled-btn, jdp-container .jdp-btn-empty.disabled-btn {
+  opacity: 0.2;
+  cursor: not-allowed;
 }
 
 @-webkit-keyframes jdpOpenAnimation {

@@ -293,26 +293,21 @@ export const getValidMonths = (jdp) => {
     return months;
 };
 
-export const isValidDay = (jdp, day) => {
-    const initDate=jdp.initDate;
-    const minDate=jdp.options.minDate;
-    const maxDate=jdp.options.maxDate;
-
+export const isValidDate = (jdp, year,month,day) => {
+    let minDate=jdp.options.minDate;
+    let maxDate=jdp.options.maxDate;
+    
     if (isPlainObject(minDate) && isPlainObject(maxDate)) {
         return true;
     }
-    if (minDate.year === maxDate.year && minDate.month === maxDate.month) {
-        return day >= minDate.day && day <= maxDate.day;
-    }
-    if (initDate.year === minDate.year && initDate.month === minDate.month) {
-        return day >= minDate.day;
-    }
-    if (initDate.year === maxDate.year && initDate.month === maxDate.month) {
-        return day <= maxDate.day;
-    }
 
-    return true;
+    const date=getDateToString(year,month,day);
+    minDate=getDateToString(minDate.year,minDate.month,minDate.day);
+    maxDate=getDateToString(maxDate.year,maxDate.month,maxDate.day);
+    return date <= maxDate && date >= minDate;
 };
+
+export const isValidDateToday=(jdp) => isValidDate(jdp,jdp.today.year, jdp.today.month, jdp.today.day);
 
 export const setClassName = (element, className) => {
     element.className = className;
@@ -334,7 +329,7 @@ export const getDateFromString = (str, sepChar) => {
         day: parseInt(date[2])
     };
 };
-export const getDateToString = (y, m, d, sepChar) => {
+export const getDateToString = (y, m, d, sepChar="") => {
     return y + sepChar + addLeadingZero(m) + sepChar + addLeadingZero(d);
 };
 
