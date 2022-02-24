@@ -5,6 +5,9 @@
     MONTH_ELM_QUERY,
     DAYS_ELM_QUERY,
     DAY_ELM_QUERY,
+    DAY_NOTINMONTH_ELM_QUERY,
+    DAY_DISABLED_ELM_QUERY,
+    DAY_DISABLED_NOTINMONTH_ELM_QUERY,
     DAY_NAME_ELM_QUERY,
     PLUS_ICON_ELM_QUERY,
     MINUS_ICON_ELM_QUERY,
@@ -106,25 +109,49 @@ const renderMonths = () => {
 
 const renderDays = () => {
     const daysContainer = createElement(DAYS_ELM_QUERY, jdp.dpContainer);
-    for (let i = 0; i < 7; i++) {
+    for (let i = 0; i < 7; i++) { //nameOfDay
         createElement(DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i), daysContainer, null, null, jdp.options.days[i]);
     }
+    let dayInMonth = 1;
 
     const daysInMonth = getDaysInMonth(jdp.initDate.year, jdp.initDate.month);
     const firstWeekDay = getWeekDay(jdp.initDate.year, jdp.initDate.month, 1);
     const maxDaysInCalendar = 7 * (Math.ceil((firstWeekDay + daysInMonth) / 7)) - 1;
-    let dayInMonth = 1;
+    const beforeMonthNumber = jdp.initDate.month == 1 ? 12 : jdp.initDate.month - 1;
+    const afterMonthNumber = jdp.initDate.month == 12 ? 1 : jdp.initDate.month + 1;
+    const beforeMonthYearNumber = beforeMonthNumber == 12 ? jdp.initDate.year - 1 : jdp.initDate.year;
+    const afterMonthYearNumber = afterMonthNumber == 1 ? jdp.initDate.year + 1 : jdp.initDate.year;
+    const beforeMonthDays = jdp.initDate.month == 1 ? getDaysInMonth(jdp.initDate.year - 1, beforeMonthNumber) : getDaysInMonth(jdp.initDate.year, beforeMonthNumber);
+    const startWeekDayInMonth = getWeekDay(jdp.initDate.year, jdp.initDate.month, dayInMonth);
+    let beforeDayInMonth = beforeMonthDays - startWeekDayInMonth;
+    let afterDayInMonth = 0;
 
     for (let i = 0; i <= maxDaysInCalendar; i++) {
         const weekDay = getWeekDay(jdp.initDate.year, jdp.initDate.month, dayInMonth);
         const validDay = isValidDay(jdp, dayInMonth);
+        const isBeforeDayInMonth = dayInMonth <= startWeekDayInMonth && i < startWeekDayInMonth;
+        const isAfterDayInMonth = dayInMonth > daysInMonth;
 
-        if ((dayInMonth <= weekDay && i < weekDay) || dayInMonth > daysInMonth) {
-            createElement(DAY_ELM_QUERY, daysContainer);
+        if (isBeforeDayInMonth || isAfterDayInMonth) {
+            let dayValue = 0;
+            if (isBeforeDayInMonth) {
+                beforeDayInMonth++;
+                dayValue = beforeDayInMonth;
+            } else {
+                afterDayInMonth++;
+                dayValue = afterDayInMonth;
+            }
+
+            const dayContainer = createElement(validDay ? DAY_NOTINMONTH_ELM_QUERY : DAY_DISABLED_NOTINMONTH_ELM_QUERY, daysContainer, null, null, dayValue);
+            if (validDay) {
+                dayContainer.addEventListener(EVENT_CLICK_STR, () => {
+                    jdp.setValue(isBeforeDayInMonth ? beforeMonthYearNumber : afterMonthYearNumber, isBeforeDayInMonth ? beforeMonthNumber : afterMonthNumber, dayValue);
+                });
+            }
             continue;
         }
         if (!validDay) {
-            createElement(DAY_ELM_QUERY, daysContainer);
+            createElement(DAY_DISABLED_ELM_QUERY, daysContainer, null, null, dayInMonth);
             dayInMonth += 1;
             continue;
         }

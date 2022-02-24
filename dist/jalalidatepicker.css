@@ -56,8 +56,8 @@ jdp-container .jdp-years, jdp-container .jdp-months {
   display: inline-flex;
   margin: 0 2.5%;
   font-size: 120%;
-  color: rgba(0, 0, 0, 0.8);
-  fill: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.9);
+  fill: rgba(0, 0, 0, 0.9);
 }
 jdp-container .jdp-months {
   width: 50%;
@@ -69,7 +69,7 @@ jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year 
   width: 100%;
   height: auto;
   text-align: center;
-  background: transparent;
+  background: #fff;
   border: none;
   border-radius: 0;
   padding: 0;
@@ -86,8 +86,11 @@ jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year 
 jdp-container .jdp-year:focus, jdp-container .jdp-year:active, jdp-container .jdp-year input:focus, jdp-container .jdp-year input:active, jdp-container .jdp-year select:focus, jdp-container .jdp-year select:active, jdp-container .jdp-month:focus, jdp-container .jdp-month:active, jdp-container .jdp-month input:focus, jdp-container .jdp-month input:active, jdp-container .jdp-month select:focus, jdp-container .jdp-month select:active {
   outline: none;
 }
-jdp-container .jdp-year:hover, jdp-container .jdp-year input:hover, jdp-container .jdp-year select:hover, jdp-container .jdp-month:hover, jdp-container .jdp-month input:hover, jdp-container .jdp-month select:hover {
-  background: rgba(0, 0, 0, 0.05);
+jdp-container .jdp-year option, jdp-container .jdp-year input option, jdp-container .jdp-year select option, jdp-container .jdp-month option, jdp-container .jdp-month input option, jdp-container .jdp-month select option {
+  font-size: 90%;
+}
+jdp-container .jdp-year:hover, jdp-container .jdp-month:hover {
+  filter: brightness(0.9);
 }
 jdp-container .jdp-year input, jdp-container .jdp-month input {
   cursor: text;
@@ -129,7 +132,7 @@ jdp-container .jdp-day, jdp-container .jdp-day-name {
   position: relative;
   justify-content: center;
   text-align: center;
-  color: rgba(0, 0, 0, 0.8);
+  color: rgba(0, 0, 0, 0.9);
 }
 jdp-container .jdp-day.today, jdp-container .jdp-day-name.today {
   border-color: rgba(0, 0, 0, 0.3);
@@ -141,20 +144,19 @@ jdp-container .jdp-day.selected, jdp-container .jdp-day-name.selected {
 jdp-container .jdp-day.last-week, jdp-container .jdp-day-name.last-week {
   color: #f44336;
 }
-jdp-container .jdp-day:empty {
-  background: rgba(0, 0, 0, 0.05);
-  border-color: #fff;
+jdp-container .jdp-day.not-in-month {
+  opacity: 0.5;
 }
-jdp-container .jdp-day:empty:after {
-  content: "0";
-  visibility: hidden;
+jdp-container .jdp-day.disabled-day {
+  opacity: 0.2;
+  cursor: not-allowed;
 }
-jdp-container .jdp-day:not(:empty) {
+jdp-container .jdp-day:not(.disabled-day) {
   cursor: pointer;
   border-radius: 4px;
   transition: linear 0.1s;
 }
-jdp-container .jdp-day:not(:empty):hover {
+jdp-container .jdp-day:not(.disabled-day):hover {
   background: rgba(0, 0, 0, 0.1);
   transform: scale(1.15);
   z-index: 1;

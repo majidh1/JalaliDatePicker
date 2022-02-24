@@ -12,9 +12,8 @@ $calendarBorderColor: #e6e6e6;
 $controls-parent-width: 45%;
 $controls-btn-size: 1.5rem;
 $controls-btn-padding: math.div($controls-btn-size,6);
-$monthBackground: transparent;
 $invertedBg: invert($calendarBackground);
-$calendarForeground: color.change($invertedBg, $alpha: 0.8);
+$calendarForeground: color.change($invertedBg, $alpha: 0.9);
 $activeColor: #569ff7;
 
 jdp-container {
@@ -97,7 +96,7 @@ jdp-container {
                 width: 100%;
                 height: auto;
                 text-align: center;
-                background: $monthBackground;
+                background: $calendarBackground;
                 border: none;
                 border-radius: 0;
                 padding: 0;
@@ -115,9 +114,13 @@ jdp-container {
                     outline: none
                 }
 
-                &:hover {
-                    background: color.change($invertedBg, $alpha: 0.05);
+                option{
+                    font-size: 90%;
                 }
+            }
+
+            &:hover {
+                filter: brightness(.9);
             }
 
             input {
@@ -183,16 +186,15 @@ jdp-container {
         }
 
         &-day {
-            &:empty {
-                background: color.change($invertedBg, $alpha: 0.05);
-                border-color: $calendarBackground;
-                &:after {
-                    content:"0";
-                    visibility:hidden;
-                }
+            &.not-in-month {
+                opacity: .5;
+            }
+            &.disabled-day {
+                opacity: .2;
+                cursor: not-allowed;
             }
 
-            &:not(:empty) {
+            &:not(.disabled-day) {
                 cursor: pointer;
                 border-radius: $radius;
                 transition: linear .1s;
