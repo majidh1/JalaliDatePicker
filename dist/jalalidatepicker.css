@@ -4,6 +4,7 @@
 jdp-container {
   position: absolute;
   max-width: 307.875px;
+  min-width: 307.875px;
   background: #fff;
   display: block;
   direction: rtl;
@@ -219,5 +220,6 @@ jdp-container .jdp-btn-today.disabled-btn, jdp-container .jdp-btn-empty.disabled
 @media only screen and (max-width: 307.875px) {
   jdp-container {
     max-width: 90%;
+    min-width: 80%;
   }
 }

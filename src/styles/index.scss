@@ -19,6 +19,7 @@ $activeColor: #569ff7;
 jdp-container {
     position: absolute;
     max-width: $calendarWidth;
+    min-width: $calendarWidth;
     background: $calendarBackground;
     display: block;
     direction: rtl;
@@ -275,5 +276,6 @@ jdp-container {
 @media only screen and (max-width: $calendarWidth ){
     jdp-container {
         max-width: 90%;
+        min-width: 80%;
     }
 }
