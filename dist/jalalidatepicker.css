@@ -6,7 +6,7 @@ jdp-container {
   max-width: 307.875px;
   min-width: 307.875px;
   background: #fff;
-  display: block;
+  display: none;
   direction: rtl;
   padding: 0.5rem 0;
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
