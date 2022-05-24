@@ -71,6 +71,7 @@ const jalaliDatepicker = {
         const inputHeight = inputBounds.height;
         let left = inputBounds.left;
         let top = inputBounds.top + inputHeight;
+        top += this.options.topSpace;
         const windowWidth = window.document.body.offsetWidth;
         const dpContainerWidth = this.dpContainer.offsetWidth;
         const dpContainerHeight = this.dpContainer.offsetHeight;
@@ -79,7 +80,7 @@ const jalaliDatepicker = {
             left -= (left + dpContainerWidth) - (windowWidth + 10);
         }
         if (top-inputHeight >= dpContainerHeight&&top + dpContainerHeight >= window.innerHeight) {
-            top -= dpContainerHeight + inputHeight;
+            top -= dpContainerHeight + inputHeight + this.options.bottomSpace + this.options.topSpace;
         }
         this.dpContainer.style.position = STYLE_POSITION_FIXED;
         this.dpContainer.style.left = left + "px";
@@ -131,12 +132,21 @@ const getDefaultFromAttr = (attrName, sepChar) => {
     let dateAttrVal = jalaliDatepicker.input?.getAttribute(attrName);
     if (dateAttrVal === MIN_MAX_TODAY_SETTING) {
         dateAttrVal = clon(jalaliDatepicker.today);
-    } else if (isString(dateAttrVal) && isValidDateString(dateAttrVal, sepChar)) {
-        dateAttrVal = getDateFromString(dateAttrVal, sepChar);
-    } else {
-        dateAttrVal = {};
-    }
+    } else if (isString(dateAttrVal)) {
+        try {
+            dateAttrVal = document.querySelector(dateAttrVal).value;
+        } catch {
+            //
+        }
 
+        if (isValidDateString(dateAttrVal, sepChar)) {
+            dateAttrVal = getDateFromString(dateAttrVal, sepChar);
+        } else {
+            dateAttrVal = {}; 
+        }
+    }else{
+        dateAttrVal = {}; 
+    }
     return dateAttrVal;
 };
 

@@ -97,4 +97,7 @@ key | default | description
 `showTodayBtn` | true | نمایش دکمه امروز
 `showEmptyBtn` | true | نمایش دکمه پاکسازی
 `autoReadOnlyInput` | `dynamic` | فقط خواندنی شدن input دارای datePicker
+`topSpace` | 0 | فضای خالی بین بالای datePicker و input (زمانی که دیتپیکر در پایین اینپوت هست)
+`bottomSpace` | 0 | فضای خالی بین پایین datePicker و input (زمانی که دیتپیکر در بالای اینپوت هست)
+`dayRendering` | - | متد رندر یک روز خروجی یک آبجکت از تنظیمات روز است
 </div>

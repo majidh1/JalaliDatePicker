@@ -17,6 +17,7 @@
     TODAY_CLASS_NAME,
     SELECTED_CLASS_NAME,
     LAST_WEEK_CLASS_NAME,
+    HOLLY_DAY_CLASS_NAME,
     DISABLE_CLASS_NAME,
     FOOTER_ELM_QUERY,
     TODAY_BTN_ELM_QUERY,
@@ -31,11 +32,13 @@ import {
     getValidYears,
     getValidMonths,
     isValidDate,
-    isValidDateToday
+    isValidDateToday,
+    extend,
+    isFunction
 } from "./utils";
 
 const getLastWeekClassIfNessesary = (dayOfWeek) => {
-    return dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}` : "";
+    return dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}.${HOLLY_DAY_CLASS_NAME}` : "";
 };
 const createElementPlus = (container, isYear) => {
     createElement(PLUS_ICON_ELM_QUERY + (isYear ? (jdp.options.maxDate.year === jdp.initDate.year ? `.${DISABLE_CLASS_NAME}` : "") : (jdp.options.maxDate.year === jdp.initDate.year && jdp.options.maxDate.month === jdp.initDate.month ? `.${DISABLE_CLASS_NAME}` : "")), container, EVENT_CLICK_STR, isYear ? () => {
@@ -113,81 +116,107 @@ const renderDays = () => {
     for (let i = 0; i < 7; i++) { //nameOfDay
         createElement(DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i), daysContainer, null, null, jdp.options.days[i]);
     }
-    let dayInMonth = 1;
+    const setDefaultOptions = (opt) => {
+        if(!opt.day || opt.inBeforeMonth){
+            opt.day=1;
+        }
+        else{
+            opt.day+=1;
+        }
+        opt.inBeforeMonth = false;
+        opt.inAfterMonth = false;
+        opt.isValid = false;
+        opt.isHollyDay = false;
+        opt.className = "";
+        opt.year = jdp.initDate.year;
+        opt.month = jdp.initDate.month;
 
-    const daysInMonth = getDaysInMonth(jdp.initDate.year, jdp.initDate.month);
-    const firstWeekDay = getWeekDay(jdp.initDate.year, jdp.initDate.month, 1);
+        return opt;
+    };
+
+    const dayOptions = setDefaultOptions({});
+
+    const daysInMonth = getDaysInMonth(dayOptions.year, dayOptions.month);
+    const firstWeekDay = getWeekDay(dayOptions.year, dayOptions.month, 1);
     const maxDaysInCalendar = 7 * (Math.ceil((firstWeekDay + daysInMonth) / 7)) - 1;
-    const beforeMonthNumber = jdp.initDate.month == 1 ? 12 : jdp.initDate.month - 1;
-    const afterMonthNumber = jdp.initDate.month == 12 ? 1 : jdp.initDate.month + 1;
-    const beforeMonthYearNumber = beforeMonthNumber == 12 ? jdp.initDate.year - 1 : jdp.initDate.year;
-    const afterMonthYearNumber = afterMonthNumber == 1 ? jdp.initDate.year + 1 : jdp.initDate.year;
-    const beforeMonthDays = jdp.initDate.month == 1 ? getDaysInMonth(jdp.initDate.year - 1, beforeMonthNumber) : getDaysInMonth(jdp.initDate.year, beforeMonthNumber);
-    const startWeekDayInMonth = getWeekDay(jdp.initDate.year, jdp.initDate.month, dayInMonth);
+    const beforeMonthNumber = dayOptions.month == 1 ? 12 : dayOptions.month - 1;
+    const afterMonthNumber = dayOptions.month == 12 ? 1 : dayOptions.month + 1;
+    const beforeMonthYearNumber = beforeMonthNumber == 12 ? dayOptions.year - 1 : dayOptions.year;
+    const afterMonthYearNumber = afterMonthNumber == 1 ? dayOptions.year + 1 : dayOptions.year;
+    const beforeMonthDays = dayOptions.month == 1 ? getDaysInMonth(dayOptions.year - 1, beforeMonthNumber) : getDaysInMonth(dayOptions.year, beforeMonthNumber);
+    const startWeekDayInMonth = getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day);
     let beforeDayInMonth = beforeMonthDays - startWeekDayInMonth;
     let afterDayInMonth = 0;
 
     for (let i = 0; i <= maxDaysInCalendar; i++) {
-        const isBeforeDayInMonth = dayInMonth <= startWeekDayInMonth && i < startWeekDayInMonth;
-        const isAfterDayInMonth = dayInMonth > daysInMonth;
-        let weekDay = getWeekDay(jdp.initDate.year, jdp.initDate.month, dayInMonth);
-        let className = getLastWeekClassIfNessesary(weekDay);
-        
-        if (isBeforeDayInMonth || isAfterDayInMonth) {
-            const yearNumber=isBeforeDayInMonth ? beforeMonthYearNumber : afterMonthYearNumber;
-            const monthNumber=isBeforeDayInMonth ? beforeMonthNumber : afterMonthNumber;
-            let dayValue = 0;
-            if (isBeforeDayInMonth) {
+        dayOptions.inBeforeMonth = dayOptions.day <= startWeekDayInMonth && i < startWeekDayInMonth;
+        dayOptions.inAfterMonth = i >= daysInMonth+startWeekDayInMonth;
+        if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {
+            if (dayOptions.inBeforeMonth) {
                 beforeDayInMonth++;
-                dayValue = beforeDayInMonth;
+                dayOptions.day = beforeDayInMonth;
+                dayOptions.year = beforeMonthYearNumber;
+                dayOptions.month = beforeMonthNumber;
             } else {
                 afterDayInMonth++;
-                dayValue = afterDayInMonth;
+                dayOptions.day = afterDayInMonth;
+                dayOptions.year = afterMonthYearNumber;
+                dayOptions.month = afterMonthNumber;
             }
-            weekDay = getWeekDay(yearNumber, monthNumber, dayValue);
-            className = getLastWeekClassIfNessesary(weekDay);
-            const validDay = isValidDate(jdp, yearNumber, monthNumber,dayValue);
+        }
+        
+        dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
+        dayOptions.className = getLastWeekClassIfNessesary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
 
-            const dayContainer = createElement(validDay ? DAY_NOTINMONTH_ELM_QUERY+className : DAY_DISABLED_NOTINMONTH_ELM_QUERY+className, daysContainer, null, null, dayValue);
-            if (validDay) {
-                dayContainer.addEventListener(EVENT_CLICK_STR, () => {
-                    jdp.setValue(yearNumber, monthNumber, dayValue);
-                });
+        if (jdp.valueDate.day === dayOptions.day &&
+            jdp.valueDate.year === dayOptions.year &&
+            jdp.valueDate.month === dayOptions.month) {
+            dayOptions.className += `.${SELECTED_CLASS_NAME}`;
+        }
+        if (jdp.today.day === dayOptions.day &&
+            jdp.today.year === dayOptions.year &&
+            jdp.today.month === dayOptions.month) {
+            dayOptions.className += `.${TODAY_CLASS_NAME}`;
+        }
+
+        if (isFunction(jdp.options.dayRendering)) {
+            extend(dayOptions, jdp.options.dayRendering(dayOptions,jdp.input));
+        }
+        if (dayOptions.isHollyDay) {
+            dayOptions.className += `.${HOLLY_DAY_CLASS_NAME}`;
+        }
+
+        let query = dayOptions.isValid ? DAY_ELM_QUERY : DAY_DISABLED_ELM_QUERY;
+
+        if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {
+            query = DAY_NOTINMONTH_ELM_QUERY;
+
+            if (!dayOptions.isValid) {
+                query = DAY_DISABLED_NOTINMONTH_ELM_QUERY;
             }
-            continue;
-        }
-        if (!isValidDate(jdp, jdp.initDate.year, jdp.initDate.month,dayInMonth)) {
-            createElement(DAY_DISABLED_ELM_QUERY+className, daysContainer, null, null, dayInMonth);
-            dayInMonth += 1;
-            continue;
         }
 
-        if (jdp.valueDate.day === dayInMonth &&
-            jdp.valueDate.year === jdp.initDate.year &&
-            jdp.valueDate.month === jdp.initDate.month) {
-            className += `.${SELECTED_CLASS_NAME}`;
-        }
-        if (jdp.today.day === dayInMonth &&
-            jdp.today.year === jdp.initDate.year &&
-            jdp.today.month === jdp.initDate.month) {
-            className += `.${TODAY_CLASS_NAME}`;
-        }
-        const dayContainer = createElement(DAY_ELM_QUERY + className, daysContainer, null, null, dayInMonth);
-        dayContainer.day = dayInMonth;
-        dayContainer.addEventListener(EVENT_CLICK_STR, () => {
-            jdp.setValue(jdp.initDate.year, jdp.initDate.month, dayContainer.day);
-        });
+        const dayContainer = createElement(query + dayOptions.className, daysContainer, null, null, dayOptions.day);
+        dayContainer.day = dayOptions.day;
+        dayContainer.month = dayOptions.month;
+        dayContainer.year = dayOptions.year;
 
-        dayInMonth += 1;
+        if (dayOptions.isValid) {
+            dayContainer.addEventListener(EVENT_CLICK_STR, () => {
+                jdp.setValue(dayContainer.year, dayContainer.month, dayContainer.day);
+            });
+        }
+
+        setDefaultOptions(dayOptions);
     }
 };
 
 const renderFooterBtns = () => {
     const footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer);
     if (jdp.options.showTodayBtn) {
-        const isActiveToday=isValidDateToday(jdp);
-        createElement(TODAY_BTN_ELM_QUERY +(isActiveToday ? "":".disabled-btn"), footerContainer, EVENT_CLICK_STR, () => {
-            isActiveToday&&jdp.setValue(jdp.today.year, jdp.today.month, jdp.today.day);
+        const isActiveToday = isValidDateToday(jdp);
+        createElement(TODAY_BTN_ELM_QUERY + (isActiveToday ? "" : ".disabled-btn"), footerContainer, EVENT_CLICK_STR, () => {
+            isActiveToday && jdp.setValue(jdp.today.year, jdp.today.month, jdp.today.day);
         }, "امروز");
     }
     if (jdp.options.showEmptyBtn) {

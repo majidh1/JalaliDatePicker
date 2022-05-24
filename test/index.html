@@ -32,7 +32,7 @@
         <div dir="rtl">
             <input data-jdp placeholder="has jdp is" />
             <br />
-            <input style="margin:0 200px" data-jdp data-jdp-min-date="1398/11/30" data-jdp-max-date="today" />
+            <input style="margin:0 200px" data-jdp data-jdp-min-date="#aaa" data-jdp-max-date="today" placeholder="test" />
 
         </div>
         <div style="max-width: 100px; margin: auto; padding: 0 0 700px 0;">
@@ -41,7 +41,7 @@
             <br />
             <br />
             <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" />
-            <input data-jdp data-jdp-min-date="today" data-jdp-max-date="1401/10/16" onchange="console.log" id="aaa" />
+            <input data-jdp data-jdp-min-date="today" data-jdp-max-date="1401/10/16" onchange="console.log" id="aaa" placeholder="minOfTest"/>
         </div>
     </div>
     <input data-jdp placeholder="has jdp" />
@@ -64,7 +64,14 @@
             maxDate: "attr",
             changeMonthRotateYear: true,
             showTodayBtn: true,
-            showEmptyBtn: true
+            showEmptyBtn: true,
+            topSpace: 10,
+            bottomSpace: 30,
+            dayRendering(opt,input){
+                return {
+                    isHollyDay:opt.day==1
+                }
+            }
         });
         
         document.getElementById("aaa").addEventListener("jdp:change", function (e) { console.log(e) });

@@ -33,5 +33,8 @@
     showEmptyBtn: true,
 
     autoReadOnlyInput: (/iphone|ipod|android|ie|blackberry|fennec/).test(window.navigator?.userAgent?.toLowerCase()),
-    useDropDownYears: true
+    useDropDownYears: true,
+    
+    topSpace: 0,
+    bottomSpace: 0
 };

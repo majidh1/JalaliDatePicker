@@ -20,6 +20,7 @@ export const SELECTED_CLASS_NAME = "selected";
 export const TODAY_CLASS_NAME = "today";
 export const LAST_WEEK_CLASS_NAME = "last-week";
 export const DISABLE_CLASS_NAME = "not-in-range";
+export const HOLLY_DAY_CLASS_NAME = "holly-day";
 
 export const EVENT_CHANGE_INPUT_STR = `${NAMESPACE}:change`;
 export const EVENT_CHANGE_MONTH_DROPDOWN_STR = "change";

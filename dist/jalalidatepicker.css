@@ -142,7 +142,7 @@ jdp-container .jdp-day.selected, jdp-container .jdp-day-name.selected {
   background-color: #569ff7 !important;
   color: #fff !important;
 }
-jdp-container .jdp-day.last-week, jdp-container .jdp-day-name.last-week {
+jdp-container .jdp-day.last-week, jdp-container .jdp-day.holly-day, jdp-container .jdp-day-name.last-week, jdp-container .jdp-day-name.holly-day {
   color: #f44336;
 }
 jdp-container .jdp-day.not-in-month {
