@@ -100,4 +100,23 @@ key | default | description
 `topSpace` | 0 | فضای خالی بین بالای datePicker و input (زمانی که دیتپیکر در پایین اینپوت هست)
 `bottomSpace` | 0 | فضای خالی بین پایین datePicker و input (زمانی که دیتپیکر در بالای اینپوت هست)
 `dayRendering` | - | متد رندر یک روز خروجی یک آبجکت از تنظیمات روز است
+
+#### مثال dayRendering:
+برای نمایش تعطیلی 4 روز ابتدایی سال
+<div dir="ltr">
+ 
+```javascript
+jalaliDatepicker.startWatch({
+  dayRendering:function(dayOptions,input){
+    return {
+     isHollyDay: dayOptions.month==1 && dayOptions.day<=4,
+     // isValid = false, امکان غیر فعال کردن روز
+     // className = "nowruz" امکان افزودن کلاس برای درج استایل به روز
+    }
+  }
+})
+```
+                                                        
+</div>
+
 </div>
