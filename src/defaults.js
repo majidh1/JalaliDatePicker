@@ -12,7 +12,7 @@
     
     hasSecond: true,
 
-    time:true,
+    time:false,
     date:true,
     //sample {year:1399,month:11,day:29} || today || attr
     minDate: {},
