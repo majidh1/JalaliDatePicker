@@ -3,15 +3,28 @@
 
     months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
 
+    //sample {year:1400,month:11,day:29}
     initDate: null,
+    //sample {year:1400,month:11,day:29}
+    today:null,
+    //{hour:12,minute:11,second:10}
+    initTime: null,
+    
+    hasSecond: true,
 
+    time:true,
+    date:true,
     //sample {year:1399,month:11,day:29} || today || attr
     minDate: {},
 
     //sample {year:1400,month:11,day:29} || today || attr
     maxDate: {},
 
-    separatorChar: "/",
+    separatorChars: {
+        date:"/",
+        between:" ",
+        time:":"
+    },
 
     zIndex: 1000,
 

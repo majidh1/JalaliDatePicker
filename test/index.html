@@ -50,6 +50,13 @@
     </div>
     <div class="modal">
         <input data-jdp placeholder="has jdp" />
+        <input data-jdp value="1401/04/27"/>
+        <input data-jdp placeholder="min Today" data-jdp-min-date="today"/>
+        <input data-jdp placeholder="max Today" data-jdp-max-date="today"/>
+        <input data-jdp placeholder="max 1401/10/11" data-jdp-max-date="1401/10/11"/>
+        <input data-jdp placeholder="min 1401/03/11" data-jdp-min-date="1401/03/11"/>
+        <input data-jdp placeholder="only time" data-jdp-only-time/>
+        <input data-jdp placeholder="only date" data-jdp-only-date/>
         <div style="height: 400px"></div>
         <input data-jdp placeholder="has jdp" />
     </div>
@@ -59,9 +66,9 @@
     <input data-jdp placeholder="last" />
     <script>
         jalaliDatepicker.startWatch({
-            separatorChar: "/",
             minDate: "attr",
             maxDate: "attr",
+            today:{year:1400,month:11,day:29},
             changeMonthRotateYear: true,
             showTodayBtn: true,
             showEmptyBtn: true,

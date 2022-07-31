@@ -1,14 +1,50 @@
-import { extend, createElement, triggerEvent, jalaliToday, isValidDateString, getDateFromString, getDateToString, isString, clon, isPlainObject, normalizeMinMaxDate, getScrollParent, getEventTarget, containsDom } from "./utils";
-import { CONTAINER_ELM_QUERY, EVENT_FOCUS_STR, EVENT_CHANGE_INPUT_STR, MIN_MAX_TODAY_SETTING, MIN_MAX_ATTR_SETTING, MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME, MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME, STYLE_VISIBILITY_VISIBLE, STYLE_VISIBILITY_HIDDEN, STYLE_DISPLAY_BLOCK, STYLE_DISPLAY_HIDDEN, STYLE_POSITION_FIXED } from "./constants";
+import {
+    isValidValueString,
+    getValueObjectFromString,
+    getValueStringFromValueObject,
+    normalizeMinMaxDate,
+    isValidDateString,
+    isValidTimeString
+} from "./utils";
+import {
+    extend,
+    clon,
+    isPlainObject,
+    isString
+} from "./utils/object";
+import {
+    getScrollParent,
+    getEventTarget,
+    containsDom,
+    triggerEvent,
+    createElement
+} from "./utils/dom";
+import {
+    jalaliToday
+} from "./utils/jalali";
+import {
+    CONTAINER_ELM_QUERY,
+    EVENT_FOCUS_STR,
+    EVENT_CHANGE_INPUT_STR,
+    MIN_MAX_TODAY_SETTING,
+    MIN_MAX_ATTR_SETTING,
+    MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME,
+    MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME,
+    ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME,
+    ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME,
+    STYLE_VISIBILITY_VISIBLE,
+    STYLE_VISIBILITY_HIDDEN,
+    STYLE_DISPLAY_BLOCK,
+    STYLE_DISPLAY_HIDDEN,
+    STYLE_POSITION_FIXED
+} from "./constants";
 import draw from "./draw";
 import defaults from "./defaults";
 
 const jalaliDatepicker = {
     init(options) {
-        this.options = extend(defaults, options);
-        this.options = normalizeOptions(this.options);
+        this.options = normalizeOptions(options);
         window.onresize = windowResize;
-
         if (this.options.autoHide) document.body.onclick = documentClick;
         if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);
     },
@@ -19,37 +55,63 @@ const jalaliDatepicker = {
         return this._dpContainer;
     },
     get today() {
-        this._today = this._today || jalaliToday();
+        this._today = this._today || this.options.today || jalaliToday();
         return this._today;
     },
-    get valueDate() {
-        this._valueDate = clon(this.input.value);
+    get inputValue() {
+        let inputValue = clon(this.input.value);
 
-        if (isString(this._valueDate)) {
-            if (isValidDateString(this._valueDate, this.options.separatorChar)) {
-                this._valueDate = getDateFromString(this._valueDate, this.options.separatorChar);
-            } else {
-                this._valueDate = {};
-            }
+        if (isValidValueString(this, inputValue)) {
+            inputValue = getValueObjectFromString(this, inputValue);
+        } 
+        else if (isString(inputValue) && isValidDateString(this, inputValue)) {
+            inputValue = getValueObjectFromString(this, inputValue);
+        }
+        else {
+            inputValue = {};
         }
 
-        return this._valueDate;
+        return inputValue;
     },
     get initDate() {
-        this._initDate = this._initDate || clon(this.valueDate);
+        if(this._initDate){
+            return this._initDate;
+        }
+        this._initDate = clon(this.input.value) || {};
 
         if (isPlainObject(this._initDate)) {
             this._initDate = this.options.initDate || clon(this.today);
         }
-        if (isString(this._initDate) && isValidDateString(this._initDate, this.options.separatorChar)) {
-            this._initDate = getDateFromString(this._initDate, this.options.separatorChar);
+        if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
+            this._initDate = getValueObjectFromString(this, this._initDate);
+        }else{
+            this._initDate = clon(this.today);
         }
-        return normalizeMinMaxDate(this._initDate.year, this._initDate.month, this._initDate.day, this._initDate, this.options.minDate, this.options.maxDate);
+        this._initDate=normalizeMinMaxDate(this,this._initDate);
+
+        return this._initDate;
+    },
+    get initTime() {
+        const defaultInit={
+            hour:0,minute:0,second:0
+        };
+        this._initTime = this._initTime || clon(this.input.value) || this.options.initTime || defaultInit;
+
+        if (isString(this._initTime)) {
+            if (isValidTimeString(this, this._initTime)) {
+                this._initTime = getValueObjectFromString(this, this._initTime);
+                this._initTime=extend(this._initTime,defaultInit);
+            }else{
+                this._initTime = defaultInit;
+            }
+        }
+        return this._initTime;
     },
     _draw: draw,
     show(input) {
         this._initDate = null;
-        this._valueDate = null;
+        this._initTime = null;
+        this._value = null;
         this.input = input;
         this._draw();
         this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
@@ -79,24 +141,34 @@ const jalaliDatepicker = {
         if (left + dpContainerWidth >= windowWidth) {
             left -= (left + dpContainerWidth) - (windowWidth + 10);
         }
-        if (top-inputHeight >= dpContainerHeight&&top + dpContainerHeight >= window.innerHeight) {
+        if (top - inputHeight >= dpContainerHeight && top + dpContainerHeight >= window.innerHeight) {
             top -= dpContainerHeight + inputHeight + this.options.bottomSpace + this.options.topSpace;
         }
         this.dpContainer.style.position = STYLE_POSITION_FIXED;
         this.dpContainer.style.left = left + "px";
         this.dpContainer.style.top = top + "px";
     },
-    setValue(year, month, day) {
-        this._valueDate.year = year;
-        this._valueDate.month = month;
-        this._valueDate.day = day;
-        this.hide();
-        if (isNaN(year + month + day)) {
-            this.input.value = "";
-        } else {
-            this.input.value = getDateToString(year, month, day, this.options.separatorChar);
-        }
+    get getValue() {
+        this._value = this._value || this.inputValue || {};
+        return this._value;
+    },
+    setValue(objValue) {
+        this._value = extend({
+            year: this.today.year,
+            month: this.today.month,
+            day: this.today.day,
+            hour: this.initTime.hour,
+            minute: this.initTime.minute,
+            second: this.initTime.second
+        }, extend(this._value, objValue));
+
+        this.input.value = getValueStringFromValueObject(this, this._value);
         triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
+        if (!this.options.time) {
+            this.hide();
+        } else {
+            this._draw();
+        }
     },
     increaseMonth() {
         const isLastMonth = this._initDate.month === 12;
@@ -113,7 +185,7 @@ const jalaliDatepicker = {
         this.monthChange(isFirstMonth ? 12 : this._initDate.month - 1);
     },
     monthChange(month) {
-        this._initDate = normalizeMinMaxDate(this._initDate.year, month, this._initDate.day, this._initDate, this.options.minDate, this.options.maxDate);
+        this._initDate = normalizeMinMaxDate(this,this._initDate,{month});
         this._draw();
     },
     increaseYear() {
@@ -123,12 +195,12 @@ const jalaliDatepicker = {
         this.yearChange(this._initDate.year - 1);
     },
     yearChange(year) {
-        this._initDate = normalizeMinMaxDate(year, this._initDate.month, this._initDate.day, this._initDate, this.options.minDate, this.options.maxDate);
+        this._initDate = normalizeMinMaxDate(this,this._initDate,{year});
         this._draw();
     }
 };
 
-const getDefaultFromAttr = (attrName, sepChar) => {
+const getDefaultFromAttr = (attrName) => {
     let dateAttrVal = jalaliDatepicker.input?.getAttribute(attrName);
     if (dateAttrVal === MIN_MAX_TODAY_SETTING) {
         dateAttrVal = clon(jalaliDatepicker.today);
@@ -139,18 +211,20 @@ const getDefaultFromAttr = (attrName, sepChar) => {
             //
         }
 
-        if (isValidDateString(dateAttrVal, sepChar)) {
-            dateAttrVal = getDateFromString(dateAttrVal, sepChar);
+        if (isValidDateString(jalaliDatepicker, dateAttrVal)) {
+            dateAttrVal = getValueObjectFromString(jalaliDatepicker, dateAttrVal);
         } else {
-            dateAttrVal = {}; 
+            dateAttrVal = {};
         }
-    }else{
-        dateAttrVal = {}; 
+    } else {
+        dateAttrVal = {};
     }
     return dateAttrVal;
 };
 
 const normalizeOptions = (options) => {
+    options = extend(defaults, options);
+
     if (options.minDate === MIN_MAX_TODAY_SETTING) options.minDate = clon(jalaliDatepicker.today);
     if (options.maxDate === MIN_MAX_TODAY_SETTING) options.maxDate = clon(jalaliDatepicker.today);
 
@@ -158,7 +232,7 @@ const normalizeOptions = (options) => {
         delete options.minDate;
         window.Object.defineProperty(options, "minDate", {
             get: () => {
-                return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME, options.separatorChar);
+                return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME);
             }
         });
     }
@@ -166,10 +240,26 @@ const normalizeOptions = (options) => {
         delete options.maxDate;
         window.Object.defineProperty(options, "maxDate", {
             get: () => {
-                return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME, options.separatorChar);
+                return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME);
             }
         });
     }
+
+    const tempDateOption=options.date;
+    delete options.date;
+    window.Object.defineProperty(options, "date", {
+        get: () => {
+            return tempDateOption && !jalaliDatepicker.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME);
+        }
+    });
+
+    const tempTimeOption=options.time;
+    delete options.time;
+    window.Object.defineProperty(options, "time", {
+        get: () => {
+            return tempTimeOption && !jalaliDatepicker.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME);
+        }
+    });
 
     return options;
 };
@@ -191,7 +281,9 @@ function windowResize() {
 function setScrollOnParent(input) {
     getScrollParent(input).addEventListener("scroll", function () {
         jalaliDatepicker.setPosition();
-    }, { passive: true });
+    }, {
+        passive: true
+    });
 }
 
 function setReadOnly(input, options) {

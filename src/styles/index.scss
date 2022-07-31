@@ -92,7 +92,7 @@ jdp-container {
             width: $controls-parent-width - 5;
         }
 
-        &-year, &-month {
+        &-year, &-month, &-time {
             &, input, select {
                 width: 100%;
                 height: auto;
@@ -243,6 +243,36 @@ jdp-container {
                 &.disabled-btn{
                     opacity: .2;
                     cursor: not-allowed;
+                }
+            }
+        }
+
+        &-time-container{
+            display: flex;
+            padding: 0;
+
+            .jdp-time{
+                flex:auto;
+                margin: 0 .5rem;
+                position: relative;
+
+                select{
+                    padding: 0.5rem 1rem 0.5rem 7px;
+                    background:color.change($invertedBg, $alpha: 0.03);;
+                    border-radius: 5px;
+                }
+
+                &:after {
+                    content: ":";
+                    position: absolute;
+                    right: -.7rem;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    font-size: 1.5rem;
+                    height: 100%;
+                }
+                &:first-child:after{
+                    display:none
                 }
             }
         }

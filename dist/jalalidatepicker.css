@@ -66,7 +66,7 @@ jdp-container .jdp-months {
 jdp-container .jdp-years {
   width: 40%;
 }
-jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year select, jdp-container .jdp-month, jdp-container .jdp-month input, jdp-container .jdp-month select {
+jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year select, jdp-container .jdp-month, jdp-container .jdp-month input, jdp-container .jdp-month select, jdp-container .jdp-time, jdp-container .jdp-time input, jdp-container .jdp-time select {
   width: 100%;
   height: auto;
   text-align: center;
@@ -84,24 +84,24 @@ jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year 
   line-height: inherit;
   outline: none;
 }
-jdp-container .jdp-year:focus, jdp-container .jdp-year:active, jdp-container .jdp-year input:focus, jdp-container .jdp-year input:active, jdp-container .jdp-year select:focus, jdp-container .jdp-year select:active, jdp-container .jdp-month:focus, jdp-container .jdp-month:active, jdp-container .jdp-month input:focus, jdp-container .jdp-month input:active, jdp-container .jdp-month select:focus, jdp-container .jdp-month select:active {
+jdp-container .jdp-year:focus, jdp-container .jdp-year:active, jdp-container .jdp-year input:focus, jdp-container .jdp-year input:active, jdp-container .jdp-year select:focus, jdp-container .jdp-year select:active, jdp-container .jdp-month:focus, jdp-container .jdp-month:active, jdp-container .jdp-month input:focus, jdp-container .jdp-month input:active, jdp-container .jdp-month select:focus, jdp-container .jdp-month select:active, jdp-container .jdp-time:focus, jdp-container .jdp-time:active, jdp-container .jdp-time input:focus, jdp-container .jdp-time input:active, jdp-container .jdp-time select:focus, jdp-container .jdp-time select:active {
   outline: none;
 }
-jdp-container .jdp-year option, jdp-container .jdp-year input option, jdp-container .jdp-year select option, jdp-container .jdp-month option, jdp-container .jdp-month input option, jdp-container .jdp-month select option {
+jdp-container .jdp-year option, jdp-container .jdp-year input option, jdp-container .jdp-year select option, jdp-container .jdp-month option, jdp-container .jdp-month input option, jdp-container .jdp-month select option, jdp-container .jdp-time option, jdp-container .jdp-time input option, jdp-container .jdp-time select option {
   font-size: 90%;
 }
-jdp-container .jdp-year:hover, jdp-container .jdp-month:hover {
+jdp-container .jdp-year:hover, jdp-container .jdp-month:hover, jdp-container .jdp-time:hover {
   filter: brightness(0.9);
 }
-jdp-container .jdp-year input, jdp-container .jdp-month input {
+jdp-container .jdp-year input, jdp-container .jdp-month input, jdp-container .jdp-time input {
   cursor: text;
   -webkit-appearance: none;
   -moz-appearance: textfield;
 }
-jdp-container .jdp-year input::-webkit-outer-spin-button, jdp-container .jdp-year input::-webkit-inner-spin-button, jdp-container .jdp-month input::-webkit-outer-spin-button, jdp-container .jdp-month input::-webkit-inner-spin-button {
+jdp-container .jdp-year input::-webkit-outer-spin-button, jdp-container .jdp-year input::-webkit-inner-spin-button, jdp-container .jdp-month input::-webkit-outer-spin-button, jdp-container .jdp-month input::-webkit-inner-spin-button, jdp-container .jdp-time input::-webkit-outer-spin-button, jdp-container .jdp-time input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
-jdp-container .jdp-year select, jdp-container .jdp-month select {
+jdp-container .jdp-year select, jdp-container .jdp-month select, jdp-container .jdp-time select {
   cursor: pointer;
   position: relative;
   -webkit-appearance: menulist;
@@ -195,6 +195,32 @@ jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty {
 jdp-container .jdp-btn-today.disabled-btn, jdp-container .jdp-btn-empty.disabled-btn {
   opacity: 0.2;
   cursor: not-allowed;
+}
+jdp-container .jdp-time-container {
+  display: flex;
+  padding: 0;
+}
+jdp-container .jdp-time-container .jdp-time {
+  flex: auto;
+  margin: 0 0.5rem;
+  position: relative;
+}
+jdp-container .jdp-time-container .jdp-time select {
+  padding: 0.5rem 1rem 0.5rem 7px;
+  background: rgba(0, 0, 0, 0.03);
+  border-radius: 5px;
+}
+jdp-container .jdp-time-container .jdp-time:after {
+  content: ":";
+  position: absolute;
+  right: -0.7rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+  height: 100%;
+}
+jdp-container .jdp-time-container .jdp-time:first-child:after {
+  display: none;
 }
 
 @-webkit-keyframes jdpOpenAnimation {
