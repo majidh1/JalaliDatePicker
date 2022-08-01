@@ -30,8 +30,6 @@
 
     container: "body",
 
-    dpContainer: null,
-
     selector: "input[data-jdp]",
 
     autoShow:true,
