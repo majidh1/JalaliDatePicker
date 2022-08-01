@@ -32,6 +32,7 @@ const renderFooter = (jdp) => {
     if (jdp.options.showEmptyBtn) {
         createElement(EMPTY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
             jdp.input.value = "";
+            jdp.hide();
         }, "خالی");
     }
 };
