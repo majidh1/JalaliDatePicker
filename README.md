@@ -88,7 +88,6 @@ key | default | description
 `plusHtml` | `"svg"` | html مربوط به دکمه افزایش سال و ماه
 `minusHtml` | `"svg"` | html مربوط به دکمه کاهش سال و ماه
 `container` | "body" | datepicker در کجا ساخته شود
-`dpContainer` | null | Container مربوط به datepicker
 `selector` | "input[data-jdp]" | selector مربوط به autoShow
 `zIndex` | 1000 | zIndex مربوط به datepicker
 `days` | ["ش", "ی", "د", "س", "چ", "پ", "ج"] | نام روزهای هفته
