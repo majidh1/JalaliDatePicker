@@ -82,13 +82,12 @@ const jalaliDatepicker = {
         if (isPlainObject(this._initDate)) {
             this._initDate = this.options.initDate || clon(this.today);
         }
-        if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
+        else if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
             this._initDate = getValueObjectFromString(this, this._initDate);
         }else{
             this._initDate = clon(this.today);
         }
         this._initDate=normalizeMinMaxDate(this,this._initDate);
-
         return this._initDate;
     },
     get initTime() {
