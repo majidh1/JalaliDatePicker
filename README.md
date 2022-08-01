@@ -78,13 +78,18 @@ jalaliDatepicker.hide();
 
 key | default | description
 ----|---------|------------
+`date` | true | امکان انتخاب تاریخ
+`time` | false | امکان انتخاب زمان
+`hasSecond` | true | امکان ثانیه در انتخاب زمان
+`initTime` | null | زمان پیشفرض
 `autoShow` | true | نمایش خودکار
 `autoHide` | true | مخفی شدن خودکار
 `useDropDownYears` | true | انتخاب سال به صورت DropDown
-`separatorChar` | `"/"` | جداکننده بین سال، ماه و روز
+`separatorChars` | date,between,time |  جداکننده بین سال، ماه و روز و بین تاریخ و زمان
 `minDate` | null | مشخص کننده حداقل تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-min-date` attrubute  است
 `maxDate` | null | مشخص کننده حداکثر تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-max-date` attrubute  است
 `initDate` | null | تاریخی که به صورت پیشفرض نمایش داده می‌شود در صورتی که تنظیم نشود برابر است با `روز جاری`.
+`today` | null | برابر با آبجکت تاریخ برای تعیین روز جاری به صورت پیشفرض از تاریخ سیستم محاسبه میشود
 `plusHtml` | `"svg"` | html مربوط به دکمه افزایش سال و ماه
 `minusHtml` | `"svg"` | html مربوط به دکمه کاهش سال و ماه
 `container` | "body" | datepicker در کجا ساخته شود
