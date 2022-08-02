@@ -131,7 +131,7 @@ data-jdp-max-date
 
 data-jdp-only-date
 
-data-jdp-only-date
+data-jdp-only-time
               
           
 </div>
