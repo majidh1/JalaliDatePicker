@@ -120,7 +120,20 @@ jalaliDatepicker.startWatch({
   }
 })
 ```
-                                                        
+
+ATTR On Input:
+
+data-jdp
+
+data-jdp-min-date
+
+data-jdp-max-date
+
+data-jdp-only-date
+
+data-jdp-only-date
+              
+          
 </div>
 
 </div>
