@@ -1,3 +1,5 @@
+<div  align="center">
+
 # JalaliDatePicker
 [![npm version](https://badge.fury.io/js/%40majidh1%2Fjalalidatepicker.svg)](https://www.npmjs.com/package/@majidh1/jalalidatepicker)
 <img src="res/filesizegzip.svg" width="102px"/>
@@ -6,14 +8,27 @@
 <img src="https://shields.io/badge/analyze-passing-blue"/>
 [![License](https://img.shields.io/badge/license-MIT-blue.svg?style=plastic)](https://raw.githubusercontent.com/majidh1/JalaliDatePicker/main/LICENSE)
 
+</div>
+
 <div dir="rtl">
  
 <img src="res/sample1.png" width="32%"/>
 <img src="res/sample5.png" width="32%"/>
 <img src="res/sample2.png" width="32%"/>
-<img src="res/sample3.png" width="32%"/>
-<img src="res/sample4.png" width="32%"/>
+<img src="res/jdp-time-min.png" width="32%"/>
+<img src="res/jdp-datetime-min.png" width="32%"/>
+<img src="res/jdp-minmax-min.png" width="32%"/>
  
+ <br/>
+ 
+ <br/>
+ 
+ <br/>
+
+[نصب و استفاده](#نصب-و-استفاده)
+
+[تنظیمات](#options)
+
 [تاریخچه تغییرات نسخه](https://github.com/majidh1/JalaliDatePicker/blob/main/ChangeLog.md)
  
 ## نصب و استفاده
