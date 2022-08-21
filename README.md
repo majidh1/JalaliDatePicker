@@ -73,7 +73,7 @@ jalaliDatepicker.startWatch();
 
 #### Info & Methods
 
-بعد از لود فایل js یک object به نام jalaliDatepicker به صورت global  که شامل 3 متد زیر است.ایجاد می‌شود
+بعد از لود فایل js یک object به نام jalaliDatepicker به صورت global  که شامل 4 متد زیر است.ایجاد می‌شود
 
  <div dir="ltr">
 
@@ -81,6 +81,7 @@ jalaliDatepicker.startWatch();
 jalaliDatepicker.startWatch(options);
 jalaliDatepicker.show(input);
 jalaliDatepicker.hide();
+jalaliDatepicker.updateOptions(options);
 ```
 
  </div>
