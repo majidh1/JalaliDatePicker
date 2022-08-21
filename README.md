@@ -88,6 +88,7 @@ jalaliDatepicker.hide();
 1. `startWatch(options)` شروع کار و پردازش روی input ها
 2. `show(input)` نمایش روی یک input
 3. `hide` مخفی شدن
+4. `updateOptions` آپدیت تنظیمات بعد از startWatch
 
 ### Options
 
@@ -115,6 +116,7 @@ key | default | description
 `changeMonthRotateYear` | false | با تغییر ماه سال نیز کم یا زیاد شود
 `showTodayBtn` | true | نمایش دکمه امروز
 `showEmptyBtn` | true | نمایش دکمه پاکسازی
+`showCloseBtn` | dynamic | نمایش دکمه بستن دیتپیکر
 `autoReadOnlyInput` | `dynamic` | فقط خواندنی شدن input دارای datePicker
 `topSpace` | 0 | فضای خالی بین بالای datePicker و input (زمانی که دیتپیکر در پایین اینپوت هست)
 `bottomSpace` | 0 | فضای خالی بین پایین datePicker و input (زمانی که دیتپیکر در بالای اینپوت هست)

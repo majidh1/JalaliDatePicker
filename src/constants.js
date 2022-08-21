@@ -15,6 +15,7 @@ export const MINUS_ICON_ELM_QUERY = `div.${NAMESPACE}-icon-minus`;
 export const FOOTER_ELM_QUERY = `div.${NAMESPACE}-footer`;
 export const TODAY_BTN_ELM_QUERY = `div.${NAMESPACE}-btn-today`;
 export const EMPTY_BTN_ELM_QUERY = `div.${NAMESPACE}-btn-empty`;
+export const CLOSE_BTN_ELM_QUERY = `div.${NAMESPACE}-btn-close`;
 export const FOOTER_TIME_ELM_QUERY = `div.${NAMESPACE}-time-container`;
 export const TIME_DROPDOWN_PARENT_ELM_QUERY = `div.${NAMESPACE}-time`;
 

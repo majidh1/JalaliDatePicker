@@ -10,7 +10,8 @@ import {
     extend,
     clon,
     isPlainObject,
-    isString
+    isString,
+    isUndefined
 } from "./utils/object";
 import {
     getScrollParent,
@@ -43,10 +44,13 @@ import defaults from "./defaults";
 
 const jalaliDatepicker = {
     init(options) {
-        this.options = normalizeOptions(options);
+        this.updateOptions(options);
         window.onresize = windowResize;
         if (this.options.autoHide) document.body.onclick = documentClick;
         if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);
+    },
+    updateOptions(options){
+        this.options = normalizeOptions(options);
     },
     options: defaults,
     input: null,
@@ -222,42 +226,54 @@ const getDefaultFromAttr = (attrName) => {
 };
 
 const normalizeOptions = (options) => {
-    options = extend(defaults, options);
+    if(!isUndefined(jalaliDatepicker.options._date) && isUndefined(options.date)){
+        options.date=jalaliDatepicker.options._date;
+    }
+    if(!isUndefined(jalaliDatepicker.options._time) && isUndefined(options.time)){
+        options.time=jalaliDatepicker.options._time;
+    }
 
+    options=extend({},jalaliDatepicker.options, options);
     if (options.minDate === MIN_MAX_TODAY_SETTING) options.minDate = clon(jalaliDatepicker.today);
     if (options.maxDate === MIN_MAX_TODAY_SETTING) options.maxDate = clon(jalaliDatepicker.today);
 
-    if (options.minDate === MIN_MAX_ATTR_SETTING) {
+    if (options.minDate === MIN_MAX_ATTR_SETTING || options._minDateIsAttr) {
         delete options.minDate;
+        options._minDateIsAttr = true;
         window.Object.defineProperty(options, "minDate", {
             get: () => {
                 return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME);
-            }
+            },
+            enumerable:true
         });
     }
-    if (options.maxDate === MIN_MAX_ATTR_SETTING) {
+    if (options.maxDate === MIN_MAX_ATTR_SETTING || options._maxDateIsAttr) {
         delete options.maxDate;
+        options._maxDateIsAttr = true;
         window.Object.defineProperty(options, "maxDate", {
             get: () => {
                 return getDefaultFromAttr(MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME);
-            }
+            },
+            enumerable:true
         });
     }
 
-    const tempDateOption=options.date;
+    options._date=options.date;
     delete options.date;
     window.Object.defineProperty(options, "date", {
         get: () => {
-            return tempDateOption && !jalaliDatepicker.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME);
-        }
+            return options._date && !jalaliDatepicker.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME);
+        },
+        enumerable:true
     });
 
-    const tempTimeOption=options.time;
+    options._time=options.time;
     delete options.time;
     window.Object.defineProperty(options, "time", {
         get: () => {
-            return tempTimeOption && !jalaliDatepicker.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME);
-        }
+            return options._time && !jalaliDatepicker.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME);
+        },
+        enumerable:true
     });
 
     return options;
@@ -312,5 +328,8 @@ window.jalaliDatepicker = {
     },
     hide() {
         jalaliDatepicker.hide();
+    },
+    updateOptions(options){
+        jalaliDatepicker.updateOptions(options);
     }
 };

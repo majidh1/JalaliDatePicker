@@ -4,17 +4,17 @@
 $calendarBackground: #fff;
 $daySize: 39px;
 $radius: 4px;
-$padding: math.div($daySize,16);
+$padding: math.div($daySize, 16);
 $dayMargin: 2px;
-$daysWidth: ($daySize*7 + $dayMargin*14 + $padding*2 + 2);
-$calendarWidth: $daysWidth;
+$calendarWidth: ($daySize*7 + $dayMargin*14 + $padding*2 + 2);
 $calendarBorderColor: #e6e6e6;
 $controls-parent-width: 45%;
 $controls-btn-size: 1.5rem;
-$controls-btn-padding: math.div($controls-btn-size,6);
+$controls-btn-padding: math.div($controls-btn-size, 6);
 $invertedBg: invert($calendarBackground);
 $calendarForeground: color.change($invertedBg, $alpha: 0.9);
 $activeColor: #569ff7;
+$mobileQuerySize:481px;
 
 jdp-container {
     position: absolute;
@@ -36,6 +36,14 @@ jdp-container {
     -moz-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
     -webkit-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
     animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
+
+    @media only screen and (max-width: $mobileQuerySize) {
+        max-width: $calendarWidth;
+        width: 80%;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        min-width: 280px;
+    }
 
     &, *, *::after, *::before {
         -moz-box-sizing: border-box;
@@ -78,7 +86,7 @@ jdp-container {
             display: -webkit-flex;
             display: -ms-inline-flexbox;
             display: inline-flex;
-            margin: 0 math.div((math.div(100%,2)-$controls-parent-width),2);
+            margin: 0 math.div((math.div(100%, 2)-$controls-parent-width), 2);
             font-size: 120%;
             color: $calendarForeground;
             fill: $calendarForeground;
@@ -115,8 +123,11 @@ jdp-container {
                     outline: none
                 }
 
-                option{
-                    font-size: 90%;
+                option {
+                    font-size: 95%;
+                    min-height: 1.3rem;
+                    outline: none;
+                    padding: 0;
                 }
             }
 
@@ -190,6 +201,7 @@ jdp-container {
             &.not-in-month {
                 opacity: .4;
             }
+
             &.disabled-day {
                 opacity: .15;
                 cursor: not-allowed;
@@ -230,7 +242,10 @@ jdp-container {
         }
 
         &-btn {
-            &-today, &-empty {
+
+            &-today,
+            &-empty,
+            &-close {
                 background: $activeColor;
                 font-size: 90%;
                 padding: .3em .6em;
@@ -240,25 +255,34 @@ jdp-container {
                 text-align: center;
                 color: #fff;
                 cursor: pointer;
-                &.disabled-btn{
+
+                &.disabled-btn {
                     opacity: .2;
                     cursor: not-allowed;
                 }
             }
+
+            &-empty{
+                @media only screen and (max-width: $mobileQuerySize) {
+                    margin-right: 1em;
+                    margin-left: auto;
+                }
+            }
         }
 
-        &-time-container{
+        &-time-container {
             display: flex;
             padding: 0;
 
-            .jdp-time{
-                flex:auto;
+            .jdp-time {
+                flex: auto;
                 margin: 0 .5rem;
                 position: relative;
 
-                select{
+                select {
                     padding: 0.5rem 1rem 0.5rem 7px;
-                    background:color.change($invertedBg, $alpha: 0.03);;
+                    background: color.change($invertedBg, $alpha: 0.03);
+                    ;
                     border-radius: 5px;
                 }
 
@@ -271,8 +295,9 @@ jdp-container {
                     font-size: 1.5rem;
                     height: 100%;
                 }
-                &:first-child:after{
-                    display:none
+
+                &:first-child:after {
+                    display: none
                 }
             }
         }
@@ -300,12 +325,5 @@ jdp-container {
     to {
         opacity: 1;
         transform: scale(1);
-    }
-}
-
-@media only screen and (max-width: $calendarWidth ){
-    jdp-container {
-        max-width: 90%;
-        min-width: 80%;
     }
 }

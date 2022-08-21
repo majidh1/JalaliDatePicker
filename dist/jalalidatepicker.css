@@ -22,6 +22,15 @@ jdp-container {
   -webkit-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
   animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
 }
+@media only screen and (max-width: 481px) {
+  jdp-container {
+    max-width: 307.875px;
+    width: 80%;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    min-width: 280px;
+  }
+}
 jdp-container, jdp-container *, jdp-container *::after, jdp-container *::before {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -88,7 +97,10 @@ jdp-container .jdp-year:focus, jdp-container .jdp-year:active, jdp-container .jd
   outline: none;
 }
 jdp-container .jdp-year option, jdp-container .jdp-year input option, jdp-container .jdp-year select option, jdp-container .jdp-month option, jdp-container .jdp-month input option, jdp-container .jdp-month select option, jdp-container .jdp-time option, jdp-container .jdp-time input option, jdp-container .jdp-time select option {
-  font-size: 90%;
+  font-size: 95%;
+  min-height: 1.3rem;
+  outline: none;
+  padding: 0;
 }
 jdp-container .jdp-year:hover, jdp-container .jdp-month:hover, jdp-container .jdp-time:hover {
   filter: brightness(0.9);
@@ -181,7 +193,7 @@ jdp-container .jdp-footer {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
-jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty {
+jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty, jdp-container .jdp-btn-close {
   background: #569ff7;
   font-size: 90%;
   padding: 0.3em 0.6em;
@@ -192,9 +204,15 @@ jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty {
   color: #fff;
   cursor: pointer;
 }
-jdp-container .jdp-btn-today.disabled-btn, jdp-container .jdp-btn-empty.disabled-btn {
+jdp-container .jdp-btn-today.disabled-btn, jdp-container .jdp-btn-empty.disabled-btn, jdp-container .jdp-btn-close.disabled-btn {
   opacity: 0.2;
   cursor: not-allowed;
+}
+@media only screen and (max-width: 481px) {
+  jdp-container .jdp-btn-empty {
+    margin-right: 1em;
+    margin-left: auto;
+  }
 }
 jdp-container .jdp-time-container {
   display: flex;
@@ -241,11 +259,5 @@ jdp-container .jdp-time-container .jdp-time:first-child:after {
   to {
     opacity: 1;
     transform: scale(1);
-  }
-}
-@media only screen and (max-width: 307.875px) {
-  jdp-container {
-    max-width: 90%;
-    min-width: 80%;
   }
 }

@@ -2,7 +2,8 @@
     EVENT_CLICK_STR,
     FOOTER_ELM_QUERY,
     TODAY_BTN_ELM_QUERY,
-    EMPTY_BTN_ELM_QUERY
+    EMPTY_BTN_ELM_QUERY,
+    CLOSE_BTN_ELM_QUERY
 } from "./constants";
 
 import {
@@ -34,6 +35,12 @@ const renderFooter = (jdp) => {
             jdp.input.value = "";
             jdp.hide();
         }, "خالی");
+    }
+
+    if (jdp.options.showCloseBtn) {
+        createElement(CLOSE_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
+            jdp.hide();
+        }, "بستن");
     }
 };
 export const render = (jdp) => {

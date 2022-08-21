@@ -1,4 +1,7 @@
-﻿export default {
+﻿const isMobile=(/iphone|ipod|android|ie|blackberry|fennec/).test(window.navigator?.userAgent?.toLowerCase());
+import {clon} from "./utils/object";
+
+export default clon({
     days: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
 
     months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
@@ -42,10 +45,11 @@
 
     showTodayBtn: true,
     showEmptyBtn: true,
+    showCloseBtn: isMobile,
 
-    autoReadOnlyInput: (/iphone|ipod|android|ie|blackberry|fennec/).test(window.navigator?.userAgent?.toLowerCase()),
+    autoReadOnlyInput: isMobile,
     useDropDownYears: true,
     
     topSpace: 0,
     bottomSpace: 0
-};
+});
