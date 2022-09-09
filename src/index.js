@@ -128,6 +128,8 @@ const jalaliDatepicker = {
         this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
         setTimeout(() => {
             this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
+            this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
+            this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
         }, 50);
         this.setPosition();
         setScrollOnParent(input);
