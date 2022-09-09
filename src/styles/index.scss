@@ -16,6 +16,21 @@ $calendarForeground: color.change($invertedBg, $alpha: 0.9);
 $activeColor: #569ff7;
 $mobileQuerySize:481px;
 
+jdp-overlay{
+    width: 0px;
+    height: 0px;
+    @media only screen and (max-width: $mobileQuerySize) {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background-color: rgba(0,0,0,0.3);
+        backdrop-filter: blur(2px);
+        -webkit-backdrop-filter: blur(2px);
+        display: none;
+    }
+}
 jdp-container {
     position: absolute;
     max-width: $calendarWidth;
@@ -38,11 +53,14 @@ jdp-container {
     animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
 
     @media only screen and (max-width: $mobileQuerySize) {
-        max-width: $calendarWidth;
-        width: 80%;
+        max-width: 100%;
+        width: 100%;
         left: 50% !important;
+        bottom: 0% !important;
+        top: unset !important;
         transform: translateX(-50%) !important;
         min-width: 280px;
+        border-radius: $radius $radius 0 0;
     }
 
     &, *, *::after, *::before {
@@ -190,6 +208,7 @@ jdp-container {
             &.selected {
                 background-color: $activeColor !important;
                 color: #fff !important;
+                opacity: 1 !important;
             }
 
             &.last-week,&.holly-day {
@@ -239,6 +258,9 @@ jdp-container {
             -ms-flex-wrap: nowrap;
             -ms-flex-pack: justify;
             justify-content: space-between;
+            @media only screen and (max-width: $mobileQuerySize) {
+                margin: .5rem 0;
+            }
         }
 
         &-btn {
@@ -256,13 +278,18 @@ jdp-container {
                 color: #fff;
                 cursor: pointer;
 
+                @media only screen and (max-width: $mobileQuerySize) {
+                    padding: 0.5em 0.8em;
+                    font-size: 100%;
+                }
+
                 &.disabled-btn {
                     opacity: .2;
                     cursor: not-allowed;
                 }
             }
 
-            &-empty{
+            &-today ~ .jdp-btn-empty{
                 @media only screen and (max-width: $mobileQuerySize) {
                     margin-right: 1em;
                     margin-left: auto;
@@ -282,7 +309,6 @@ jdp-container {
                 select {
                     padding: 0.5rem 1rem 0.5rem 7px;
                     background: color.change($invertedBg, $alpha: 0.03);
-                    ;
                     border-radius: 5px;
                 }
 
@@ -299,6 +325,22 @@ jdp-container {
                 &:first-child:after {
                     display: none
                 }
+            }
+
+            &.jdp-only-time{
+                .jdp-time{
+                    select {
+                        padding: .8rem 1rem .8rem 7px;
+                        font-size: 1.5rem;
+                    }
+
+                    &:after {
+                        position: absolute;
+                        right: -.8rem;
+                        font-size: 2.3rem;
+                    }
+                }
+
             }
         }
     }

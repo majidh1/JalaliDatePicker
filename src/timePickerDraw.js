@@ -42,7 +42,8 @@ const timeDropDownRender = (jdp, timePickerContainer, type) => {
 };
 
 export const renderTimePicker = (jdp) => {
-    const timePickerContainer = createElement(FOOTER_TIME_ELM_QUERY, jdp.dpContainer);
+    const elmQuery=FOOTER_TIME_ELM_QUERY+((jdp.options.time && !jdp.options.date) ? ".jdp-only-time" : "");
+    const timePickerContainer = createElement(elmQuery, jdp.dpContainer);
     if (jdp.options.hasSecond) {
         timeDropDownRender(jdp, timePickerContainer, "second");
     }

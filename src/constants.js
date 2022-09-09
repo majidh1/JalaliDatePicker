@@ -1,5 +1,6 @@
 export const NAMESPACE = "jdp";
 export const CONTAINER_ELM_QUERY = `${NAMESPACE}-container`;
+export const OVERLAY_ELM_QUERY = `${NAMESPACE}-overlay`;
 export const YEARS_ELM_QUERY = `div.${NAMESPACE}-years`;
 export const YEAR_ELM_QUERY = `div.${NAMESPACE}-year`;
 export const MONTHS_ELM_QUERY = `div.${NAMESPACE}-months`;

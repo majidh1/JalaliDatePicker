@@ -25,6 +25,7 @@ import {
 } from "./utils/jalali";
 import {
     CONTAINER_ELM_QUERY,
+    OVERLAY_ELM_QUERY,
     EVENT_FOCUS_STR,
     EVENT_CHANGE_INPUT_STR,
     MIN_MAX_TODAY_SETTING,
@@ -55,7 +56,13 @@ const jalaliDatepicker = {
     options: defaults,
     input: null,
     get dpContainer() {
-        this._dpContainer = this._dpContainer || createElement(CONTAINER_ELM_QUERY, this.options.container);
+        if(!this._dpContainer){
+            this._dpContainer = createElement(CONTAINER_ELM_QUERY, this.options.container);
+            this.overlayElm = createElement(OVERLAY_ELM_QUERY, this.options.container);
+            
+            this.dpContainer.style.zIndex = this.options.zIndex;
+            this.overlayElm.style.zIndex = this.options.zIndex-1;
+        }
         return this._dpContainer;
     },
     get today() {
@@ -119,7 +126,9 @@ const jalaliDatepicker = {
         this._draw();
         this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
         this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-        this.dpContainer.style.zIndex = this.options.zIndex;
+        setTimeout(() => {
+            this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
+        }, 50);
         this.setPosition();
         setScrollOnParent(input);
         setReadOnly(input, this.options);
@@ -127,6 +136,7 @@ const jalaliDatepicker = {
     hide() {
         this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
         this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
+        this.overlayElm.style.display = STYLE_DISPLAY_HIDDEN;
     },
     setPosition() {
         if (this.dpContainer.style.visibility !== STYLE_VISIBILITY_VISIBLE) {
@@ -232,7 +242,7 @@ const normalizeOptions = (options) => {
     if(!isUndefined(jalaliDatepicker.options._time) && isUndefined(options.time)){
         options.time=jalaliDatepicker.options._time;
     }
-
+    options.separatorChars=extend(jalaliDatepicker.options.separatorChars,options.separatorChars);
     options=extend({},jalaliDatepicker.options, options);
     if (options.minDate === MIN_MAX_TODAY_SETTING) options.minDate = clon(jalaliDatepicker.today);
     if (options.maxDate === MIN_MAX_TODAY_SETTING) options.maxDate = clon(jalaliDatepicker.today);

@@ -1,6 +1,24 @@
 /*!********************************************************************************************************************************************!*\
   !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/styles/index.scss ***!
   \********************************************************************************************************************************************/
+jdp-overlay {
+  width: 0px;
+  height: 0px;
+}
+@media only screen and (max-width: 481px) {
+  jdp-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    display: none;
+  }
+}
+
 jdp-container {
   position: absolute;
   max-width: 307.875px;
@@ -24,11 +42,14 @@ jdp-container {
 }
 @media only screen and (max-width: 481px) {
   jdp-container {
-    max-width: 307.875px;
-    width: 80%;
+    max-width: 100%;
+    width: 100%;
     left: 50% !important;
+    bottom: 0% !important;
+    top: unset !important;
     transform: translateX(-50%) !important;
     min-width: 280px;
+    border-radius: 4px 4px 0 0;
   }
 }
 jdp-container, jdp-container *, jdp-container *::after, jdp-container *::before {
@@ -153,6 +174,7 @@ jdp-container .jdp-day.today, jdp-container .jdp-day-name.today {
 jdp-container .jdp-day.selected, jdp-container .jdp-day-name.selected {
   background-color: #569ff7 !important;
   color: #fff !important;
+  opacity: 1 !important;
 }
 jdp-container .jdp-day.last-week, jdp-container .jdp-day.holly-day, jdp-container .jdp-day-name.last-week, jdp-container .jdp-day-name.holly-day {
   color: #f44336;
@@ -193,6 +215,11 @@ jdp-container .jdp-footer {
   -ms-flex-pack: justify;
   justify-content: space-between;
 }
+@media only screen and (max-width: 481px) {
+  jdp-container .jdp-footer {
+    margin: 0.5rem 0;
+  }
+}
 jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty, jdp-container .jdp-btn-close {
   background: #569ff7;
   font-size: 90%;
@@ -204,12 +231,18 @@ jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty, jdp-container .jdp-b
   color: #fff;
   cursor: pointer;
 }
+@media only screen and (max-width: 481px) {
+  jdp-container .jdp-btn-today, jdp-container .jdp-btn-empty, jdp-container .jdp-btn-close {
+    padding: 0.5em 0.8em;
+    font-size: 100%;
+  }
+}
 jdp-container .jdp-btn-today.disabled-btn, jdp-container .jdp-btn-empty.disabled-btn, jdp-container .jdp-btn-close.disabled-btn {
   opacity: 0.2;
   cursor: not-allowed;
 }
 @media only screen and (max-width: 481px) {
-  jdp-container .jdp-btn-empty {
+  jdp-container .jdp-btn-today ~ .jdp-btn-empty {
     margin-right: 1em;
     margin-left: auto;
   }
@@ -239,6 +272,15 @@ jdp-container .jdp-time-container .jdp-time:after {
 }
 jdp-container .jdp-time-container .jdp-time:first-child:after {
   display: none;
+}
+jdp-container .jdp-time-container.jdp-only-time .jdp-time select {
+  padding: 0.8rem 1rem 0.8rem 7px;
+  font-size: 1.5rem;
+}
+jdp-container .jdp-time-container.jdp-only-time .jdp-time:after {
+  position: absolute;
+  right: -0.8rem;
+  font-size: 2.3rem;
 }
 
 @-webkit-keyframes jdpOpenAnimation {

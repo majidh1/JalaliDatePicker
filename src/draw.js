@@ -24,7 +24,7 @@ import {
 
 const renderFooter = (jdp) => {
     const footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer);
-    if (jdp.options.showTodayBtn) {
+    if (jdp.options.showTodayBtn && jdp.options.date) {
         const isActiveToday = isValidDateToday(jdp);
         createElement(TODAY_BTN_ELM_QUERY + (isActiveToday ? "" : ".disabled-btn"), footerContainer, EVENT_CLICK_STR, () => {
             isActiveToday && jdp.setValue(jdp.today);
@@ -51,9 +51,7 @@ export const render = (jdp) => {
     if (jdp.options.time) {
         renderTimePicker(jdp);
     }
-    if (jdp.options.date) {
-        renderFooter(jdp);
-    }
+    renderFooter(jdp);
 };
 
 export default function () {
