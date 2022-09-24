@@ -48,6 +48,12 @@
 <link type="text/css" rel="stylesheet" href="jalalidatepicker.min.css" />
 <script type="text/javascript" src="jalalidatepicker.min.js"></script>
 ```
+یا استفاده از CDN
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+<script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js">
+```
 
  </div>
  3- به inputهای مورد نیاز Attribute زیر را  اضافه کنید.
