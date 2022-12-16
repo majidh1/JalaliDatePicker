@@ -38,7 +38,7 @@ import {
 } from "./utils/jalali";
 
 import {
-    createElement
+    createElement, toPersianDigitsIfNeeded
 } from "./utils/dom";
 
 const getLastWeekClassIfNessesary = (dayOfWeek) => {
@@ -76,7 +76,7 @@ const renderYear = (jdp) => {
         for (let i = validYears.min; i <= validYears.max; i++) {
             const optionElm = createElement("option", yearInput);
             optionElm.value = i;
-            optionElm.text = i;
+            optionElm.text = toPersianDigitsIfNeeded(i, jdp.options.persianDigits);
             optionElm.selected = i === jdp.initDate.year;
         }
     } else {
@@ -102,7 +102,7 @@ const renderMonths = (jdp) => {
     for (let i = 0; i < months.length; i++) {
         const optionElm = createElement("option", monthDropDownContainer);
         optionElm.value = months[i];
-        optionElm.text = monthsName[months[i] - 1];
+        optionElm.text = toPersianDigitsIfNeeded(monthsName[months[i] - 1], jdp.options.persianDigits);
         optionElm.selected = months[i] === jdp.initDate.month;
     }
 };
@@ -110,7 +110,7 @@ const renderMonths = (jdp) => {
 const renderDays = (jdp) => {
     const daysContainer = createElement(DAYS_ELM_QUERY, jdp.dpContainer);
     for (let i = 0; i < 7; i++) { //nameOfDay
-        createElement(DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i), daysContainer, null, null, jdp.options.days[i]);
+        createElement(DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i), daysContainer, null, null, toPersianDigitsIfNeeded(jdp.options.days[i], jdp.options.persianDigits));
     }
     const setDefaultOptions = (opt) => {
         if (!opt.day || opt.inBeforeMonth) {
@@ -191,7 +191,7 @@ const renderDays = (jdp) => {
             }
         }
 
-        const dayContainer = createElement(query + dayOptions.className, daysContainer, null, null, dayOptions.day);
+        const dayContainer = createElement(query + dayOptions.className, daysContainer, null, null, dayOptions.day, jdp.options.persianDigits);
         dayContainer.day = dayOptions.day;
         dayContainer.month = dayOptions.month;
         dayContainer.year = dayOptions.year;

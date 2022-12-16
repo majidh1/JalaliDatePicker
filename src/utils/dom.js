@@ -63,7 +63,7 @@ const addListenerMulti = (element, eventNames, listener) => {
         element.addEventListener(events[i], listener, false);
     }
 };
-export const createElement = (tag, parent, eventNames, event, content) => {
+export const createElement = (tag, parent, eventNames, event, content, persianDigits) => {
     const splits = tag.split(".");
     tag = splits.shift() || "div";
     const className = splits;
@@ -81,11 +81,17 @@ export const createElement = (tag, parent, eventNames, event, content) => {
         addListenerMulti(element, eventNames, event);
     }
     if (!isUndefined(content)) {
-        setInnerHTML(element, content);
+        setInnerHTML(element, toPersianDigitsIfNeeded(content, persianDigits));
     }
     return element;
 };
 
 export const setInnerHTML = (element, html) => {
     element.innerHTML = html;
+};
+
+export const toPersianDigitsIfNeeded = (data, convert) => {
+    if (convert)
+        return data.toString().replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+    return data;
 };
