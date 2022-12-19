@@ -30,6 +30,12 @@ const renderFooter = (jdp) => {
             isActiveToday && jdp.setValue(jdp.today);
         }, "امروز");
     }
+    if(!jdp.options.date && jdp.options.time && !jdp.input?.value){
+        createElement(TODAY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
+            jdp.setValue(jdp.initTime);
+            jdp.hide();
+        }, "انتخاب");
+    }
     if (jdp.options.showEmptyBtn) {
         createElement(EMPTY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
             jdp.input.value = "";

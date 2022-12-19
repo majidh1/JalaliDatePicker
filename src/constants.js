@@ -35,8 +35,10 @@ export const EVENT_FOCUS_STR = "focusin";
 
 export const MIN_MAX_TODAY_SETTING = "today";
 export const MIN_MAX_ATTR_SETTING = "attr";
-export const MIN_MAX_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-max-date";
-export const MIN_MAX_ATTR_SETTING_MIN_ATTR_NAME = "data-jdp-min-date";
+export const MAX_DATE_ATTR_NAME = "data-jdp-max-date";
+export const MIN_DATE_ATTR_NAME = "data-jdp-min-date";
+export const MAX_TIME_ATTR_NAME = "data-jdp-max-time";
+export const MIN_TIME_ATTR_NAME = "data-jdp-min-time";
 export const ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-date";
 export const ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-time";
 

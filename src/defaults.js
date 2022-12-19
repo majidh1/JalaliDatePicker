@@ -23,6 +23,10 @@ export default clon({
     //sample {year:1400,month:11,day:29} || today || attr
     maxDate: {},
 
+    minTime: {},
+
+    maxTime: {},
+
     separatorChars: {
         date:"/",
         between:" ",

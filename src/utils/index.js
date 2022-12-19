@@ -50,6 +50,52 @@ export const normalizeMinMaxDate = (jdp, dateObj, updateObj) => {
     };
 };
 
+export const normalizeMinMaxTime = (jdp, timeObj, updateObj) => {
+    const _timeObj = extend(timeObj, updateObj);
+    const initTime = jdp.initTime;
+    const maxTime = jdp.options.maxTime;
+    const minTime = jdp.options.minTime;
+    let hour = _timeObj.hour;
+    let minute = _timeObj.minute;
+    let second = _timeObj.second;
+
+    if (isNaN(hour) || hour < 0 || hour > 23) {
+        hour = initTime.hour;
+    } else {
+        if (hour < minTime.hour) {
+            hour = minTime.hour;
+        } else if (hour > maxTime.hour) {
+            hour = maxTime.hour;
+        }
+    }
+
+    if (isNaN(minute) || minute < 0 || minute > 59) {
+        minute = initTime.minute;
+    } else {
+        if (hour <= minTime.hour && minute < minTime.minute) {
+            minute = minTime.minute;
+        } else if (hour >= maxTime.hour && minute > maxTime.minute) {
+            minute = maxTime.minute;
+        }
+    }
+
+    if (isNaN(second) || second < 0 || second > 59) {
+        second = initTime.second;
+    } else {
+        if (hour <= minTime.hour && minute <= minTime.minute && second < minTime.second) {
+            second = minTime.second;
+        } else if (hour >= maxTime.hour && minute >= maxTime.minute && second > maxTime.second) {
+            second = maxTime.second;
+        }
+    }
+
+    return {
+        hour: parseInt(hour),
+        minute: parseInt(minute),
+        second: parseInt(second)
+    };
+};
+
 export const getValidYears = (jdp) => {
     function rnd(val) {
         return Math.round(val / 100) * 100;
@@ -136,9 +182,9 @@ export const getValueObjectFromString = (jdp, str) => {
         year: parseInt(date[0]),
         month: parseInt(date[1]),
         day: parseInt(date[2]),
-        hour: parseInt(time[0]) || undefined,
-        minute: parseInt(time[1]) || undefined,
-        second: parseInt(time[2]) || undefined
+        hour: parseInt(time[0]),
+        minute: parseInt(time[1]),
+        second: parseInt(time[2])
     };
 };
 

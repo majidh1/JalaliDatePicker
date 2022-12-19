@@ -55,7 +55,7 @@
         <input data-jdp placeholder="max Today" data-jdp-max-date="today"/>
         <input data-jdp placeholder="max 1401/10/11" data-jdp-max-date="1401/10/11"/>
         <input data-jdp placeholder="min 1401/03/11" data-jdp-min-date="1401/03/11"/>
-        <input data-jdp placeholder="only time" data-jdp-only-time/>
+        <input data-jdp placeholder="only time" data-jdp-only-time data-jdp-min-time="20:10:10" data-jdp-max-time="20:20:10"/>
         <input data-jdp placeholder="only date" data-jdp-only-date/>
         <div style="height: 400px"></div>
         <input data-jdp placeholder="has jdp" />
@@ -68,6 +68,8 @@
         jalaliDatepicker.startWatch({
             minDate: "attr",
             maxDate: "attr",
+            minTime: "attr",
+            maxTime: "attr",
             time: true,
             changeMonthRotateYear: true,
             showTodayBtn: true,
