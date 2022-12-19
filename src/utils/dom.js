@@ -63,7 +63,7 @@ const addListenerMulti = (element, eventNames, listener) => {
         element.addEventListener(events[i], listener, false);
     }
 };
-export const createElement = (tag, parent, eventNames, event, content, persianDigits) => {
+export const createElement = (tag, parent, eventNames, event, content) => {
     const splits = tag.split(".");
     tag = splits.shift() || "div";
     const className = splits;
@@ -81,7 +81,7 @@ export const createElement = (tag, parent, eventNames, event, content, persianDi
         addListenerMulti(element, eventNames, event);
     }
     if (!isUndefined(content)) {
-        setInnerHTML(element, toPersianDigitsIfNeeded(content, persianDigits));
+        setInnerHTML(element, content);
     }
     return element;
 };

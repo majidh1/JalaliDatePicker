@@ -191,7 +191,7 @@ const renderDays = (jdp) => {
             }
         }
 
-        const dayContainer = createElement(query + dayOptions.className, daysContainer, null, null, dayOptions.day, jdp.options.persianDigits);
+        const dayContainer = createElement(query + dayOptions.className, daysContainer, null, null, toPersianDigitsIfNeeded(dayOptions.day, jdp.options.persianDigits));
         dayContainer.day = dayOptions.day;
         dayContainer.month = dayOptions.month;
         dayContainer.year = dayOptions.year;
