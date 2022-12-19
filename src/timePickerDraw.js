@@ -10,7 +10,7 @@ import {
 } from "./utils/object";
 
 import {
-    createElement
+    createElement, toPersianDigitsIfNeeded
 } from "./utils/dom";
 
 import {
@@ -72,7 +72,7 @@ const timeDropDownRender = (jdp, timePickerContainer, type) => {
     for (let i = 0; i < items.length; i++) {
         const optionElm = createElement("option", dropDownContainer);
         optionElm.value = items[i];
-        optionElm.text = items[i];
+        optionElm.text = toPersianDigitsIfNeeded(items[i], jdp.options.persianDigits);
         optionElm.selected = parseInt(items[i]) === parseInt(jdp.getValue[type] || jdp.initTime[type]);
     }
 };

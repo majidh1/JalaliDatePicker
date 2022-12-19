@@ -48,6 +48,12 @@
 <link type="text/css" rel="stylesheet" href="jalalidatepicker.min.css" />
 <script type="text/javascript" src="jalalidatepicker.min.js"></script>
 ```
+یا استفاده از CDN
+
+```html
+<link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
+<script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js">
+```
 
  </div>
  3- به inputهای مورد نیاز Attribute زیر را  اضافه کنید.
@@ -103,6 +109,7 @@ key | default | description
 `autoHide` | true | مخفی شدن خودکار
 `useDropDownYears` | true | انتخاب سال به صورت DropDown
 `separatorChars` | date,between,time |  جداکننده بین سال، ماه و روز و بین تاریخ و زمان
+`persianDigits` | false | استفاده از کارکترهای یونیکد فارسی به جای کارکترهای انگلیسی
 `minDate` | null | مشخص کننده حداقل تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-min-date` attrubute  است
 `maxDate` | null | مشخص کننده حداکثر تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-max-date` attrubute  است
 `initDate` | null | تاریخی که به صورت پیشفرض نمایش داده می‌شود در صورتی که تنظیم نشود برابر است با `روز جاری`.

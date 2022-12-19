@@ -33,6 +33,8 @@ export default clon({
         time:":"
     },
 
+    persianDigits: false,
+
     zIndex: 1000,
 
     container: "body",
