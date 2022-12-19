@@ -89,3 +89,9 @@ export const createElement = (tag, parent, eventNames, event, content) => {
 export const setInnerHTML = (element, html) => {
     element.innerHTML = html;
 };
+
+export const toPersianDigitsIfNeeded = (data, convert) => {
+    if (convert)
+        return data.toString().replace(/\d/g, d => "۰۱۲۳۴۵۶۷۸۹"[d]);
+    return data;
+};
