@@ -24,6 +24,11 @@
  <br/>
  
  <br/>
+ 
+ ## The English version of the documentation may be available [Here](/README-en.md).
+
+ <br />
+ <br />
 
 [نصب و استفاده](#نصب-و-استفاده)
 
