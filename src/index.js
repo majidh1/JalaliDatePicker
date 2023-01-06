@@ -133,11 +133,13 @@ const jalaliDatepicker = {
         setReadOnly(input, this.options);
         this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
         this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
+        this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
         setTimeout(() => {
-            this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
             this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
             this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-        }, 50);
+            this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
+            this.isShow=true;
+        }, 300);
         this.setPosition();
         setScrollOnParent(input);
     },
@@ -145,6 +147,7 @@ const jalaliDatepicker = {
         this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
         this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
         this.overlayElm.style.display = STYLE_DISPLAY_HIDDEN;
+        this.isShow = false;
     },
     setPosition() {
         if (this.dpContainer.style.visibility !== STYLE_VISIBILITY_VISIBLE) {
@@ -334,7 +337,7 @@ const normalizeOptions = (options) => {
 };
 
 function documentClick(e) {
-    if (jalaliDatepicker.dpContainer.style.visibility !== STYLE_VISIBILITY_VISIBLE ||
+    if (!jalaliDatepicker.isShow ||
         containsDom(jalaliDatepicker.dpContainer, e) ||
         getEventTarget(e) === jalaliDatepicker.input
     ) {
