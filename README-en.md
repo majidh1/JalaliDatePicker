@@ -131,7 +131,8 @@ Key | Default | Description
 `hasSecond` | true: bool | Can choose second when the `time` on
 `initTime` | null: string | Default time
 `autoShow` | true: bool | Auto show wherever `data-jdp` is present
-`autoHide` | true: bool | Auto hide after choose time
+`autoHide` | true: bool | Auto hide after click out of datepicker or input
+`hideAfterChange` | true: bool | hide after choose a dateTime
 `useDropDownYears` | true: bool | Can choose year with Dropdown
 `separatorChars` | date,between,time |  Separator between date and time as well as between year, month, and day
 `persianDigits` | false: bool | replacing English letters with Persian Unicode characters

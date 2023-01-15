@@ -1,4 +1,10 @@
 
+## نسخه 0.9.2
+
+افزودن تنظیم جدید hideAfterChange برای مخفی  نشدن بعد از انتخاب تاریخ
+
+[issue52](https://github.com/majidh1/JalaliDatePicker/issues/52)
+
 ## نسخه 0.9.1
 
 اصلاحات جزئی

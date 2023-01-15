@@ -111,7 +111,8 @@ key | default | description
 `hasSecond` | true | امکان ثانیه در انتخاب زمان
 `initTime` | null | زمان پیشفرض
 `autoShow` | true | نمایش خودکار
-`autoHide` | true | مخفی شدن خودکار
+`autoHide` | true | مخفی شدن خودکار هنگام کلیک خارج دیتپیکر یا اینپوت
+`hideAfterChange` | true | مخفی شدن بعد از انتخاب تاریخ
 `useDropDownYears` | true | انتخاب سال به صورت DropDown
 `separatorChars` | date,between,time |  جداکننده بین سال، ماه و روز و بین تاریخ و زمان
 `persianDigits` | false | استفاده از کارکترهای یونیکد فارسی به جای کارکترهای انگلیسی

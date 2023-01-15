@@ -3,7 +3,8 @@
     FOOTER_ELM_QUERY,
     TODAY_BTN_ELM_QUERY,
     EMPTY_BTN_ELM_QUERY,
-    CLOSE_BTN_ELM_QUERY
+    CLOSE_BTN_ELM_QUERY,
+    EVENT_CHANGE_INPUT_STR
 } from "./constants";
 
 import {
@@ -12,7 +13,8 @@ import {
 
 import {
     createElement,
-    setInnerHTML
+    setInnerHTML,
+    triggerEvent
 } from "./utils/dom";
 
 import {
@@ -39,6 +41,7 @@ const renderFooter = (jdp) => {
     if (jdp.options.showEmptyBtn) {
         createElement(EMPTY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
             jdp.input.value = "";
+            triggerEvent(jdp.input, EVENT_CHANGE_INPUT_STR);
             jdp.hide();
         }, "خالی");
     }

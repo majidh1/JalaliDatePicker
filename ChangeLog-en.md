@@ -1,4 +1,9 @@
 
+# V0.9.2
+
+added new config => hideAfterChange
+fixed https://github.com/majidh1/JalaliDatePicker/issues/52
+
 # V0.9.1
 
 minor reform
