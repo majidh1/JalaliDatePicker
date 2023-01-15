@@ -188,7 +188,7 @@ const jalaliDatepicker = {
         this._initTime = null;
         this.input.value = getValueStringFromValueObject(this, this._value);
         triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
-        if (!this.options.time && this.options.autoHide) {
+        if (!this.options.time && this.options.hideAfterChange) {
             this.hide();
         } else {
             this._draw();
