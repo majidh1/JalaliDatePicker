@@ -396,12 +396,16 @@ window.jalaliDatepicker = {
         jalaliDatepicker.updateOptions(options);
     },
     get date() {
+        if (!jalaliDatepicker.input?.value)
+            return null;
         const input = jalaliDatepicker.inputValue;
         for (const property in input)
             input[property] = input[property] || 0;
         return new Date(input.year, input.month, input.day, input.hour, input.minute, input.second);
     },
     get gregorianDate() {
+        if (!jalaliDatepicker.input?.value)
+            return null;
         const input = jalaliDatepicker.inputValue;
         const gregorianObject = toGregorian(input.year, input.month, input.day);
         for (const property in input)
