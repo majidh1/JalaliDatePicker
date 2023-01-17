@@ -25,6 +25,9 @@ import {
     jalaliToday
 } from "./utils/jalali";
 import {
+    toGregorian
+} from "./utils/convert";
+import {
     CONTAINER_ELM_QUERY,
     OVERLAY_ELM_QUERY,
     EVENT_FOCUS_STR,
@@ -138,7 +141,7 @@ const jalaliDatepicker = {
             this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
             this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
             this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
-            this.isShow=true;
+            this.isShow = true;
         }, 300);
         this.setPosition();
         setScrollOnParent(input);
@@ -297,7 +300,7 @@ const normalizeOptions = (options) => {
         options._minTimeIsAttr = true;
         window.Object.defineProperty(options, "minTime", {
             get: () => {
-                return getDefaultFromAttr(MIN_TIME_ATTR_NAME,true);
+                return getDefaultFromAttr(MIN_TIME_ATTR_NAME, true);
             },
             enumerable: true
         });
@@ -307,7 +310,7 @@ const normalizeOptions = (options) => {
         options._maxTimeIsAttr = true;
         window.Object.defineProperty(options, "maxTime", {
             get: () => {
-                return getDefaultFromAttr(MAX_TIME_ATTR_NAME,true);
+                return getDefaultFromAttr(MAX_TIME_ATTR_NAME, true);
             },
             enumerable: true
         });
@@ -359,7 +362,7 @@ function setScrollOnParent(input) {
 }
 
 function setReadOnly(input, options) {
-    if (options.autoReadOnlyInput && !input.readOnly){
+    if (options.autoReadOnlyInput && !input.readOnly) {
         input.setAttribute("readonly", "readonly");
         input.readOnly = true;
     }
@@ -391,5 +394,18 @@ window.jalaliDatepicker = {
     },
     updateOptions(options) {
         jalaliDatepicker.updateOptions(options);
+    },
+    get date() {
+        const input = jalaliDatepicker.inputValue;
+        for (const property in input)
+            input[property] = input[property] || 0;
+        return new Date(input.year, input.month, input.day, input.hour, input.minute, input.second);
+    },
+    get gregorianDate() {
+        const input = jalaliDatepicker.inputValue;
+        const gregorianObject = toGregorian(input.year, input.month, input.day);
+        for (const property in input)
+            input[property] = input[property] || 0;
+        return new Date(gregorianObject.year, gregorianObject.month, gregorianObject.day, input.hour, input.minute, input.second);
     }
 };

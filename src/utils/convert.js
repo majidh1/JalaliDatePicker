@@ -125,9 +125,9 @@ const d2g = (jdn) => {
     const gm = mod(div(i, 153), 12) + 1;
     const gy = div(j, 1461) - 100100 + div(8 - gm, 6);
     return {
-        gy: gy,
-        gm: gm,
-        gd: gd
+        year: gy,
+        month: gm,
+        day: gd
     };
 };
 
