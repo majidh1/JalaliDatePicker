@@ -1,3 +1,5 @@
+// all the credit for this file goes to https://github.com/jalaali/jalaali-js
+
 /*
   Jalaali years starting the 33-year rule.
 */
