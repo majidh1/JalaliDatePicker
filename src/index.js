@@ -87,6 +87,11 @@ const jalaliDatepicker = {
         return inputValue;
     },
     get initDate() {
+
+        if(this.options.initDate)
+        {
+            return this.options.initDate;
+        }
         if (this._initDate) {
             return this._initDate;
         }
@@ -404,4 +409,5 @@ window.jalaliDatepicker = {
     updateOptions(options) {
         jalaliDatepicker.updateOptions(options);
     }
+
 };
