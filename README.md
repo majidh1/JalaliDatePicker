@@ -136,6 +136,9 @@ key | default | description
 `bottomSpace` | 0 | فضای خالی بین پایین datePicker و input (زمانی که دیتپیکر در بالای اینپوت هست)
 `dayRendering` | - | متد رندر یک روز خروجی یک آبجکت از تنظیمات روز است
 
+#### نمونه‌های codepen:
+[لینک کالکشن](https://codepen.io/collection/wajWMo)
+
 #### مثال dayRendering:
 برای نمایش تعطیلی 4 روز ابتدایی سال
 <div dir="ltr">
