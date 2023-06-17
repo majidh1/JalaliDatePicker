@@ -31,6 +31,7 @@ import {
     EVENT_CHANGE_INPUT_STR,
     MIN_MAX_TODAY_SETTING,
     MIN_MAX_ATTR_SETTING,
+    INIT_DATE_ATTR_NAME,
     MAX_DATE_ATTR_NAME,
     MIN_DATE_ATTR_NAME,
     MAX_TIME_ATTR_NAME,
@@ -86,6 +87,11 @@ const jalaliDatepicker = {
         return inputValue;
     },
     get initDate() {
+
+        if(this.options.initDate)
+        {
+            return this.options.initDate;
+        }
         if (this._initDate) {
             return this._initDate;
         }
@@ -271,6 +277,17 @@ const normalizeOptions = (options) => {
     if (options.minDate === MIN_MAX_TODAY_SETTING) options.minDate = clon(jalaliDatepicker.today);
     if (options.maxDate === MIN_MAX_TODAY_SETTING) options.maxDate = clon(jalaliDatepicker.today);
 
+    if (options.initDate === MIN_MAX_ATTR_SETTING || options._initDateIsAttr) {
+        delete options.initDate;
+        options._initDateIsAttr = true;
+        window.Object.defineProperty(options, "initDate", {
+            get: () => {
+                return getDefaultFromAttr(INIT_DATE_ATTR_NAME);
+            },
+            enumerable: true
+        });
+    }
+
     if (options.minDate === MIN_MAX_ATTR_SETTING || options._minDateIsAttr) {
         delete options.minDate;
         options._minDateIsAttr = true;
@@ -392,4 +409,5 @@ window.jalaliDatepicker = {
     updateOptions(options) {
         jalaliDatepicker.updateOptions(options);
     }
+
 };
