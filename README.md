@@ -114,7 +114,7 @@ key | default | description
 `autoHide` | true | مخفی شدن خودکار هنگام کلیک خارج دیتپیکر یا اینپوت
 `hideAfterChange` | true | مخفی شدن بعد از انتخاب تاریخ
 `useDropDownYears` | true | انتخاب سال به صورت DropDown
-`separatorChars` | date,between,time |  جداکننده بین سال، ماه و روز و بین تاریخ و زمان
+`separatorChars(object)` | date: `'/'` <br/> between: `' '` <br/> time: `':'` |  جداکننده بین سال، ماه و روز<br/>جداکننده بین تاریخ و زمان<br/>جداکننده بین ساعت، دقیقه و ثانیه
 `persianDigits` | false | استفاده از کارکترهای یونیکد فارسی به جای کارکترهای انگلیسی
 `minDate` | null | مشخص کننده حداقل تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-min-date` attrubute  است
 `maxDate` | null | مشخص کننده حداکثر تاریخ. در صورتی که برابر با `today` باشد `روز جاری` است. در صورتی که برابر با `attr` باشد برابر با مقدار `data-jdp-max-date` attrubute  است
