@@ -134,7 +134,7 @@ Key | Default | Description
 `autoHide` | true: bool | Auto hide after click out of datepicker or input
 `hideAfterChange` | true: bool | hide after choose a dateTime
 `useDropDownYears` | true: bool | Can choose year with Dropdown
-`separatorChars` | date,between,time |  Separator between date and time as well as between year, month, and day
+`separatorChars(option)` | date: `'/'` <br/> between: `' '` <br/> time: `':'` |  Separator between year, month, day <br/> Separator between date and time <br/>Separator between hour, min, sec
 `persianDigits` | false: bool | replacing English letters with Persian Unicode characters
 `minDate` | `null`: string | Date minimum specifier. It is the current day if it equals `today`. If not, it is equivalent to the `data-attribute-jdp-min-date`
 `maxDate` | `null`: string | Date maximum specifier. It is the current day if it equals `today`. If not, it is equivalent to the `data-attribute-jdp-max-date`
