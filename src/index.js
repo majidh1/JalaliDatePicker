@@ -50,8 +50,8 @@ import defaults from "./defaults";
 const jalaliDatepicker = {
     init(options) {
         this.updateOptions(options);
-        window.onresize = windowResize;
-        if (this.options.autoHide) document.body.onclick = documentClick;
+        addEventListenerOnResize();
+        if (this.options.autoHide) addEventListenerOnBody();
         if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);
     },
     updateOptions(options) {
@@ -353,20 +353,6 @@ const normalizeOptions = (options) => {
     return options;
 };
 
-function documentClick(e) {
-    if (!jalaliDatepicker.isShow ||
-        containsDom(jalaliDatepicker.dpContainer, e) ||
-        getEventTarget(e) === jalaliDatepicker.input
-    ) {
-        return;
-    }
-    jalaliDatepicker.hide();
-}
-
-function windowResize() {
-    jalaliDatepicker.setPosition();
-}
-
 function setScrollOnParent(input) {
     getScrollParent(input).addEventListener("scroll", function () {
         jalaliDatepicker.setPosition();
@@ -382,17 +368,35 @@ function setReadOnly(input, options) {
     }
 }
 
-function addEventListenerOnInputs(querySelector) {
+function addEventListenerOnResize() {
     Element.prototype.matches =
-        Element.prototype.matchesSelector ||
-        Element.prototype.mozMatchesSelector ||
-        Element.prototype.msMatchesSelector ||
-        Element.prototype.oMatchesSelector ||
-        Element.prototype.webkitMatchesSelector;
+    Element.prototype.matchesSelector ||
+    Element.prototype.mozMatchesSelector ||
+    Element.prototype.msMatchesSelector ||
+    Element.prototype.oMatchesSelector ||
+    Element.prototype.webkitMatchesSelector;
+    document.body.addEventListener("resize", (e) => {
+        jalaliDatepicker.setPosition();
+    });
+}
+
+function addEventListenerOnInputs(querySelector) {
     document.body.addEventListener(EVENT_FOCUS_STR, (e) => {
         if (e.target && e.target.matches(querySelector)) {
             jalaliDatepicker.show(e.target);
         }
+    });
+}
+
+function addEventListenerOnBody() {
+    document.body.addEventListener("click", (e) => {
+        if (!jalaliDatepicker.isShow ||
+            containsDom(jalaliDatepicker.dpContainer, e) ||
+            getEventTarget(e) === jalaliDatepicker.input
+        ) {
+            return;
+        }
+        jalaliDatepicker.hide();
     });
 }
 
