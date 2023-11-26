@@ -1,4 +1,8 @@
 
+# V0.9.4
+
+added new Event Listener
+
 # V0.9.3
 
 added new config => hideAfterChange

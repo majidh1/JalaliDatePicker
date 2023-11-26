@@ -375,7 +375,7 @@ function addEventListenerOnResize() {
     Element.prototype.msMatchesSelector ||
     Element.prototype.oMatchesSelector ||
     Element.prototype.webkitMatchesSelector;
-    document.body.addEventListener("resize", (e) => {
+    window.addEventListener("resize", () => {
         jalaliDatepicker.setPosition();
     });
 }
