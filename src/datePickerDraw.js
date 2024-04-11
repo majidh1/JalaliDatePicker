@@ -125,6 +125,7 @@ const renderDays = (jdp) => {
         opt.className = "";
         opt.year = jdp.initDate.year;
         opt.month = jdp.initDate.month;
+        opt.weekDay = getWeekDay(opt.year,opt.month,opt.day);
 
         return opt;
     };
@@ -132,14 +133,13 @@ const renderDays = (jdp) => {
     const dayOptions = setDefaultOptions({});
 
     const daysInMonth = getDaysInMonth(dayOptions.year, dayOptions.month);
-    const firstWeekDay = getWeekDay(dayOptions.year, dayOptions.month, 1);
-    const maxDaysInCalendar = 7 * (Math.ceil((firstWeekDay + daysInMonth) / 7)) - 1;
+    const startWeekDayInMonth = dayOptions.weekDay;
+    const maxDaysInCalendar = 7 * (Math.ceil((startWeekDayInMonth + daysInMonth) / 7)) - 1;
     const beforeMonthNumber = dayOptions.month == 1 ? 12 : dayOptions.month - 1;
     const afterMonthNumber = dayOptions.month == 12 ? 1 : dayOptions.month + 1;
     const beforeMonthYearNumber = beforeMonthNumber == 12 ? dayOptions.year - 1 : dayOptions.year;
     const afterMonthYearNumber = afterMonthNumber == 1 ? dayOptions.year + 1 : dayOptions.year;
     const beforeMonthDays = dayOptions.month == 1 ? getDaysInMonth(dayOptions.year - 1, beforeMonthNumber) : getDaysInMonth(dayOptions.year, beforeMonthNumber);
-    const startWeekDayInMonth = getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day);
     let beforeDayInMonth = beforeMonthDays - startWeekDayInMonth;
     let afterDayInMonth = 0;
 
