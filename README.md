@@ -36,6 +36,8 @@
 
 [تاریخچه تغییرات نسخه](https://github.com/majidh1/JalaliDatePicker/blob/main/ChangeLog.md)
  
+[نمونه پیاده سازی](https://github.com/majidh1/JalaliDatePicker/blob/main/Sample.md)
+ 
 ## نصب و استفاده
  1- با استفاده از npm یا فولدر dist در همین مخزن آخرین نسخه را دریافت کنید
  <br/>
