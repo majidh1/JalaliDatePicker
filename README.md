@@ -40,13 +40,14 @@
  
 ## نصب و استفاده
  1- با استفاده از npm یا فولدر dist در همین مخزن آخرین نسخه را دریافت کنید
- <br/>
- <div dir="ltr">
- &nbsp&nbsp&nbsp npm i @majidh1/jalalidatepicker
- <br/>&nbsp&nbsp &nbsp OR<br/>
- &nbsp&nbsp&nbsp https://github.com/majidh1/JalaliDatePicker => /dist/
- <br/>
- </div>
+
+```shell
+npm i @majidh1/jalalidatepicker
+```
+OR
+```html
+https://github.com/majidh1/JalaliDatePicker => /dist/
+```
  2- دوفایل زیر را به پروژه اضافه کنید
   <br/><br/>
  <div dir="ltr">
@@ -157,17 +158,15 @@ jalaliDatepicker.startWatch({
 })
 ```
 
-ATTR On Input:
+## ATTR On Input:
 
+```shell
 data-jdp
-
 data-jdp-min-date
-
 data-jdp-max-date
-
 data-jdp-only-date
-
 data-jdp-only-time
+```
               
           
 </div>
