@@ -1,4 +1,8 @@
 
+## نسخه 0.9.5
+
+افزودن کانفیگ overflowSpace
+
 ## نسخه 0.9.4
 
 تغییر EventListener به دلیل مشکل در zone.js

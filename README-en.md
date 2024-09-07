@@ -154,6 +154,7 @@ Key | Default | Description
 `autoReadOnlyInput` | `dynamic` | Make input 
 `topSpace` | `0: int` | The empty space between the top of the datepicker and the input (when the datepicker is at the bottom of the input)
 `bottomSpace` | `0`: int | The empty space between the top of the datepicker and the input (when the datepicker is at the top of the input)
+`bottomSpace` | `-10`: int | The empty space between the corner of the page (window) and datePicker (when the datepicker goes out of the page)
 `dayRendering` | `callable`: callable | The render method of a day is the output of an object from the day setting
 
 ### Example of _`dayRendering`_:

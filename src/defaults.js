@@ -58,5 +58,7 @@ export default clon({
     useDropDownYears: true,
     
     topSpace: 0,
-    bottomSpace: 0
+    bottomSpace: 0,
+
+    overflowSpace: -10
 });
