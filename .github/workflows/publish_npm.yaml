@@ -1,0 +1,53 @@
+name: publish npm
+
+on:
+  push:
+    branches:
+      - master
+  workflow_dispatch:
+
+jobs:
+  deploy_npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      # Setup Node.js
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12.x'
+          registry-url: 'https://registry.npmjs.org'
+
+      # Cache npm dependencies
+      - name: Cache node modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Install dependencies
+      - run: npm install
+      
+      # Check if version has changed
+      - name: Check for version change
+        id: version_check
+        run: |
+          git fetch --tags
+          latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1))
+          current_version=$(jq -r '.version' package.json)
+          if [ "$latest_tag" = "v$current_version" ]; then
+            echo "No version change, skipping publish."
+            exit 0
+          else
+            echo "Version changed, proceeding to publish."
+            echo "::set-output name=version_changed::true"
+          fi
+
+      # Publish to NPM if version has changed
+      - name: Publish NPM
+        if: steps.version_check.outputs.version_changed == 'true'
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
