@@ -69,9 +69,10 @@ const timeDropDownRender = (jdp, timePickerContainer, type) => {
     dropDownContainer.tabIndex = -1;
 
     const items = getItemForType();
+
     for (let i = 0; i < items.length; i++) {
         const optionElm = createElement("option", dropDownContainer);
-        optionElm.value = items[i];
+        optionElm.value = `'${items[i]}'`;
         optionElm.text = toPersianDigitsIfNeeded(items[i], jdp.options.persianDigits);
         optionElm.selected = parseInt(items[i]) === parseInt(jdp.getValue[type] || jdp.initTime[type]);
     }
