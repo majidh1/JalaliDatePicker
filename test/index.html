@@ -1,91 +1,96 @@
 ﻿<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
+  <head>
     <title>Test</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
     <script src="../dist/jalalidatepicker.js"></script>
     <link rel="stylesheet" href="../dist/jalalidatepicker.css" />
     <style>
-        .modal {
-            position: fixed;
-            top: 0;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            margin: auto;
-            background: #FFF;
-            box-shadow: 0 0 8px rgba(0,0,0,.3);
-            transition: margin-top 0.3s ease, height 0.3s ease;
-            transform: translateZ(0);
-            box-sizing: border-box;
-            z-index: 999;
-            border-radius: 3px;
-            max-width: 600px;
-            display: block;
-            height: 400px;
-            overflow: scroll;
-        }
+      .modal {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        background: #fff;
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+        transition: margin-top 0.3s ease, height 0.3s ease;
+        transform: translateZ(0);
+        box-sizing: border-box;
+        z-index: 999;
+        border-radius: 3px;
+        max-width: 600px;
+        display: block;
+        height: 400px;
+        overflow: scroll;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div style="height: 200px; overflow: scroll">
-        <div dir="rtl">
-            <input data-jdp placeholder="has jdp is" />
-            <br />
-            <input style="margin:0 200px" data-jdp data-jdp-min-date="#aaa" data-jdp-max-date="today" placeholder="test" />
-
-        </div>
-        <div style="max-width: 100px; margin: auto; padding: 0 0 700px 0;">
-            <br />
-            <input placeholder="no jdp" />
-            <br />
-            <br />
-            <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" />
-            <input data-jdp data-jdp-min-date="today" data-jdp-max-date="1401/10/16" onchange="console.log" id="aaa" placeholder="minOfTest"/>
-        </div>
+      <div dir="rtl">
+        <input data-jdp placeholder="has jdp is" />
+        <br />
+        <input style="margin: 0 200px" data-jdp data-jdp-min-date="#aaa" data-jdp-max-date="today" placeholder="test" />
+      </div>
+      <div style="max-width: 100px; margin: auto; padding: 0 0 700px 0">
+        <br />
+        <input placeholder="no jdp" />
+        <br />
+        <br />
+        <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" />
+        <input data-jdp data-jdp-min-date="today" data-jdp-max-date="1401/10/16" onchange="console.log" id="aaa" placeholder="minOfTest" />
+      </div>
     </div>
     <input data-jdp placeholder="has jdp" />
     <div style="height: 500px; overflow: scroll">
-        <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" />
+      <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" />
     </div>
     <div class="modal">
-        <input data-jdp placeholder="has jdp" />
-        <input data-jdp value="1401/04/27"/>
-        <input data-jdp placeholder="Init Date" data-jdp-init-date="1402/05/01"/>
-        <input data-jdp placeholder="min Today" data-jdp-min-date="today"/>
-        <input data-jdp placeholder="max Today" data-jdp-max-date="today"/>
-        <input data-jdp placeholder="max 1401/10/11" data-jdp-max-date="1401/10/11"/>
-        <input data-jdp placeholder="min 1401/03/11" data-jdp-min-date="1401/03/11"/>
-        <input data-jdp placeholder="only time" data-jdp-only-time data-jdp-min-time="20:10:10" data-jdp-max-time="20:20:10"/>
-        <input data-jdp placeholder="only date" data-jdp-only-date/>
-        <div style="height: 400px"></div>
-        <input data-jdp placeholder="has jdp" />
+      <input data-jdp placeholder="has jdp" />
+      <input data-jdp value="1401/04/27" />
+      <input data-jdp placeholder="Init Date" data-jdp-init-date="1402/05/01" />
+      <input data-jdp placeholder="min Today" data-jdp-min-date="today" />
+      <input data-jdp placeholder="max Today" data-jdp-max-date="today" />
+      <input data-jdp placeholder="max 1401/10/11" data-jdp-max-date="1401/10/11" />
+      <input data-jdp placeholder="min 1401/03/11" data-jdp-min-date="1401/03/11" />
+      <input data-jdp placeholder="only time" data-jdp-only-time data-jdp-min-time="20:10:10" data-jdp-max-time="20:20:10" />
+      <input data-jdp placeholder="date and time" />
+      <input data-jdp placeholder="only date" data-jdp-only-date />
+      <div style="height: 400px"></div>
+      <input data-jdp placeholder="has jdp" />
     </div>
     <div style="height: 400px"></div>
     <input data-jdp placeholder="last" />
     <div style="height: 400px"></div>
     <input data-jdp placeholder="last" />
     <script>
-        jalaliDatepicker.startWatch({
-            minDate: "attr",
-            maxDate: "attr",
-            minTime: "attr",
-            maxTime: "attr",
-            hideAfterChange: false,
-            autoHide: true,
-            showTodayBtn: true,
-            showEmptyBtn: true,
-            topSpace: 10,
-            bottomSpace: 30,
-            overflowSpace: -10,
-            dayRendering(opt,input){
-                return {
-                    isHollyDay:opt.day==1
-                }
-            }
-        });
-        
-        document.getElementById("aaa").addEventListener("jdp:change", function (e) { console.log(e) });
+      jalaliDatepicker.startWatch({
+        minDate: "attr",
+        maxDate: "attr",
+        minTime: "attr",
+        maxTime: "attr",
+        time: true,
+        date: true,
+        hasSecond: false,
+        hideAfterChange: false,
+        autoHide: true,
+        showTodayBtn: true,
+        showEmptyBtn: true,
+        topSpace: 10,
+        bottomSpace: 30,
+        overflowSpace: -10,
+        dayRendering(opt, input) {
+          return {
+            isHollyDay: opt.day == 1,
+          };
+        },
+      });
+
+      document.getElementById("aaa").addEventListener("jdp:change", function (e) {
+        console.log(e);
+      });
     </script>
-</body>
+  </body>
 </html>
