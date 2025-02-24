@@ -19,6 +19,8 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - uses: actions/checkout@v2
       - name: Publish NPM
-        run: npm publish
+        run: 
+          npm i
+          npm run publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
