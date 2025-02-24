@@ -30,8 +30,7 @@
     "lint": "eslint . --ext .js",
     "debug": "npm run lint && webpack --mode=development",
     "release": "npm run lint && webpack --mode=production",
-    "watch": "webpack --mode=development --watch",
-    "publish": "npm run debug && npm run release && npm publish"
+    "watch": "webpack --mode=development --watch"
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
