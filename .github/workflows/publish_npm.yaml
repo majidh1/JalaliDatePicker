@@ -3,24 +3,39 @@ name: publish npm
 on:
   push:
     tags:
-      - 'version: *'
+      - 'version:*'
     branches:
       - main
   workflow_dispatch:
-    
 
 jobs:
   deploy_npm:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # اطمینان از دریافت تاریخچه کامل گیت
+
       - uses: actions/setup-node@v2
         with:
           node-version: '14.x'
           registry-url: 'https://registry.npmjs.org'
-      - uses: actions/checkout@v2
-      - name: Publish NPM
-        run: 
-          npm i
-          npm run publish
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build and prepare release
+        run: npm run debug && npm run release
+
+      - name: Commit & Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "chore: update build files before npm publish" || echo "No changes to commit"
+          git push origin main
+
+      - name: Publish to NPM
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
