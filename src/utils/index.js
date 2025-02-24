@@ -18,6 +18,7 @@ export const normalizeMinMaxDate = (jdp, dateObj, updateObj) => {
     } else {
         if (year < minDate.year) {
             year = minDate.year;
+            month = 1;
         } else if (year > maxDate.year) {
             year = maxDate.year;
         }
@@ -28,6 +29,7 @@ export const normalizeMinMaxDate = (jdp, dateObj, updateObj) => {
     } else {
         if (year <= minDate.year && month < minDate.month) {
             month = minDate.month;
+            day = 1;
         } else if (year >= maxDate.year && month > maxDate.month) {
             month = maxDate.month;
         }
