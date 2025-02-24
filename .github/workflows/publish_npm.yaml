@@ -35,7 +35,25 @@ jobs:
           git commit -m "chore: update build files before npm publish" || echo "No changes to commit"
           git push origin main
 
+      - name: Check if version needs publishing
+        id: check_version
+        run: |
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          NPM_VERSION=$(npm show @majidh1/jalalidatepicker version || echo "0.0.0")
+
+          echo "Package.json version: $PACKAGE_VERSION"
+          echo "Published npm version: $NPM_VERSION"
+
+          if [ "$PACKAGE_VERSION" != "$NPM_VERSION" ]; then
+            echo "New version detected. Proceeding with publish."
+            echo "publish=true" >> $GITHUB_ENV
+          else
+            echo "No new version found. Skipping publish."
+            echo "publish=false" >> $GITHUB_ENV
+          fi
+
       - name: Publish to NPM
+        if: env.publish == 'true'
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
