@@ -9,6 +9,8 @@
 
 [نمونه VUE](https://codesandbox.io/p/devbox/jalalidatepicker-angular-2hzzg9)
 
+[نمونه Modal](https://codesandbox.io/p/sandbox/2spjyv)
+
 #### نمونه‌های codepen
 
 [لینک کالکشن](https://codepen.io/collection/wajWMo)
