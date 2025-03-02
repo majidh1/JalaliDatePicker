@@ -60,13 +60,15 @@ const jalaliDatepicker = {
     options: defaults,
     input: null,
     get dpContainer() {
-        if (!this._dpContainer) {
+        if (!this._dpContainer || !this._dpContainer.isConnected) {
             this._dpContainer = createElement(CONTAINER_ELM_QUERY, this.options.container);
-            this.overlayElm = createElement(OVERLAY_ELM_QUERY, this.options.container);
-
             this.dpContainer.style.zIndex = this.options.zIndex;
+        }
+        if (!this.overlayElm || !this.overlayElm.isConnected) {
+            this.overlayElm = createElement(OVERLAY_ELM_QUERY, this.options.container);
             this.overlayElm.style.zIndex = this.options.zIndex - 1;
         }
+
         return this._dpContainer;
     },
     get today() {
