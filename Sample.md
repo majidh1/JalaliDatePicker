@@ -7,7 +7,7 @@
 
 [نمونه Angular](https://codesandbox.io/p/devbox/jalalidatepicker-angular-2hzzg9)
 
-[نمونه VUE](https://codesandbox.io/p/devbox/jalalidatepicker-angular-2hzzg9)
+[نمونه VUE](https://codesandbox.io/p/devbox/jalalidatepicker-vue-x2gpj7)
 
 [نمونه Modal](https://codesandbox.io/p/sandbox/2spjyv)
 
