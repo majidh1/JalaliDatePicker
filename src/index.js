@@ -150,12 +150,14 @@ const jalaliDatepicker = {
         }, 300);
         this.setPosition();
         setScrollOnParent(input);
+        document.addEventListener("keydown", handleEscKey);
     },
     hide() {
         this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
         this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
         this.overlayElm.style.display = STYLE_DISPLAY_HIDDEN;
         this.isShow = false;
+        document.removeEventListener("keydown", handleEscKey);
     },
     setPosition() {
         if (this.dpContainer.style.visibility !== STYLE_VISIBILITY_VISIBLE) {
@@ -400,6 +402,14 @@ function addEventListenerOnBody() {
         }
         jalaliDatepicker.hide();
     });
+}
+
+function handleEscKey(event) {
+    if (event.key === "Escape") {
+        document.removeEventListener("keydown", handleEscKey);
+        jalaliDatepicker.input.blur();
+        jalaliDatepicker.hide();
+    }
 }
 
 window.jalaliDatepicker = {
