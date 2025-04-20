@@ -32,6 +32,7 @@ export const EVENT_CHANGE_YEAR_INPUT_STR = "keyup change";
 export const EVENT_CHANGE_TIME_DROPDOWN_STR = "change";
 export const EVENT_CLICK_STR = "click";
 export const EVENT_FOCUS_STR = "focusin";
+export const EVENT_KEYDOWN_STR = "keydown";
 
 export const MIN_MAX_TODAY_SETTING = "today";
 export const MIN_MAX_ATTR_SETTING = "attr";
