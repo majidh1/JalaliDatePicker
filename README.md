@@ -25,7 +25,7 @@
  
  <br/>
  
- ## The English version of the documentation may be available [Here](/README-en.md).
+ ## The English version of the documentation is available [Here](/README-en.md).
 
  <br />
  <br />
