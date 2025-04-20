@@ -28,6 +28,7 @@ import {
     CONTAINER_ELM_QUERY,
     OVERLAY_ELM_QUERY,
     EVENT_FOCUS_STR,
+    EVENT_KEYDOWN_STR,
     EVENT_CHANGE_INPUT_STR,
     MIN_MAX_TODAY_SETTING,
     MIN_MAX_ATTR_SETTING,
@@ -59,6 +60,7 @@ const jalaliDatepicker = {
     },
     options: defaults,
     input: null,
+    isTransitioning: false,
     get dpContainer() {
         if (!this._dpContainer || !this._dpContainer.isConnected) {
             this._dpContainer = createElement(CONTAINER_ELM_QUERY, this.options.container);
@@ -139,6 +141,7 @@ const jalaliDatepicker = {
         this.input = input;
         this._draw();
         setReadOnly(input, this.options);
+        this.isTransitioning = true;
         this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
         this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
         this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
@@ -147,15 +150,18 @@ const jalaliDatepicker = {
             this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
             this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
             this.isShow=true;
+            this.isTransitioning = false;
         }, 300);
         this.setPosition();
         setScrollOnParent(input);
+        document.addEventListener(EVENT_KEYDOWN_STR, handleEscKey);
     },
     hide() {
         this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
         this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
         this.overlayElm.style.display = STYLE_DISPLAY_HIDDEN;
         this.isShow = false;
+        document.removeEventListener(EVENT_KEYDOWN_STR, handleEscKey);
     },
     setPosition() {
         if (this.dpContainer.style.visibility !== STYLE_VISIBILITY_VISIBLE) {
@@ -400,6 +406,15 @@ function addEventListenerOnBody() {
         }
         jalaliDatepicker.hide();
     });
+}
+
+function handleEscKey(event) {
+    if (event.key === "Escape") {
+        if (!jalaliDatepicker.isTransitioning) {
+            jalaliDatepicker.input?.blur?.();
+            jalaliDatepicker.hide();
+        }
+    }
 }
 
 window.jalaliDatepicker = {
