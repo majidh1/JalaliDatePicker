@@ -1,3 +1,6 @@
+## V0.9.11
+
+Added the ability to close the datepicker with ESC, thanks to @mostafa793
 
 ## V0.9.7
 
