@@ -1,4 +1,8 @@
 
+## نسخه 0.9.11
+
+افزودن امکان بستن دیتپیکر با ESC با تشکر از @mostafa793
+
 ## نسخه 0.9.7
 
 اصلاح باگ مربوط به ایشو [issue128](https://github.com/majidh1/JalaliDatePicker/issues/128)
