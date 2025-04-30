@@ -49,11 +49,13 @@ import draw from "./draw";
 import defaults from "./defaults";
 
 const jalaliDatepicker = {
+    isInitialized: false,
     init(options) {
         this.updateOptions(options);
         addEventListenerOnResize();
         if (this.options.autoHide) addEventListenerOnBody();
         if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);
+        this.isInitialized = true;
     },
     updateOptions(options) {
         this.options = normalizeOptions(options);
