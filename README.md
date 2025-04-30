@@ -173,3 +173,26 @@ data-jdp-only-time
 </div>
 
 </div>
+
+
+#### مثال تبدیل تاریخ شمسی به تاریخ میلادی با مقداردهی به اتربیوت data-jdp-miladi-input="miladi_date" و استفاده در input تایپ hidden :
+[لینک نمونه](https://cdpn.io/majidh1/fullembedgrid/xxQdyGq?safe=true)
+
+
+تغییر تاریخ میلادی در input تایپ hidden با تغییر تاریخ شمسی به صورت وارد کردن/تغییر دادن تاریخ از روی کیبورد 
+```js
+document.querySelectorAll("[data-jdp-miladi-input]").forEach(function(el) {
+    el.addEventListener("input", function (e) {
+        var miladiInput = document.getElementById(this.getAttribute("data-jdp-miladi-input"));
+        if (!this.value) {
+            miladiInput.value = "";
+            return;
+        }
+        var parts = this.value.split(" ");
+        var date = parts[0].split("/");
+        var time = parts[1];
+
+        miladiInput.value = jalali_to_gregorian(date[0], date[1], date[2]).join("/") + ' ' + time;
+    });
+});
+``` 
