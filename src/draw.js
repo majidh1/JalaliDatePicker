@@ -32,7 +32,7 @@ const renderFooter = (jdp) => {
             isActiveToday && jdp.setValue(jdp.today);
         }, "امروز");
     }
-    if(!jdp.options.date && jdp.options.time && !jdp.input?.value){
+    if(!jdp.options.date && jdp.options.time && (!jdp.input?.value || !!jdp.options.showSelectTimeBtnAlways )){
         createElement(TODAY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, () => {
             jdp.setValue(jdp.initTime);
             jdp.hide();
