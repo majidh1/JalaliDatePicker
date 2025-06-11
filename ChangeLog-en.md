@@ -1,3 +1,7 @@
+## V0.9.12
+
+Added the ability to show always Select Button showSelectTimeBtnAlways
+
 ## V0.9.11
 
 Added the ability to close the datepicker with ESC, thanks to @mostafa793
