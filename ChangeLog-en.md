@@ -1,3 +1,22 @@
+## V0.9.12
+
+Added the ability to show always Select Button showSelectTimeBtnAlways
+
+## V0.9.11
+
+Added the ability to close the datepicker with ESC, thanks to @mostafa793
+
+## V0.9.7
+
+Bug Fix [issue128](https://github.com/majidh1/JalaliDatePicker/issues/128)
+
+## V0.9.6
+
+Solving the problem of not being able to select option 00 in hours, minutes and seconds
+
+## V0.9.5
+
+add overflowSpace config
 
 # V0.9.4
 

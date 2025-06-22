@@ -53,10 +53,13 @@ export default clon({
     showTodayBtn: true,
     showEmptyBtn: true,
     showCloseBtn: isMobile,
+    showSelectTimeBtnAlways: false,
 
     autoReadOnlyInput: isMobile,
     useDropDownYears: true,
     
     topSpace: 0,
-    bottomSpace: 0
+    bottomSpace: 0,
+
+    overflowSpace: -10
 });

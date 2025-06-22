@@ -28,6 +28,7 @@ import {
     CONTAINER_ELM_QUERY,
     OVERLAY_ELM_QUERY,
     EVENT_FOCUS_STR,
+    EVENT_KEYDOWN_STR,
     EVENT_CHANGE_INPUT_STR,
     MIN_MAX_TODAY_SETTING,
     MIN_MAX_ATTR_SETTING,
@@ -48,25 +49,30 @@ import draw from "./draw";
 import defaults from "./defaults";
 
 const jalaliDatepicker = {
+    isInitialized: false,
     init(options) {
         this.updateOptions(options);
         addEventListenerOnResize();
         if (this.options.autoHide) addEventListenerOnBody();
         if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);
+        this.isInitialized = true;
     },
     updateOptions(options) {
         this.options = normalizeOptions(options);
     },
     options: defaults,
     input: null,
+    isTransitioning: false,
     get dpContainer() {
-        if (!this._dpContainer) {
+        if (!this._dpContainer || !this._dpContainer.isConnected) {
             this._dpContainer = createElement(CONTAINER_ELM_QUERY, this.options.container);
-            this.overlayElm = createElement(OVERLAY_ELM_QUERY, this.options.container);
-
             this.dpContainer.style.zIndex = this.options.zIndex;
+        }
+        if (!this.overlayElm || !this.overlayElm.isConnected) {
+            this.overlayElm = createElement(OVERLAY_ELM_QUERY, this.options.container);
             this.overlayElm.style.zIndex = this.options.zIndex - 1;
         }
+
         return this._dpContainer;
     },
     get today() {
@@ -137,6 +143,7 @@ const jalaliDatepicker = {
         this.input = input;
         this._draw();
         setReadOnly(input, this.options);
+        this.isTransitioning = true;
         this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
         this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
         this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
@@ -145,15 +152,18 @@ const jalaliDatepicker = {
             this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
             this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
             this.isShow=true;
+            this.isTransitioning = false;
         }, 300);
         this.setPosition();
         setScrollOnParent(input);
+        document.addEventListener(EVENT_KEYDOWN_STR, handleEscKey);
     },
     hide() {
         this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
         this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
         this.overlayElm.style.display = STYLE_DISPLAY_HIDDEN;
         this.isShow = false;
+        document.removeEventListener(EVENT_KEYDOWN_STR, handleEscKey);
     },
     setPosition() {
         if (this.dpContainer.style.visibility !== STYLE_VISIBILITY_VISIBLE) {
@@ -169,7 +179,7 @@ const jalaliDatepicker = {
         const dpContainerHeight = this.dpContainer.offsetHeight;
 
         if (left + dpContainerWidth >= windowWidth) {
-            left -= (left + dpContainerWidth) - (windowWidth + 10);
+            left -= (left + dpContainerWidth) - (windowWidth + this.options.overflowSpace);
         }
         if (top - inputHeight >= dpContainerHeight && top + dpContainerHeight >= window.innerHeight) {
             top -= dpContainerHeight + inputHeight + this.options.bottomSpace + this.options.topSpace;
@@ -398,6 +408,15 @@ function addEventListenerOnBody() {
         }
         jalaliDatepicker.hide();
     });
+}
+
+function handleEscKey(event) {
+    if (event.key === "Escape") {
+        if (!jalaliDatepicker.isTransitioning) {
+            jalaliDatepicker.input?.blur?.();
+            jalaliDatepicker.hide();
+        }
+    }
 }
 
 window.jalaliDatepicker = {

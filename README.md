@@ -25,7 +25,7 @@
  
  <br/>
  
- ## The English version of the documentation may be available [Here](/README-en.md).
+ ## The English version of the documentation is available [Here](/README-en.md).
 
  <br />
  <br />
@@ -36,15 +36,18 @@
 
 [تاریخچه تغییرات نسخه](https://github.com/majidh1/JalaliDatePicker/blob/main/ChangeLog.md)
  
+[نمونه پیاده سازی](https://github.com/majidh1/JalaliDatePicker/blob/main/Sample.md)
+ 
 ## نصب و استفاده
  1- با استفاده از npm یا فولدر dist در همین مخزن آخرین نسخه را دریافت کنید
- <br/>
- <div dir="ltr">
- &nbsp&nbsp&nbsp npm i @majidh1/jalalidatepicker
- <br/>&nbsp&nbsp &nbsp OR<br/>
- &nbsp&nbsp&nbsp https://github.com/majidh1/JalaliDatePicker => /dist/
- <br/>
- </div>
+
+```shell
+npm i @majidh1/jalalidatepicker
+```
+OR
+```html
+https://github.com/majidh1/JalaliDatePicker => /dist/
+```
  2- دوفایل زیر را به پروژه اضافه کنید
   <br/><br/>
  <div dir="ltr">
@@ -131,9 +134,11 @@ key | default | description
 `showTodayBtn` | true | نمایش دکمه امروز
 `showEmptyBtn` | true | نمایش دکمه پاکسازی
 `showCloseBtn` | dynamic | نمایش دکمه بستن دیتپیکر
+`showSelectTimeBtnAlways` | false | نمایش همیشگی دکمه انتخاب در تایم پیکر
 `autoReadOnlyInput` | `dynamic` | فقط خواندنی شدن input دارای datePicker
 `topSpace` | 0 | فضای خالی بین بالای datePicker و input (زمانی که دیتپیکر در پایین اینپوت هست)
 `bottomSpace` | 0 | فضای خالی بین پایین datePicker و input (زمانی که دیتپیکر در بالای اینپوت هست)
+`overflowSpace` | -10 | فضای خالی بین گوشه صفحه (window) و datePicker (زمانی که دیتپیکر بیرون از صفحه میرود)
 `dayRendering` | - | متد رندر یک روز خروجی یک آبجکت از تنظیمات روز است
 
 #### نمونه‌های codepen:
@@ -155,17 +160,15 @@ jalaliDatepicker.startWatch({
 })
 ```
 
-ATTR On Input:
+## ATTR On Input:
 
+```shell
 data-jdp
-
 data-jdp-min-date
-
 data-jdp-max-date
-
 data-jdp-only-date
-
 data-jdp-only-time
+```
               
           
 </div>
