@@ -1,0 +1,9 @@
+{
+	"recommendations": [
+		"dbaeumer.vscode-eslint",
+		"stylelint.vscode-stylelint",
+		"esbenp.prettier-vscode",
+		"EditorConfig.EditorConfig",
+		"burkeholland.simple-react-snippets"
+	]
+}

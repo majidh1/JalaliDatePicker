@@ -1,0 +1,40 @@
+{
+	"files.exclude": {
+		"node_modules": true,
+		"dist": true,
+		"res": true,
+		".eslintrc": true,
+		".eslintignore": true,
+		".npmignore": true,
+		".gitignore": true,
+		"SECURITY.md": true,
+		"LICENSE": true,
+		".prettierrc.json": true,
+		".stylelintrc.json": true,
+		".vscode": true,
+		"package-lock.json": true
+	},
+	"stylelint.validate": ["css", "scss", "postcss"],
+	"eslint.validate": ["javascript"],
+	"eslint.format.enable": true,
+	"editor.formatOnSave": true,
+	"typescript.format.insertSpaceBeforeFunctionParenthesis": false,
+	"javascript.format.insertSpaceBeforeFunctionParenthesis": false,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": "explicit",
+		"source.fixAll.stylelint": "explicit"
+	},
+	"[json]": {
+		"editor.defaultFormatter": "vscode.json-language-features"
+	},
+	"[html]": {
+		"editor.defaultFormatter": "vscode.html-language-features"
+	},
+	"[javascript]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[scss]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"git.pullBeforeCheckout": true
+}
