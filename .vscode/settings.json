@@ -3,8 +3,7 @@
 		"node_modules": true,
 		"dist": true,
 		"res": true,
-		".eslintrc": true,
-		".eslintignore": true,
+		"eslint.config.mjs": true,
 		".npmignore": true,
 		".gitignore": true,
 		"SECURITY.md": true,
@@ -28,7 +27,7 @@
 		"editor.defaultFormatter": "vscode.json-language-features"
 	},
 	"[html]": {
-		"editor.defaultFormatter": "vscode.html-language-features"
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 	"[javascript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"

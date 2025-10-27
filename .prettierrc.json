@@ -1,0 +1,17 @@
+{
+  "bracketSameLine": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "singleQuote": false,
+  "useTabs": true,
+  "tabWidth": 1,
+  "trailingComma": "none",
+  "printWidth": 123,
+  "overrides": [
+    {
+      "files": "test/index.html",
+      "options": {
+        "printWidth": 200
+      }
+    }
+  ]
+}
