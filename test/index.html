@@ -57,9 +57,8 @@
 					overflowSpace: -10,
 					zIndex: 9999,
 					dayRendering(opt, input) {
-						debugger;
 						return {
-							isHollyDay: opt.day == 1
+							isHollyDay: opt.weekDay == 1
 						};
 					}
 				});
