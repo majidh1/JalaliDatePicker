@@ -4,6 +4,7 @@ import {
 	MONTHS_ELM_QUERY,
 	MONTH_ELM_QUERY,
 	DAYS_ELM_QUERY,
+	DAYS_HEADER_ELM_QUERY,
 	DAY_ELM_QUERY,
 	DAY_NOTINMONTH_ELM_QUERY,
 	DAY_DISABLED_ELM_QUERY,
@@ -90,6 +91,7 @@ const renderYear = (jdp) => {
 		jdp.yearChange(e.target.value);
 	});
 	if (useDropDownYears) {
+		yearInput.setAttribute("tabindex", "-1");
 		const validYears = getValidYears(jdp);
 		for (let i = validYears.min; i <= validYears.max; i++) {
 			const optionElm = createElement("option", yearInput);
@@ -126,12 +128,13 @@ const renderMonths = (jdp) => {
 };
 
 const renderDays = (jdp) => {
+	const daysHeaderContainer = createElement(DAYS_HEADER_ELM_QUERY, jdp.dpContainer);
 	const daysContainer = createElement(DAYS_ELM_QUERY, jdp.dpContainer);
 	for (let i = 0; i < 7; i++) {
 		//nameOfDay
 		createElement(
 			DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i),
-			daysContainer,
+			daysHeaderContainer,
 			null,
 			null,
 			toPersianDigitsIfNeeded(jdp.options.days[i], jdp.options.persianDigits)
@@ -202,7 +205,6 @@ const renderDays = (jdp) => {
 		if (jdp.today.day === dayOptions.day && jdp.today.year === dayOptions.year && jdp.today.month === dayOptions.month) {
 			dayOptions.className += `.${TODAY_CLASS_NAME}`;
 		}
-		console.log(dayOptions.month, dayOptions.day);
 
 		if (isFunction(jdp.options.dayRendering)) {
 			extend(dayOptions, jdp.options.dayRendering(dayOptions, jdp.input));

@@ -53,6 +53,7 @@ const jalaliDatepicker = {
 	get dpContainer() {
 		if (!this._dpContainer || !this._dpContainer.isConnected) {
 			this._dpContainer = createElement(CONTAINER_ELM_QUERY, this.options.container);
+			this._dpContainer.setAttribute("tabindex", "-1");
 			this.dpContainer.style.zIndex = this.options.zIndex;
 		}
 		if (!this.overlayElm || !this.overlayElm.isConnected) {

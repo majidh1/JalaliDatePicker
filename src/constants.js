@@ -6,6 +6,7 @@ export const YEAR_ELM_QUERY = `div.${NAMESPACE}-year`;
 export const MONTHS_ELM_QUERY = `div.${NAMESPACE}-months`;
 export const MONTH_ELM_QUERY = `div.${NAMESPACE}-month`;
 export const DAYS_ELM_QUERY = `div.${NAMESPACE}-days`;
+export const DAYS_HEADER_ELM_QUERY = `div.${NAMESPACE}-days-header`;
 export const DAY_ELM_QUERY = `div.${NAMESPACE}-day`;
 export const DAY_NOTINMONTH_ELM_QUERY = `div.${NAMESPACE}-day.not-in-month`;
 export const DAY_DISABLED_ELM_QUERY = `div.${NAMESPACE}-day.disabled-day`;

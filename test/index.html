@@ -11,34 +11,56 @@
 			rel="stylesheet"
 			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 			crossorigin="anonymous" />
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+		<style>
+			body {
+				font-family: vazir;
+			}
+		</style>
 	</head>
 
 	<body>
 		<div class="container my-2 d-flex gap-3 flex-column">
 			<div class="row">
-				<div class="col">
+				<div class="col d-flex flex-column gap-3">
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</button>
 					<input data-jdp placeholder="simple" class="form-control" />
 					<input data-jdp data-jdp-min-date="1404/06/08" placeholder="min from 1404/06/08" class="form-control" />
+					<input type="text" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-min-date="today" placeholder="نمایش تاریخ از امروز" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-max-date="today" placeholder="نمایش تاریخ تا امروز" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-max-date="1400/05/10" placeholder="نمایش تاریخ تا 1400/05/10" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp placeholder="انتخاب تاریخ و زمان" class="form-control" />
+					<input type="text" data-jdp placeholder="امکان انتخاب فقط زمان" data-jdp-only-time class="form-control" />
 				</div>
 				<div class="col">
-					<div class="bg-warning p-2 rounded">سیسی</div>
+					<div class="bg-warning p-2 rounded"></div>
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal fade" id="exampleModal" aria-modal="true" role="dialog" aria-hidden="true">
+			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
 						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
 						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 					</div>
-					<div class="modal-body"><input data-jdp style="margin: 80vh 0" /></div>
-					<div class="modal-footer"><button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button></div>
+					<div class="modal-body" style="height: 60vh; overflow: auto">
+						<div style="margin: 150vh 0">
+							<input type="text" data-jdp data-jdp-max-date="1400/05/10" placeholder="نمایش تاریخ تا 1400/05/10" class="form-control" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
 				</div>
 			</div>
 		</div>
 		<script>
+			//flatpickr("[data-jdp]");
 			document.addEventListener("DOMContentLoaded", () => {
 				jalaliDatepicker.startWatch({
 					minDate: "attr",
