@@ -1,4 +1,5 @@
 import { isPlainObject, addLeadingZero, extend } from "./object";
+import { toMiladi } from "./jalali";
 
 export const normalizeMinMaxDate = (jdp, dateObj, updateObj) => {
 	const _dateObj = extend(dateObj, updateObj);
@@ -225,4 +226,19 @@ export const isValidTimeString = (jdp, str) => {
 
 	const time = str.substr(jdp.options.date ? 11 : 0, 8).split(jdp.options.separatorChars.time);
 	return time.length === (jdp.options.hasSecond ? 3 : 2) && !time.find((t) => t.toString().length !== 2);
+};
+
+export const getConvertedValue = (jdp) => {
+	const value = jdp.input.value;
+	if (!value) {
+		return "";
+	}
+
+	if (jdp.options.targetValueType === "miladi") {
+		const normalValue = getValueObjectFromString(jdp, value);
+		const miladiValue = toMiladi(normalValue.year, normalValue.month, normalValue.day);
+		return `${miladiValue.year}-${miladiValue.month}-${miladiValue.day}`;
+	}
+
+	return value;
 };

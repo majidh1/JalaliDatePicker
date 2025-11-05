@@ -26,12 +26,10 @@ const isLeapYear = (jy) => {
 	return leap === 0;
 };
 
-export const jalaliToday = () => {
-	const date = new Date();
-	let gy = parseInt(date.getFullYear());
-	const gm = parseInt(date.getMonth()) + 1;
-	const gd = parseInt(date.getDate());
-
+export const toJalali = (gy, gm, gd) => {
+	gy = parseInt(gy);
+	gm = parseInt(gm);
+	gd = parseInt(gd);
 	let jy, days;
 	const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
 	if (gy > 1600) {
@@ -62,6 +60,15 @@ export const jalaliToday = () => {
 	};
 };
 
+export const jalaliToday = () => {
+	const date = new Date();
+	let gy = parseInt(date.getFullYear());
+	const gm = parseInt(date.getMonth()) + 1;
+	const gd = parseInt(date.getDate());
+
+	return toJalali(gy, gm, gd);
+};
+
 export const getWeekDay = (year, month, day) => {
 	const getDays = (month, day) => {
 		if (month < 8) return (month - 1) * 31 + day;
@@ -82,4 +89,57 @@ export const getWeekDay = (year, month, day) => {
 
 export const getDaysInMonth = (year, month) => {
 	return [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
+};
+
+export const toMiladi = (jy, jm, jd) => {
+	let gy = jy <= 979 ? 621 : 1600;
+	jy -= jy <= 979 ? 0 : 979;
+	let days =
+		365 * jy +
+		Math.floor(jy / 33) * 8 +
+		Math.floor(((jy % 33) + 3) / 4) +
+		78 +
+		jd +
+		(jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);
+	gy += 400 * Math.floor(days / 146097);
+	days %= 146097;
+	if (days > 36524) {
+		gy += 100 * Math.floor(--days / 36524);
+		days %= 36524;
+		if (days >= 365) days++;
+	}
+	gy += 4 * Math.floor(days / 1461);
+	days %= 1461;
+	if (days > 365) {
+		gy += Math.floor((days - 1) / 365);
+		days = (days - 1) % 365;
+	}
+	let gd = days + 1;
+	const sal_a = [
+		0,
+		31,
+		(gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0 ? 29 : 28,
+		31,
+		30,
+		31,
+		30,
+		31,
+		31,
+		30,
+		31,
+		30,
+		31
+	];
+	let gm;
+	for (gm = 0; gm < 13; gm++) {
+		const v = sal_a[gm];
+		if (gd <= v) break;
+		gd -= v;
+	}
+
+	return {
+		year: gy,
+		month: gm,
+		day: gd
+	};
 };

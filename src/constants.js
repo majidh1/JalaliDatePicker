@@ -43,6 +43,7 @@ export const MIN_DATE_ATTR_NAME = "data-jdp-min-date";
 export const MAX_TIME_ATTR_NAME = "data-jdp-max-time";
 export const MIN_TIME_ATTR_NAME = "data-jdp-min-time";
 export const TARGET_VALUE_INPUT_ATTR_NAME = "data-jdp-target-value-input";
+export const TARGET_VALUE_TYPE_ATTR_NAME = "data-jdp-target-value-type";
 export const ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-date";
 export const ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-time";
 

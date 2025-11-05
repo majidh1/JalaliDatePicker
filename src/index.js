@@ -5,7 +5,8 @@ import {
 	normalizeMinMaxDate,
 	normalizeMinMaxTime,
 	isValidDateString,
-	isValidTimeString
+	isValidTimeString,
+	getConvertedValue
 } from "./utils";
 import { extend, clon, isPlainObject, isString, isUndefined } from "./utils/object";
 import { getScrollParent, getEventTarget, containsDom, triggerEvent, createElement } from "./utils/dom";
@@ -208,9 +209,11 @@ const jalaliDatepicker = {
 	},
 	setTargetValue() {
 		if (!this.options.targetValueInput) return;
-		const targetInput = document.querySelector(this.options.targetValueInput);
-		if (!targetInput) return;
-		targetInput.value = this.input.value;
+		const targetInputList = document.querySelectorAll(this.options.targetValueInput);
+		if (!targetInputList || !targetInputList.length) return;
+		targetInputList.forEach((targetInput) => {
+			targetInput.value = getConvertedValue(this);
+		});
 	},
 	increaseMonth() {
 		const isLastMonth = this._initDate.month === 12;
@@ -344,6 +347,17 @@ const normalizeOptions = (options) => {
 		delete options.targetValueInput;
 		options._targetValueInputIsAttr = true;
 		window.Object.defineProperty(options, "targetValueInput", {
+			get: () => {
+				return jalaliDatepicker.input?.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
+			},
+			enumerable: true
+		});
+	}
+
+	if (options.targetValueType === OPTION_ATTR_SETTING || options._targetValueTypeIsAttr) {
+		delete options.targetValueType;
+		options._targetValueTypeIsAttr = true;
+		window.Object.defineProperty(options, "targetValueType", {
 			get: () => {
 				return jalaliDatepicker.input?.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
 			},
