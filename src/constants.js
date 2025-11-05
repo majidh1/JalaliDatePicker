@@ -36,12 +36,13 @@ export const EVENT_FOCUS_STR = "focusin";
 export const EVENT_KEYDOWN_STR = "keydown";
 
 export const MIN_MAX_TODAY_SETTING = "today";
-export const MIN_MAX_ATTR_SETTING = "attr";
+export const OPTION_ATTR_SETTING = "attr";
 export const INIT_DATE_ATTR_NAME = "data-jdp-init-date";
 export const MAX_DATE_ATTR_NAME = "data-jdp-max-date";
 export const MIN_DATE_ATTR_NAME = "data-jdp-min-date";
 export const MAX_TIME_ATTR_NAME = "data-jdp-max-time";
 export const MIN_TIME_ATTR_NAME = "data-jdp-min-time";
+export const TARGET_VALUE_INPUT_ATTR_NAME = "data-jdp-target-value-input";
 export const ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-date";
 export const ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-time";
 

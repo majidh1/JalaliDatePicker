@@ -11,8 +11,6 @@
 			rel="stylesheet"
 			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
 			crossorigin="anonymous" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
-		<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 		<style>
 			body {
@@ -26,8 +24,8 @@
 			<div class="row">
 				<div class="col d-flex flex-column gap-3">
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</button>
-					<input data-jdp placeholder="simple" class="form-control" />
-					<input data-jdp data-jdp-min-date="1404/06/08" placeholder="min from 1404/06/08" class="form-control" />
+					<input data-jdp-target-value-input="#xxxxxxxxx" data-jdp placeholder="simple" class="form-control" value="1404/04/05 > 1404/04/10" />
+					<input id="xxxxxxxxx" />
 					<input type="text" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" data-jdp-only-date class="form-control" />
 					<input type="text" data-jdp data-jdp-min-date="today" placeholder="نمایش تاریخ از امروز" data-jdp-only-date class="form-control" />
 					<input type="text" data-jdp data-jdp-max-date="today" placeholder="نمایش تاریخ تا امروز" data-jdp-only-date class="form-control" />
@@ -40,7 +38,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="modal fade" id="exampleModal" aria-modal="true" role="dialog" aria-hidden="true">
+		<div class="modal fade" id="exampleModal" aria-modal="true" role="dialog" aria-hidden="true" data-bs-focus="false">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -60,7 +58,6 @@
 			</div>
 		</div>
 		<script>
-			//flatpickr("[data-jdp]");
 			document.addEventListener("DOMContentLoaded", () => {
 				jalaliDatepicker.startWatch({
 					minDate: "attr",
@@ -70,7 +67,7 @@
 					time: true,
 					date: true,
 					hasSecond: true,
-					hideAfterChange: false,
+					hideAfterChange: true,
 					autoHide: true,
 					showTodayBtn: true,
 					showEmptyBtn: true,
@@ -78,6 +75,7 @@
 					bottomSpace: 30,
 					overflowSpace: -10,
 					zIndex: 9999,
+					targetValueInput: "attr",
 					dayRendering(opt, input) {
 						return {
 							isHollyDay: opt.weekDay == 1

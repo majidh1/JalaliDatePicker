@@ -17,12 +17,13 @@ import {
 	EVENT_KEYDOWN_STR,
 	EVENT_CHANGE_INPUT_STR,
 	MIN_MAX_TODAY_SETTING,
-	MIN_MAX_ATTR_SETTING,
+	OPTION_ATTR_SETTING,
 	INIT_DATE_ATTR_NAME,
 	MAX_DATE_ATTR_NAME,
 	MIN_DATE_ATTR_NAME,
 	MAX_TIME_ATTR_NAME,
 	MIN_TIME_ATTR_NAME,
+	TARGET_VALUE_INPUT_ATTR_NAME,
 	ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME,
 	ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME,
 	STYLE_VISIBILITY_VISIBLE,
@@ -193,11 +194,23 @@ const jalaliDatepicker = {
 		this._initTime = null;
 		this.input.value = getValueStringFromValueObject(this, this._value);
 		triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
+		this.setTargetValue();
 		if (!this.options.time && this.options.hideAfterChange) {
 			this.hide();
 		} else {
 			this._draw();
 		}
+	},
+	cleanValue() {
+		this.input.value = "";
+		this.setTargetValue();
+		triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
+	},
+	setTargetValue() {
+		if (!this.options.targetValueInput) return;
+		const targetInput = document.querySelector(this.options.targetValueInput);
+		if (!targetInput) return;
+		targetInput.value = this.input.value;
 	},
 	increaseMonth() {
 		const isLastMonth = this._initDate.month === 12;
@@ -274,7 +287,7 @@ const normalizeOptions = (options) => {
 	if (options.minDate === MIN_MAX_TODAY_SETTING) options.minDate = clon(jalaliDatepicker.today);
 	if (options.maxDate === MIN_MAX_TODAY_SETTING) options.maxDate = clon(jalaliDatepicker.today);
 
-	if (options.initDate === MIN_MAX_ATTR_SETTING || options._initDateIsAttr) {
+	if (options.initDate === OPTION_ATTR_SETTING || options._initDateIsAttr) {
 		delete options.initDate;
 		options._initDateIsAttr = true;
 		window.Object.defineProperty(options, "initDate", {
@@ -285,7 +298,7 @@ const normalizeOptions = (options) => {
 		});
 	}
 
-	if (options.minDate === MIN_MAX_ATTR_SETTING || options._minDateIsAttr) {
+	if (options.minDate === OPTION_ATTR_SETTING || options._minDateIsAttr) {
 		delete options.minDate;
 		options._minDateIsAttr = true;
 		window.Object.defineProperty(options, "minDate", {
@@ -295,7 +308,7 @@ const normalizeOptions = (options) => {
 			enumerable: true
 		});
 	}
-	if (options.maxDate === MIN_MAX_ATTR_SETTING || options._maxDateIsAttr) {
+	if (options.maxDate === OPTION_ATTR_SETTING || options._maxDateIsAttr) {
 		delete options.maxDate;
 		options._maxDateIsAttr = true;
 		window.Object.defineProperty(options, "maxDate", {
@@ -306,7 +319,7 @@ const normalizeOptions = (options) => {
 		});
 	}
 
-	if (options.minTime === MIN_MAX_ATTR_SETTING || options._minTimeIsAttr) {
+	if (options.minTime === OPTION_ATTR_SETTING || options._minTimeIsAttr) {
 		delete options.minTime;
 		options._minTimeIsAttr = true;
 		window.Object.defineProperty(options, "minTime", {
@@ -316,12 +329,23 @@ const normalizeOptions = (options) => {
 			enumerable: true
 		});
 	}
-	if (options.maxTime === MIN_MAX_ATTR_SETTING || options._maxTimeIsAttr) {
+	if (options.maxTime === OPTION_ATTR_SETTING || options._maxTimeIsAttr) {
 		delete options.maxTime;
 		options._maxTimeIsAttr = true;
 		window.Object.defineProperty(options, "maxTime", {
 			get: () => {
 				return getDefaultFromAttr(MAX_TIME_ATTR_NAME, true);
+			},
+			enumerable: true
+		});
+	}
+
+	if (options.targetValueInput === OPTION_ATTR_SETTING || options._targetValueInputIsAttr) {
+		delete options.targetValueInput;
+		options._targetValueInputIsAttr = true;
+		window.Object.defineProperty(options, "targetValueInput", {
+			get: () => {
+				return jalaliDatepicker.input?.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
 			},
 			enumerable: true
 		});

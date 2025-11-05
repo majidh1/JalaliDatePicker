@@ -1,65 +1,70 @@
-﻿const isMobile=(/iphone|ipod|android|ie|blackberry|fennec/).test(window.navigator?.userAgent?.toLowerCase());
-import {clon} from "./utils/object";
+﻿const isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test(window.navigator?.userAgent?.toLowerCase());
+import { clon } from "./utils/object";
 
 export default clon({
-    days: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
+	days: ["ش", "ی", "د", "س", "چ", "پ", "ج"],
 
-    months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
+	months: ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"],
 
-    //sample {year:1400,month:11,day:29}
-    initDate: null,
-    //sample {year:1400,month:11,day:29}
-    today:null,
-    //{hour:12,minute:11,second:10}
-    initTime: null,
-    
-    hasSecond: true,
+	//sample {year:1400,month:11,day:29}
+	initDate: null,
+	//sample {year:1400,month:11,day:29}
+	today: null,
+	//{hour:12,minute:11,second:10}
+	initTime: null,
 
-    time:false,
-    date:true,
-    //sample {year:1399,month:11,day:29} || today || attr
-    minDate: {},
+	hasSecond: true,
 
-    //sample {year:1400,month:11,day:29} || today || attr
-    maxDate: {},
+	time: false,
+	date: true,
+	//sample {year:1399,month:11,day:29} || today || attr
+	minDate: {},
 
-    minTime: {},
+	//sample {year:1400,month:11,day:29} || today || attr
+	maxDate: {},
 
-    maxTime: {},
+	minTime: {},
 
-    separatorChars: {
-        date:"/",
-        between:" ",
-        time:":"
-    },
+	maxTime: {},
 
-    persianDigits: false,
+	separatorChars: {
+		date: "/",
+		between: " ",
+		time: ":"
+	},
 
-    zIndex: 1000,
+	persianDigits: false,
 
-    container: "body",
+	zIndex: 1000,
 
-    selector: "input[data-jdp]",
+	container: "body",
 
-    autoShow:true,
-    autoHide: true,
-    hideAfterChange: true,
+	selector: "input[data-jdp]",
 
-    plusHtml: "<svg viewBox=\"0 0 1024 1024\"><g><path d=\"M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z\"></path></g></svg>",
-    minusHtml: "<svg viewBox=\"0 0 1024 1024\"><g><path d=\"M810 554h-596v-84h596v84z\"></path></g></svg>",
+	autoShow: true,
+	autoHide: true,
+	hideAfterChange: true,
 
-    changeMonthRotateYear: false,
+	plusHtml:
+		'<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>',
+	minusHtml: '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>',
 
-    showTodayBtn: true,
-    showEmptyBtn: true,
-    showCloseBtn: isMobile,
-    showSelectTimeBtnAlways: false,
+	changeMonthRotateYear: false,
 
-    autoReadOnlyInput: isMobile,
-    useDropDownYears: true,
-    
-    topSpace: 0,
-    bottomSpace: 0,
+	showTodayBtn: true,
+	showEmptyBtn: true,
+	showCloseBtn: isMobile,
+	showSelectTimeBtnAlways: false,
 
-    overflowSpace: -10
+	autoReadOnlyInput: isMobile,
+	useDropDownYears: true,
+
+	topSpace: 0,
+	bottomSpace: 0,
+
+	overflowSpace: -10,
+
+	targetValueInput: "",
+
+	targetValueType: ""
 });
