@@ -1,4 +1,5 @@
-﻿import {
+﻿import { JalaliDatepicker } from "./models/types";
+import {
 	EVENT_CLICK_STR,
 	FOOTER_ELM_QUERY,
 	TODAY_BTN_ELM_QUERY,
@@ -8,13 +9,13 @@
 
 import { isValidDateToday } from "./utils";
 
-import { createElement, setInnerHTML, triggerEvent } from "./utils/dom";
+import { createElement, setInnerHTML } from "./utils/dom";
 
 import { renderTimePicker } from "./timePickerDraw";
 import { renderDatePicker } from "./datePickerDraw";
 
-const renderFooter = (jdp) => {
-	const footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer);
+const renderFooter = (jdp: JalaliDatepicker) => {
+	const footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer, undefined, undefined, undefined);
 	if (jdp.options.showTodayBtn && jdp.options.date) {
 		const isActiveToday = isValidDateToday(jdp);
 		createElement(
@@ -22,7 +23,8 @@ const renderFooter = (jdp) => {
 			footerContainer,
 			EVENT_CLICK_STR,
 			() => {
-				isActiveToday && jdp.setValue(jdp.today);
+				if (isActiveToday)
+					jdp.setValue(jdp.today);
 			},
 			"امروز"
 		);
@@ -64,7 +66,7 @@ const renderFooter = (jdp) => {
 		);
 	}
 };
-export const render = (jdp) => {
+export const render = (jdp: JalaliDatepicker) => {
 	setInnerHTML(jdp.dpContainer, "");
 	if (jdp.options.date) {
 		renderDatePicker(jdp);
@@ -75,6 +77,6 @@ export const render = (jdp) => {
 	renderFooter(jdp);
 };
 
-export default function () {
+export default function (this: JalaliDatepicker) {
 	render(this);
 }

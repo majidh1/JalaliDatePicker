@@ -5,7 +5,7 @@ export default defineConfig(({ mode }) => ({
 	build: {
 		emptyOutDir: false,
 		lib: {
-			entry: resolve(__dirname, "src/index.js"),
+			entry: resolve(__dirname, "src/index.ts"),
 			name: "JalaliDatePicker",
 			formats: ["iife"], // Only UMD for the main output
 			fileName: () => `jalalidatepicker${mode === "minified" ? ".min" : ""}.js`

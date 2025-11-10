@@ -3,9 +3,10 @@
   "htmlWhitespaceSensitivity": "ignore",
   "singleQuote": false,
   "useTabs": true,
-  "tabWidth": 1,
+  "tabWidth": 4,
   "trailingComma": "none",
   "printWidth": 123,
+  "semi": true,
   "overrides": [
     {
       "files": "test/index.html",

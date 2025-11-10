@@ -3,7 +3,7 @@
 		"node_modules": true,
 		"dist": true,
 		"res": true,
-		"eslint.config.mjs": true,
+		".eslintrc.cjs": true,
 		".npmignore": true,
 		".gitignore": true,
 		"SECURITY.md": true,
@@ -13,8 +13,15 @@
 		".vscode": true,
 		"package-lock.json": true
 	},
-	"stylelint.validate": ["css", "scss", "postcss"],
-	"eslint.validate": ["javascript"],
+	"stylelint.validate": [
+		"css",
+		"scss",
+		"postcss"
+	],
+	"eslint.validate": [
+		"javascript",
+		"typescript",
+	],
 	"eslint.format.enable": true,
 	"editor.formatOnSave": true,
 	"typescript.format.insertSpaceBeforeFunctionParenthesis": false,
@@ -27,6 +34,9 @@
 		"editor.defaultFormatter": "vscode.json-language-features"
 	},
 	"[html]": {
+		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	},
+	"[typescript]": {
 		"editor.defaultFormatter": "esbenp.prettier-vscode"
 	},
 	"[javascript]": {

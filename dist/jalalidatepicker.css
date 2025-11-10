@@ -52,7 +52,10 @@ jdp-container {
     animation: jdpOpenAnimationMobile 300ms cubic-bezier(0.23, 1, 0.32, 1);
   }
 }
-jdp-container, jdp-container *, jdp-container *::after, jdp-container *::before {
+jdp-container,
+jdp-container *,
+jdp-container *::after,
+jdp-container *::before {
   -moz-box-sizing: border-box;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -70,7 +73,7 @@ jdp-container .jdp-icon-plus, jdp-container .jdp-icon-minus {
 }
 jdp-container .jdp-icon-plus svg, jdp-container .jdp-icon-minus svg {
   width: 1.5rem;
-  height: 1.5rem;
+  height: 100%;
   padding: 0.25rem;
   vertical-align: middle;
 }
@@ -96,7 +99,13 @@ jdp-container .jdp-months {
 jdp-container .jdp-years {
   width: 40%;
 }
-jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year select, jdp-container .jdp-month, jdp-container .jdp-month input, jdp-container .jdp-month select, jdp-container .jdp-time, jdp-container .jdp-time input, jdp-container .jdp-time select {
+jdp-container .jdp-year,
+jdp-container .jdp-year input,
+jdp-container .jdp-year select, jdp-container .jdp-month,
+jdp-container .jdp-month input,
+jdp-container .jdp-month select, jdp-container .jdp-time,
+jdp-container .jdp-time input,
+jdp-container .jdp-time select {
   width: 100%;
   height: auto;
   text-align: center;
@@ -114,10 +123,28 @@ jdp-container .jdp-year, jdp-container .jdp-year input, jdp-container .jdp-year 
   line-height: inherit;
   outline: none;
 }
-jdp-container .jdp-year:focus, jdp-container .jdp-year:active, jdp-container .jdp-year input:focus, jdp-container .jdp-year input:active, jdp-container .jdp-year select:focus, jdp-container .jdp-year select:active, jdp-container .jdp-month:focus, jdp-container .jdp-month:active, jdp-container .jdp-month input:focus, jdp-container .jdp-month input:active, jdp-container .jdp-month select:focus, jdp-container .jdp-month select:active, jdp-container .jdp-time:focus, jdp-container .jdp-time:active, jdp-container .jdp-time input:focus, jdp-container .jdp-time input:active, jdp-container .jdp-time select:focus, jdp-container .jdp-time select:active {
+jdp-container .jdp-year:focus, jdp-container .jdp-year:active,
+jdp-container .jdp-year input:focus,
+jdp-container .jdp-year input:active,
+jdp-container .jdp-year select:focus,
+jdp-container .jdp-year select:active, jdp-container .jdp-month:focus, jdp-container .jdp-month:active,
+jdp-container .jdp-month input:focus,
+jdp-container .jdp-month input:active,
+jdp-container .jdp-month select:focus,
+jdp-container .jdp-month select:active, jdp-container .jdp-time:focus, jdp-container .jdp-time:active,
+jdp-container .jdp-time input:focus,
+jdp-container .jdp-time input:active,
+jdp-container .jdp-time select:focus,
+jdp-container .jdp-time select:active {
   outline: none;
 }
-jdp-container .jdp-year option, jdp-container .jdp-year input option, jdp-container .jdp-year select option, jdp-container .jdp-month option, jdp-container .jdp-month input option, jdp-container .jdp-month select option, jdp-container .jdp-time option, jdp-container .jdp-time input option, jdp-container .jdp-time select option {
+jdp-container .jdp-year option,
+jdp-container .jdp-year input option,
+jdp-container .jdp-year select option, jdp-container .jdp-month option,
+jdp-container .jdp-month input option,
+jdp-container .jdp-month select option, jdp-container .jdp-time option,
+jdp-container .jdp-time input option,
+jdp-container .jdp-time select option {
   font-size: 95%;
   min-height: 1.3rem;
   outline: none;
@@ -141,7 +168,7 @@ jdp-container .jdp-year select, jdp-container .jdp-month select, jdp-container .
   -moz-appearance: menulist;
 }
 jdp-container .jdp-days {
-  padding: 0.5rem 0 0 0;
+  padding: 0 0.3rem 0.3rem 0.3rem;
   outline: 0;
   text-align: left;
   width: 100%;
@@ -152,6 +179,12 @@ jdp-container .jdp-days {
   -ms-flex-wrap: wrap;
   -ms-flex-pack: justify;
   justify-content: space-around;
+}
+jdp-container .jdp-days-header {
+  width: 100%;
+  padding: 0 0.3rem;
+  margin-top: 0.5rem;
+  background-color: rgba(0, 0, 0, 0.1);
 }
 jdp-container .jdp-day, jdp-container .jdp-day-name {
   background: none;
@@ -200,7 +233,6 @@ jdp-container .jdp-day-name {
   border-radius: 0;
   font-weight: 900;
   font-size: 90%;
-  background-color: rgba(0, 0, 0, 0.1);
   cursor: default;
 }
 jdp-container .jdp-footer {

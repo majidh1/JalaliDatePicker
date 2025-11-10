@@ -1,17 +1,17 @@
 import { mod } from "./object";
 
-const isLeapYear = (jy) => {
-	function div(a, b) {
+const isLeapYear = (jy: number) => {
+	function div(a: number, b: number) {
 		return ~~(a / b);
 	}
 	const breaks = [
-			-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178
-		],
-		bl = breaks.length;
-	let jump = 0,
-		leapJ = -14,
-		jp = breaks[0],
-		leap;
+		-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178
+	];
+	const bl = breaks.length;
+	let jump = 0;
+	let leapJ = -14;
+	let jp = breaks[0];
+	let leap;
 	for (let i = 1; i < bl; i += 1) {
 		const jm = breaks[i];
 		jump = jm - jp;
@@ -26,11 +26,9 @@ const isLeapYear = (jy) => {
 	return leap === 0;
 };
 
-export const toJalali = (gy, gm, gd) => {
-	gy = parseInt(gy);
-	gm = parseInt(gm);
-	gd = parseInt(gd);
-	let jy, days;
+export const toJalali = (gy: number, gm: number, gd: number) => {
+	let jy;
+	let days;
 	const gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
 	if (gy > 1600) {
 		jy = 979;
@@ -41,16 +39,22 @@ export const toJalali = (gy, gm, gd) => {
 	}
 	const gy2 = gm > 2 ? gy + 1 : gy;
 	days =
-		365 * gy + parseInt((gy2 + 3) / 4) - parseInt((gy2 + 99) / 100) + parseInt((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];
-	jy += 33 * parseInt(days / 12053);
+		365 * gy +
+		parseInt(((gy2 + 3) / 4) as any) -
+		parseInt(((gy2 + 99) / 100) as any) +
+		parseInt(((gy2 + 399) / 400) as any) -
+		80 +
+		gd +
+		gdm[gm - 1];
+	jy += 33 * parseInt((days / 12053) as any);
 	days %= 12053;
-	jy += 4 * parseInt(days / 1461);
+	jy += 4 * parseInt((days / 1461) as any);
 	days %= 1461;
 	if (days > 365) {
-		jy += parseInt((days - 1) / 365);
+		jy += parseInt(((days - 1) / 365) as any);
 		days = (days - 1) % 365;
 	}
-	const jm = days < 186 ? 1 + parseInt(days / 31) : 7 + parseInt((days - 186) / 30);
+	const jm = days < 186 ? 1 + parseInt((days / 31) as any) : 7 + parseInt(((days - 186) / 30) as any);
 	const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
 
 	return {
@@ -62,19 +66,18 @@ export const toJalali = (gy, gm, gd) => {
 
 export const jalaliToday = () => {
 	const date = new Date();
-	let gy = parseInt(date.getFullYear());
-	const gm = parseInt(date.getMonth()) + 1;
-	const gd = parseInt(date.getDate());
-
+	const gy = date.getFullYear();
+	const gm = date.getMonth() + 1;
+	const gd = date.getDate();
 	return toJalali(gy, gm, gd);
 };
 
-export const getWeekDay = (year, month, day) => {
-	const getDays = (month, day) => {
-		if (month < 8) return (month - 1) * 31 + day;
-		return 6 * 31 + (month - 7) * 30 + day;
+export const getWeekDay = (year: number, month: number, day: number) => {
+	const getDays = (_month: number, _day: number) => {
+		if (_month < 8) return (_month - 1) * 31 + _day;
+		return 6 * 31 + (_month - 7) * 30 + _day;
 	};
-	const getDiffDays = (year1, month1, day1, year2, month2, day2) => {
+	const getDiffDays = (year1: number, month1: number, day1: number, year2: number, month2: number, day2: number) => {
 		let diffDays = getDays(month2, day2) - getDays(month1, day1);
 		const y1 = year1 < year2 ? year1 : year2;
 		const y2 = year1 < year2 ? year2 : year1;
@@ -87,11 +90,10 @@ export const getWeekDay = (year, month, day) => {
 	return mod(getDiffDays(1392, 3, 25, year, month, day), 7);
 };
 
-export const getDaysInMonth = (year, month) => {
-	return [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
-};
+export const getDaysInMonth = (year: number, month: number) =>
+	[0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
 
-export const toMiladi = (jy, jm, jd) => {
+export const toMiladi = (jy: number, jm: number, jd: number) => {
 	let gy = jy <= 979 ? 621 : 1600;
 	jy -= jy <= 979 ? 0 : 979;
 	let days =
