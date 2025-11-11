@@ -34,7 +34,15 @@
 					<input type="text" data-jdp placeholder="امکان انتخاب فقط زمان" data-jdp-only-time class="form-control" />
 				</div>
 				<div class="col">
-					<div class="bg-warning p-2 rounded"></div>
+					<div class="bg-warning p-2 rounded">
+						<select id="font-selector" class="form-select">
+							<option>Samim</option>
+							<option selected>Vazir</option>
+							<option>Shabnam</option>
+							<option>Tahoma</option>
+							<option>B Shadi</option>
+						</select>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -82,6 +90,9 @@
 							isHollyDay: opt.weekDay == 1
 						};
 					}
+				});
+				document.getElementById("font-selector").addEventListener("change", (event) => {
+					document.body.style.fontFamily = event.target.value;
 				});
 			});
 		</script>
