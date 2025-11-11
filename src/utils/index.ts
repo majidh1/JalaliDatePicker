@@ -150,25 +150,27 @@ export const isValidDate = (jdp: JalaliDatepicker, year: number, month: number, 
 		month,
 		day
 	});
-	let maxDate: any = jdp.options.maxDate;
-	let minDate: any = jdp.options.minDate;
+	let maxDateStr = date;
+	let minDateStr = date;
+	const maxDate = jdp.options.maxDate;
+	const minDate = jdp.options.minDate;
 
 	if (!isPlainObject(minDate)) {
-		minDate = getDateValueStringFromValueObject(jdp, {
+		minDateStr = getDateValueStringFromValueObject(jdp, {
 			year: minDate.year,
 			month: minDate.month,
 			day: minDate.day
 		});
 	}
 	if (!isPlainObject(maxDate)) {
-		maxDate = getDateValueStringFromValueObject(jdp, {
+		maxDateStr = getDateValueStringFromValueObject(jdp, {
 			year: maxDate.year,
 			month: maxDate.month,
 			day: maxDate.day
 		});
 	}
 
-	return date <= maxDate && date >= minDate;
+	return date <= maxDateStr && date >= minDateStr;
 };
 
 export const isValidDateToday = (jdp: JalaliDatepicker) =>
