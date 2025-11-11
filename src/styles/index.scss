@@ -1,20 +1,15 @@
 @use "sass:color";
 @use "sass:math";
 
-$calendarBackground: #fff;
 $daySize: 39px;
 $radius: 4px;
 $container-padding: 0.3rem;
 $padding: math.div($daySize, 16);
 $dayMargin: 2px;
 $calendarWidth: ($daySize * 7 + $dayMargin * 14 + $padding * 2 + 2);
-$calendarBorderColor: #e6e6e6;
 $controls-parent-width: 45%;
 $controls-btn-size: 1.5rem;
 $controls-btn-padding: math.div($controls-btn-size, 6);
-$invertedBg: color.invert($calendarBackground);
-$calendarForeground: color.change($invertedBg, $alpha: 0.9);
-$activeColor: #569ff7;
 $mobileQuerySize: 481px;
 
 jdp-overlay {
@@ -33,14 +28,25 @@ jdp-overlay {
 	}
 }
 jdp-container {
+	--abcdf: 1;
+	--jdp-color-0: #fff;
+	--jdp-color-1: #f0f0f0;
+	--jdp-color-2: #e0e0e0;
+	--jdp-color-3: #b6b6b6;
+	--jdp-color-4: #838383;
+	--jdp-color-5: #333;
+	--jdp-primary: #569ff7;
+	--jdp-red: #f44336;
+
 	position: absolute;
 	max-width: $calendarWidth;
 	min-width: $calendarWidth;
-	background: $calendarBackground;
+	background: var(--jdp-color-0);
 	display: none;
 	direction: rtl;
 	padding: 0.5rem 0;
-	box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 24%);
+	box-shadow: 1px 0 0 var(--jdp-color-2), -1px 0 0 var(--jdp-color-2), 0 1px 0 var(--jdp-color-2),
+		0 -1px 0 var(--jdp-color-2), 0 3px 13px var(--jdp-color-2);
 	border-radius: $radius;
 	overflow: hidden;
 	-ms-touch-action: manipulation;
@@ -87,7 +93,7 @@ jdp-container {
 				overflow: hidden;
 				flex: none;
 				text-decoration: none;
-				border: 1px solid $calendarBorderColor;
+				border: 1px solid var(--jdp-color-3);
 				border-radius: $radius;
 
 				svg {
@@ -115,8 +121,8 @@ jdp-container {
 			display: inline-flex;
 			margin: 0 math.div((math.div(100%, 2)-$controls-parent-width), 2);
 			font-size: 120%;
-			color: $calendarForeground;
-			fill: $calendarForeground;
+			color: var(--jdp-color-5);
+			fill: var(--jdp-color-5);
 		}
 
 		&-months {
@@ -136,7 +142,7 @@ jdp-container {
 				width: 100%;
 				height: auto;
 				text-align: center;
-				background: $calendarBackground;
+				background: var(--jdp-color-0);
 				border: none;
 				border-radius: 0;
 				padding: 0;
@@ -204,7 +210,7 @@ jdp-container {
 			width: 100%;
 			padding: 0 $container-padding;
 			margin-top: 0.5rem;
-			background-color: color.change($invertedBg, $alpha: 0.1);
+			background-color: var(--jdp-color-1);
 		}
 
 		&-day,
@@ -221,21 +227,21 @@ jdp-container {
 			position: relative;
 			justify-content: center;
 			text-align: center;
-			color: $calendarForeground;
+			color: var(--jdp-color-5);
 
 			&.today {
-				border-color: color.change($invertedBg, $alpha: 0.3);
+				border-color: var(--jdp-color-3);
 			}
 
 			&.selected {
-				background-color: $activeColor !important;
-				color: #fff !important;
+				background-color: var(--jdp-primary) !important;
+				color: var(--jdp-color-0) !important;
 				opacity: 1 !important;
 			}
 
 			&.last-week,
 			&.holly-day {
-				color: #f44336;
+				color: var(--jdp-red);
 			}
 		}
 
@@ -255,7 +261,7 @@ jdp-container {
 				transition: linear 0.1s;
 
 				&:hover {
-					background: color.change($invertedBg, $alpha: 0.1);
+					background: var(--jdp-color-2);
 					transform: scale(1.15);
 					z-index: 1;
 				}
@@ -290,14 +296,14 @@ jdp-container {
 			&-today,
 			&-empty,
 			&-close {
-				background: $activeColor;
+				background: var(--jdp-primary);
 				font-size: 90%;
 				padding: 0.3em 0.6em;
 				border-radius: 5px;
 				font-weight: 400;
 				display: inline-block;
 				text-align: center;
-				color: #fff;
+				color: var(--jdp-color-0);
 				cursor: pointer;
 
 				@media only screen and (max-width: $mobileQuerySize) {
@@ -330,7 +336,7 @@ jdp-container {
 
 				select {
 					padding: 0.5rem 1rem 0.5rem 7px;
-					background: color.change($invertedBg, $alpha: 0.03);
+					background: var(--jdp-color-1);
 					border-radius: 5px;
 				}
 
