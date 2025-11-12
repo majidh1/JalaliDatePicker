@@ -4,9 +4,7 @@ const isLeapYear = (jy: number) => {
 	function div(a: number, b: number) {
 		return ~~(a / b);
 	}
-	const breaks = [
-		-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178
-	];
+	const breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
 	const bl = breaks.length;
 	let jump = 0;
 	let leapJ = -14;
@@ -38,14 +36,7 @@ export const toJalali = (gy: number, gm: number, gd: number) => {
 		gy -= 621;
 	}
 	const gy2 = gm > 2 ? gy + 1 : gy;
-	days =
-		365 * gy +
-		parseInt(((gy2 + 3) / 4) as any) -
-		parseInt(((gy2 + 99) / 100) as any) +
-		parseInt(((gy2 + 399) / 400) as any) -
-		80 +
-		gd +
-		gdm[gm - 1];
+	days = 365 * gy + parseInt(((gy2 + 3) / 4) as any) - parseInt(((gy2 + 99) / 100) as any) + parseInt(((gy2 + 399) / 400) as any) - 80 + gd + gdm[gm - 1];
 	jy += 33 * parseInt((days / 12053) as any);
 	days %= 12053;
 	jy += 4 * parseInt((days / 1461) as any);
@@ -90,19 +81,12 @@ export const getWeekDay = (year: number, month: number, day: number) => {
 	return mod(getDiffDays(1392, 3, 25, year, month, day), 7);
 };
 
-export const getDaysInMonth = (year: number, month: number) =>
-	[0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
+export const getDaysInMonth = (year: number, month: number) => [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
 
 export const toMiladi = (jy: number, jm: number, jd: number) => {
 	let gy = jy <= 979 ? 621 : 1600;
 	jy -= jy <= 979 ? 0 : 979;
-	let days =
-		365 * jy +
-		Math.floor(jy / 33) * 8 +
-		Math.floor(((jy % 33) + 3) / 4) +
-		78 +
-		jd +
-		(jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);
+	let days = 365 * jy + Math.floor(jy / 33) * 8 + Math.floor(((jy % 33) + 3) / 4) + 78 + jd + (jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);
 	gy += 400 * Math.floor(days / 146097);
 	days %= 146097;
 	if (days > 36524) {
@@ -117,21 +101,7 @@ export const toMiladi = (jy: number, jm: number, jd: number) => {
 		days = (days - 1) % 365;
 	}
 	let gd = days + 1;
-	const sal_a = [
-		0,
-		31,
-		(gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0 ? 29 : 28,
-		31,
-		30,
-		31,
-		30,
-		31,
-		31,
-		30,
-		31,
-		30,
-		31
-	];
+	const sal_a = [0, 31, (gy % 4 === 0 && gy % 100 !== 0) || gy % 400 === 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 	let gm;
 	for (gm = 0; gm < 13; gm++) {
 		const v = sal_a[gm];

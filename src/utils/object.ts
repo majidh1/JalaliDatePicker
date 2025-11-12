@@ -24,10 +24,7 @@ export const extend = <T extends object, U extends object>(target: T, source: U)
 			const targetValue = (target as any)[key];
 
 			if (sourceValue && typeof sourceValue === "object" && !Array.isArray(sourceValue)) {
-				(target as any)[key] = extend(
-					targetValue && typeof targetValue === "object" ? targetValue : {},
-					sourceValue
-				);
+				(target as any)[key] = extend(targetValue && typeof targetValue === "object" ? targetValue : {}, sourceValue);
 			} else {
 				(target as any)[key] = sourceValue;
 			}

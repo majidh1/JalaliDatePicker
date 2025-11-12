@@ -82,7 +82,7 @@ const jalaliDatepicker: JalaliDatepicker = {
 		this._initDate = clon(this.input?.value || "") || {};
 
 		if (isPlainObject(this._initDate)) {
-			this._initDate = (this.options.initDate) || clon(this.today);
+			this._initDate = this.options.initDate || clon(this.today);
 		} else if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
 			this._initDate = getValueObjectFromString(this, this._initDate);
 		} else {
@@ -101,7 +101,7 @@ const jalaliDatepicker: JalaliDatepicker = {
 			minute: date.getMinutes(),
 			second: 0
 		};
-		this._initTime = clon(this.input?.value || "") || (this.options.initTime) || defaultInit;
+		this._initTime = clon(this.input?.value || "") || this.options.initTime || defaultInit;
 
 		if (isString(this._initTime)) {
 			if (isValidTimeString(this, this._initTime)) {
@@ -302,11 +302,7 @@ function addEventListenerOnInputs(querySelector?: string) {
 
 function addEventListenerOnBody() {
 	document.body.addEventListener("click", (e) => {
-		if (
-			!jalaliDatepicker.isShow ||
-			containsDom(jalaliDatepicker.dpContainer, e) ||
-			getEventTarget(e) === jalaliDatepicker.input
-		) {
+		if (!jalaliDatepicker.isShow || containsDom(jalaliDatepicker.dpContainer, e) || getEventTarget(e) === jalaliDatepicker.input) {
 			return;
 		}
 		jalaliDatepicker.hide();

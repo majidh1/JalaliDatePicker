@@ -17,6 +17,9 @@ export interface SeparatorChars {
 	date: string;
 	between: string;
 	time: string;
+	targetDate: string;
+	targetBetween: string;
+	targetTime: string;
 }
 
 export interface ValueObject extends Partial<DateObject>, Partial<TimeObject> {}

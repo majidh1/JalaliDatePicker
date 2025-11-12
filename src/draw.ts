@@ -1,11 +1,5 @@
 ﻿import { JalaliDatepicker } from "./models/types";
-import {
-	EVENT_CLICK_STR,
-	FOOTER_ELM_QUERY,
-	TODAY_BTN_ELM_QUERY,
-	EMPTY_BTN_ELM_QUERY,
-	CLOSE_BTN_ELM_QUERY
-} from "./constants";
+import { EVENT_CLICK_STR, FOOTER_ELM_QUERY, TODAY_BTN_ELM_QUERY, EMPTY_BTN_ELM_QUERY, CLOSE_BTN_ELM_QUERY } from "./constants";
 
 import { isValidDateToday } from "./utils";
 
@@ -23,8 +17,7 @@ const renderFooter = (jdp: JalaliDatepicker) => {
 			footerContainer,
 			EVENT_CLICK_STR,
 			() => {
-				if (isActiveToday)
-					jdp.setValue(jdp.today);
+				if (isActiveToday) jdp.setValue(jdp.today);
 			},
 			"امروز"
 		);

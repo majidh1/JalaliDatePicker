@@ -31,15 +31,9 @@ import { getDaysInMonth, getWeekDay } from "./utils/jalali";
 import { createElement, toPersianDigitsIfNeeded } from "./utils/dom";
 import { DayOptions, JalaliDatepicker } from "./models/types";
 
-const getLastWeekClassIfNessesary = (dayOfWeek: number) =>
-	dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}.${HOLLY_DAY_CLASS_NAME}` : "";
+const getLastWeekClassIfNessesary = (dayOfWeek: number) => (dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}.${HOLLY_DAY_CLASS_NAME}` : "");
 
-const createElementPlusMinus = (
-	jdp: JalaliDatepicker,
-	container: string | HTMLElement,
-	isYear: boolean,
-	mode: "PLUS" | "MINUS"
-) => {
+const createElementPlusMinus = (jdp: JalaliDatepicker, container: string | HTMLElement, isYear: boolean, mode: "PLUS" | "MINUS") => {
 	const isPlus = mode === "PLUS";
 	let className = "";
 	let event = null;
@@ -174,10 +168,7 @@ const renderDays = (jdp: JalaliDatepicker) => {
 	const afterMonthNumber = dayOptions.month === 12 ? 1 : dayOptions.month + 1;
 	const beforeMonthYearNumber = beforeMonthNumber === 12 ? dayOptions.year - 1 : dayOptions.year;
 	const afterMonthYearNumber = afterMonthNumber === 1 ? dayOptions.year + 1 : dayOptions.year;
-	const beforeMonthDays =
-		dayOptions.month === 1
-			? getDaysInMonth(dayOptions.year - 1, beforeMonthNumber)
-			: getDaysInMonth(dayOptions.year, beforeMonthNumber);
+	const beforeMonthDays = dayOptions.month === 1 ? getDaysInMonth(dayOptions.year - 1, beforeMonthNumber) : getDaysInMonth(dayOptions.year, beforeMonthNumber);
 	let beforeDayInMonth = beforeMonthDays - startWeekDayInMonth;
 	let afterDayInMonth = 0;
 
@@ -202,18 +193,10 @@ const renderDays = (jdp: JalaliDatepicker) => {
 		dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
 		dayOptions.className = getLastWeekClassIfNessesary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
 
-		if (
-			jdp.inputValue.day === dayOptions.day &&
-			jdp.inputValue.year === dayOptions.year &&
-			jdp.inputValue.month === dayOptions.month
-		) {
+		if (jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month) {
 			dayOptions.className += `.${SELECTED_CLASS_NAME}`;
 		}
-		if (
-			jdp.today.day === dayOptions.day &&
-			jdp.today.year === dayOptions.year &&
-			jdp.today.month === dayOptions.month
-		) {
+		if (jdp.today.day === dayOptions.day && jdp.today.year === dayOptions.year && jdp.today.month === dayOptions.month) {
 			dayOptions.className += `.${TODAY_CLASS_NAME}`;
 		}
 

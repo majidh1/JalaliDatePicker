@@ -58,13 +58,7 @@ export const setInnerHTML = (element: HTMLElement, html: string): void => {
 	element.innerHTML = html;
 };
 
-export const createElement = (
-	tag: string,
-	parent: string | HTMLElement,
-	eventNames?: string,
-	event?: EventListener,
-	content?: string
-): HTMLElement => {
+export const createElement = (tag: string, parent: string | HTMLElement, eventNames?: string, event?: EventListener, content?: string): HTMLElement => {
 	const splits = tag.split(".");
 	tag = splits.shift() || "div";
 	const className = splits;

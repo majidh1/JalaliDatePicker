@@ -13,11 +13,7 @@ const getArrayNumbersStringTo = (min: number, max: number) => {
 	return items;
 };
 
-const timeDropDownRender = (
-	jdp: JalaliDatepicker,
-	timePickerContainer: HTMLElement,
-	type: "hour" | "minute" | "second"
-) => {
+const timeDropDownRender = (jdp: JalaliDatepicker, timePickerContainer: HTMLElement, type: "hour" | "minute" | "second") => {
 	const getItemForType = () => {
 		const minTime = extend({ hour: 0, minute: 0, second: 0 } as TimeObject, jdp.options.minTime || {});
 		const maxTime = extend({ hour: 23, minute: 59, second: 59 } as TimeObject, jdp.options.maxTime || {});

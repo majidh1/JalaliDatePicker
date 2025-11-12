@@ -11,15 +11,7 @@ import {
 	TARGET_VALUE_INPUT_ATTR_NAME,
 	TARGET_VALUE_TYPE_ATTR_NAME
 } from "../constants";
-import {
-	DateObject,
-	IJalaliDatepickerExternalOptions,
-	TimeObject,
-	SeparatorChars,
-	JalaliDatepicker,
-	ValueObject,
-	DayOptions
-} from "./types";
+import { DateObject, IJalaliDatepickerExternalOptions, TimeObject, SeparatorChars, JalaliDatepicker, ValueObject, DayOptions } from "./types";
 import { getValueObjectFromString, isValidDateString, isValidTimeString } from "../utils";
 import { jalaliToday } from "../utils/jalali";
 import { clon, isPlainObject, isString, isFunction } from "../utils/object";
@@ -31,10 +23,7 @@ const normalizeOptions = (
 	internalOptions: JalaliDatepickerInternalOptions,
 	jdp: JalaliDatepicker
 ): JalaliDatepickerInternalOptions => {
-	const setDefaultValue = <K extends keyof IJalaliDatepickerExternalOptions>(
-		propertyName: K,
-		defaultValue: NonNullable<JalaliDatepickerInternalOptions[K]>
-	) => {
+	const setDefaultValue = <K extends keyof IJalaliDatepickerExternalOptions>(propertyName: K, defaultValue: NonNullable<JalaliDatepickerInternalOptions[K]>) => {
 		const extValue = externalOptions[propertyName];
 		const intValue = internalOptions[propertyName];
 
@@ -43,15 +32,7 @@ const normalizeOptions = (
 	function setDefinePropertyFromAttr(
 		propertyName: keyof Pick<
 			IJalaliDatepickerExternalOptions,
-			| "date"
-			| "time"
-			| "minDate"
-			| "maxDate"
-			| "minTime"
-			| "maxTime"
-			| "initDate"
-			| "targetValueInput"
-			| "targetValueType"
+			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType"
 		>
 	) {
 		const getDefaultFromAttr = (attrName: string, isTime?: boolean): any => {
@@ -110,15 +91,13 @@ const normalizeOptions = (
 				delete (internalOptions as Partial<JalaliDatepickerInternalOptions>)[propertyName];
 
 				getterFunc = () =>
-					!jdp.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME) &&
-					(_date || jdp.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME));
+					!jdp.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME) && (_date || jdp.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME));
 			} else if (propertyName === "time") {
 				const _time = externalOptions.time ?? internalOptions.time;
 				delete (internalOptions as Partial<JalaliDatepickerInternalOptions>)[propertyName];
 
 				getterFunc = () =>
-					!jdp.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME) &&
-					(_time || jdp.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME));
+					!jdp.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME) && (_time || jdp.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME));
 			}
 
 			window.Object.defineProperty(internalOptions, propertyName, {
@@ -149,24 +128,14 @@ const normalizeOptions = (
 	setDefaultValue("showSelectTimeBtnAlways", false);
 	setDefaultValue("hasSecond", true);
 	setDefaultValue("days", ["ش", "ی", "د", "س", "چ", "پ", "ج"]);
-	setDefaultValue("months", [
-		"فروردین",
-		"اردیبهشت",
-		"خرداد",
-		"تیر",
-		"مرداد",
-		"شهریور",
-		"مهر",
-		"آبان",
-		"آذر",
-		"دی",
-		"بهمن",
-		"اسفند"
-	]);
+	setDefaultValue("months", ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]);
 	setDefaultValue("separatorChars", {
 		date: "/",
 		between: " ",
-		time: ":"
+		time: ":",
+		targetDate: "-",
+		targetBetween: " ",
+		targetTime: ":"
 	});
 	setDefaultValue("persianDigits", false);
 	setDefaultValue(
