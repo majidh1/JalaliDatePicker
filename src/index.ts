@@ -205,7 +205,7 @@ const jalaliDatepicker: JalaliDatepicker = {
 			triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
 		}
 		this.setTargetValue();
-		if (!this.options.time && this.options.hideAfterChange) {
+		if (this.options.hideAfterChange && (!this.options.time || this.options.hideAfterChangeWithTime)) {
 			this.hide();
 		} else {
 			this._draw();

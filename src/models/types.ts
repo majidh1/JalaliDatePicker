@@ -54,6 +54,7 @@ export class IJalaliDatepickerExternalOptions {
 	bottomSpace: number;
 	overflowSpace: number;
 	hideAfterChange: boolean;
+	hideAfterChangeWithTime: boolean;
 	changeMonthRotateYear: boolean;
 	showTodayBtn: boolean;
 	showEmptyBtn: boolean;

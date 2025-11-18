@@ -121,6 +121,7 @@ const normalizeOptions = (
 	setDefaultValue("bottomSpace", 0);
 	setDefaultValue("overflowSpace", -10);
 	setDefaultValue("hideAfterChange", true);
+	setDefaultValue("hideAfterChangeWithTime", false);
 	setDefaultValue("changeMonthRotateYear", false);
 	setDefaultValue("showTodayBtn", true);
 	setDefaultValue("showEmptyBtn", true);
@@ -177,6 +178,7 @@ export class JalaliDatepickerInternalOptions implements IJalaliDatepickerExterna
 	bottomSpace: number;
 	overflowSpace: number;
 	hideAfterChange: boolean;
+	hideAfterChangeWithTime: boolean;
 	changeMonthRotateYear: boolean;
 	showTodayBtn: boolean;
 	showEmptyBtn: boolean;
