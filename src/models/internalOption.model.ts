@@ -147,6 +147,8 @@ const normalizeOptions = (
 	setDefaultValue("minusHtml", '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>');
 	setDefaultValue("useDropDownYears", true);
 	setDefaultValue("today", jalaliToday());
+	setDefaultValue("position", "left");
+
 	if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
 	if (externalOptions.minDate === MIN_MAX_TODAY_SETTING) internalOptions.minDate = internalOptions.today;
 	if (externalOptions.maxDate === MIN_MAX_TODAY_SETTING) internalOptions.maxDate = internalOptions.today;
@@ -200,6 +202,7 @@ export class JalaliDatepickerInternalOptions implements IJalaliDatepickerExterna
 	plusHtml: string;
 	minusHtml: string;
 	useDropDownYears: boolean;
+	position: "left" | "right" | "center";
 
 	constructor(externalOptions: Partial<IJalaliDatepickerExternalOptions>, jdp: JalaliDatepicker) {
 		normalizeOptions(externalOptions || {}, isPlainObject(jdp.options) ? this : jdp.options, jdp);

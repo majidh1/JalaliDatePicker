@@ -155,10 +155,27 @@ const jalaliDatepicker: JalaliDatepicker = {
 		const windowWidth = window.document.body.offsetWidth;
 		const dpContainerWidth = this.dpContainer.offsetWidth;
 		const dpContainerHeight = this.dpContainer.offsetHeight;
+		const position = this.options.position;
+
+		if (position === "right") {
+			left = left + inputBounds.width - dpContainerWidth;
+			if (left + dpContainerWidth >= windowWidth) {
+				left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+			}
+		} else if (position === "center") {
+			left = left + inputBounds.width / 2 - dpContainerWidth / 2;
+			if (left + dpContainerWidth >= windowWidth) {
+				left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+			}
+		}
 
 		if (left + dpContainerWidth >= windowWidth) {
 			left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
 		}
+		if (left < 0) {
+			left = 0;
+		}
+
 		if (top - inputHeight >= dpContainerHeight && top + dpContainerHeight >= window.innerHeight) {
 			top -= dpContainerHeight + inputHeight + (this.options.bottomSpace || 0) + (this.options.topSpace || 0);
 		}
