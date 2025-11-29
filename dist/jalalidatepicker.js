@@ -297,23 +297,25 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       month: month,
       day: day
     });
+    var maxDateStr = date;
+    var minDateStr = date;
     var maxDate = jdp.options.maxDate;
     var minDate = jdp.options.minDate;
     if (!isPlainObject(minDate)) {
-      minDate = getDateValueStringFromValueObject(jdp, {
+      minDateStr = getDateValueStringFromValueObject(jdp, {
         year: minDate.year,
         month: minDate.month,
         day: minDate.day
       });
     }
     if (!isPlainObject(maxDate)) {
-      maxDate = getDateValueStringFromValueObject(jdp, {
+      maxDateStr = getDateValueStringFromValueObject(jdp, {
         year: maxDate.year,
         month: maxDate.month,
         day: maxDate.day
       });
     }
-    return date <= maxDate && date >= minDate;
+    return date <= maxDateStr && date >= minDateStr;
   };
   var isValidDateToday = function isValidDateToday(jdp) {
     return isValidDate(jdp, jdp.today.year, jdp.today.month, jdp.today.day);
@@ -337,21 +339,27 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       year: parseInt(date[0]),
       month: parseInt(date[1]),
       day: parseInt(date[2]),
-      hour: parseInt(time[0]),
-      minute: parseInt(time[1]),
-      second: parseInt(time[2])
+      hour: parseInt(time[0]) || 0,
+      minute: parseInt(time[1]) || 0,
+      second: parseInt(time[2]) || 0
     };
   };
+  var getDateValueStringFromValueObjectWithSep = function getDateValueStringFromValueObjectWithSep(jdp, obj, forTarget) {
+    var opt = jdp.options;
+    var separatorChars = opt.separatorChars;
+    var date = forTarget ? separatorChars.targetDate : separatorChars.date;
+    var time = forTarget ? separatorChars.targetTime : separatorChars.time;
+    var between = forTarget ? separatorChars.targetBetween : separatorChars.between;
+    var dateStr = opt.date ? "".concat(obj.year).concat(date).concat(addLeadingZero(obj.month)).concat(date).concat(addLeadingZero(obj.day)) : "";
+    var timeStr = opt.time ? "".concat(addLeadingZero(obj.hour)).concat(time).concat(addLeadingZero(obj.minute)) + (opt.hasSecond ? time + addLeadingZero(obj.second) : "") : "";
+    var betweenStr = dateStr && timeStr ? between : "";
+    return dateStr + betweenStr + timeStr;
+  };
   var getDateValueStringFromValueObject = function getDateValueStringFromValueObject(jdp, obj) {
-    var sepChar = jdp.options.separatorChars;
-    return "".concat(obj.year).concat(sepChar.date).concat(addLeadingZero(obj.month)).concat(sepChar.date).concat(addLeadingZero(obj.day));
+    return getDateValueStringFromValueObjectWithSep(jdp, obj);
   };
   var getValueStringFromValueObject = function getValueStringFromValueObject(jdp, obj) {
-    var sepChar = jdp.options.separatorChars;
-    var dateStr = jdp.options.date ? "".concat(obj.year).concat(sepChar.date).concat(addLeadingZero(obj.month)).concat(sepChar.date).concat(addLeadingZero(obj.day)) : "";
-    var timeStr = jdp.options.time ? "".concat(addLeadingZero(obj.hour)).concat(sepChar.time).concat(addLeadingZero(obj.minute)) + (jdp.options.hasSecond ? sepChar.time + addLeadingZero(obj.second) : "") : "";
-    var betweenStr = dateStr && timeStr ? sepChar.between : "";
-    return dateStr + betweenStr + timeStr;
+    return getDateValueStringFromValueObjectWithSep(jdp, obj);
   };
   var isValidDateString = function isValidDateString(jdp, str) {
     if (!str) {
@@ -375,10 +383,12 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     if (!value) {
       return "";
     }
-    if (jdp.options.targetValueType === "miladi") {
+    if (jdp.options.targetValueType) {
       var normalValue = getValueObjectFromString(jdp, value);
-      var miladiValue = toMiladi(normalValue.year, normalValue.month, normalValue.day);
-      return "".concat(addLeadingZero(miladiValue.year), "-").concat(addLeadingZero(miladiValue.month), "-").concat(addLeadingZero(miladiValue.day));
+      if (jdp.options.targetValueType === "miladi") {
+        var miladiValue = toMiladi(normalValue.year, normalValue.month, normalValue.day);
+        return getDateValueStringFromValueObjectWithSep(jdp, _extend(normalValue, miladiValue), true);
+      }
     }
     return value;
   };
@@ -907,6 +917,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     setDefaultValue("bottomSpace", 0);
     setDefaultValue("overflowSpace", -10);
     setDefaultValue("hideAfterChange", true);
+    setDefaultValue("hideAfterChangeWithTime", false);
     setDefaultValue("changeMonthRotateYear", false);
     setDefaultValue("showTodayBtn", true);
     setDefaultValue("showEmptyBtn", true);
@@ -918,7 +929,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     setDefaultValue("separatorChars", {
       date: "/",
       between: " ",
-      time: ":"
+      time: ":",
+      targetDate: "-",
+      targetBetween: " ",
+      targetTime: ":"
     });
     setDefaultValue("persianDigits", false);
     setDefaultValue("plusHtml",
@@ -927,6 +941,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     setDefaultValue("minusHtml", '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>');
     setDefaultValue("useDropDownYears", true);
     setDefaultValue("today", jalaliToday());
+    setDefaultValue("position", "left");
     if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
     if (externalOptions.minDate === MIN_MAX_TODAY_SETTING) internalOptions.minDate = internalOptions.today;
     if (externalOptions.maxDate === MIN_MAX_TODAY_SETTING) internalOptions.maxDate = internalOptions.today;
@@ -953,6 +968,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     _defineProperty(this, "bottomSpace", void 0);
     _defineProperty(this, "overflowSpace", void 0);
     _defineProperty(this, "hideAfterChange", void 0);
+    _defineProperty(this, "hideAfterChangeWithTime", void 0);
     _defineProperty(this, "changeMonthRotateYear", void 0);
     _defineProperty(this, "showTodayBtn", void 0);
     _defineProperty(this, "showEmptyBtn", void 0);
@@ -978,6 +994,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     _defineProperty(this, "plusHtml", void 0);
     _defineProperty(this, "minusHtml", void 0);
     _defineProperty(this, "useDropDownYears", void 0);
+    _defineProperty(this, "position", void 0);
     normalizeOptions(externalOptions || {}, isPlainObject(jdp.options) ? this : jdp.options, jdp);
   });
   var jalaliDatepicker = {
@@ -1105,8 +1122,23 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       var windowWidth = window.document.body.offsetWidth;
       var dpContainerWidth = this.dpContainer.offsetWidth;
       var dpContainerHeight = this.dpContainer.offsetHeight;
+      var position = this.options.position;
+      if (position === "right") {
+        left = left + inputBounds.width - dpContainerWidth;
+        if (left + dpContainerWidth >= windowWidth) {
+          left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+        }
+      } else if (position === "center") {
+        left = left + inputBounds.width / 2 - dpContainerWidth / 2;
+        if (left + dpContainerWidth >= windowWidth) {
+          left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+        }
+      }
       if (left + dpContainerWidth >= windowWidth) {
         left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+      }
+      if (left < 0) {
+        left = 0;
       }
       if (top - inputHeight >= dpContainerHeight && top + dpContainerHeight >= window.innerHeight) {
         top -= dpContainerHeight + inputHeight + (this.options.bottomSpace || 0) + (this.options.topSpace || 0);
@@ -1134,7 +1166,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
       }
       this.setTargetValue();
-      if (!this.options.time && this.options.hideAfterChange) {
+      if (this.options.hideAfterChange && (!this.options.time || this.options.hideAfterChangeWithTime)) {
         this.hide();
       } else {
         this._draw();

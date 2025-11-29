@@ -28,7 +28,6 @@ jdp-overlay {
 	}
 }
 jdp-container {
-	--abcdf: 1;
 	--jdp-color-0: #fff;
 	--jdp-color-1: #f0f0f0;
 	--jdp-color-2: #e0e0e0;
@@ -45,8 +44,7 @@ jdp-container {
 	display: none;
 	direction: rtl;
 	padding: 0.5rem 0;
-	box-shadow: 1px 0 0 var(--jdp-color-2), -1px 0 0 var(--jdp-color-2), 0 1px 0 var(--jdp-color-2),
-		0 -1px 0 var(--jdp-color-2), 0 3px 13px var(--jdp-color-2);
+	box-shadow: 1px 0 0 var(--jdp-color-2), -1px 0 0 var(--jdp-color-2), 0 1px 0 var(--jdp-color-2), 0 -1px 0 var(--jdp-color-2), 0 3px 13px var(--jdp-color-2);
 	border-radius: $radius;
 	overflow: hidden;
 	-ms-touch-action: manipulation;
