@@ -74,6 +74,8 @@ export class IJalaliDatepickerExternalOptions {
 	minusHtml: string;
 	useDropDownYears: boolean;
 	position: "left" | "right" | "center";
+	minuteIncrement: number;
+	hourIncrement: number;
 }
 
 export interface JalaliDatepicker {

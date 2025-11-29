@@ -149,6 +149,8 @@ const normalizeOptions = (
 	setDefaultValue("useDropDownYears", true);
 	setDefaultValue("today", jalaliToday());
 	setDefaultValue("position", "left");
+	setDefaultValue("minuteIncrement", 1);
+	setDefaultValue("hourIncrement", 1);
 
 	if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
 	if (externalOptions.minDate === MIN_MAX_TODAY_SETTING) internalOptions.minDate = internalOptions.today;
@@ -205,6 +207,8 @@ export class JalaliDatepickerInternalOptions implements IJalaliDatepickerExterna
 	minusHtml: string;
 	useDropDownYears: boolean;
 	position: "left" | "right" | "center";
+	minuteIncrement: number;
+	hourIncrement: number;
 
 	constructor(externalOptions: Partial<IJalaliDatepickerExternalOptions>, jdp: JalaliDatepicker) {
 		normalizeOptions(externalOptions || {}, isPlainObject(jdp.options) ? this : jdp.options, jdp);

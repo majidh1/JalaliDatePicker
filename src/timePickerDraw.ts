@@ -7,9 +7,12 @@ import { createElement, toPersianDigitsIfNeeded } from "./utils/dom";
 import { normalizeMinMaxTime } from "./utils";
 import { JalaliDatepicker, TimeObject } from "./models/types";
 
-const getArrayNumbersStringTo = (min: number, max: number) => {
+const getArrayNumbersStringTo = (min: number, max: number, increment?: number) => {
 	const items = [];
-	for (let i = min; i <= max; i++) items.push(addLeadingZero(i));
+	if (!increment || increment <= 0) {
+		increment = 1;
+	}
+	for (let i = min; i <= max; i += increment) items.push(addLeadingZero(i));
 	return items;
 };
 
@@ -18,19 +21,19 @@ const timeDropDownRender = (jdp: JalaliDatepicker, timePickerContainer: HTMLElem
 		const minTime = extend({ hour: 0, minute: 0, second: 0 } as TimeObject, jdp.options.minTime || {});
 		const maxTime = extend({ hour: 23, minute: 59, second: 59 } as TimeObject, jdp.options.maxTime || {});
 		if (type === "hour") {
-			return getArrayNumbersStringTo(minTime.hour, maxTime.hour);
+			return getArrayNumbersStringTo(minTime.hour, maxTime.hour, jdp.options.hourIncrement);
 		}
 		if (type === "minute") {
 			if (minTime.hour === maxTime.hour) {
-				return getArrayNumbersStringTo(minTime.minute, maxTime.minute);
+				return getArrayNumbersStringTo(minTime.minute, maxTime.minute, jdp.options.minuteIncrement);
 			}
 			if (jdp.initTime.hour === minTime.hour) {
-				return getArrayNumbersStringTo(minTime.minute, 59);
+				return getArrayNumbersStringTo(minTime.minute, 59, jdp.options.minuteIncrement);
 			}
 			if (jdp.initTime.hour === maxTime.hour) {
-				return getArrayNumbersStringTo(0, maxTime.minute);
+				return getArrayNumbersStringTo(0, maxTime.minute, jdp.options.minuteIncrement);
 			}
-			return getArrayNumbersStringTo(0, 59);
+			return getArrayNumbersStringTo(0, 59, jdp.options.minuteIncrement);
 		}
 
 		if (type === "second") {
