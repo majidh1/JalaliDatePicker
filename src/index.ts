@@ -10,7 +10,7 @@ import {
 	isValidTimeString,
 	getConvertedValue
 } from "./utils";
-import { extend, clon, isPlainObject, isString } from "./utils/object";
+import { extend, clon, isString } from "./utils/object";
 import { getScrollParent, getEventTarget, containsDom, triggerEvent, createElement } from "./utils/dom";
 import { jalaliToday } from "./utils/jalali";
 import {
@@ -79,15 +79,16 @@ const jalaliDatepicker: JalaliDatepicker = {
 		if (this._initDate) {
 			return this._initDate;
 		}
-		this._initDate = clon(this.input?.value || "") || {};
+		this._initDate = clon(this.input?.value || "");
 
-		if (isPlainObject(this._initDate)) {
+		if (!this._initDate) {
 			this._initDate = this.options.initDate || clon(this.today);
 		} else if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
 			this._initDate = getValueObjectFromString(this, this._initDate);
 		} else {
 			this._initDate = clon(this.today);
 		}
+
 		this._initDate = normalizeMinMaxDate(this, this._initDate);
 		return this._initDate;
 	},

@@ -1,18 +1,19 @@
 export const isUndefined = (value: unknown): value is undefined => typeof value === "undefined";
 export const isFunction = (value: unknown): value is Function => typeof value === "function";
 export const isString = (value: unknown): value is string => typeof value === "string";
+export const isObject = (value: unknown): value is object => typeof value === "object";
 
 export const clon = (a: Object | string) => JSON.parse(JSON.stringify(a));
 
-export const isPlainObject = (obj: Object | null | undefined): obj is undefined => {
-	if (!obj || !obj.constructor || Object.prototype.toString.call(obj) !== "[object Object]") {
+export const isNotObjectOrIsEmptyObject = (obj: Object | null | undefined): obj is Record<string, undefined> => {
+	if (!isObject(obj)) {
 		return false;
 	}
 
 	try {
 		return JSON.stringify(obj) === "{}";
 	} catch (e) {
-		return true;
+		return false;
 	}
 };
 

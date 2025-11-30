@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { isPlainObject, addLeadingZero, extend } from "./object";
+import { isObject, addLeadingZero, extend } from "./object";
 import { toMiladi } from "./jalali";
 import { DateObject, JalaliDatepicker, TimeObject, ValueObject } from "../models/types";
 
@@ -147,14 +147,14 @@ export const isValidDate = (jdp: JalaliDatepicker, year: number, month: number, 
 	const maxDate = jdp.options.maxDate;
 	const minDate = jdp.options.minDate;
 
-	if (!isPlainObject(minDate)) {
+	if (isObject(minDate)) {
 		minDateStr = getDateValueStringFromValueObject(jdp, {
 			year: minDate.year,
 			month: minDate.month,
 			day: minDate.day
 		});
 	}
-	if (!isPlainObject(maxDate)) {
+	if (isObject(maxDate)) {
 		maxDateStr = getDateValueStringFromValueObject(jdp, {
 			year: maxDate.year,
 			month: maxDate.month,

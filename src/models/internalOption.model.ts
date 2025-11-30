@@ -14,7 +14,7 @@ import {
 import { DateObject, IJalaliDatepickerExternalOptions, TimeObject, SeparatorChars, JalaliDatepicker, ValueObject, DayOptions } from "./types";
 import { getValueObjectFromString, isValidDateString, isValidTimeString } from "../utils";
 import { jalaliToday } from "../utils/jalali";
-import { clon, isPlainObject, isString, isFunction } from "../utils/object";
+import { clon, isNotObjectOrIsEmptyObject, isString, isFunction } from "../utils/object";
 
 const isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test(window.navigator?.userAgent?.toLowerCase());
 
@@ -211,6 +211,6 @@ export class JalaliDatepickerInternalOptions implements IJalaliDatepickerExterna
 	hourIncrement: number;
 
 	constructor(externalOptions: Partial<IJalaliDatepickerExternalOptions>, jdp: JalaliDatepicker) {
-		normalizeOptions(externalOptions || {}, isPlainObject(jdp.options) ? this : jdp.options, jdp);
+		normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
 	}
 }
