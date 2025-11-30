@@ -5,7 +5,7 @@ export const isObject = (value: unknown): value is object => typeof value === "o
 
 export const clon = (a: Object | string) => JSON.parse(JSON.stringify(a));
 
-export const isNotObjectOrIsEmptyObject = (obj: Object | null | undefined): obj is Record<string, undefined> => {
+export const isNotObjectOrIsEmptyObject = (obj: Object | null | undefined): obj is undefined => {
 	if (!isObject(obj)) {
 		return false;
 	}

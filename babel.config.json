@@ -1,9 +1,14 @@
 {
   "presets": [
-    ["@babel/preset-env", {
-      "targets": {
-        "ie": "11"
+    [
+      "@babel/preset-env",
+      {
+        "loose": true,
+        "modules": false,
+        "targets": {
+          "ie": "11"
+        }
       }
-    }]
+    ]
   ]
 }

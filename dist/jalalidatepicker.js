@@ -1,12 +1,3 @@
-"use strict";
-
-function _defineProperties(e, r) { for (var t = 0; t < r.length; t++) { var o = r[t]; o.enumerable = o.enumerable || !1, o.configurable = !0, "value" in o && (o.writable = !0), Object.defineProperty(e, _toPropertyKey(o.key), o); } }
-function _createClass(e, r, t) { return r && _defineProperties(e.prototype, r), t && _defineProperties(e, t), Object.defineProperty(e, "prototype", { writable: !1 }), e; }
-function _classCallCheck(a, n) { if (!(a instanceof n)) throw new TypeError("Cannot call a class as a function"); }
-function _defineProperty(e, r, t) { return (r = _toPropertyKey(r)) in e ? Object.defineProperty(e, r, { value: t, enumerable: !0, configurable: !0, writable: !0 }) : e[r] = t, e; }
-function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : i + ""; }
-function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
-function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 (function (_window$navigator) {
   "use strict";
 
@@ -19,17 +10,20 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   var isString = function isString(value) {
     return typeof value === "string";
   };
+  var isObject = function isObject(value) {
+    return typeof value === "object";
+  };
   var clon = function clon(a) {
     return JSON.parse(JSON.stringify(a));
   };
-  var isPlainObject = function isPlainObject(obj) {
-    if (!obj || !obj.constructor || Object.prototype.toString.call(obj) !== "[object Object]") {
+  var isNotObjectOrIsEmptyObject = function isNotObjectOrIsEmptyObject(obj) {
+    if (!isObject(obj)) {
       return false;
     }
     try {
       return JSON.stringify(obj) === "{}";
     } catch (e) {
-      return true;
+      return false;
     }
   };
   var _extend = function extend(target, source) {
@@ -37,8 +31,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       if (source.hasOwnProperty(key)) {
         var sourceValue = source[key];
         var targetValue = target[key];
-        if (sourceValue && _typeof(sourceValue) === "object" && !Array.isArray(sourceValue)) {
-          target[key] = _extend(targetValue && _typeof(targetValue) === "object" ? targetValue : {}, sourceValue);
+        if (sourceValue && typeof sourceValue === "object" && !Array.isArray(sourceValue)) {
+          target[key] = _extend(targetValue && typeof targetValue === "object" ? targetValue : {}, sourceValue);
         } else {
           target[key] = sourceValue;
         }
@@ -49,8 +43,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   var mod = function mod(a, b) {
     return window.Math.abs(a - b * window.Math.floor(a / b));
   };
-  var addLeadingZero = function addLeadingZero(value) {
-    var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;
+  var addLeadingZero = function addLeadingZero(value, length) {
+    if (length === void 0) {
+      length = 2;
+    }
     if (isUndefined(value)) {
       return value;
     }
@@ -263,8 +259,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       return Math.round(val / 100) * 100;
     }
     var initYear = jdp.initDate.year;
-    var min = ((_jdp$options$minDate = jdp.options.minDate) === null || _jdp$options$minDate === void 0 ? void 0 : _jdp$options$minDate.year) || rnd(initYear - 200);
-    var max = ((_jdp$options$maxDate = jdp.options.maxDate) === null || _jdp$options$maxDate === void 0 ? void 0 : _jdp$options$maxDate.year) || rnd(initYear + 200);
+    var min = ((_jdp$options$minDate = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate.year) || rnd(initYear - 200);
+    var max = ((_jdp$options$maxDate = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate.year) || rnd(initYear + 200);
     return {
       min: min,
       max: max
@@ -277,12 +273,12 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     var months = [];
     var start = 1;
     var finish = 12;
-    if (initYear === (minDate === null || minDate === void 0 ? void 0 : minDate.year)) {
+    if (initYear === (minDate == null ? void 0 : minDate.year)) {
       start = minDate.month;
-      if (initYear === (maxDate === null || maxDate === void 0 ? void 0 : maxDate.year)) {
+      if (initYear === (maxDate == null ? void 0 : maxDate.year)) {
         finish = maxDate.month;
       }
-    } else if (initYear === (maxDate === null || maxDate === void 0 ? void 0 : maxDate.year)) {
+    } else if (initYear === (maxDate == null ? void 0 : maxDate.year)) {
       start = 1;
       finish = maxDate.month;
     }
@@ -301,14 +297,14 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     var minDateStr = date;
     var maxDate = jdp.options.maxDate;
     var minDate = jdp.options.minDate;
-    if (!isPlainObject(minDate)) {
+    if (isObject(minDate)) {
       minDateStr = getDateValueStringFromValueObject(jdp, {
         year: minDate.year,
         month: minDate.month,
         day: minDate.day
       });
     }
-    if (!isPlainObject(maxDate)) {
+    if (isObject(maxDate)) {
       maxDateStr = getDateValueStringFromValueObject(jdp, {
         year: maxDate.year,
         month: maxDate.month,
@@ -325,8 +321,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       return false;
     }
     var sepOpt = jdp.options.separatorChars;
-    var datePattern = jdp.options.date ? "\\d{4}".concat(sepOpt.date, "\\d{2}").concat(sepOpt.date, "\\d{2}") : "";
-    var timePattern = jdp.options.time ? "\\d{2}".concat(sepOpt.time, "\\d{2}") + (jdp.options.hasSecond ? "".concat(sepOpt.time, "\\d{2}") : "") : "";
+    var datePattern = jdp.options.date ? "\\d{4}" + sepOpt.date + "\\d{2}" + sepOpt.date + "\\d{2}" : "";
+    var timePattern = jdp.options.time ? "\\d{2}" + sepOpt.time + "\\d{2}" + (jdp.options.hasSecond ? sepOpt.time + "\\d{2}" : "") : "";
     var regex = new RegExp(datePattern + (datePattern && timePattern ? sepOpt.between : "") + timePattern, "g");
     return regex.test(str);
   };
@@ -350,8 +346,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     var date = forTarget ? separatorChars.targetDate : separatorChars.date;
     var time = forTarget ? separatorChars.targetTime : separatorChars.time;
     var between = forTarget ? separatorChars.targetBetween : separatorChars.between;
-    var dateStr = opt.date ? "".concat(obj.year).concat(date).concat(addLeadingZero(obj.month)).concat(date).concat(addLeadingZero(obj.day)) : "";
-    var timeStr = opt.time ? "".concat(addLeadingZero(obj.hour)).concat(time).concat(addLeadingZero(obj.minute)) + (opt.hasSecond ? time + addLeadingZero(obj.second) : "") : "";
+    var dateStr = opt.date ? "" + obj.year + date + addLeadingZero(obj.month) + date + addLeadingZero(obj.day) : "";
+    var timeStr = opt.time ? "" + addLeadingZero(obj.hour) + time + addLeadingZero(obj.minute) + (opt.hasSecond ? time + addLeadingZero(obj.second) : "") : "";
     var betweenStr = dateStr && timeStr ? between : "";
     return dateStr + betweenStr + timeStr;
   };
@@ -379,7 +375,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   };
   var getConvertedValue = function getConvertedValue(jdp) {
     var _jdp$input;
-    var value = (_jdp$input = jdp.input) === null || _jdp$input === void 0 ? void 0 : _jdp$input.value;
+    var value = (_jdp$input = jdp.input) == null ? void 0 : _jdp$input.value;
     if (!value) {
       return "";
     }
@@ -393,50 +389,52 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     return value;
   };
   var NAMESPACE = "jdp";
-  var CONTAINER_ELM_QUERY = "".concat(NAMESPACE, "-container");
-  var OVERLAY_ELM_QUERY = "".concat(NAMESPACE, "-overlay");
-  var YEARS_ELM_QUERY = "div.".concat(NAMESPACE, "-years");
-  var YEAR_ELM_QUERY = "div.".concat(NAMESPACE, "-year");
-  var MONTHS_ELM_QUERY = "div.".concat(NAMESPACE, "-months");
-  var MONTH_ELM_QUERY = "div.".concat(NAMESPACE, "-month");
-  var DAYS_ELM_QUERY = "div.".concat(NAMESPACE, "-days");
-  var DAYS_HEADER_ELM_QUERY = "div.".concat(NAMESPACE, "-days-header");
-  var DAY_ELM_QUERY = "div.".concat(NAMESPACE, "-day");
-  var DAY_NOTINMONTH_ELM_QUERY = "div.".concat(NAMESPACE, "-day.not-in-month");
-  var DAY_DISABLED_ELM_QUERY = "div.".concat(NAMESPACE, "-day.disabled-day");
-  var DAY_DISABLED_NOTINMONTH_ELM_QUERY = "".concat(DAY_NOTINMONTH_ELM_QUERY, ".disabled-day");
-  var DAY_NAME_ELM_QUERY = "div.".concat(NAMESPACE, "-day-name");
-  var PLUS_ICON_ELM_QUERY = "div.".concat(NAMESPACE, "-icon-plus");
-  var MINUS_ICON_ELM_QUERY = "div.".concat(NAMESPACE, "-icon-minus");
-  var FOOTER_ELM_QUERY = "div.".concat(NAMESPACE, "-footer");
-  var TODAY_BTN_ELM_QUERY = "div.".concat(NAMESPACE, "-btn-today");
-  var EMPTY_BTN_ELM_QUERY = "div.".concat(NAMESPACE, "-btn-empty");
-  var CLOSE_BTN_ELM_QUERY = "div.".concat(NAMESPACE, "-btn-close");
-  var FOOTER_TIME_ELM_QUERY = "div.".concat(NAMESPACE, "-time-container");
-  var TIME_DROPDOWN_PARENT_ELM_QUERY = "div.".concat(NAMESPACE, "-time");
+  var DIV_NAMESPACE = "div." + NAMESPACE;
+  var CONTAINER_ELM_QUERY = NAMESPACE + "-container";
+  var OVERLAY_ELM_QUERY = NAMESPACE + "-overlay";
+  var YEARS_ELM_QUERY = DIV_NAMESPACE + "-years";
+  var YEAR_ELM_QUERY = DIV_NAMESPACE + "-year";
+  var MONTHS_ELM_QUERY = DIV_NAMESPACE + "-months";
+  var MONTH_ELM_QUERY = DIV_NAMESPACE + "-month";
+  var DAYS_ELM_QUERY = DIV_NAMESPACE + "-days";
+  var DAYS_HEADER_ELM_QUERY = DIV_NAMESPACE + "-days-header";
+  var DAY_ELM_QUERY = DIV_NAMESPACE + "-day";
+  var DAY_NOTINMONTH_ELM_QUERY = DIV_NAMESPACE + "-day.not-in-month";
+  var DAY_DISABLED_ELM_QUERY = DIV_NAMESPACE + "-day.disabled-day";
+  var DAY_DISABLED_NOTINMONTH_ELM_QUERY = DAY_NOTINMONTH_ELM_QUERY + ".disabled-day";
+  var DAY_NAME_ELM_QUERY = DIV_NAMESPACE + "-day-name";
+  var PLUS_ICON_ELM_QUERY = DIV_NAMESPACE + "-icon-plus";
+  var MINUS_ICON_ELM_QUERY = DIV_NAMESPACE + "-icon-minus";
+  var FOOTER_ELM_QUERY = DIV_NAMESPACE + "-footer";
+  var TODAY_BTN_ELM_QUERY = DIV_NAMESPACE + "-btn-today";
+  var EMPTY_BTN_ELM_QUERY = DIV_NAMESPACE + "-btn-empty";
+  var CLOSE_BTN_ELM_QUERY = DIV_NAMESPACE + "-btn-close";
+  var FOOTER_TIME_ELM_QUERY = DIV_NAMESPACE + "-time-container";
+  var TIME_DROPDOWN_PARENT_ELM_QUERY = DIV_NAMESPACE + "-time";
   var SELECTED_CLASS_NAME = "selected";
   var TODAY_CLASS_NAME = "today";
   var LAST_WEEK_CLASS_NAME = "last-week";
   var DISABLE_CLASS_NAME = "not-in-range";
   var HOLLY_DAY_CLASS_NAME = "holly-day";
-  var EVENT_CHANGE_INPUT_STR = "".concat(NAMESPACE, ":change");
+  var EVENT_CHANGE_INPUT_STR = NAMESPACE + ":change";
   var EVENT_CHANGE_MONTH_DROPDOWN_STR = "change";
+  var EVENT_CHANGE_TIME_DROPDOWN_STR = EVENT_CHANGE_MONTH_DROPDOWN_STR;
   var EVENT_CHANGE_YEAR_INPUT_STR = "keyup change";
-  var EVENT_CHANGE_TIME_DROPDOWN_STR = "change";
   var EVENT_CLICK_STR = "click";
   var EVENT_FOCUS_STR = "focusin";
   var EVENT_KEYDOWN_STR = "keydown";
   var MIN_MAX_TODAY_SETTING = "today";
   var OPTION_ATTR_SETTING = "attr";
-  var INIT_DATE_ATTR_NAME = "data-jdp-init-date";
-  var MAX_DATE_ATTR_NAME = "data-jdp-max-date";
-  var MIN_DATE_ATTR_NAME = "data-jdp-min-date";
-  var MAX_TIME_ATTR_NAME = "data-jdp-max-time";
-  var MIN_TIME_ATTR_NAME = "data-jdp-min-time";
-  var TARGET_VALUE_INPUT_ATTR_NAME = "data-jdp-target-value-input";
-  var TARGET_VALUE_TYPE_ATTR_NAME = "data-jdp-target-value-type";
-  var ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-date";
-  var ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = "data-jdp-only-time";
+  var DATA_JDP = "data-jdp-";
+  var INIT_DATE_ATTR_NAME = DATA_JDP + "init-date";
+  var MAX_DATE_ATTR_NAME = DATA_JDP + "max-date";
+  var MIN_DATE_ATTR_NAME = DATA_JDP + "min-date";
+  var MAX_TIME_ATTR_NAME = DATA_JDP + "max-time";
+  var MIN_TIME_ATTR_NAME = DATA_JDP + "min-time";
+  var TARGET_VALUE_INPUT_ATTR_NAME = DATA_JDP + "target-value-input";
+  var TARGET_VALUE_TYPE_ATTR_NAME = DATA_JDP + "target-value-type";
+  var ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-date";
+  var ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-time";
   var STYLE_VISIBILITY_VISIBLE = "visible";
   var STYLE_VISIBILITY_HIDDEN = "hidden";
   var STYLE_DISPLAY_BLOCK = "block";
@@ -482,7 +480,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   var triggerEvent = function triggerEvent(elm, event) {
     if (!elm) return;
     elm.dispatchEvent(createEvent(event));
-    if (event === EVENT_CHANGE_INPUT_STR) {
+    {
       elm.dispatchEvent(createEvent("change"));
       elm.dispatchEvent(createEvent("input"));
     }
@@ -523,9 +521,12 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     });
     return data;
   };
-  var getArrayNumbersStringTo = function getArrayNumbersStringTo(min, max) {
+  var getArrayNumbersStringTo = function getArrayNumbersStringTo(min, max, increment) {
     var items = [];
-    for (var i = min; i <= max; i++) items.push(addLeadingZero(i));
+    if (!increment || increment <= 0) {
+      increment = 1;
+    }
+    for (var i = min; i <= max; i += increment) items.push(addLeadingZero(i));
     return items;
   };
   var timeDropDownRender = function timeDropDownRender(jdp, timePickerContainer, type) {
@@ -541,19 +542,19 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         second: 59
       }, jdp.options.maxTime || {});
       if (type === "hour") {
-        return getArrayNumbersStringTo(minTime.hour, maxTime.hour);
+        return getArrayNumbersStringTo(minTime.hour, maxTime.hour, jdp.options.hourIncrement);
       }
       if (type === "minute") {
         if (minTime.hour === maxTime.hour) {
-          return getArrayNumbersStringTo(minTime.minute, maxTime.minute);
+          return getArrayNumbersStringTo(minTime.minute, maxTime.minute, jdp.options.minuteIncrement);
         }
         if (jdp.initTime.hour === minTime.hour) {
-          return getArrayNumbersStringTo(minTime.minute, 59);
+          return getArrayNumbersStringTo(minTime.minute, 59, jdp.options.minuteIncrement);
         }
         if (jdp.initTime.hour === maxTime.hour) {
-          return getArrayNumbersStringTo(0, maxTime.minute);
+          return getArrayNumbersStringTo(0, maxTime.minute, jdp.options.minuteIncrement);
         }
-        return getArrayNumbersStringTo(0, 59);
+        return getArrayNumbersStringTo(0, 59, jdp.options.minuteIncrement);
       }
       if (type === "second") {
         if (minTime.hour === maxTime.hour && minTime.minute === maxTime.minute) {
@@ -571,7 +572,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     };
     var container = createElement(TIME_DROPDOWN_PARENT_ELM_QUERY, timePickerContainer);
     var dropDownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, function (e) {
-      jdp.setValue(normalizeMinMaxTime(jdp, jdp.initTime, _defineProperty({}, type, e.target.value)));
+      var _normalizeMinMaxTime;
+      jdp.setValue(normalizeMinMaxTime(jdp, jdp.initTime, (_normalizeMinMaxTime = {}, _normalizeMinMaxTime[type] = e.target.value, _normalizeMinMaxTime)));
     });
     dropDownContainer.tabIndex = -1;
     var items = getItemForType();
@@ -593,7 +595,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     timeDropDownRender(jdp, timePickerContainer, "hour");
   };
   var getLastWeekClassIfNessesary = function getLastWeekClassIfNessesary(dayOfWeek) {
-    return dayOfWeek === 6 ? ".".concat(LAST_WEEK_CLASS_NAME, ".").concat(HOLLY_DAY_CLASS_NAME) : "";
+    return dayOfWeek === 6 ? "." + LAST_WEEK_CLASS_NAME + "." + HOLLY_DAY_CLASS_NAME : "";
   };
   var createElementPlusMinus = function createElementPlusMinus(jdp, container, isYear, mode) {
     var _jdp$options$maxDate2, _jdp$options$maxDate3, _jdp$options$minDate2, _jdp$options$minDate3;
@@ -601,10 +603,10 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     var className = "";
     var event = null;
     var elmQuery = isPlus ? PLUS_ICON_ELM_QUERY : MINUS_ICON_ELM_QUERY;
-    var isMaxYear = isPlus && ((_jdp$options$maxDate2 = jdp.options.maxDate) === null || _jdp$options$maxDate2 === void 0 ? void 0 : _jdp$options$maxDate2.year) === jdp.initDate.year;
-    var isMaxMonth = isPlus && ((_jdp$options$maxDate3 = jdp.options.maxDate) === null || _jdp$options$maxDate3 === void 0 ? void 0 : _jdp$options$maxDate3.month) === jdp.initDate.month;
-    var isMinYear = !isPlus && ((_jdp$options$minDate2 = jdp.options.minDate) === null || _jdp$options$minDate2 === void 0 ? void 0 : _jdp$options$minDate2.year) === jdp.initDate.year;
-    var isMinMonth = !isPlus && ((_jdp$options$minDate3 = jdp.options.minDate) === null || _jdp$options$minDate3 === void 0 ? void 0 : _jdp$options$minDate3.month) === jdp.initDate.month;
+    var isMaxYear = isPlus && ((_jdp$options$maxDate2 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate2.year) === jdp.initDate.year;
+    var isMaxMonth = isPlus && ((_jdp$options$maxDate3 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate3.month) === jdp.initDate.month;
+    var isMinYear = !isPlus && ((_jdp$options$minDate2 = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate2.year) === jdp.initDate.year;
+    var isMinMonth = !isPlus && ((_jdp$options$minDate3 = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate3.month) === jdp.initDate.month;
     var html = isPlus ? jdp.options.plusHtml : jdp.options.minusHtml;
     if (isYear) {
       if (isPlus) event = function event() {
@@ -730,16 +732,16 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
       dayOptions.className = getLastWeekClassIfNessesary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
       if (jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month) {
-        dayOptions.className += ".".concat(SELECTED_CLASS_NAME);
+        dayOptions.className += "." + SELECTED_CLASS_NAME;
       }
       if (jdp.today.day === dayOptions.day && jdp.today.year === dayOptions.year && jdp.today.month === dayOptions.month) {
-        dayOptions.className += ".".concat(TODAY_CLASS_NAME);
+        dayOptions.className += "." + TODAY_CLASS_NAME;
       }
       if (isFunction(jdp.options.dayRendering)) {
         _extend(dayOptions, jdp.options.dayRendering(dayOptions, jdp.input));
       }
       if (dayOptions.isHollyDay) {
-        dayOptions.className += ".".concat(HOLLY_DAY_CLASS_NAME);
+        dayOptions.className += "." + HOLLY_DAY_CLASS_NAME;
       }
       var query = dayOptions.isValid ? DAY_ELM_QUERY : DAY_DISABLED_ELM_QUERY;
       if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {
@@ -781,7 +783,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         if (isActiveToday) jdp.setValue(jdp.today);
       }, "امروز");
     }
-    if (!jdp.options.date && jdp.options.time && (!((_jdp$input2 = jdp.input) !== null && _jdp$input2 !== void 0 && _jdp$input2.value) || !!jdp.options.showSelectTimeBtnAlways)) {
+    if (!jdp.options.date && jdp.options.time && (!((_jdp$input2 = jdp.input) != null && _jdp$input2.value) || !!jdp.options.showSelectTimeBtnAlways)) {
       createElement(TODAY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, function () {
         jdp.setValue(jdp.initTime);
         jdp.hide();
@@ -812,18 +814,18 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   function draw() {
     render(this);
   }
-  var isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test((_window$navigator = window.navigator) === null || _window$navigator === void 0 || (_window$navigator = _window$navigator.userAgent) === null || _window$navigator === void 0 ? void 0 : _window$navigator.toLowerCase());
+  var isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test((_window$navigator = window.navigator) == null || (_window$navigator = _window$navigator.userAgent) == null ? void 0 : _window$navigator.toLowerCase());
   var normalizeOptions = function normalizeOptions(externalOptions, internalOptions, jdp) {
     var setDefaultValue = function setDefaultValue(propertyName, defaultValue) {
       var _ref;
       var extValue = externalOptions[propertyName];
       var intValue = internalOptions[propertyName];
-      internalOptions[propertyName] = (_ref = extValue !== null && extValue !== void 0 ? extValue : intValue) !== null && _ref !== void 0 ? _ref : defaultValue;
+      internalOptions[propertyName] = (_ref = extValue != null ? extValue : intValue) != null ? _ref : defaultValue;
     };
     function setDefinePropertyFromAttr(propertyName) {
       var getDefaultFromAttr = function getDefaultFromAttr(attrName, isTime) {
         var _jdp$input3;
-        var attrVal = (_jdp$input3 = jdp.input) === null || _jdp$input3 === void 0 ? void 0 : _jdp$input3.getAttribute(attrName);
+        var attrVal = (_jdp$input3 = jdp.input) == null ? void 0 : _jdp$input3.getAttribute(attrName);
         if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clon(jdp.today);
         if (!isString(attrVal)) return {};
         try {
@@ -872,28 +874,28 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         } else if (propertyName === "targetValueInput") {
           getterFunc = function getterFunc() {
             var _jdp$input4;
-            return (_jdp$input4 = jdp.input) === null || _jdp$input4 === void 0 ? void 0 : _jdp$input4.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
+            return (_jdp$input4 = jdp.input) == null ? void 0 : _jdp$input4.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
           };
         } else if (propertyName === "targetValueType") {
           getterFunc = function getterFunc() {
             var _jdp$input5;
-            return (_jdp$input5 = jdp.input) === null || _jdp$input5 === void 0 ? void 0 : _jdp$input5.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
+            return (_jdp$input5 = jdp.input) == null ? void 0 : _jdp$input5.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
           };
         } else if (propertyName === "date") {
           var _externalOptions$date;
-          var _date = (_externalOptions$date = externalOptions.date) !== null && _externalOptions$date !== void 0 ? _externalOptions$date : internalOptions.date;
+          var _date = (_externalOptions$date = externalOptions.date) != null ? _externalOptions$date : internalOptions.date;
           delete internalOptions[propertyName];
           getterFunc = function getterFunc() {
             var _jdp$input6, _jdp$input7;
-            return !((_jdp$input6 = jdp.input) !== null && _jdp$input6 !== void 0 && _jdp$input6.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (_date || ((_jdp$input7 = jdp.input) === null || _jdp$input7 === void 0 ? void 0 : _jdp$input7.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));
+            return !((_jdp$input6 = jdp.input) != null && _jdp$input6.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (_date || ((_jdp$input7 = jdp.input) == null ? void 0 : _jdp$input7.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));
           };
         } else if (propertyName === "time") {
           var _externalOptions$time;
-          var _time = (_externalOptions$time = externalOptions.time) !== null && _externalOptions$time !== void 0 ? _externalOptions$time : internalOptions.time;
+          var _time = (_externalOptions$time = externalOptions.time) != null ? _externalOptions$time : internalOptions.time;
           delete internalOptions[propertyName];
           getterFunc = function getterFunc() {
             var _jdp$input8, _jdp$input9;
-            return !((_jdp$input8 = jdp.input) !== null && _jdp$input8 !== void 0 && _jdp$input8.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input9 = jdp.input) === null || _jdp$input9 === void 0 ? void 0 : _jdp$input9.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
+            return !((_jdp$input8 = jdp.input) != null && _jdp$input8.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input9 = jdp.input) == null ? void 0 : _jdp$input9.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
           };
         }
         window.Object.defineProperty(internalOptions, propertyName, {
@@ -942,6 +944,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     setDefaultValue("useDropDownYears", true);
     setDefaultValue("today", jalaliToday());
     setDefaultValue("position", "left");
+    setDefaultValue("minuteIncrement", 1);
+    setDefaultValue("hourIncrement", 1);
     if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
     if (externalOptions.minDate === MIN_MAX_TODAY_SETTING) internalOptions.minDate = internalOptions.today;
     if (externalOptions.maxDate === MIN_MAX_TODAY_SETTING) internalOptions.maxDate = internalOptions.today;
@@ -956,47 +960,48 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     internalOptions = setDefinePropertyFromAttr("targetValueType");
     return internalOptions;
   };
-  var JalaliDatepickerInternalOptions = /*#__PURE__*/_createClass(function JalaliDatepickerInternalOptions(externalOptions, jdp) {
-    _classCallCheck(this, JalaliDatepickerInternalOptions);
-    _defineProperty(this, "container", void 0);
-    _defineProperty(this, "selector", void 0);
-    _defineProperty(this, "zIndex", void 0);
-    _defineProperty(this, "autoShow", void 0);
-    _defineProperty(this, "autoHide", void 0);
-    _defineProperty(this, "autoReadOnlyInput", void 0);
-    _defineProperty(this, "topSpace", void 0);
-    _defineProperty(this, "bottomSpace", void 0);
-    _defineProperty(this, "overflowSpace", void 0);
-    _defineProperty(this, "hideAfterChange", void 0);
-    _defineProperty(this, "hideAfterChangeWithTime", void 0);
-    _defineProperty(this, "changeMonthRotateYear", void 0);
-    _defineProperty(this, "showTodayBtn", void 0);
-    _defineProperty(this, "showEmptyBtn", void 0);
-    _defineProperty(this, "showCloseBtn", void 0);
-    _defineProperty(this, "showSelectTimeBtnAlways", void 0);
-    _defineProperty(this, "dayRendering", void 0);
-    _defineProperty(this, "minDate", void 0);
-    _defineProperty(this, "maxDate", void 0);
-    _defineProperty(this, "initDate", void 0);
-    _defineProperty(this, "minTime", void 0);
-    _defineProperty(this, "maxTime", void 0);
-    _defineProperty(this, "initTime", void 0);
-    _defineProperty(this, "date", void 0);
-    _defineProperty(this, "time", void 0);
-    _defineProperty(this, "today", void 0);
-    _defineProperty(this, "hasSecond", void 0);
-    _defineProperty(this, "targetValueInput", void 0);
-    _defineProperty(this, "targetValueType", void 0);
-    _defineProperty(this, "days", void 0);
-    _defineProperty(this, "months", void 0);
-    _defineProperty(this, "separatorChars", void 0);
-    _defineProperty(this, "persianDigits", void 0);
-    _defineProperty(this, "plusHtml", void 0);
-    _defineProperty(this, "minusHtml", void 0);
-    _defineProperty(this, "useDropDownYears", void 0);
-    _defineProperty(this, "position", void 0);
-    normalizeOptions(externalOptions || {}, isPlainObject(jdp.options) ? this : jdp.options, jdp);
-  });
+  var JalaliDatepickerInternalOptions = function JalaliDatepickerInternalOptions(externalOptions, jdp) {
+    this.container = void 0;
+    this.selector = void 0;
+    this.zIndex = void 0;
+    this.autoShow = void 0;
+    this.autoHide = void 0;
+    this.autoReadOnlyInput = void 0;
+    this.topSpace = void 0;
+    this.bottomSpace = void 0;
+    this.overflowSpace = void 0;
+    this.hideAfterChange = void 0;
+    this.hideAfterChangeWithTime = void 0;
+    this.changeMonthRotateYear = void 0;
+    this.showTodayBtn = void 0;
+    this.showEmptyBtn = void 0;
+    this.showCloseBtn = void 0;
+    this.showSelectTimeBtnAlways = void 0;
+    this.dayRendering = void 0;
+    this.minDate = void 0;
+    this.maxDate = void 0;
+    this.initDate = void 0;
+    this.minTime = void 0;
+    this.maxTime = void 0;
+    this.initTime = void 0;
+    this.date = void 0;
+    this.time = void 0;
+    this.today = void 0;
+    this.hasSecond = void 0;
+    this.targetValueInput = void 0;
+    this.targetValueType = void 0;
+    this.days = void 0;
+    this.months = void 0;
+    this.separatorChars = void 0;
+    this.persianDigits = void 0;
+    this.plusHtml = void 0;
+    this.minusHtml = void 0;
+    this.useDropDownYears = void 0;
+    this.position = void 0;
+    this.minuteIncrement = void 0;
+    this.hourIncrement = void 0;
+    normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
+  };
   var jalaliDatepicker = {
     init: function init(options) {
       this.updateOptions(options);
@@ -1028,7 +1033,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
     },
     get inputValue() {
       var _this$input;
-      var inputValue = clon(((_this$input = this.input) === null || _this$input === void 0 ? void 0 : _this$input.value) || "");
+      var inputValue = clon(((_this$input = this.input) == null ? void 0 : _this$input.value) || "");
       if (isValidValueString(this, inputValue)) {
         inputValue = getValueObjectFromString(this, inputValue);
       } else if (isString(inputValue) && isValidDateString(this, inputValue)) {
@@ -1046,8 +1051,8 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
       if (this._initDate) {
         return this._initDate;
       }
-      this._initDate = clon(((_this$input2 = this.input) === null || _this$input2 === void 0 ? void 0 : _this$input2.value) || "") || {};
-      if (isPlainObject(this._initDate)) {
+      this._initDate = clon(((_this$input2 = this.input) == null ? void 0 : _this$input2.value) || "");
+      if (!this._initDate) {
         this._initDate = this.options.initDate || clon(this.today);
       } else if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
         this._initDate = getValueObjectFromString(this, this._initDate);
@@ -1068,7 +1073,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
         minute: date.getMinutes(),
         second: 0
       };
-      this._initTime = clon(((_this$input3 = this.input) === null || _this$input3 === void 0 ? void 0 : _this$input3.value) || "") || this.options.initTime || defaultInit;
+      this._initTime = clon(((_this$input3 = this.input) == null ? void 0 : _this$input3.value) || "") || this.options.initTime || defaultInit;
       if (isString(this._initTime)) {
         if (isValidTimeString(this, this._initTime)) {
           this._initTime = getValueObjectFromString(this, this._initTime);
@@ -1274,15 +1279,17 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
   function handleEscKey(event) {
     if (event.key === "Escape") {
       if (!jalaliDatepicker.isTransitioning) {
-        var _jalaliDatepicker$inp, _jalaliDatepicker$inp2;
-        (_jalaliDatepicker$inp = jalaliDatepicker.input) === null || _jalaliDatepicker$inp === void 0 || (_jalaliDatepicker$inp2 = _jalaliDatepicker$inp.blur) === null || _jalaliDatepicker$inp2 === void 0 || _jalaliDatepicker$inp2.call(_jalaliDatepicker$inp);
+        var _jalaliDatepicker$inp;
+        (_jalaliDatepicker$inp = jalaliDatepicker.input) == null || _jalaliDatepicker$inp.blur == null || _jalaliDatepicker$inp.blur();
         jalaliDatepicker.hide();
       }
     }
   }
   window.jalaliDatepicker = {
-    startWatch: function startWatch() {
-      var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+    startWatch: function startWatch(options) {
+      if (options === void 0) {
+        options = {};
+      }
       jalaliDatepicker.init(options);
     },
     show: function show(input) {

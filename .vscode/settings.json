@@ -1,7 +1,6 @@
 {
 	"files.exclude": {
 		"node_modules": true,
-		"dist": true,
 		"res": true,
 		".eslintrc.cjs": true,
 		".npmignore": true,
