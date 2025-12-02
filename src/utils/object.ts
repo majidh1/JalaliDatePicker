@@ -7,7 +7,7 @@ export const clon = (a: Object | string) => JSON.parse(JSON.stringify(a));
 
 export const isNotObjectOrIsEmptyObject = (obj: Object | null | undefined): obj is undefined => {
 	if (!isObject(obj)) {
-		return false;
+		return true;
 	}
 
 	try {

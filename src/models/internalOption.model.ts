@@ -14,7 +14,7 @@ import {
 import { DateObject, IJalaliDatepickerExternalOptions, TimeObject, SeparatorChars, JalaliDatepicker, ValueObject, DayOptions } from "./types";
 import { getValueObjectFromString, isValidDateString, isValidTimeString } from "../utils";
 import { jalaliToday } from "../utils/jalali";
-import { clon, isNotObjectOrIsEmptyObject, isString, isFunction } from "../utils/object";
+import { clon, isNotObjectOrIsEmptyObject, isString, isFunction, isUndefined } from "../utils/object";
 
 const isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test(window.navigator?.userAgent?.toLowerCase());
 
@@ -106,7 +106,9 @@ const normalizeOptions = (
 				configurable: true
 			});
 		} else {
-			setDefaultValue(propertyName, undefined as any);
+			const _temp = internalOptions[propertyName];
+			delete internalOptions[propertyName];
+			setDefaultValue(propertyName, _temp as any);
 		}
 		return internalOptions;
 	}
@@ -212,5 +214,9 @@ export class JalaliDatepickerInternalOptions implements IJalaliDatepickerExterna
 
 	constructor(externalOptions: Partial<IJalaliDatepickerExternalOptions>, jdp: JalaliDatepicker) {
 		normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
+	}
+
+	update(externalOptions: Partial<IJalaliDatepickerExternalOptions>, jdp: JalaliDatepicker) {
+		normalizeOptions(externalOptions || {}, this, jdp) as any;
 	}
 }

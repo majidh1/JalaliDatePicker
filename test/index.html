@@ -205,6 +205,81 @@
 									</div>
 								</td>
 							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="minDate" class="form-label">minDate</label>
+										<input class="form-control" type="text" id="minDate" data-key="minDate" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="maxDate" class="form-label">maxDate</label>
+										<input class="form-control" type="text" id="maxDate" data-key="maxDate" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="minTime" class="form-label">minTime</label>
+										<input class="form-control" type="text" id="minTime" data-key="minTime" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="maxTime" class="form-label">maxTime</label>
+										<input class="form-control" type="text" id="maxTime" data-key="maxTime" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<h5 class="mt-2">Separator Chars</h5>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="sep-date" class="form-label">Date</label>
+										<input class="form-control" type="text" id="sep-date" data-group="separatorChars" data-key="date" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="sep-between" class="form-label">Between</label>
+										<input class="form-control" type="text" id="sep-between" data-group="separatorChars" data-key="between" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="sep-time" class="form-label">Time</label>
+										<input class="form-control" type="text" id="sep-time" data-group="separatorChars" data-key="time" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="sep-targetDate" class="form-label">Target Date</label>
+										<input class="form-control" type="text" id="sep-targetDate" data-group="separatorChars" data-key="targetDate" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="sep-targetBetween" class="form-label">Target Between</label>
+										<input class="form-control" type="text" id="sep-targetBetween" data-group="separatorChars" data-key="targetBetween" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="sep-targetTime" class="form-label">Target Time</label>
+										<input class="form-control" type="text" id="sep-targetTime" data-group="separatorChars" data-key="targetTime" />
+									</div>
+								</td>
+							</tr>
 						</table>
 					</div>
 				</div>
@@ -231,7 +306,7 @@
 		</div>
 		<script>
 			document.addEventListener("DOMContentLoaded", () => {
-				jalaliDatepicker.startWatch({
+				const initialOptions = {
 					minDate: "attr",
 					maxDate: "attr",
 					minTime: "attr",
@@ -250,12 +325,29 @@
 					position: "right",
 					targetValueInput: "attr",
 					targetValueType: "miladi",
+					useDropDownYears: false,
+					persianDigits: false,
+					autoShow: true,
+					hideAfterChange: false,
+					autoReadOnlyInput: false,
+					showSelectTimeBtnAlways: false,
+					minuteIncrement: 1,
+					hourIncrement: 1,
+					separatorChars: {
+						date: "/",
+						between: " ",
+						time: ":",
+						targetDate: "-",
+						targetBetween: " ",
+						targetTime: ":"
+					},
 					dayRendering(opt, input) {
 						return {
 							isHollyDay: opt.weekDay == 1
 						};
 					}
-				});
+				};
+				jalaliDatepicker.startWatch(initialOptions);
 				document.getElementById("font-selector").addEventListener("change", (event) => {
 					document.body.style.fontFamily = event.target.value;
 				});
@@ -263,50 +355,46 @@
 				const settingsContainer = document.getElementById("dynamic-settings");
 				const inputs = settingsContainer.querySelectorAll("input, select");
 
-				const initialOptions = {
-					time: true,
-					date: true,
-					showTodayBtn: true,
-					showEmptyBtn: true,
-					showCloseBtn: false,
-					changeMonthRotateYear: false,
-					useDropDownYears: false,
-					persianDigits: false,
-					autoShow: false,
-					autoHide: true,
-					hideAfterChange: false,
-					autoReadOnlyInput: false,
-					hideAfterChangeWithTime: true,
-					showSelectTimeBtnAlways: false,
-					hasSecond: true,
-					zIndex: 9999,
-					topSpace: 0,
-					bottomSpace: 30,
-					overflowSpace: -10,
-					minuteIncrement: 1,
-					hourIncrement: 1,
-					position: "right"
-				};
-
 				inputs.forEach((input) => {
 					const key = input.dataset.key;
-					if (input.type === "checkbox") {
-						input.checked = initialOptions[key];
-					} else {
-						input.value = initialOptions[key];
+					const group = input.dataset.group;
+
+					if (group === "separatorChars") {
+						if (initialOptions.separatorChars[key]) {
+							input.value = initialOptions.separatorChars[key];
+						}
+					} else if (initialOptions[key] !== undefined) {
+						if (input.type === "checkbox") {
+							input.checked = initialOptions[key];
+						} else {
+							input.value = initialOptions[key];
+						}
 					}
 				});
 
 				settingsContainer.addEventListener("change", (event) => {
 					const target = event.target;
-					if (target.matches("input, select")) {
-						const key = target.dataset.key;
+					if (!target.matches("input, select")) return;
+
+					const key = target.dataset.key;
+					const group = target.dataset.group;
+
+					if (group === "separatorChars") {
+						const separatorChars = { ...jalaliDatepicker.options.separatorChars };
+						document.querySelectorAll("[data-group=separatorChars]").forEach((el) => {
+							separatorChars[el.dataset.key] = el.value;
+						});
+						Object.assign(initialOptions, { separatorChars });
+						jalaliDatepicker.updateOptions({ separatorChars });
+					} else {
 						let value = target.value;
 						if (target.type === "checkbox") {
 							value = target.checked;
 						} else if (target.type === "number") {
 							value = Number(target.value);
 						}
+
+						Object.assign(initialOptions, { [key]: value });
 						jalaliDatepicker.updateOptions({ [key]: value });
 					}
 				});

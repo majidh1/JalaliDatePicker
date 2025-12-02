@@ -10,7 +10,7 @@ import {
 	isValidTimeString,
 	getConvertedValue
 } from "./utils";
-import { extend, clon, isString } from "./utils/object";
+import { extend, clon, isString, isNotObjectOrIsEmptyObject } from "./utils/object";
 import { getScrollParent, getEventTarget, containsDom, triggerEvent, createElement } from "./utils/dom";
 import { jalaliToday } from "./utils/jalali";
 import {
@@ -33,11 +33,15 @@ const jalaliDatepicker: JalaliDatepicker = {
 	init(options: Partial<IJalaliDatepickerExternalOptions>) {
 		this.updateOptions(options);
 		addEventListenerOnResize();
-		if (this.options.autoHide) addEventListenerOnBody();
-		if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);
+		addEventListenerOnBody();
+		addEventListenerOnInputs(this.options.selector);
 	},
 	updateOptions(options: Partial<IJalaliDatepickerExternalOptions>) {
-		this.options = new JalaliDatepickerInternalOptions(options, this);
+		if (isNotObjectOrIsEmptyObject(this.options)) {
+			this.options = new JalaliDatepickerInternalOptions(options, this);
+		} else {
+			this.options.update(options, this);
+		}
 	},
 	options: {} as any,
 	input: null,
@@ -310,6 +314,9 @@ function addEventListenerOnResize() {
 }
 
 const onInputFocusCallback = (e: FocusEvent) => {
+	if (!jalaliDatepicker.options.autoShow) {
+		return;
+	}
 	if (e.target && (e.target as Element).matches(jalaliDatepicker.options.selector)) {
 		jalaliDatepicker.show(e.target as HTMLInputElement);
 	}
@@ -322,7 +329,7 @@ function addEventListenerOnInputs(querySelector?: string) {
 }
 
 const onBodyClickCallback = (e: PointerEvent) => {
-	if (!jalaliDatepicker.isShow || containsDom(jalaliDatepicker.dpContainer, e) || getEventTarget(e) === jalaliDatepicker.input) {
+	if (!jalaliDatepicker.options.autoHide || !jalaliDatepicker.isShow || containsDom(jalaliDatepicker.dpContainer, e) || getEventTarget(e) === jalaliDatepicker.input) {
 		return;
 	}
 	jalaliDatepicker.hide();
