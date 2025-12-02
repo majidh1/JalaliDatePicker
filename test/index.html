@@ -43,101 +43,169 @@
 							<option>B Shadi</option>
 						</select>
 
-						<div id="dynamic-settings" class="d-flex flex-column gap-2 mt-2">
-							<h5>Dynamic Settings</h5>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="time" data-key="time" checked />
-								<label class="form-check-label" for="time">Show Time Picker</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="date" data-key="date" checked />
-								<label class="form-check-label" for="date">Show Date Picker</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="showTodayBtn" data-key="showTodayBtn" checked />
-								<label class="form-check-label" for="showTodayBtn">Show Today Button</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="showEmptyBtn" data-key="showEmptyBtn" checked />
-								<label class="form-check-label" for="showEmptyBtn">Show Empty Button</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="showCloseBtn" data-key="showCloseBtn" />
-								<label class="form-check-label" for="showCloseBtn">Show Close Button</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="changeMonthRotateYear" data-key="changeMonthRotateYear" />
-								<label class="form-check-label" for="changeMonthRotateYear">Change Month Rotates Year</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="useDropDownYears" data-key="useDropDownYears" />
-								<label class="form-check-label" for="useDropDownYears">Use Dropdown for Years</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="persianDigits" data-key="persianDigits" />
-								<label class="form-check-label" for="persianDigits">Use Persian Digits</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="autoShow" data-key="autoShow" />
-								<label class="form-check-label" for="autoShow">Auto Show on Focus</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="autoHide" data-key="autoHide" checked />
-								<label class="form-check-label" for="autoHide">Auto Hide on Select</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="hideAfterChange" data-key="hideAfterChange" />
-								<label class="form-check-label" for="hideAfterChange">Hide After Change</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="autoReadOnlyInput" data-key="autoReadOnlyInput" />
-								<label class="form-check-label" for="autoReadOnlyInput">Auto ReadOnly Input</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="hideAfterChangeWithTime" data-key="hideAfterChangeWithTime" checked />
-								<label class="form-check-label" for="hideAfterChangeWithTime">Hide After Change With Time</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="showSelectTimeBtnAlways" data-key="showSelectTimeBtnAlways" />
-								<label class="form-check-label" for="showSelectTimeBtnAlways">Show Select Time Button Always</label>
-							</div>
-							<div class="form-check form-switch">
-								<input class="form-check-input" type="checkbox" id="hasSecond" data-key="hasSecond" checked />
-								<label class="form-check-label" for="hasSecond">Has Second</label>
-							</div>
-							<div>
-								<label for="zIndex" class="form-label">zIndex</label>
-								<input class="form-control" type="number" id="zIndex" data-key="zIndex" value="9999" />
-							</div>
-							<div>
-								<label for="topSpace" class="form-label">topSpace</label>
-								<input class="form-control" type="number" id="topSpace" data-key="topSpace" value="0" />
-							</div>
-							<div>
-								<label for="bottomSpace" class="form-label">bottomSpace</label>
-								<input class="form-control" type="number" id="bottomSpace" data-key="bottomSpace" value="30" />
-							</div>
-							<div>
-								<label for="overflowSpace" class="form-label">overflowSpace</label>
-								<input class="form-control" type="number" id="overflowSpace" data-key="overflowSpace" value="-10" />
-							</div>
-							<div>
-								<label for="minuteIncrement" class="form-label">minuteIncrement</label>
-								<input class="form-control" type="number" id="minuteIncrement" data-key="minuteIncrement" value="1" />
-							</div>
-							<div>
-								<label for="hourIncrement" class="form-label">hourIncrement</label>
-								<input class="form-control" type="number" id="hourIncrement" data-key="hourIncrement" value="1" />
-							</div>
-							<div>
-								<label for="position-selector" class="form-label">Position</label>
-								<select id="position-selector" class="form-select" data-key="position">
-									<option value="left">Left</option>
-									<option value="right" selected>Right</option>
-									<option value="center">Center</option>
-								</select>
-							</div>
-						</div>
+						<h5>Dynamic Settings</h5>
+						<table id="dynamic-settings" class="w-100 table-sm">
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="time" data-key="time" checked />
+										<label class="form-check-label" for="time">Show Time Picker</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="date" data-key="date" checked />
+										<label class="form-check-label" for="date">Show Date Picker</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showTodayBtn" data-key="showTodayBtn" checked />
+										<label class="form-check-label" for="showTodayBtn">Show Today Button</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showEmptyBtn" data-key="showEmptyBtn" checked />
+										<label class="form-check-label" for="showEmptyBtn">Show Empty Button</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showCloseBtn" data-key="showCloseBtn" />
+										<label class="form-check-label" for="showCloseBtn">Show Close Button</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="changeMonthRotateYear" data-key="changeMonthRotateYear" />
+										<label class="form-check-label" for="changeMonthRotateYear">Change Month Rotates Year</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="useDropDownYears" data-key="useDropDownYears" />
+										<label class="form-check-label" for="useDropDownYears">Use Dropdown for Years</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="persianDigits" data-key="persianDigits" />
+										<label class="form-check-label" for="persianDigits">Use Persian Digits</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="autoShow" data-key="autoShow" />
+										<label class="form-check-label" for="autoShow">Auto Show on Focus</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="autoHide" data-key="autoHide" checked />
+										<label class="form-check-label" for="autoHide">Auto Hide on Select</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="hideAfterChange" data-key="hideAfterChange" />
+										<label class="form-check-label" for="hideAfterChange">Hide After Change</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="autoReadOnlyInput" data-key="autoReadOnlyInput" />
+										<label class="form-check-label" for="autoReadOnlyInput">Auto ReadOnly Input</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="hideAfterChangeWithTime" data-key="hideAfterChangeWithTime" checked />
+										<label class="form-check-label" for="hideAfterChangeWithTime">Hide After Change With Time</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showSelectTimeBtnAlways" data-key="showSelectTimeBtnAlways" />
+										<label class="form-check-label" for="showSelectTimeBtnAlways">Show Select Time Button Always</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="hasSecond" data-key="hasSecond" checked />
+										<label class="form-check-label" for="hasSecond">Has Second</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="zIndex" class="form-label">zIndex</label>
+										<input class="form-control" type="number" id="zIndex" data-key="zIndex" value="9999" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="topSpace" class="form-label">topSpace</label>
+										<input class="form-control" type="number" id="topSpace" data-key="topSpace" value="0" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="bottomSpace" class="form-label">bottomSpace</label>
+										<input class="form-control" type="number" id="bottomSpace" data-key="bottomSpace" value="30" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="overflowSpace" class="form-label">overflowSpace</label>
+										<input class="form-control" type="number" id="overflowSpace" data-key="overflowSpace" value="-10" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="minuteIncrement" class="form-label">minuteIncrement</label>
+										<input class="form-control" type="number" id="minuteIncrement" data-key="minuteIncrement" value="1" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="hourIncrement" class="form-label">hourIncrement</label>
+										<input class="form-control" type="number" id="hourIncrement" data-key="hourIncrement" value="1" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="position-selector" class="form-label">Position</label>
+										<select id="position-selector" class="form-select" data-key="position">
+											<option value="left">Left</option>
+											<option value="right" selected>Right</option>
+											<option value="center">Center</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+						</table>
 					</div>
 				</div>
 			</div>
