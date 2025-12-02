@@ -309,22 +309,28 @@ function addEventListenerOnResize() {
 	window.addEventListener("resize", onResizeHandler);
 }
 
+const onInputFocusCallback = (e: FocusEvent) => {
+	if (e.target && (e.target as Element).matches(jalaliDatepicker.options.selector)) {
+		jalaliDatepicker.show(e.target as HTMLInputElement);
+	}
+};
+
 function addEventListenerOnInputs(querySelector?: string) {
+	document.body.removeEventListener(EVENT_FOCUS_STR, onInputFocusCallback);
 	if (!querySelector) return;
-	document.body.addEventListener(EVENT_FOCUS_STR, (e) => {
-		if (e.target && (e.target as Element).matches(querySelector)) {
-			jalaliDatepicker.show(e.target as HTMLInputElement);
-		}
-	});
+	document.body.addEventListener(EVENT_FOCUS_STR, onInputFocusCallback);
 }
 
+const onBodyClickCallback = (e: PointerEvent) => {
+	if (!jalaliDatepicker.isShow || containsDom(jalaliDatepicker.dpContainer, e) || getEventTarget(e) === jalaliDatepicker.input) {
+		return;
+	}
+	jalaliDatepicker.hide();
+};
+
 function addEventListenerOnBody() {
-	document.body.addEventListener("click", (e) => {
-		if (!jalaliDatepicker.isShow || containsDom(jalaliDatepicker.dpContainer, e) || getEventTarget(e) === jalaliDatepicker.input) {
-			return;
-		}
-		jalaliDatepicker.hide();
-	});
+	document.body.removeEventListener("click", onBodyClickCallback);
+	document.body.addEventListener("click", onBodyClickCallback);
 }
 
 function handleEscKey(event: KeyboardEvent) {

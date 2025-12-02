@@ -42,6 +42,102 @@
 							<option>Tahoma</option>
 							<option>B Shadi</option>
 						</select>
+
+						<div id="dynamic-settings" class="d-flex flex-column gap-2 mt-2">
+							<h5>Dynamic Settings</h5>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="time" data-key="time" checked />
+								<label class="form-check-label" for="time">Show Time Picker</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="date" data-key="date" checked />
+								<label class="form-check-label" for="date">Show Date Picker</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="showTodayBtn" data-key="showTodayBtn" checked />
+								<label class="form-check-label" for="showTodayBtn">Show Today Button</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="showEmptyBtn" data-key="showEmptyBtn" checked />
+								<label class="form-check-label" for="showEmptyBtn">Show Empty Button</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="showCloseBtn" data-key="showCloseBtn" />
+								<label class="form-check-label" for="showCloseBtn">Show Close Button</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="changeMonthRotateYear" data-key="changeMonthRotateYear" />
+								<label class="form-check-label" for="changeMonthRotateYear">Change Month Rotates Year</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="useDropDownYears" data-key="useDropDownYears" />
+								<label class="form-check-label" for="useDropDownYears">Use Dropdown for Years</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="persianDigits" data-key="persianDigits" />
+								<label class="form-check-label" for="persianDigits">Use Persian Digits</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="autoShow" data-key="autoShow" />
+								<label class="form-check-label" for="autoShow">Auto Show on Focus</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="autoHide" data-key="autoHide" checked />
+								<label class="form-check-label" for="autoHide">Auto Hide on Select</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="hideAfterChange" data-key="hideAfterChange" />
+								<label class="form-check-label" for="hideAfterChange">Hide After Change</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="autoReadOnlyInput" data-key="autoReadOnlyInput" />
+								<label class="form-check-label" for="autoReadOnlyInput">Auto ReadOnly Input</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="hideAfterChangeWithTime" data-key="hideAfterChangeWithTime" checked />
+								<label class="form-check-label" for="hideAfterChangeWithTime">Hide After Change With Time</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="showSelectTimeBtnAlways" data-key="showSelectTimeBtnAlways" />
+								<label class="form-check-label" for="showSelectTimeBtnAlways">Show Select Time Button Always</label>
+							</div>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox" id="hasSecond" data-key="hasSecond" checked />
+								<label class="form-check-label" for="hasSecond">Has Second</label>
+							</div>
+							<div>
+								<label for="zIndex" class="form-label">zIndex</label>
+								<input class="form-control" type="number" id="zIndex" data-key="zIndex" value="9999" />
+							</div>
+							<div>
+								<label for="topSpace" class="form-label">topSpace</label>
+								<input class="form-control" type="number" id="topSpace" data-key="topSpace" value="0" />
+							</div>
+							<div>
+								<label for="bottomSpace" class="form-label">bottomSpace</label>
+								<input class="form-control" type="number" id="bottomSpace" data-key="bottomSpace" value="30" />
+							</div>
+							<div>
+								<label for="overflowSpace" class="form-label">overflowSpace</label>
+								<input class="form-control" type="number" id="overflowSpace" data-key="overflowSpace" value="-10" />
+							</div>
+							<div>
+								<label for="minuteIncrement" class="form-label">minuteIncrement</label>
+								<input class="form-control" type="number" id="minuteIncrement" data-key="minuteIncrement" value="1" />
+							</div>
+							<div>
+								<label for="hourIncrement" class="form-label">hourIncrement</label>
+								<input class="form-control" type="number" id="hourIncrement" data-key="hourIncrement" value="1" />
+							</div>
+							<div>
+								<label for="position-selector" class="form-label">Position</label>
+								<select id="position-selector" class="form-select" data-key="position">
+									<option value="left">Left</option>
+									<option value="right" selected>Right</option>
+									<option value="center">Center</option>
+								</select>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -94,6 +190,57 @@
 				});
 				document.getElementById("font-selector").addEventListener("change", (event) => {
 					document.body.style.fontFamily = event.target.value;
+				});
+
+				const settingsContainer = document.getElementById("dynamic-settings");
+				const inputs = settingsContainer.querySelectorAll("input, select");
+
+				const initialOptions = {
+					time: true,
+					date: true,
+					showTodayBtn: true,
+					showEmptyBtn: true,
+					showCloseBtn: false,
+					changeMonthRotateYear: false,
+					useDropDownYears: false,
+					persianDigits: false,
+					autoShow: false,
+					autoHide: true,
+					hideAfterChange: false,
+					autoReadOnlyInput: false,
+					hideAfterChangeWithTime: true,
+					showSelectTimeBtnAlways: false,
+					hasSecond: true,
+					zIndex: 9999,
+					topSpace: 0,
+					bottomSpace: 30,
+					overflowSpace: -10,
+					minuteIncrement: 1,
+					hourIncrement: 1,
+					position: "right"
+				};
+
+				inputs.forEach((input) => {
+					const key = input.dataset.key;
+					if (input.type === "checkbox") {
+						input.checked = initialOptions[key];
+					} else {
+						input.value = initialOptions[key];
+					}
+				});
+
+				settingsContainer.addEventListener("change", (event) => {
+					const target = event.target;
+					if (target.matches("input, select")) {
+						const key = target.dataset.key;
+						let value = target.value;
+						if (target.type === "checkbox") {
+							value = target.checked;
+						} else if (target.type === "number") {
+							value = Number(target.value);
+						}
+						jalaliDatepicker.updateOptions({ [key]: value });
+					}
 				});
 			});
 		</script>
