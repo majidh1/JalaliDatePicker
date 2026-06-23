@@ -1,4 +1,25 @@
 
+## نسخه 1.0.0
+
+انتشار نسخه پایدار 1.0.0 و بازسازی ساختار پروژه.
+
+- مهاجرت سورس از JavaScript به TypeScript و اضافه شدن typeهای داخلی برای optionها، تاریخ، زمان و API عمومی.
+- جایگزینی build قدیمی webpack با Vite، TypeScript، Babel و خروجی‌های جدید ES5/minified در پوشه `dist`.
+- اضافه شدن تست خودکار با Vitest و jsdom برای API عمومی، تبدیل تاریخ، اعتبارسنجی مقدار، min/max و separatorهای سفارشی.
+- بهبود مستندات فارسی و انگلیسی با راهنمای نصب، شروع سریع، API عمومی، optionها، attributeها، eventها، فرمت مقدارها و روند توسعه.
+- اضافه شدن پشتیبانی از `targetValueInput` برای نوشتن مقدار تبدیل‌شده در input مقصد.
+- اضافه شدن `targetValueType: "gregorian"` برای تولید مقدار میلادی در target.
+- اضافه شدن `minuteIncrement` و `hourIncrement` برای کنترل گام dropdownهای زمان.
+- اضافه شدن مقدار `weekDay` به `dayRendering`.
+- اضافه شدن جایگاه `position: "left" | "right" | "center"` برای datepicker.
+- پشتیبانی از نام‌های تمیزتر و سازگار: `JalaliDatePicker`، `useDropdownYears` و `isHoliday` همراه با حفظ aliasهای قدیمی برای سازگاری.
+- اصلاح محاسبه و محدودسازی تاریخ‌ها بر اساس مقدار کامل سال/ماه/روز، نه مقایسه ناقص بخش‌های تاریخ.
+- اصلاح اعتبارسنجی رشته مقدار با separatorهای regex-special مثل `+`.
+- اصلاح به‌روزرسانی `zIndex` بعد از `updateOptions`.
+- اصلاح پشتیبانی از `targetValueInput` وقتی مقدار آن `HTMLInputElement` باشد.
+- اصلاح مدیریت scroll listener هنگام نمایش datepicker روی inputهای مختلف.
+- اصلاح چند مورد UI، modal/bootstrap، weekday، eventها و نمونه‌های تستی.
+
 ## نسخه 0.9.12
 
 افزودن امکان نمایش همیشگی دکمه انتخاب در تایمپیکر showSelectTimeBtnAlways
