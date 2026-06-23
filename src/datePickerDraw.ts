@@ -1,24 +1,24 @@
 import {
-	YEARS_ELM_QUERY,
-	YEAR_ELM_QUERY,
-	MONTHS_ELM_QUERY,
-	MONTH_ELM_QUERY,
-	DAYS_ELM_QUERY,
-	DAYS_HEADER_ELM_QUERY,
-	DAY_ELM_QUERY,
-	DAY_NOTINMONTH_ELM_QUERY,
-	DAY_DISABLED_ELM_QUERY,
-	DAY_DISABLED_NOTINMONTH_ELM_QUERY,
-	DAY_NAME_ELM_QUERY,
-	PLUS_ICON_ELM_QUERY,
-	MINUS_ICON_ELM_QUERY,
+	YEARS_ELEMENT_QUERY,
+	YEAR_ELEMENT_QUERY,
+	MONTHS_ELEMENT_QUERY,
+	MONTH_ELEMENT_QUERY,
+	DAYS_ELEMENT_QUERY,
+	DAYS_HEADER_ELEMENT_QUERY,
+	DAY_ELEMENT_QUERY,
+	DAY_NOT_IN_MONTH_ELEMENT_QUERY,
+	DAY_DISABLED_ELEMENT_QUERY,
+	DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY,
+	DAY_NAME_ELEMENT_QUERY,
+	PLUS_ICON_ELEMENT_QUERY,
+	MINUS_ICON_ELEMENT_QUERY,
 	EVENT_CHANGE_MONTH_DROPDOWN_STR,
 	EVENT_CLICK_STR,
 	EVENT_CHANGE_YEAR_INPUT_STR,
 	TODAY_CLASS_NAME,
 	SELECTED_CLASS_NAME,
 	LAST_WEEK_CLASS_NAME,
-	HOLLY_DAY_CLASS_NAME,
+	HOLIDAY_CLASS_NAME,
 	DISABLE_CLASS_NAME
 } from "./constants";
 
@@ -29,15 +29,15 @@ import { extend, isFunction } from "./utils/object";
 import { getDaysInMonth, getWeekDay } from "./utils/jalali";
 
 import { createElement, toPersianDigitsIfNeeded } from "./utils/dom";
-import { DayOptions, JalaliDatepicker } from "./models/types";
+import { DayOptions, JalaliDatePicker } from "./models/types";
 
-const getLastWeekClassIfNessesary = (dayOfWeek: number) => (dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}.${HOLLY_DAY_CLASS_NAME}` : "");
+const getLastWeekClassIfNecessary = (dayOfWeek: number) => (dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}.${HOLIDAY_CLASS_NAME}` : "");
 
-const createElementPlusMinus = (jdp: JalaliDatepicker, container: string | HTMLElement, isYear: boolean, mode: "PLUS" | "MINUS") => {
+const createElementPlusMinus = (jdp: JalaliDatePicker, container: string | HTMLElement, isYear: boolean, mode: "PLUS" | "MINUS") => {
 	const isPlus = mode === "PLUS";
 	let className = "";
 	let event = null;
-	const elmQuery = isPlus ? PLUS_ICON_ELM_QUERY : MINUS_ICON_ELM_QUERY;
+	const elementQuery = isPlus ? PLUS_ICON_ELEMENT_QUERY : MINUS_ICON_ELEMENT_QUERY;
 	const isMaxYear = isPlus && jdp.options.maxDate?.year === jdp.initDate.year;
 	const isMaxMonth = isPlus && jdp.options.maxDate?.month === jdp.initDate.month;
 	const isMinYear = !isPlus && jdp.options.minDate?.year === jdp.initDate.year;
@@ -69,36 +69,36 @@ const createElementPlusMinus = (jdp: JalaliDatepicker, container: string | HTMLE
 			className = DISABLE_CLASS_NAME;
 		}
 	}
-	createElement(elmQuery + "." + className, container, EVENT_CLICK_STR, event, html);
+	createElement(elementQuery + "." + className, container, EVENT_CLICK_STR, event, html, "html");
 };
 
-const createElementPlus = (jdp: JalaliDatepicker, container: string | HTMLElement, isYear: boolean) => {
+const createElementPlus = (jdp: JalaliDatePicker, container: string | HTMLElement, isYear: boolean) => {
 	createElementPlusMinus(jdp, container, isYear, "PLUS");
 };
-const createElementMinus = (jdp: JalaliDatepicker, container: string | HTMLElement, isYear: boolean) => {
+const createElementMinus = (jdp: JalaliDatePicker, container: string | HTMLElement, isYear: boolean) => {
 	createElementPlusMinus(jdp, container, isYear, "MINUS");
 };
 
-const renderYear = (jdp: JalaliDatepicker) => {
-	const yearsContainer = createElement(YEARS_ELM_QUERY, jdp.dpContainer);
+const renderYear = (jdp: JalaliDatePicker) => {
+	const yearsContainer = createElement(YEARS_ELEMENT_QUERY, jdp.dpContainer);
 	createElementPlus(jdp, yearsContainer, true);
-	const yearContainer = createElement(YEAR_ELM_QUERY, yearsContainer);
+	const yearContainer = createElement(YEAR_ELEMENT_QUERY, yearsContainer);
 	createElementMinus(jdp, yearsContainer, true);
 
-	const useDropDownYears = jdp.options.useDropDownYears;
-	const yearInputTagName = useDropDownYears ? "select" : "input";
+	const useDropdownYears = jdp.options.useDropdownYears ?? jdp.options.useDropDownYears;
+	const yearInputTagName = useDropdownYears ? "select" : "input";
 	const yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, (e: any) => {
 		if (e.target.value < 1000 || e.target.value > 2000) return;
 		jdp.yearChange(e.target.value);
 	}) as HTMLInputElement;
-	if (useDropDownYears) {
+	if (useDropdownYears) {
 		yearInput.setAttribute("tabindex", "-1");
 		const validYears = getValidYears(jdp);
 		for (let i = validYears.min; i <= validYears.max; i++) {
-			const optionElm = createElement("option", yearInput) as HTMLOptionElement;
-			optionElm.value = i.toString();
-			optionElm.text = toPersianDigitsIfNeeded(i, jdp.options.persianDigits).toString();
-			optionElm.selected = i === jdp.initDate.year;
+			const optionElement = createElement("option", yearInput) as HTMLOptionElement;
+			optionElement.value = i.toString();
+			optionElement.text = toPersianDigitsIfNeeded(i, jdp.options.persianDigits).toString();
+			optionElement.selected = i === jdp.initDate.year;
 		}
 	} else {
 		yearInput.tabIndex = -1;
@@ -107,34 +107,34 @@ const renderYear = (jdp: JalaliDatepicker) => {
 	}
 };
 
-const renderMonths = (jdp: JalaliDatepicker) => {
-	const monthsContainer = createElement(MONTHS_ELM_QUERY, jdp.dpContainer);
+const renderMonths = (jdp: JalaliDatePicker) => {
+	const monthsContainer = createElement(MONTHS_ELEMENT_QUERY, jdp.dpContainer);
 	createElementPlus(jdp, monthsContainer, false);
-	const monthContainer = createElement(MONTH_ELM_QUERY, monthsContainer);
+	const monthContainer = createElement(MONTH_ELEMENT_QUERY, monthsContainer);
 	createElementMinus(jdp, monthsContainer, false);
 
-	const monthDropDownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, (e: any) => {
+	const monthDropdownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, (e: any) => {
 		jdp.monthChange(parseFloat(e.target.value));
 	});
-	monthDropDownContainer.tabIndex = -1;
+	monthDropdownContainer.tabIndex = -1;
 
 	const months = getValidMonths(jdp);
 	const monthsName = jdp.options.months;
 	for (let i = 0; i < months.length; i++) {
-		const optionElm = createElement("option", monthDropDownContainer) as HTMLOptionElement;
-		optionElm.value = months[i].toString();
-		optionElm.text = toPersianDigitsIfNeeded(monthsName[months[i] - 1], jdp.options.persianDigits).toString();
-		optionElm.selected = months[i] === jdp.initDate.month;
+		const optionElement = createElement("option", monthDropdownContainer) as HTMLOptionElement;
+		optionElement.value = months[i].toString();
+		optionElement.text = toPersianDigitsIfNeeded(monthsName[months[i] - 1], jdp.options.persianDigits).toString();
+		optionElement.selected = months[i] === jdp.initDate.month;
 	}
 };
 
-const renderDays = (jdp: JalaliDatepicker) => {
-	const daysHeaderContainer = createElement(DAYS_HEADER_ELM_QUERY, jdp.dpContainer);
-	const daysContainer = createElement(DAYS_ELM_QUERY, jdp.dpContainer);
+const renderDays = (jdp: JalaliDatePicker) => {
+	const daysHeaderContainer = createElement(DAYS_HEADER_ELEMENT_QUERY, jdp.dpContainer);
+	const daysContainer = createElement(DAYS_ELEMENT_QUERY, jdp.dpContainer);
 	for (let i = 0; i < 7; i++) {
 		//nameOfDay
 		createElement(
-			DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i),
+			DAY_NAME_ELEMENT_QUERY + getLastWeekClassIfNecessary(i),
 			daysHeaderContainer,
 			undefined,
 			undefined,
@@ -150,6 +150,7 @@ const renderDays = (jdp: JalaliDatepicker) => {
 		opt.inBeforeMonth = false;
 		opt.inAfterMonth = false;
 		opt.isValid = false;
+		opt.isHoliday = false;
 		opt.isHollyDay = false;
 		opt.className = "";
 		opt.year = jdp.initDate.year;
@@ -191,7 +192,7 @@ const renderDays = (jdp: JalaliDatepicker) => {
 		}
 
 		dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
-		dayOptions.className = getLastWeekClassIfNessesary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
+		dayOptions.className = getLastWeekClassIfNecessary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
 
 		if (jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month) {
 			dayOptions.className += `.${SELECTED_CLASS_NAME}`;
@@ -203,17 +204,17 @@ const renderDays = (jdp: JalaliDatepicker) => {
 		if (isFunction(jdp.options.dayRendering)) {
 			extend(dayOptions, jdp.options.dayRendering(dayOptions, jdp.input));
 		}
-		if (dayOptions.isHollyDay) {
-			dayOptions.className += `.${HOLLY_DAY_CLASS_NAME}`;
+		if (dayOptions.isHoliday || dayOptions.isHollyDay) {
+			dayOptions.className += `.${HOLIDAY_CLASS_NAME}`;
 		}
 
-		let query = dayOptions.isValid ? DAY_ELM_QUERY : DAY_DISABLED_ELM_QUERY;
+		let query = dayOptions.isValid ? DAY_ELEMENT_QUERY : DAY_DISABLED_ELEMENT_QUERY;
 
 		if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {
-			query = DAY_NOTINMONTH_ELM_QUERY;
+			query = DAY_NOT_IN_MONTH_ELEMENT_QUERY;
 
 			if (!dayOptions.isValid) {
-				query = DAY_DISABLED_NOTINMONTH_ELM_QUERY;
+				query = DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY;
 			}
 		}
 
@@ -242,7 +243,7 @@ const renderDays = (jdp: JalaliDatepicker) => {
 	}
 };
 
-export const renderDatePicker = (jdp: JalaliDatepicker) => {
+export const renderDatePicker = (jdp: JalaliDatePicker) => {
 	renderYear(jdp);
 	renderMonths(jdp);
 	renderDays(jdp);

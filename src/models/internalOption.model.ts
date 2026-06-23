@@ -11,34 +11,37 @@ import {
 	TARGET_VALUE_INPUT_ATTR_NAME,
 	TARGET_VALUE_TYPE_ATTR_NAME
 } from "../constants";
-import { DateObject, IJalaliDatepickerExternalOptions, TimeObject, SeparatorChars, JalaliDatepicker, ValueObject, DayOptions } from "./types";
+import { DateObject, IJalaliDatePickerExternalOptions, TimeObject, SeparatorChars, JalaliDatePicker, ValueObject, DayOptions } from "./types";
 import { getValueObjectFromString, isValidDateString, isValidTimeString } from "../utils";
 import { jalaliToday } from "../utils/jalali";
-import { clon, isNotObjectOrIsEmptyObject, isString, isFunction, isUndefined } from "../utils/object";
+import { clone, isNotObjectOrIsEmptyObject, isString, isFunction } from "../utils/object";
 
 const isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test(window.navigator?.userAgent?.toLowerCase());
 
 const normalizeOptions = (
-	externalOptions: Partial<IJalaliDatepickerExternalOptions>,
-	internalOptions: JalaliDatepickerInternalOptions,
-	jdp: JalaliDatepicker
-): JalaliDatepickerInternalOptions => {
-	const setDefaultValue = <K extends keyof IJalaliDatepickerExternalOptions>(propertyName: K, defaultValue: NonNullable<JalaliDatepickerInternalOptions[K]>) => {
+	externalOptions: Partial<IJalaliDatePickerExternalOptions>,
+	internalOptions: JalaliDatePickerInternalOptions,
+	jdp: JalaliDatePicker
+): JalaliDatePickerInternalOptions => {
+	const setDefaultValue = <K extends keyof IJalaliDatePickerExternalOptions>(propertyName: K, defaultValue: NonNullable<JalaliDatePickerInternalOptions[K]>) => {
 		const extValue = externalOptions[propertyName];
 		const intValue = internalOptions[propertyName];
-
-		internalOptions[propertyName] = (extValue ?? intValue ?? defaultValue) as JalaliDatepickerInternalOptions[K];
+		const descriptor = Object.getOwnPropertyDescriptor(internalOptions, propertyName);
+		if (descriptor?.get && !descriptor.set) {
+			delete internalOptions[propertyName];
+		}
+		internalOptions[propertyName] = (extValue ?? intValue ?? defaultValue) as JalaliDatePickerInternalOptions[K];
 	};
 	function setDefinePropertyFromAttr(
 		propertyName: keyof Pick<
-			IJalaliDatepickerExternalOptions,
+			IJalaliDatePickerExternalOptions,
 			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType"
 		>
 	) {
 		const getDefaultFromAttr = (attrName: string, isTime?: boolean): any => {
 			let attrVal: ValueObject | string | null | undefined = jdp.input?.getAttribute(attrName);
 
-			if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clon(jdp.today);
+			if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clone(jdp.today);
 
 			if (!isString(attrVal)) return {};
 
@@ -88,13 +91,13 @@ const normalizeOptions = (
 				getterFunc = () => jdp.input?.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
 			} else if (propertyName === "date") {
 				const _date = externalOptions.date ?? internalOptions.date;
-				delete (internalOptions as Partial<JalaliDatepickerInternalOptions>)[propertyName];
+				delete (internalOptions as Partial<JalaliDatePickerInternalOptions>)[propertyName];
 
 				getterFunc = () =>
 					!jdp.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME) && (_date || jdp.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME));
 			} else if (propertyName === "time") {
 				const _time = externalOptions.time ?? internalOptions.time;
-				delete (internalOptions as Partial<JalaliDatepickerInternalOptions>)[propertyName];
+				delete (internalOptions as Partial<JalaliDatePickerInternalOptions>)[propertyName];
 
 				getterFunc = () =>
 					!jdp.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME) && (_time || jdp.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME));
@@ -116,7 +119,6 @@ const normalizeOptions = (
 	setDefaultValue("selector", "input[data-jdp]");
 	setDefaultValue("zIndex", 1000);
 	setDefaultValue("autoShow", true);
-	setDefaultValue("autoShow", true);
 	setDefaultValue("autoHide", true);
 	setDefaultValue("autoReadOnlyInput", isMobile);
 	setDefaultValue("topSpace", 0);
@@ -130,6 +132,8 @@ const normalizeOptions = (
 	setDefaultValue("showCloseBtn", isMobile);
 	setDefaultValue("showSelectTimeBtnAlways", false);
 	setDefaultValue("hasSecond", true);
+	setDefaultValue("date", true);
+	setDefaultValue("time", false);
 	setDefaultValue("days", ["ش", "ی", "د", "س", "چ", "پ", "ج"]);
 	setDefaultValue("months", ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]);
 	setDefaultValue("separatorChars", {
@@ -148,7 +152,11 @@ const normalizeOptions = (
 	);
 	// eslint-disable-next-line @typescript-eslint/quotes, quotes
 	setDefaultValue("minusHtml", '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>');
-	setDefaultValue("useDropDownYears", true);
+	if (externalOptions.useDropDownYears !== undefined && externalOptions.useDropdownYears === undefined) {
+		internalOptions.useDropdownYears = externalOptions.useDropDownYears;
+	}
+	setDefaultValue("useDropdownYears", true);
+	internalOptions.useDropDownYears = internalOptions.useDropdownYears;
 	setDefaultValue("today", jalaliToday());
 	setDefaultValue("position", "left");
 	setDefaultValue("minuteIncrement", 1);
@@ -171,7 +179,7 @@ const normalizeOptions = (
 	return internalOptions;
 };
 
-export class JalaliDatepickerInternalOptions implements IJalaliDatepickerExternalOptions {
+export class JalaliDatePickerInternalOptions implements IJalaliDatePickerExternalOptions {
 	container: string | HTMLElement;
 	selector: string;
 	zIndex: number;
@@ -200,23 +208,24 @@ export class JalaliDatepickerInternalOptions implements IJalaliDatepickerExterna
 	today: DateObject;
 	hasSecond: boolean;
 	targetValueInput?: string | HTMLInputElement | "attr";
-	targetValueType?: "miladi" | "attr";
+	targetValueType?: "gregorian" | "attr";
 	days: string[];
 	months: string[];
 	separatorChars: SeparatorChars;
 	persianDigits: boolean;
 	plusHtml: string;
 	minusHtml: string;
+	useDropdownYears: boolean;
 	useDropDownYears: boolean;
 	position: "left" | "right" | "center";
 	minuteIncrement: number;
 	hourIncrement: number;
 
-	constructor(externalOptions: Partial<IJalaliDatepickerExternalOptions>, jdp: JalaliDatepicker) {
+	constructor(externalOptions: Partial<IJalaliDatePickerExternalOptions>, jdp: JalaliDatePicker) {
 		normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
 	}
 
-	update(externalOptions: Partial<IJalaliDatepickerExternalOptions>, jdp: JalaliDatepicker) {
+	update(externalOptions: Partial<IJalaliDatePickerExternalOptions>, jdp: JalaliDatePicker) {
 		normalizeOptions(externalOptions || {}, this, jdp) as any;
 	}
 }

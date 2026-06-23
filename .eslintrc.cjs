@@ -2,11 +2,7 @@
 // eslint-disable-next-line no-undef
 module.exports = {
 	root: true,
-	extends: [
-		"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended"
-	],
+	extends: ["eslint:recommended", "plugin:@typescript-eslint/eslint-recommended", "plugin:@typescript-eslint/recommended"],
 	parser: "@typescript-eslint/parser",
 	plugins: ["@typescript-eslint"],
 	ignorePatterns: ["dist"],
@@ -189,25 +185,14 @@ module.exports = {
 		"constructor-super": "error",
 		"dot-notation": "off",
 		eqeqeq: ["error", "smart"],
-		"id-denylist": [
-			"error",
-			"any",
-			"Number",
-			"number",
-			"String",
-			"string",
-			"Boolean",
-			"boolean",
-			"Undefined",
-			"undefined"
-		],
+		"id-denylist": ["error", "any", "Number", "number", "String", "string", "Boolean", "boolean", "Undefined", "undefined"],
 		"id-match": "error",
 		"import/order": "off",
 		indent: "off",
 		"max-len": [
 			"warn",
 			{
-				code: 150,
+				code: 170,
 				tabWidth: 2,
 				ignoreStrings: true,
 				ignoreComments: true

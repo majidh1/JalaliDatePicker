@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { JalaliDatepickerInternalOptions } from "./internalOption.model";
+import { JalaliDatePickerInternalOptions } from "./internalOption.model";
 
 export interface DateObject {
 	year: number;
@@ -28,7 +28,11 @@ export interface DayOptions {
 	inBeforeMonth: boolean;
 	inAfterMonth: boolean;
 	isValid: boolean;
-	isHollyDay: boolean;
+	isHoliday: boolean;
+	/**
+	 * @deprecated change to isHoliday
+	 */
+	isHollyDay?: boolean;
 	className: string;
 	day: number;
 	month: number;
@@ -36,7 +40,7 @@ export interface DayOptions {
 	weekDay: number;
 }
 
-export class IJalaliDatepickerExternalOptions {
+export class IJalaliDatePickerExternalOptions {
 	dayRendering?(day: DayOptions, input: HTMLInputElement | null): DayOptions; // Will refine later
 	minDate?: DateObject | "today" | "attr";
 	maxDate?: DateObject | "today" | "attr";
@@ -65,28 +69,31 @@ export class IJalaliDatepickerExternalOptions {
 	today: DateObject;
 	hasSecond: boolean;
 	targetValueInput?: string | HTMLInputElement | "attr";
-	targetValueType?: "miladi" | "attr";
+	targetValueType?: "gregorian" | "attr";
 	days: string[];
 	months: string[];
 	separatorChars: SeparatorChars;
 	persianDigits: boolean;
 	plusHtml: string;
 	minusHtml: string;
+	useDropdownYears?: boolean;
 	useDropDownYears: boolean;
 	position: "left" | "right" | "center";
 	minuteIncrement: number;
 	hourIncrement: number;
 }
 
-export interface JalaliDatepicker {
-	init(options: Partial<IJalaliDatepickerExternalOptions>): void;
-	updateOptions(options: Partial<IJalaliDatepickerExternalOptions>): void;
-	options: JalaliDatepickerInternalOptions;
+export interface JalaliDatePicker {
+	init(options: Partial<IJalaliDatePickerExternalOptions>): void;
+	updateOptions(options: Partial<IJalaliDatePickerExternalOptions>): void;
+	options: JalaliDatePickerInternalOptions;
 	input: HTMLInputElement | null;
 	isTransitioning: boolean;
 	dpContainer: HTMLElement;
 	_dpContainer: HTMLElement | undefined;
-	overlayElm: HTMLElement | undefined;
+	overlayElement: HTMLElement | undefined;
+	_scrollParent: Window | HTMLElement | undefined;
+	_scrollHandler: EventListener | undefined;
 	today: DateObject;
 	_today: DateObject | undefined;
 	inputValue: ValueObject;

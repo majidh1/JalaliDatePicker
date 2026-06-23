@@ -223,6 +223,7 @@ jdp-container {
 			}
 
 			&.last-week,
+			&.holiday-day,
 			&.holly-day {
 				color: var(--jdp-red);
 			}

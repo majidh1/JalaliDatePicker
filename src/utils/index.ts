@@ -1,59 +1,58 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { isNotObjectOrIsEmptyObject, addLeadingZero, extend } from "./object";
-import { toMiladi } from "./jalali";
-import { DateObject, JalaliDatepicker, TimeObject, ValueObject } from "../models/types";
+import { getDaysInMonth, toGregorian } from "./jalali";
+import { DateObject, JalaliDatePicker, TimeObject, ValueObject } from "../models/types";
 
-export const normalizeMinMaxDate = (jdp: JalaliDatepicker, dateObj?: DateObject | null, updateObj?: Partial<DateObject> | null) => {
+const getDateNumber = (date: DateObject) => date.year * 10000 + date.month * 100 + date.day;
+
+const isValidYear = (year: number) => !isNaN(year) && year >= 1000 && year <= 1999;
+const isValidMonth = (month: number) => !isNaN(month) && month >= 1 && month <= 12;
+const escapeRegex = (value: string) => value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+
+const getFallbackDate = (jdp: JalaliDatePicker): DateObject => {
+	if (jdp._initDate) return jdp._initDate;
+	if (jdp.options.initDate && typeof jdp.options.initDate === "object") return jdp.options.initDate;
+	return jdp.today;
+};
+
+const getFallbackTime = (jdp: JalaliDatePicker): TimeObject => {
+	if (jdp._initTime) return jdp._initTime;
+	if (jdp.options.initTime && typeof jdp.options.initTime === "object") return jdp.options.initTime;
+	return {
+		hour: 0,
+		minute: 0,
+		second: 0
+	};
+};
+
+export const normalizeMinMaxDate = (jdp: JalaliDatePicker, dateObj?: DateObject | null, updateObj?: Partial<DateObject> | null) => {
 	const _dateObj = extend(dateObj || {}, updateObj || {}) as DateObject;
-	const initDate = jdp.initDate;
+	const fallbackDate = getFallbackDate(jdp);
 	const maxDate = jdp.options.maxDate;
 	const minDate = jdp.options.minDate;
-	let year = _dateObj.year;
-	let month = _dateObj.month;
-	let day = _dateObj.day;
+	const year = isValidYear(_dateObj.year) ? _dateObj.year : fallbackDate.year;
+	const month = isValidMonth(_dateObj.month) ? _dateObj.month : fallbackDate.month;
+	let day = !isNaN(_dateObj.day) && _dateObj.day >= 1 ? _dateObj.day : fallbackDate.day;
+	const daysInMonth = getDaysInMonth(year, month);
 
-	if (isNaN(year) || year < 1000 || year > 1999) {
-		year = initDate.year;
-	} else {
-		if (minDate && year < minDate.year) {
-			year = minDate.year;
-			month = 1;
-		} else if (maxDate && year > maxDate.year) {
-			year = maxDate.year;
-		}
+	if (day > daysInMonth) {
+		day = daysInMonth;
 	}
 
-	if (isNaN(month) || month < 1 || month > 12) {
-		month = initDate.month;
-	} else {
-		if (minDate && year <= minDate.year && month < minDate.month) {
-			month = minDate.month;
-			day = 1;
-		} else if (maxDate && year >= maxDate.year && month > maxDate.month) {
-			month = maxDate.month;
-		}
-	}
-
-	if (isNaN(day) || day < 1) {
-		day = initDate.day;
-	} else {
-		if (minDate && month <= minDate.month && day < minDate.day) {
-			day = minDate.day;
-		} else if (maxDate && month >= maxDate.month && day > maxDate.day) {
-			day = maxDate.day;
-		}
-	}
-
-	return {
+	const normalizedDate = {
 		year,
 		month,
 		day
 	};
+
+	if (minDate && getDateNumber(normalizedDate) < getDateNumber(minDate)) return minDate;
+	if (maxDate && getDateNumber(normalizedDate) > getDateNumber(maxDate)) return maxDate;
+	return normalizedDate;
 };
 
-export const normalizeMinMaxTime = (jdp: JalaliDatepicker, timeObj?: TimeObject | null, updateObj?: Partial<TimeObject> | null) => {
+export const normalizeMinMaxTime = (jdp: JalaliDatePicker, timeObj?: TimeObject | null, updateObj?: Partial<TimeObject> | null) => {
 	const _timeObj = extend(timeObj || {}, updateObj || {});
-	const initTime = jdp.initTime;
+	const initTime = getFallbackTime(jdp);
 	const maxTime = jdp.options.maxTime;
 	const minTime = jdp.options.minTime;
 	let hour = _timeObj.hour as number;
@@ -97,7 +96,7 @@ export const normalizeMinMaxTime = (jdp: JalaliDatepicker, timeObj?: TimeObject 
 	};
 };
 
-export const getValidYears = (jdp: JalaliDatepicker) => {
+export const getValidYears = (jdp: JalaliDatePicker) => {
 	function rnd(val: number) {
 		return Math.round(val / 100) * 100;
 	}
@@ -111,7 +110,7 @@ export const getValidYears = (jdp: JalaliDatepicker) => {
 	};
 };
 
-export const getValidMonths = (jdp: JalaliDatepicker) => {
+export const getValidMonths = (jdp: JalaliDatePicker) => {
 	const initYear = jdp.initDate.year;
 	const minDate = jdp.options.minDate;
 	const maxDate = jdp.options.maxDate;
@@ -136,7 +135,7 @@ export const getValidMonths = (jdp: JalaliDatepicker) => {
 	return months;
 };
 
-export const isValidDate = (jdp: JalaliDatepicker, year: number, month: number, day: number) => {
+export const isValidDate = (jdp: JalaliDatePicker, year: number, month: number, day: number) => {
 	const date = getDateValueStringFromValueObject(jdp, {
 		year,
 		month,
@@ -165,21 +164,24 @@ export const isValidDate = (jdp: JalaliDatepicker, year: number, month: number, 
 	return date <= maxDateStr && date >= minDateStr;
 };
 
-export const isValidDateToday = (jdp: JalaliDatepicker) => isValidDate(jdp, jdp.today.year, jdp.today.month, jdp.today.day);
+export const isValidDateToday = (jdp: JalaliDatePicker) => isValidDate(jdp, jdp.today.year, jdp.today.month, jdp.today.day);
 
-export const isValidValueString = (jdp: JalaliDatepicker, str: string) => {
+export const isValidValueString = (jdp: JalaliDatePicker, str: string) => {
 	if (!str) {
 		return false;
 	}
 	const sepOpt = jdp.options.separatorChars;
-	const datePattern = jdp.options.date ? `\\d{4}${sepOpt.date}\\d{2}${sepOpt.date}\\d{2}` : "";
-	const timePattern = jdp.options.time ? `\\d{2}${sepOpt.time}\\d{2}` + (jdp.options.hasSecond ? `${sepOpt.time}\\d{2}` : "") : "";
-	const regex = new RegExp(datePattern + (datePattern && timePattern ? sepOpt.between : "") + timePattern, "g");
+	const dateSeparator = escapeRegex(sepOpt.date);
+	const timeSeparator = escapeRegex(sepOpt.time);
+	const betweenSeparator = escapeRegex(sepOpt.between);
+	const datePattern = jdp.options.date ? `\\d{4}${dateSeparator}\\d{2}${dateSeparator}\\d{2}` : "";
+	const timePattern = jdp.options.time ? `\\d{2}${timeSeparator}\\d{2}` + (jdp.options.hasSecond ? `${timeSeparator}\\d{2}` : "") : "";
+	const regex = new RegExp(`^${datePattern}${datePattern && timePattern ? betweenSeparator : ""}${timePattern}$`);
 
 	return regex.test(str);
 };
 
-export const getValueObjectFromString = (jdp: JalaliDatepicker, str: string) => {
+export const getValueObjectFromString = (jdp: JalaliDatePicker, str: string) => {
 	const sepOpt = jdp.options.separatorChars;
 
 	const sep = str.split(sepOpt.between);
@@ -196,7 +198,7 @@ export const getValueObjectFromString = (jdp: JalaliDatepicker, str: string) => 
 	};
 };
 
-export const getDateValueStringFromValueObjectWithSep = (jdp: JalaliDatepicker, obj: Partial<ValueObject>, forTarget?: boolean) => {
+export const getDateValueStringFromValueObjectWithSep = (jdp: JalaliDatePicker, obj: Partial<ValueObject>, forTarget?: boolean) => {
 	const opt = jdp.options;
 	const separatorChars = opt.separatorChars;
 	const date = forTarget ? separatorChars.targetDate : separatorChars.date;
@@ -209,11 +211,11 @@ export const getDateValueStringFromValueObjectWithSep = (jdp: JalaliDatepicker, 
 	return dateStr + betweenStr + timeStr;
 };
 
-export const getDateValueStringFromValueObject = (jdp: JalaliDatepicker, obj: DateObject) => getDateValueStringFromValueObjectWithSep(jdp, obj);
+export const getDateValueStringFromValueObject = (jdp: JalaliDatePicker, obj: DateObject) => getDateValueStringFromValueObjectWithSep(jdp, obj);
 
-export const getValueStringFromValueObject = (jdp: JalaliDatepicker, obj: ValueObject) => getDateValueStringFromValueObjectWithSep(jdp, obj);
+export const getValueStringFromValueObject = (jdp: JalaliDatePicker, obj: ValueObject) => getDateValueStringFromValueObjectWithSep(jdp, obj);
 
-export const isValidDateString = (jdp: JalaliDatepicker, str: string) => {
+export const isValidDateString = (jdp: JalaliDatePicker, str: string) => {
 	if (!str) {
 		return false;
 	}
@@ -221,7 +223,7 @@ export const isValidDateString = (jdp: JalaliDatepicker, str: string) => {
 	return date.length === 3 && date[0].length === 4 && date[1].length === 2 && date[2].length === 2;
 };
 
-export const isValidTimeString = (jdp: JalaliDatepicker, str: string) => {
+export const isValidTimeString = (jdp: JalaliDatePicker, str: string) => {
 	if (!str) {
 		return false;
 	}
@@ -230,16 +232,16 @@ export const isValidTimeString = (jdp: JalaliDatepicker, str: string) => {
 	return time.length === (jdp.options.hasSecond ? 3 : 2) && !time.find((t) => t.toString().length !== 2);
 };
 
-export const getConvertedValue = (jdp: JalaliDatepicker) => {
+export const getConvertedValue = (jdp: JalaliDatePicker) => {
 	const value = jdp.input?.value;
 	if (!value) {
 		return "";
 	}
 	if (jdp.options.targetValueType) {
 		const normalValue = getValueObjectFromString(jdp, value);
-		if (jdp.options.targetValueType === "miladi") {
-			const miladiValue = toMiladi(normalValue.year, normalValue.month, normalValue.day);
-			return getDateValueStringFromValueObjectWithSep(jdp, extend(normalValue, miladiValue), true);
+		if (jdp.options.targetValueType === "gregorian") {
+			const gregorianValue = toGregorian(normalValue.year, normalValue.month, normalValue.day);
+			return getDateValueStringFromValueObjectWithSep(jdp, extend(normalValue, gregorianValue), true);
 		}
 	}
 

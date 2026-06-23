@@ -58,14 +58,25 @@ export const setInnerHTML = (element: HTMLElement, html: string): void => {
 	element.innerHTML = html;
 };
 
-export const createElement = (tag: string, parent: string | HTMLElement, eventNames?: string, event?: EventListener, content?: string): HTMLElement => {
+export const createElement = (
+	tag: string,
+	parent: string | HTMLElement,
+	eventNames?: string,
+	event?: EventListener,
+	content?: string,
+	contentMode: "text" | "html" = "text"
+): HTMLElement => {
 	const splits = tag.split(".");
 	tag = splits.shift() || "div";
 	const className = splits;
 	const element = window.document.createElement(tag);
 
 	if (isString(parent)) {
-		(window.document.querySelector(parent) as HTMLElement).appendChild(element);
+		const parentElement = window.document.querySelector(parent);
+		if (!parentElement) {
+			throw new Error(`Parent element not found: ${parent}`);
+		}
+		parentElement.appendChild(element);
 	} else {
 		parent.appendChild(element);
 	}
@@ -76,7 +87,11 @@ export const createElement = (tag: string, parent: string | HTMLElement, eventNa
 		addListenerMulti(element, eventNames, event);
 	}
 	if (!isUndefined(content)) {
-		setInnerHTML(element, content as string);
+		if (contentMode === "html") {
+			setInnerHTML(element, content as string);
+		} else {
+			element.textContent = content as string;
+		}
 	}
 	return element;
 };

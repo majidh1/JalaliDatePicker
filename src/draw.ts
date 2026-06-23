@@ -1,5 +1,5 @@
-﻿import { JalaliDatepicker } from "./models/types";
-import { EVENT_CLICK_STR, FOOTER_ELM_QUERY, TODAY_BTN_ELM_QUERY, EMPTY_BTN_ELM_QUERY, CLOSE_BTN_ELM_QUERY } from "./constants";
+import { JalaliDatePicker } from "./models/types";
+import { EVENT_CLICK_STR, FOOTER_ELEMENT_QUERY, TODAY_BUTTON_ELEMENT_QUERY, EMPTY_BUTTON_ELEMENT_QUERY, CLOSE_BUTTON_ELEMENT_QUERY } from "./constants";
 
 import { isValidDateToday } from "./utils";
 
@@ -8,12 +8,12 @@ import { createElement, setInnerHTML } from "./utils/dom";
 import { renderTimePicker } from "./timePickerDraw";
 import { renderDatePicker } from "./datePickerDraw";
 
-const renderFooter = (jdp: JalaliDatepicker) => {
-	const footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer, undefined, undefined, undefined);
+const renderFooter = (jdp: JalaliDatePicker) => {
+	const footerContainer = createElement(FOOTER_ELEMENT_QUERY, jdp.dpContainer, undefined, undefined, undefined);
 	if (jdp.options.showTodayBtn && jdp.options.date) {
 		const isActiveToday = isValidDateToday(jdp);
 		createElement(
-			TODAY_BTN_ELM_QUERY + (isActiveToday ? "" : ".disabled-btn"),
+			TODAY_BUTTON_ELEMENT_QUERY + (isActiveToday ? "" : ".disabled-btn"),
 			footerContainer,
 			EVENT_CLICK_STR,
 			() => {
@@ -24,7 +24,7 @@ const renderFooter = (jdp: JalaliDatepicker) => {
 	}
 	if (!jdp.options.date && jdp.options.time && (!jdp.input?.value || !!jdp.options.showSelectTimeBtnAlways)) {
 		createElement(
-			TODAY_BTN_ELM_QUERY,
+			TODAY_BUTTON_ELEMENT_QUERY,
 			footerContainer,
 			EVENT_CLICK_STR,
 			() => {
@@ -36,7 +36,7 @@ const renderFooter = (jdp: JalaliDatepicker) => {
 	}
 	if (jdp.options.showEmptyBtn) {
 		createElement(
-			EMPTY_BTN_ELM_QUERY,
+			EMPTY_BUTTON_ELEMENT_QUERY,
 			footerContainer,
 			EVENT_CLICK_STR,
 			() => {
@@ -49,7 +49,7 @@ const renderFooter = (jdp: JalaliDatepicker) => {
 
 	if (jdp.options.showCloseBtn) {
 		createElement(
-			CLOSE_BTN_ELM_QUERY,
+			CLOSE_BUTTON_ELEMENT_QUERY,
 			footerContainer,
 			EVENT_CLICK_STR,
 			() => {
@@ -59,7 +59,7 @@ const renderFooter = (jdp: JalaliDatepicker) => {
 		);
 	}
 };
-export const render = (jdp: JalaliDatepicker) => {
+export const render = (jdp: JalaliDatePicker) => {
 	setInnerHTML(jdp.dpContainer, "");
 	if (jdp.options.date) {
 		renderDatePicker(jdp);
@@ -70,6 +70,6 @@ export const render = (jdp: JalaliDatepicker) => {
 	renderFooter(jdp);
 };
 
-export default function (this: JalaliDatepicker) {
+export default function (this: JalaliDatePicker) {
 	render(this);
 }

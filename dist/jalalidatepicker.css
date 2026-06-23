@@ -202,7 +202,7 @@ jdp-container .jdp-day.selected, jdp-container .jdp-day-name.selected {
   color: var(--jdp-color-0) !important;
   opacity: 1 !important;
 }
-jdp-container .jdp-day.last-week, jdp-container .jdp-day.holly-day, jdp-container .jdp-day-name.last-week, jdp-container .jdp-day-name.holly-day {
+jdp-container .jdp-day.last-week, jdp-container .jdp-day.holiday-day, jdp-container .jdp-day.holly-day, jdp-container .jdp-day-name.last-week, jdp-container .jdp-day-name.holiday-day, jdp-container .jdp-day-name.holly-day {
   color: var(--jdp-red);
 }
 jdp-container .jdp-day.not-in-month {

@@ -1,11 +1,11 @@
-import { FOOTER_TIME_ELM_QUERY, TIME_DROPDOWN_PARENT_ELM_QUERY, EVENT_CHANGE_TIME_DROPDOWN_STR } from "./constants";
+import { FOOTER_TIME_ELEMENT_QUERY, TIME_DROPDOWN_PARENT_ELEMENT_QUERY, EVENT_CHANGE_TIME_DROPDOWN_STR } from "./constants";
 
 import { addLeadingZero, extend } from "./utils/object";
 
 import { createElement, toPersianDigitsIfNeeded } from "./utils/dom";
 
 import { normalizeMinMaxTime } from "./utils";
-import { JalaliDatepicker, TimeObject } from "./models/types";
+import { JalaliDatePicker, TimeObject } from "./models/types";
 
 const getArrayNumbersStringTo = (min: number, max: number, increment?: number) => {
 	const items = [];
@@ -16,7 +16,7 @@ const getArrayNumbersStringTo = (min: number, max: number, increment?: number) =
 	return items;
 };
 
-const timeDropDownRender = (jdp: JalaliDatepicker, timePickerContainer: HTMLElement, type: "hour" | "minute" | "second") => {
+const timeDropdownRender = (jdp: JalaliDatePicker, timePickerContainer: HTMLElement, type: "hour" | "minute" | "second") => {
 	const getItemForType = () => {
 		const minTime = extend({ hour: 0, minute: 0, second: 0 } as TimeObject, jdp.options.minTime || {});
 		const maxTime = extend({ hour: 23, minute: 59, second: 59 } as TimeObject, jdp.options.maxTime || {});
@@ -51,34 +51,34 @@ const timeDropDownRender = (jdp: JalaliDatepicker, timePickerContainer: HTMLElem
 
 		return getArrayNumbersStringTo(minTime.second, maxTime.second);
 	};
-	const container = createElement(TIME_DROPDOWN_PARENT_ELM_QUERY, timePickerContainer);
+	const container = createElement(TIME_DROPDOWN_PARENT_ELEMENT_QUERY, timePickerContainer);
 
-	const dropDownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, (e: any) => {
+	const dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, (e: any) => {
 		jdp.setValue(
 			normalizeMinMaxTime(jdp, jdp.initTime, {
 				[type]: e.target.value
 			})
 		);
 	});
-	dropDownContainer.tabIndex = -1;
+	dropdownContainer.tabIndex = -1;
 
 	const items = getItemForType();
 
 	for (let i = 0; i < items.length; i++) {
 		const currentItem = items[i] as string;
-		const optionElm = createElement("option", dropDownContainer) as HTMLOptionElement;
-		optionElm.value = currentItem.toString();
-		optionElm.text = toPersianDigitsIfNeeded(currentItem, jdp.options.persianDigits).toString();
-		optionElm.selected = parseInt(currentItem) === parseInt((jdp.getValue[type] || jdp.initTime[type]) as any);
+		const optionElement = createElement("option", dropdownContainer) as HTMLOptionElement;
+		optionElement.value = currentItem.toString();
+		optionElement.text = toPersianDigitsIfNeeded(currentItem, jdp.options.persianDigits).toString();
+		optionElement.selected = parseInt(currentItem) === parseInt((jdp.getValue[type] || jdp.initTime[type]) as any);
 	}
 };
 
-export const renderTimePicker = (jdp: JalaliDatepicker) => {
-	const elmQuery = FOOTER_TIME_ELM_QUERY + (jdp.options.time && !jdp.options.date ? ".jdp-only-time" : "");
-	const timePickerContainer = createElement(elmQuery, jdp.dpContainer);
+export const renderTimePicker = (jdp: JalaliDatePicker) => {
+	const elementQuery = FOOTER_TIME_ELEMENT_QUERY + (jdp.options.time && !jdp.options.date ? ".jdp-only-time" : "");
+	const timePickerContainer = createElement(elementQuery, jdp.dpContainer);
 	if (jdp.options.hasSecond) {
-		timeDropDownRender(jdp, timePickerContainer, "second");
+		timeDropdownRender(jdp, timePickerContainer, "second");
 	}
-	timeDropDownRender(jdp, timePickerContainer, "minute");
-	timeDropDownRender(jdp, timePickerContainer, "hour");
+	timeDropdownRender(jdp, timePickerContainer, "minute");
+	timeDropdownRender(jdp, timePickerContainer, "hour");
 };

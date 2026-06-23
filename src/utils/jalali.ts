@@ -83,7 +83,7 @@ export const getWeekDay = (year: number, month: number, day: number) => {
 
 export const getDaysInMonth = (year: number, month: number) => [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
 
-export const toMiladi = (jy: number, jm: number, jd: number) => {
+export const toGregorian = (jy: number, jm: number, jd: number) => {
 	let gy = jy <= 979 ? 621 : 1600;
 	jy -= jy <= 979 ? 0 : 979;
 	let days = 365 * jy + Math.floor(jy / 33) * 8 + Math.floor(((jy % 33) + 3) / 4) + 78 + jd + (jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);

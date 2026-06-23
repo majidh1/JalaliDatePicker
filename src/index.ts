@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { JalaliDatepicker, IJalaliDatepickerExternalOptions } from "./models/types";
+import { DateObject, JalaliDatePicker, IJalaliDatePickerExternalOptions, TimeObject } from "./models/types";
 import {
 	isValidValueString,
 	getValueObjectFromString,
@@ -10,12 +10,12 @@ import {
 	isValidTimeString,
 	getConvertedValue
 } from "./utils";
-import { extend, clon, isString, isNotObjectOrIsEmptyObject } from "./utils/object";
+import { extend, clone, isString, isNotObjectOrIsEmptyObject } from "./utils/object";
 import { getScrollParent, getEventTarget, containsDom, triggerEvent, createElement } from "./utils/dom";
 import { jalaliToday } from "./utils/jalali";
 import {
-	CONTAINER_ELM_QUERY,
-	OVERLAY_ELM_QUERY,
+	CONTAINER_ELEMENT_QUERY,
+	OVERLAY_ELEMENT_QUERY,
 	EVENT_FOCUS_STR,
 	EVENT_KEYDOWN_STR,
 	EVENT_CHANGE_INPUT_STR,
@@ -27,35 +27,35 @@ import {
 } from "./constants";
 import draw from "./draw";
 import "./styles/index.scss";
-import { JalaliDatepickerInternalOptions } from "./models/internalOption.model";
+import { JalaliDatePickerInternalOptions } from "./models/internalOption.model";
 
-const jalaliDatepicker: JalaliDatepicker = {
-	init(options: Partial<IJalaliDatepickerExternalOptions>) {
+const jalaliDatepicker: JalaliDatePicker = {
+	init(options: Partial<IJalaliDatePickerExternalOptions>) {
 		this.updateOptions(options);
 		addEventListenerOnResize();
 		addEventListenerOnBody();
 		addEventListenerOnInputs(this.options.selector);
 	},
-	updateOptions(options: Partial<IJalaliDatepickerExternalOptions>) {
+	updateOptions(options: Partial<IJalaliDatePickerExternalOptions>) {
 		if (isNotObjectOrIsEmptyObject(this.options)) {
-			this.options = new JalaliDatepickerInternalOptions(options, this);
+			this.options = new JalaliDatePickerInternalOptions(options, this);
 		} else {
 			this.options.update(options, this);
 		}
+		applyZIndex();
 	},
 	options: {} as any,
 	input: null,
 	isTransitioning: false,
 	get dpContainer() {
 		if (!this._dpContainer || !this._dpContainer.isConnected) {
-			this._dpContainer = createElement(CONTAINER_ELM_QUERY, this.options.container || document.body);
+			this._dpContainer = createElement(CONTAINER_ELEMENT_QUERY, this.options.container || document.body);
 			this._dpContainer.setAttribute("tabindex", "-1");
-			if (this.options.zIndex) this.dpContainer.style.zIndex = String(this.options.zIndex);
 		}
-		if (!this.overlayElm || !this.overlayElm.isConnected) {
-			this.overlayElm = createElement(OVERLAY_ELM_QUERY, this.options.container || document.body);
-			if (this.options.zIndex) this.overlayElm.style.zIndex = String(this.options.zIndex - 1);
+		if (!this.overlayElement || !this.overlayElement.isConnected) {
+			this.overlayElement = createElement(OVERLAY_ELEMENT_QUERY, this.options.container || document.body);
 		}
+		applyZIndex();
 
 		return this._dpContainer as HTMLElement;
 	},
@@ -64,17 +64,16 @@ const jalaliDatepicker: JalaliDatepicker = {
 		return this._today;
 	},
 	get inputValue() {
-		let inputValue = clon(this.input?.value || "");
+		const inputValue = this.input?.value || "";
 
 		if (isValidValueString(this, inputValue)) {
-			inputValue = getValueObjectFromString(this, inputValue);
-		} else if (isString(inputValue) && isValidDateString(this, inputValue)) {
-			inputValue = getValueObjectFromString(this, inputValue);
-		} else {
-			inputValue = {};
+			return getValueObjectFromString(this, inputValue);
+		}
+		if (isValidDateString(this, inputValue)) {
+			return getValueObjectFromString(this, inputValue);
 		}
 
-		return inputValue;
+		return {};
 	},
 	get initDate() {
 		if (this.options.initDate) {
@@ -83,17 +82,17 @@ const jalaliDatepicker: JalaliDatepicker = {
 		if (this._initDate) {
 			return this._initDate;
 		}
-		this._initDate = clon(this.input?.value || "");
+		let initDate: string | DateObject = this.input?.value || "";
 
-		if (!this._initDate) {
-			this._initDate = this.options.initDate || clon(this.today);
-		} else if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
-			this._initDate = getValueObjectFromString(this, this._initDate);
+		if (!initDate) {
+			initDate = this.options.initDate || clone(this.today);
+		} else if (isString(initDate) && isValidDateString(this, initDate)) {
+			initDate = getValueObjectFromString(this, initDate) as DateObject;
 		} else {
-			this._initDate = clon(this.today);
+			initDate = clone(this.today);
 		}
 
-		this._initDate = normalizeMinMaxDate(this, this._initDate);
+		this._initDate = normalizeMinMaxDate(this, initDate);
 		return this._initDate;
 	},
 	get initTime() {
@@ -106,16 +105,16 @@ const jalaliDatepicker: JalaliDatepicker = {
 			minute: date.getMinutes(),
 			second: 0
 		};
-		this._initTime = clon(this.input?.value || "") || this.options.initTime || defaultInit;
+		let initTime: string | TimeObject = this.input?.value || this.options.initTime || defaultInit;
 
-		if (isString(this._initTime)) {
-			if (isValidTimeString(this, this._initTime)) {
-				this._initTime = getValueObjectFromString(this, this._initTime as string);
+		if (isString(initTime)) {
+			if (isValidTimeString(this, initTime)) {
+				initTime = getValueObjectFromString(this, initTime) as TimeObject;
 			} else {
-				this._initTime = defaultInit;
+				initTime = defaultInit;
 			}
 		}
-		this._initTime = normalizeMinMaxTime(this, this._initTime);
+		this._initTime = normalizeMinMaxTime(this, initTime);
 		return this._initTime;
 	},
 	_draw: draw,
@@ -129,11 +128,11 @@ const jalaliDatepicker: JalaliDatepicker = {
 		this.isTransitioning = true;
 		this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
 		this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-		if (this.overlayElm) this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
+		if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
 		setTimeout(() => {
 			this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
 			this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-			if (this.overlayElm) this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
+			if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
 			this.isShow = true;
 			this.isTransitioning = false;
 		}, 300);
@@ -144,8 +143,9 @@ const jalaliDatepicker: JalaliDatepicker = {
 	hide() {
 		this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
 		this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
-		if (this.overlayElm) this.overlayElm.style.display = STYLE_DISPLAY_HIDDEN;
+		if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_HIDDEN;
 		this.isShow = false;
+		removeScrollOnParent();
 		document.removeEventListener(EVENT_KEYDOWN_STR, handleEscKey);
 	},
 	setPosition() {
@@ -225,9 +225,10 @@ const jalaliDatepicker: JalaliDatepicker = {
 	},
 	setTargetValue() {
 		if (!this.options.targetValueInput) return;
-		const targetInputList = document.querySelectorAll(this.options.targetValueInput as string);
+		const targetInputList =
+			this.options.targetValueInput instanceof HTMLElement ? [this.options.targetValueInput] : document.querySelectorAll(this.options.targetValueInput as string);
 		if (!targetInputList || !targetInputList.length) return;
-		targetInputList.forEach((targetInput) => {
+		targetInputList.forEach((targetInput: Element | HTMLElement) => {
 			(targetInput as HTMLInputElement).value = getConvertedValue(this);
 		});
 	},
@@ -270,7 +271,9 @@ const jalaliDatepicker: JalaliDatepicker = {
 		this._draw();
 	},
 	_dpContainer: undefined,
-	overlayElm: undefined,
+	overlayElement: undefined,
+	_scrollParent: undefined,
+	_scrollHandler: undefined,
 	_today: undefined,
 	_initDate: null,
 	_initTime: null,
@@ -278,19 +281,38 @@ const jalaliDatepicker: JalaliDatepicker = {
 	isShow: false
 };
 
-function setScrollOnParent(input: HTMLInputElement) {
-	getScrollParent(input).addEventListener(
-		"scroll",
-		function () {
-			jalaliDatepicker.setPosition();
-		},
-		{
-			passive: true
-		}
-	);
+function applyZIndex() {
+	const zIndex = jalaliDatepicker.options.zIndex;
+	if (typeof zIndex !== "number") return;
+	if (jalaliDatepicker._dpContainer?.isConnected) {
+		jalaliDatepicker._dpContainer.style.zIndex = String(zIndex);
+	}
+	if (jalaliDatepicker.overlayElement?.isConnected) {
+		jalaliDatepicker.overlayElement.style.zIndex = String(zIndex - 1);
+	}
 }
 
-function setReadOnly(input: HTMLInputElement, options: JalaliDatepickerInternalOptions) {
+function onScrollHandler() {
+	jalaliDatepicker.setPosition();
+}
+
+function setScrollOnParent(input: HTMLInputElement) {
+	removeScrollOnParent();
+	jalaliDatepicker._scrollParent = getScrollParent(input);
+	jalaliDatepicker._scrollHandler = onScrollHandler;
+	jalaliDatepicker._scrollParent.addEventListener("scroll", jalaliDatepicker._scrollHandler, {
+		passive: true
+	});
+}
+
+function removeScrollOnParent() {
+	if (!jalaliDatepicker._scrollParent || !jalaliDatepicker._scrollHandler) return;
+	jalaliDatepicker._scrollParent.removeEventListener("scroll", jalaliDatepicker._scrollHandler);
+	jalaliDatepicker._scrollParent = undefined;
+	jalaliDatepicker._scrollHandler = undefined;
+}
+
+function setReadOnly(input: HTMLInputElement, options: JalaliDatePickerInternalOptions) {
 	if (options.autoReadOnlyInput && !input.readOnly) {
 		input.setAttribute("readonly", "readonly");
 		input.readOnly = true;
@@ -329,7 +351,10 @@ function addEventListenerOnInputs(querySelector?: string) {
 }
 
 const onBodyClickCallback = (e: PointerEvent) => {
-	if (!jalaliDatepicker.options.autoHide || !jalaliDatepicker.isShow || containsDom(jalaliDatepicker.dpContainer, e) || getEventTarget(e) === jalaliDatepicker.input) {
+	const clickInsideDatePicker = containsDom(jalaliDatepicker.dpContainer, e);
+	const clickOnInput = getEventTarget(e) === jalaliDatepicker.input;
+
+	if (!jalaliDatepicker.options.autoHide || !jalaliDatepicker.isShow || clickInsideDatePicker || clickOnInput) {
 		return;
 	}
 	jalaliDatepicker.hide();
@@ -350,7 +375,7 @@ function handleEscKey(event: KeyboardEvent) {
 }
 
 (window as any).jalaliDatepicker = {
-	startWatch(options: Partial<IJalaliDatepickerExternalOptions> = {}) {
+	startWatch(options: Partial<IJalaliDatePickerExternalOptions> = {}) {
 		jalaliDatepicker.init(options);
 	},
 	show(input: HTMLInputElement) {
@@ -359,7 +384,7 @@ function handleEscKey(event: KeyboardEvent) {
 	hide() {
 		jalaliDatepicker.hide();
 	},
-	updateOptions(options: Partial<IJalaliDatepickerExternalOptions>) {
+	updateOptions(options: Partial<IJalaliDatePickerExternalOptions>) {
 		jalaliDatepicker.updateOptions(options);
 	}
 };

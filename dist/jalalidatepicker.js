@@ -11,14 +11,14 @@
     return typeof value === "string";
   };
   var isObject = function isObject(value) {
-    return typeof value === "object";
+    return value !== null && typeof value === "object";
   };
-  var clon = function clon(a) {
-    return JSON.parse(JSON.stringify(a));
+  var clone = function clone(value) {
+    return JSON.parse(JSON.stringify(value));
   };
   var isNotObjectOrIsEmptyObject = function isNotObjectOrIsEmptyObject(obj) {
     if (!isObject(obj)) {
-      return false;
+      return true;
     }
     try {
       return JSON.stringify(obj) === "{}";
@@ -138,7 +138,7 @@
   var getDaysInMonth = function getDaysInMonth(year, month) {
     return [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
   };
-  var toMiladi = function toMiladi(jy, jm, jd) {
+  var toGregorian = function toGregorian(jy, jm, jd) {
     var gy = jy <= 979 ? 621 : 1600;
     jy -= jy <= 979 ? 0 : 979;
     var days = 365 * jy + Math.floor(jy / 33) * 8 + Math.floor((jy % 33 + 3) / 4) + 78 + jd + (jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);
@@ -169,52 +169,56 @@
       day: gd
     };
   };
+  var getDateNumber = function getDateNumber(date) {
+    return date.year * 1e4 + date.month * 100 + date.day;
+  };
+  var isValidYear = function isValidYear(year) {
+    return !isNaN(year) && year >= 1e3 && year <= 1999;
+  };
+  var isValidMonth = function isValidMonth(month) {
+    return !isNaN(month) && month >= 1 && month <= 12;
+  };
+  var escapeRegex = function escapeRegex(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  };
+  var getFallbackDate = function getFallbackDate(jdp) {
+    if (jdp._initDate) return jdp._initDate;
+    if (jdp.options.initDate && typeof jdp.options.initDate === "object") return jdp.options.initDate;
+    return jdp.today;
+  };
+  var getFallbackTime = function getFallbackTime(jdp) {
+    if (jdp._initTime) return jdp._initTime;
+    if (jdp.options.initTime && typeof jdp.options.initTime === "object") return jdp.options.initTime;
+    return {
+      hour: 0,
+      minute: 0,
+      second: 0
+    };
+  };
   var normalizeMinMaxDate = function normalizeMinMaxDate(jdp, dateObj, updateObj) {
     var _dateObj = _extend(dateObj || {}, updateObj || {});
-    var initDate = jdp.initDate;
+    var fallbackDate = getFallbackDate(jdp);
     var maxDate = jdp.options.maxDate;
     var minDate = jdp.options.minDate;
-    var year = _dateObj.year;
-    var month = _dateObj.month;
-    var day = _dateObj.day;
-    if (isNaN(year) || year < 1e3 || year > 1999) {
-      year = initDate.year;
-    } else {
-      if (minDate && year < minDate.year) {
-        year = minDate.year;
-        month = 1;
-      } else if (maxDate && year > maxDate.year) {
-        year = maxDate.year;
-      }
+    var year = isValidYear(_dateObj.year) ? _dateObj.year : fallbackDate.year;
+    var month = isValidMonth(_dateObj.month) ? _dateObj.month : fallbackDate.month;
+    var day = !isNaN(_dateObj.day) && _dateObj.day >= 1 ? _dateObj.day : fallbackDate.day;
+    var daysInMonth = getDaysInMonth(year, month);
+    if (day > daysInMonth) {
+      day = daysInMonth;
     }
-    if (isNaN(month) || month < 1 || month > 12) {
-      month = initDate.month;
-    } else {
-      if (minDate && year <= minDate.year && month < minDate.month) {
-        month = minDate.month;
-        day = 1;
-      } else if (maxDate && year >= maxDate.year && month > maxDate.month) {
-        month = maxDate.month;
-      }
-    }
-    if (isNaN(day) || day < 1) {
-      day = initDate.day;
-    } else {
-      if (minDate && month <= minDate.month && day < minDate.day) {
-        day = minDate.day;
-      } else if (maxDate && month >= maxDate.month && day > maxDate.day) {
-        day = maxDate.day;
-      }
-    }
-    return {
+    var normalizedDate = {
       year: year,
       month: month,
       day: day
     };
+    if (minDate && getDateNumber(normalizedDate) < getDateNumber(minDate)) return minDate;
+    if (maxDate && getDateNumber(normalizedDate) > getDateNumber(maxDate)) return maxDate;
+    return normalizedDate;
   };
   var normalizeMinMaxTime = function normalizeMinMaxTime(jdp, timeObj, updateObj) {
     var _timeObj = _extend(timeObj || {}, updateObj || {});
-    var initTime = jdp.initTime;
+    var initTime = getFallbackTime(jdp);
     var maxTime = jdp.options.maxTime;
     var minTime = jdp.options.minTime;
     var hour = _timeObj.hour;
@@ -297,14 +301,14 @@
     var minDateStr = date;
     var maxDate = jdp.options.maxDate;
     var minDate = jdp.options.minDate;
-    if (isObject(minDate)) {
+    if (!isNotObjectOrIsEmptyObject(minDate)) {
       minDateStr = getDateValueStringFromValueObject(jdp, {
         year: minDate.year,
         month: minDate.month,
         day: minDate.day
       });
     }
-    if (isObject(maxDate)) {
+    if (!isNotObjectOrIsEmptyObject(maxDate)) {
       maxDateStr = getDateValueStringFromValueObject(jdp, {
         year: maxDate.year,
         month: maxDate.month,
@@ -321,9 +325,12 @@
       return false;
     }
     var sepOpt = jdp.options.separatorChars;
-    var datePattern = jdp.options.date ? "\\d{4}" + sepOpt.date + "\\d{2}" + sepOpt.date + "\\d{2}" : "";
-    var timePattern = jdp.options.time ? "\\d{2}" + sepOpt.time + "\\d{2}" + (jdp.options.hasSecond ? sepOpt.time + "\\d{2}" : "") : "";
-    var regex = new RegExp(datePattern + (datePattern && timePattern ? sepOpt.between : "") + timePattern, "g");
+    var dateSeparator = escapeRegex(sepOpt.date);
+    var timeSeparator = escapeRegex(sepOpt.time);
+    var betweenSeparator = escapeRegex(sepOpt.between);
+    var datePattern = jdp.options.date ? "\\d{4}" + dateSeparator + "\\d{2}" + dateSeparator + "\\d{2}" : "";
+    var timePattern = jdp.options.time ? "\\d{2}" + timeSeparator + "\\d{2}" + (jdp.options.hasSecond ? timeSeparator + "\\d{2}" : "") : "";
+    var regex = new RegExp("^" + datePattern + (datePattern && timePattern ? betweenSeparator : "") + timePattern + "$");
     return regex.test(str);
   };
   var getValueObjectFromString = function getValueObjectFromString(jdp, str) {
@@ -381,41 +388,41 @@
     }
     if (jdp.options.targetValueType) {
       var normalValue = getValueObjectFromString(jdp, value);
-      if (jdp.options.targetValueType === "miladi") {
-        var miladiValue = toMiladi(normalValue.year, normalValue.month, normalValue.day);
-        return getDateValueStringFromValueObjectWithSep(jdp, _extend(normalValue, miladiValue), true);
+      if (jdp.options.targetValueType === "gregorian") {
+        var gregorianValue = toGregorian(normalValue.year, normalValue.month, normalValue.day);
+        return getDateValueStringFromValueObjectWithSep(jdp, _extend(normalValue, gregorianValue), true);
       }
     }
     return value;
   };
   var NAMESPACE = "jdp";
   var DIV_NAMESPACE = "div." + NAMESPACE;
-  var CONTAINER_ELM_QUERY = NAMESPACE + "-container";
-  var OVERLAY_ELM_QUERY = NAMESPACE + "-overlay";
-  var YEARS_ELM_QUERY = DIV_NAMESPACE + "-years";
-  var YEAR_ELM_QUERY = DIV_NAMESPACE + "-year";
-  var MONTHS_ELM_QUERY = DIV_NAMESPACE + "-months";
-  var MONTH_ELM_QUERY = DIV_NAMESPACE + "-month";
-  var DAYS_ELM_QUERY = DIV_NAMESPACE + "-days";
-  var DAYS_HEADER_ELM_QUERY = DIV_NAMESPACE + "-days-header";
-  var DAY_ELM_QUERY = DIV_NAMESPACE + "-day";
-  var DAY_NOTINMONTH_ELM_QUERY = DIV_NAMESPACE + "-day.not-in-month";
-  var DAY_DISABLED_ELM_QUERY = DIV_NAMESPACE + "-day.disabled-day";
-  var DAY_DISABLED_NOTINMONTH_ELM_QUERY = DAY_NOTINMONTH_ELM_QUERY + ".disabled-day";
-  var DAY_NAME_ELM_QUERY = DIV_NAMESPACE + "-day-name";
-  var PLUS_ICON_ELM_QUERY = DIV_NAMESPACE + "-icon-plus";
-  var MINUS_ICON_ELM_QUERY = DIV_NAMESPACE + "-icon-minus";
-  var FOOTER_ELM_QUERY = DIV_NAMESPACE + "-footer";
-  var TODAY_BTN_ELM_QUERY = DIV_NAMESPACE + "-btn-today";
-  var EMPTY_BTN_ELM_QUERY = DIV_NAMESPACE + "-btn-empty";
-  var CLOSE_BTN_ELM_QUERY = DIV_NAMESPACE + "-btn-close";
-  var FOOTER_TIME_ELM_QUERY = DIV_NAMESPACE + "-time-container";
-  var TIME_DROPDOWN_PARENT_ELM_QUERY = DIV_NAMESPACE + "-time";
+  var CONTAINER_ELEMENT_QUERY = NAMESPACE + "-container";
+  var OVERLAY_ELEMENT_QUERY = NAMESPACE + "-overlay";
+  var YEARS_ELEMENT_QUERY = DIV_NAMESPACE + "-years";
+  var YEAR_ELEMENT_QUERY = DIV_NAMESPACE + "-year";
+  var MONTHS_ELEMENT_QUERY = DIV_NAMESPACE + "-months";
+  var MONTH_ELEMENT_QUERY = DIV_NAMESPACE + "-month";
+  var DAYS_ELEMENT_QUERY = DIV_NAMESPACE + "-days";
+  var DAYS_HEADER_ELEMENT_QUERY = DIV_NAMESPACE + "-days-header";
+  var DAY_ELEMENT_QUERY = DIV_NAMESPACE + "-day";
+  var DAY_NOT_IN_MONTH_ELEMENT_QUERY = DIV_NAMESPACE + "-day.not-in-month";
+  var DAY_DISABLED_ELEMENT_QUERY = DIV_NAMESPACE + "-day.disabled-day";
+  var DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY = DAY_NOT_IN_MONTH_ELEMENT_QUERY + ".disabled-day";
+  var DAY_NAME_ELEMENT_QUERY = DIV_NAMESPACE + "-day-name";
+  var PLUS_ICON_ELEMENT_QUERY = DIV_NAMESPACE + "-icon-plus";
+  var MINUS_ICON_ELEMENT_QUERY = DIV_NAMESPACE + "-icon-minus";
+  var FOOTER_ELEMENT_QUERY = DIV_NAMESPACE + "-footer";
+  var TODAY_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-today";
+  var EMPTY_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-empty";
+  var CLOSE_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-close";
+  var FOOTER_TIME_ELEMENT_QUERY = DIV_NAMESPACE + "-time-container";
+  var TIME_DROPDOWN_PARENT_ELEMENT_QUERY = DIV_NAMESPACE + "-time";
   var SELECTED_CLASS_NAME = "selected";
   var TODAY_CLASS_NAME = "today";
   var LAST_WEEK_CLASS_NAME = "last-week";
   var DISABLE_CLASS_NAME = "not-in-range";
-  var HOLLY_DAY_CLASS_NAME = "holly-day";
+  var HOLIDAY_CLASS_NAME = "holiday-day";
   var EVENT_CHANGE_INPUT_STR = NAMESPACE + ":change";
   var EVENT_CHANGE_MONTH_DROPDOWN_STR = "change";
   var EVENT_CHANGE_TIME_DROPDOWN_STR = EVENT_CHANGE_MONTH_DROPDOWN_STR;
@@ -494,13 +501,20 @@
   var setInnerHTML = function setInnerHTML(element, html) {
     element.innerHTML = html;
   };
-  var createElement = function createElement(tag, parent, eventNames, event, content) {
+  var createElement = function createElement(tag, parent, eventNames, event, content, contentMode) {
+    if (contentMode === void 0) {
+      contentMode = "text";
+    }
     var splits = tag.split(".");
     tag = splits.shift() || "div";
     var className = splits;
     var element = window.document.createElement(tag);
     if (isString(parent)) {
-      window.document.querySelector(parent).appendChild(element);
+      var parentElement = window.document.querySelector(parent);
+      if (!parentElement) {
+        throw new Error("Parent element not found: " + parent);
+      }
+      parentElement.appendChild(element);
     } else {
       parent.appendChild(element);
     }
@@ -511,7 +525,11 @@
       addListenerMulti(element, eventNames, event);
     }
     if (!isUndefined(content)) {
-      setInnerHTML(element, content);
+      if (contentMode === "html") {
+        setInnerHTML(element, content);
+      } else {
+        element.textContent = content;
+      }
     }
     return element;
   };
@@ -529,7 +547,7 @@
     for (var i = min; i <= max; i += increment) items.push(addLeadingZero(i));
     return items;
   };
-  var timeDropDownRender = function timeDropDownRender(jdp, timePickerContainer, type) {
+  var timeDropdownRender = function timeDropdownRender(jdp, timePickerContainer, type) {
     var getItemForType = function getItemForType() {
       var minTime = _extend({
         hour: 0,
@@ -570,39 +588,39 @@
       }
       return getArrayNumbersStringTo(minTime.second, maxTime.second);
     };
-    var container = createElement(TIME_DROPDOWN_PARENT_ELM_QUERY, timePickerContainer);
-    var dropDownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, function (e) {
+    var container = createElement(TIME_DROPDOWN_PARENT_ELEMENT_QUERY, timePickerContainer);
+    var dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, function (e) {
       var _normalizeMinMaxTime;
       jdp.setValue(normalizeMinMaxTime(jdp, jdp.initTime, (_normalizeMinMaxTime = {}, _normalizeMinMaxTime[type] = e.target.value, _normalizeMinMaxTime)));
     });
-    dropDownContainer.tabIndex = -1;
+    dropdownContainer.tabIndex = -1;
     var items = getItemForType();
     for (var i = 0; i < items.length; i++) {
       var currentItem = items[i];
-      var optionElm = createElement("option", dropDownContainer);
-      optionElm.value = currentItem.toString();
-      optionElm.text = toPersianDigitsIfNeeded(currentItem, jdp.options.persianDigits).toString();
-      optionElm.selected = parseInt(currentItem) === parseInt(jdp.getValue[type] || jdp.initTime[type]);
+      var optionElement = createElement("option", dropdownContainer);
+      optionElement.value = currentItem.toString();
+      optionElement.text = toPersianDigitsIfNeeded(currentItem, jdp.options.persianDigits).toString();
+      optionElement.selected = parseInt(currentItem) === parseInt(jdp.getValue[type] || jdp.initTime[type]);
     }
   };
   var renderTimePicker = function renderTimePicker(jdp) {
-    var elmQuery = FOOTER_TIME_ELM_QUERY + (jdp.options.time && !jdp.options.date ? ".jdp-only-time" : "");
-    var timePickerContainer = createElement(elmQuery, jdp.dpContainer);
+    var elementQuery = FOOTER_TIME_ELEMENT_QUERY + (jdp.options.time && !jdp.options.date ? ".jdp-only-time" : "");
+    var timePickerContainer = createElement(elementQuery, jdp.dpContainer);
     if (jdp.options.hasSecond) {
-      timeDropDownRender(jdp, timePickerContainer, "second");
+      timeDropdownRender(jdp, timePickerContainer, "second");
     }
-    timeDropDownRender(jdp, timePickerContainer, "minute");
-    timeDropDownRender(jdp, timePickerContainer, "hour");
+    timeDropdownRender(jdp, timePickerContainer, "minute");
+    timeDropdownRender(jdp, timePickerContainer, "hour");
   };
-  var getLastWeekClassIfNessesary = function getLastWeekClassIfNessesary(dayOfWeek) {
-    return dayOfWeek === 6 ? "." + LAST_WEEK_CLASS_NAME + "." + HOLLY_DAY_CLASS_NAME : "";
+  var getLastWeekClassIfNecessary = function getLastWeekClassIfNecessary(dayOfWeek) {
+    return dayOfWeek === 6 ? "." + LAST_WEEK_CLASS_NAME + "." + HOLIDAY_CLASS_NAME : "";
   };
   var createElementPlusMinus = function createElementPlusMinus(jdp, container, isYear, mode) {
     var _jdp$options$maxDate2, _jdp$options$maxDate3, _jdp$options$minDate2, _jdp$options$minDate3;
     var isPlus = mode === "PLUS";
     var className = "";
     var event = null;
-    var elmQuery = isPlus ? PLUS_ICON_ELM_QUERY : MINUS_ICON_ELM_QUERY;
+    var elementQuery = isPlus ? PLUS_ICON_ELEMENT_QUERY : MINUS_ICON_ELEMENT_QUERY;
     var isMaxYear = isPlus && ((_jdp$options$maxDate2 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate2.year) === jdp.initDate.year;
     var isMaxMonth = isPlus && ((_jdp$options$maxDate3 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate3.month) === jdp.initDate.month;
     var isMinYear = !isPlus && ((_jdp$options$minDate2 = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate2.year) === jdp.initDate.year;
@@ -627,7 +645,7 @@
         className = DISABLE_CLASS_NAME;
       }
     }
-    createElement(elmQuery + "." + className, container, EVENT_CLICK_STR, event, html);
+    createElement(elementQuery + "." + className, container, EVENT_CLICK_STR, event, html, "html");
   };
   var createElementPlus = function createElementPlus(jdp, container, isYear) {
     createElementPlusMinus(jdp, container, isYear, "PLUS");
@@ -636,24 +654,25 @@
     createElementPlusMinus(jdp, container, isYear, "MINUS");
   };
   var renderYear = function renderYear(jdp) {
-    var yearsContainer = createElement(YEARS_ELM_QUERY, jdp.dpContainer);
+    var _jdp$options$useDropd;
+    var yearsContainer = createElement(YEARS_ELEMENT_QUERY, jdp.dpContainer);
     createElementPlus(jdp, yearsContainer, true);
-    var yearContainer = createElement(YEAR_ELM_QUERY, yearsContainer);
+    var yearContainer = createElement(YEAR_ELEMENT_QUERY, yearsContainer);
     createElementMinus(jdp, yearsContainer, true);
-    var useDropDownYears = jdp.options.useDropDownYears;
-    var yearInputTagName = useDropDownYears ? "select" : "input";
+    var useDropdownYears = (_jdp$options$useDropd = jdp.options.useDropdownYears) != null ? _jdp$options$useDropd : jdp.options.useDropDownYears;
+    var yearInputTagName = useDropdownYears ? "select" : "input";
     var yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, function (e) {
       if (e.target.value < 1e3 || e.target.value > 2e3) return;
       jdp.yearChange(e.target.value);
     });
-    if (useDropDownYears) {
+    if (useDropdownYears) {
       yearInput.setAttribute("tabindex", "-1");
       var validYears = getValidYears(jdp);
       for (var i = validYears.min; i <= validYears.max; i++) {
-        var optionElm = createElement("option", yearInput);
-        optionElm.value = i.toString();
-        optionElm.text = toPersianDigitsIfNeeded(i, jdp.options.persianDigits).toString();
-        optionElm.selected = i === jdp.initDate.year;
+        var optionElement = createElement("option", yearInput);
+        optionElement.value = i.toString();
+        optionElement.text = toPersianDigitsIfNeeded(i, jdp.options.persianDigits).toString();
+        optionElement.selected = i === jdp.initDate.year;
       }
     } else {
       yearInput.tabIndex = -1;
@@ -662,28 +681,28 @@
     }
   };
   var renderMonths = function renderMonths(jdp) {
-    var monthsContainer = createElement(MONTHS_ELM_QUERY, jdp.dpContainer);
+    var monthsContainer = createElement(MONTHS_ELEMENT_QUERY, jdp.dpContainer);
     createElementPlus(jdp, monthsContainer, false);
-    var monthContainer = createElement(MONTH_ELM_QUERY, monthsContainer);
+    var monthContainer = createElement(MONTH_ELEMENT_QUERY, monthsContainer);
     createElementMinus(jdp, monthsContainer, false);
-    var monthDropDownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, function (e) {
+    var monthDropdownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, function (e) {
       jdp.monthChange(parseFloat(e.target.value));
     });
-    monthDropDownContainer.tabIndex = -1;
+    monthDropdownContainer.tabIndex = -1;
     var months = getValidMonths(jdp);
     var monthsName = jdp.options.months;
     for (var i = 0; i < months.length; i++) {
-      var optionElm = createElement("option", monthDropDownContainer);
-      optionElm.value = months[i].toString();
-      optionElm.text = toPersianDigitsIfNeeded(monthsName[months[i] - 1], jdp.options.persianDigits).toString();
-      optionElm.selected = months[i] === jdp.initDate.month;
+      var optionElement = createElement("option", monthDropdownContainer);
+      optionElement.value = months[i].toString();
+      optionElement.text = toPersianDigitsIfNeeded(monthsName[months[i] - 1], jdp.options.persianDigits).toString();
+      optionElement.selected = months[i] === jdp.initDate.month;
     }
   };
   var renderDays = function renderDays(jdp) {
-    var daysHeaderContainer = createElement(DAYS_HEADER_ELM_QUERY, jdp.dpContainer);
-    var daysContainer = createElement(DAYS_ELM_QUERY, jdp.dpContainer);
+    var daysHeaderContainer = createElement(DAYS_HEADER_ELEMENT_QUERY, jdp.dpContainer);
+    var daysContainer = createElement(DAYS_ELEMENT_QUERY, jdp.dpContainer);
     for (var i = 0; i < 7; i++) {
-      createElement(DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i), daysHeaderContainer, void 0, void 0, toPersianDigitsIfNeeded(jdp.options.days[i], jdp.options.persianDigits).toString());
+      createElement(DAY_NAME_ELEMENT_QUERY + getLastWeekClassIfNecessary(i), daysHeaderContainer, void 0, void 0, toPersianDigitsIfNeeded(jdp.options.days[i], jdp.options.persianDigits).toString());
     }
     var setDefaultOptions = function setDefaultOptions(opt) {
       if (!opt.day || opt.inBeforeMonth) {
@@ -694,6 +713,7 @@
       opt.inBeforeMonth = false;
       opt.inAfterMonth = false;
       opt.isValid = false;
+      opt.isHoliday = false;
       opt.isHollyDay = false;
       opt.className = "";
       opt.year = jdp.initDate.year;
@@ -730,7 +750,7 @@
         dayOptions.weekDay = getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day);
       }
       dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
-      dayOptions.className = getLastWeekClassIfNessesary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
+      dayOptions.className = getLastWeekClassIfNecessary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
       if (jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month) {
         dayOptions.className += "." + SELECTED_CLASS_NAME;
       }
@@ -740,14 +760,14 @@
       if (isFunction(jdp.options.dayRendering)) {
         _extend(dayOptions, jdp.options.dayRendering(dayOptions, jdp.input));
       }
-      if (dayOptions.isHollyDay) {
-        dayOptions.className += "." + HOLLY_DAY_CLASS_NAME;
+      if (dayOptions.isHoliday || dayOptions.isHollyDay) {
+        dayOptions.className += "." + HOLIDAY_CLASS_NAME;
       }
-      var query = dayOptions.isValid ? DAY_ELM_QUERY : DAY_DISABLED_ELM_QUERY;
+      var query = dayOptions.isValid ? DAY_ELEMENT_QUERY : DAY_DISABLED_ELEMENT_QUERY;
       if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {
-        query = DAY_NOTINMONTH_ELM_QUERY;
+        query = DAY_NOT_IN_MONTH_ELEMENT_QUERY;
         if (!dayOptions.isValid) {
-          query = DAY_DISABLED_NOTINMONTH_ELM_QUERY;
+          query = DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY;
         }
       }
       var dayContainer = createElement(query + dayOptions.className, daysContainer, void 0, void 0, toPersianDigitsIfNeeded(dayOptions.day, jdp.options.persianDigits).toString());
@@ -776,27 +796,27 @@
   };
   var renderFooter = function renderFooter(jdp) {
     var _jdp$input2;
-    var footerContainer = createElement(FOOTER_ELM_QUERY, jdp.dpContainer, void 0, void 0, void 0);
+    var footerContainer = createElement(FOOTER_ELEMENT_QUERY, jdp.dpContainer, void 0, void 0, void 0);
     if (jdp.options.showTodayBtn && jdp.options.date) {
       var isActiveToday = isValidDateToday(jdp);
-      createElement(TODAY_BTN_ELM_QUERY + (isActiveToday ? "" : ".disabled-btn"), footerContainer, EVENT_CLICK_STR, function () {
+      createElement(TODAY_BUTTON_ELEMENT_QUERY + (isActiveToday ? "" : ".disabled-btn"), footerContainer, EVENT_CLICK_STR, function () {
         if (isActiveToday) jdp.setValue(jdp.today);
       }, "امروز");
     }
     if (!jdp.options.date && jdp.options.time && (!((_jdp$input2 = jdp.input) != null && _jdp$input2.value) || !!jdp.options.showSelectTimeBtnAlways)) {
-      createElement(TODAY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, function () {
+      createElement(TODAY_BUTTON_ELEMENT_QUERY, footerContainer, EVENT_CLICK_STR, function () {
         jdp.setValue(jdp.initTime);
         jdp.hide();
       }, "انتخاب");
     }
     if (jdp.options.showEmptyBtn) {
-      createElement(EMPTY_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, function () {
+      createElement(EMPTY_BUTTON_ELEMENT_QUERY, footerContainer, EVENT_CLICK_STR, function () {
         jdp.cleanValue();
         if (jdp.options.hideAfterChange) jdp.hide();
       }, "خالی");
     }
     if (jdp.options.showCloseBtn) {
-      createElement(CLOSE_BTN_ELM_QUERY, footerContainer, EVENT_CLICK_STR, function () {
+      createElement(CLOSE_BUTTON_ELEMENT_QUERY, footerContainer, EVENT_CLICK_STR, function () {
         jdp.hide();
       }, "بستن");
     }
@@ -820,13 +840,17 @@
       var _ref;
       var extValue = externalOptions[propertyName];
       var intValue = internalOptions[propertyName];
+      var descriptor = Object.getOwnPropertyDescriptor(internalOptions, propertyName);
+      if (descriptor != null && descriptor.get && !descriptor.set) {
+        delete internalOptions[propertyName];
+      }
       internalOptions[propertyName] = (_ref = extValue != null ? extValue : intValue) != null ? _ref : defaultValue;
     };
     function setDefinePropertyFromAttr(propertyName) {
       var getDefaultFromAttr = function getDefaultFromAttr(attrName, isTime) {
         var _jdp$input3;
         var attrVal = (_jdp$input3 = jdp.input) == null ? void 0 : _jdp$input3.getAttribute(attrName);
-        if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clon(jdp.today);
+        if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clone(jdp.today);
         if (!isString(attrVal)) return {};
         try {
           attrVal = document.querySelector(attrVal).value;
@@ -904,14 +928,15 @@
           configurable: true
         });
       } else {
-        setDefaultValue(propertyName, void 0);
+        var _temp = internalOptions[propertyName];
+        delete internalOptions[propertyName];
+        setDefaultValue(propertyName, _temp);
       }
       return internalOptions;
     }
     setDefaultValue("container", "body");
     setDefaultValue("selector", "input[data-jdp]");
     setDefaultValue("zIndex", 1e3);
-    setDefaultValue("autoShow", true);
     setDefaultValue("autoShow", true);
     setDefaultValue("autoHide", true);
     setDefaultValue("autoReadOnlyInput", isMobile);
@@ -926,6 +951,8 @@
     setDefaultValue("showCloseBtn", isMobile);
     setDefaultValue("showSelectTimeBtnAlways", false);
     setDefaultValue("hasSecond", true);
+    setDefaultValue("date", true);
+    setDefaultValue("time", false);
     setDefaultValue("days", ["ش", "ی", "د", "س", "چ", "پ", "ج"]);
     setDefaultValue("months", ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]);
     setDefaultValue("separatorChars", {
@@ -941,7 +968,11 @@
     // eslint-disable-next-line @typescript-eslint/quotes, quotes
     '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>');
     setDefaultValue("minusHtml", '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>');
-    setDefaultValue("useDropDownYears", true);
+    if (externalOptions.useDropDownYears !== void 0 && externalOptions.useDropdownYears === void 0) {
+      internalOptions.useDropdownYears = externalOptions.useDropDownYears;
+    }
+    setDefaultValue("useDropdownYears", true);
+    internalOptions.useDropDownYears = internalOptions.useDropdownYears;
     setDefaultValue("today", jalaliToday());
     setDefaultValue("position", "left");
     setDefaultValue("minuteIncrement", 1);
@@ -960,71 +991,83 @@
     internalOptions = setDefinePropertyFromAttr("targetValueType");
     return internalOptions;
   };
-  var JalaliDatepickerInternalOptions = function JalaliDatepickerInternalOptions(externalOptions, jdp) {
-    this.container = void 0;
-    this.selector = void 0;
-    this.zIndex = void 0;
-    this.autoShow = void 0;
-    this.autoHide = void 0;
-    this.autoReadOnlyInput = void 0;
-    this.topSpace = void 0;
-    this.bottomSpace = void 0;
-    this.overflowSpace = void 0;
-    this.hideAfterChange = void 0;
-    this.hideAfterChangeWithTime = void 0;
-    this.changeMonthRotateYear = void 0;
-    this.showTodayBtn = void 0;
-    this.showEmptyBtn = void 0;
-    this.showCloseBtn = void 0;
-    this.showSelectTimeBtnAlways = void 0;
-    this.dayRendering = void 0;
-    this.minDate = void 0;
-    this.maxDate = void 0;
-    this.initDate = void 0;
-    this.minTime = void 0;
-    this.maxTime = void 0;
-    this.initTime = void 0;
-    this.date = void 0;
-    this.time = void 0;
-    this.today = void 0;
-    this.hasSecond = void 0;
-    this.targetValueInput = void 0;
-    this.targetValueType = void 0;
-    this.days = void 0;
-    this.months = void 0;
-    this.separatorChars = void 0;
-    this.persianDigits = void 0;
-    this.plusHtml = void 0;
-    this.minusHtml = void 0;
-    this.useDropDownYears = void 0;
-    this.position = void 0;
-    this.minuteIncrement = void 0;
-    this.hourIncrement = void 0;
-    normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
-  };
+  var JalaliDatePickerInternalOptions = /*#__PURE__*/function () {
+    function JalaliDatePickerInternalOptions(externalOptions, jdp) {
+      this.container = void 0;
+      this.selector = void 0;
+      this.zIndex = void 0;
+      this.autoShow = void 0;
+      this.autoHide = void 0;
+      this.autoReadOnlyInput = void 0;
+      this.topSpace = void 0;
+      this.bottomSpace = void 0;
+      this.overflowSpace = void 0;
+      this.hideAfterChange = void 0;
+      this.hideAfterChangeWithTime = void 0;
+      this.changeMonthRotateYear = void 0;
+      this.showTodayBtn = void 0;
+      this.showEmptyBtn = void 0;
+      this.showCloseBtn = void 0;
+      this.showSelectTimeBtnAlways = void 0;
+      this.dayRendering = void 0;
+      this.minDate = void 0;
+      this.maxDate = void 0;
+      this.initDate = void 0;
+      this.minTime = void 0;
+      this.maxTime = void 0;
+      this.initTime = void 0;
+      this.date = void 0;
+      this.time = void 0;
+      this.today = void 0;
+      this.hasSecond = void 0;
+      this.targetValueInput = void 0;
+      this.targetValueType = void 0;
+      this.days = void 0;
+      this.months = void 0;
+      this.separatorChars = void 0;
+      this.persianDigits = void 0;
+      this.plusHtml = void 0;
+      this.minusHtml = void 0;
+      this.useDropdownYears = void 0;
+      this.useDropDownYears = void 0;
+      this.position = void 0;
+      this.minuteIncrement = void 0;
+      this.hourIncrement = void 0;
+      normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
+    }
+    var _proto = JalaliDatePickerInternalOptions.prototype;
+    _proto.update = function update(externalOptions, jdp) {
+      normalizeOptions(externalOptions || {}, this, jdp);
+    };
+    return JalaliDatePickerInternalOptions;
+  }();
   var jalaliDatepicker = {
     init: function init(options) {
       this.updateOptions(options);
       addEventListenerOnResize();
-      if (this.options.autoHide) addEventListenerOnBody();
-      if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);
+      addEventListenerOnBody();
+      addEventListenerOnInputs(this.options.selector);
     },
     updateOptions: function updateOptions(options) {
-      this.options = new JalaliDatepickerInternalOptions(options, this);
+      if (isNotObjectOrIsEmptyObject(this.options)) {
+        this.options = new JalaliDatePickerInternalOptions(options, this);
+      } else {
+        this.options.update(options, this);
+      }
+      applyZIndex();
     },
     options: {},
     input: null,
     isTransitioning: false,
     get dpContainer() {
       if (!this._dpContainer || !this._dpContainer.isConnected) {
-        this._dpContainer = createElement(CONTAINER_ELM_QUERY, this.options.container || document.body);
+        this._dpContainer = createElement(CONTAINER_ELEMENT_QUERY, this.options.container || document.body);
         this._dpContainer.setAttribute("tabindex", "-1");
-        if (this.options.zIndex) this.dpContainer.style.zIndex = String(this.options.zIndex);
       }
-      if (!this.overlayElm || !this.overlayElm.isConnected) {
-        this.overlayElm = createElement(OVERLAY_ELM_QUERY, this.options.container || document.body);
-        if (this.options.zIndex) this.overlayElm.style.zIndex = String(this.options.zIndex - 1);
+      if (!this.overlayElement || !this.overlayElement.isConnected) {
+        this.overlayElement = createElement(OVERLAY_ELEMENT_QUERY, this.options.container || document.body);
       }
+      applyZIndex();
       return this._dpContainer;
     },
     get today() {
@@ -1033,15 +1076,14 @@
     },
     get inputValue() {
       var _this$input;
-      var inputValue = clon(((_this$input = this.input) == null ? void 0 : _this$input.value) || "");
+      var inputValue = ((_this$input = this.input) == null ? void 0 : _this$input.value) || "";
       if (isValidValueString(this, inputValue)) {
-        inputValue = getValueObjectFromString(this, inputValue);
-      } else if (isString(inputValue) && isValidDateString(this, inputValue)) {
-        inputValue = getValueObjectFromString(this, inputValue);
-      } else {
-        inputValue = {};
+        return getValueObjectFromString(this, inputValue);
       }
-      return inputValue;
+      if (isValidDateString(this, inputValue)) {
+        return getValueObjectFromString(this, inputValue);
+      }
+      return {};
     },
     get initDate() {
       var _this$input2;
@@ -1051,15 +1093,15 @@
       if (this._initDate) {
         return this._initDate;
       }
-      this._initDate = clon(((_this$input2 = this.input) == null ? void 0 : _this$input2.value) || "");
-      if (!this._initDate) {
-        this._initDate = this.options.initDate || clon(this.today);
-      } else if (isString(this._initDate) && isValidDateString(this, this._initDate)) {
-        this._initDate = getValueObjectFromString(this, this._initDate);
+      var initDate = ((_this$input2 = this.input) == null ? void 0 : _this$input2.value) || "";
+      if (!initDate) {
+        initDate = this.options.initDate || clone(this.today);
+      } else if (isString(initDate) && isValidDateString(this, initDate)) {
+        initDate = getValueObjectFromString(this, initDate);
       } else {
-        this._initDate = clon(this.today);
+        initDate = clone(this.today);
       }
-      this._initDate = normalizeMinMaxDate(this, this._initDate);
+      this._initDate = normalizeMinMaxDate(this, initDate);
       return this._initDate;
     },
     get initTime() {
@@ -1073,15 +1115,15 @@
         minute: date.getMinutes(),
         second: 0
       };
-      this._initTime = clon(((_this$input3 = this.input) == null ? void 0 : _this$input3.value) || "") || this.options.initTime || defaultInit;
-      if (isString(this._initTime)) {
-        if (isValidTimeString(this, this._initTime)) {
-          this._initTime = getValueObjectFromString(this, this._initTime);
+      var initTime = ((_this$input3 = this.input) == null ? void 0 : _this$input3.value) || this.options.initTime || defaultInit;
+      if (isString(initTime)) {
+        if (isValidTimeString(this, initTime)) {
+          initTime = getValueObjectFromString(this, initTime);
         } else {
-          this._initTime = defaultInit;
+          initTime = defaultInit;
         }
       }
-      this._initTime = normalizeMinMaxTime(this, this._initTime);
+      this._initTime = normalizeMinMaxTime(this, initTime);
       return this._initTime;
     },
     _draw: draw,
@@ -1096,11 +1138,11 @@
       this.isTransitioning = true;
       this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
       this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-      if (this.overlayElm) this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
+      if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
       setTimeout(function () {
         _this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
         _this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-        if (_this.overlayElm) _this.overlayElm.style.display = STYLE_DISPLAY_BLOCK;
+        if (_this.overlayElement) _this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
         _this.isShow = true;
         _this.isTransitioning = false;
       }, 300);
@@ -1111,8 +1153,9 @@
     hide: function hide() {
       this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
       this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
-      if (this.overlayElm) this.overlayElm.style.display = STYLE_DISPLAY_HIDDEN;
+      if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_HIDDEN;
       this.isShow = false;
+      removeScrollOnParent();
       document.removeEventListener(EVENT_KEYDOWN_STR, handleEscKey);
     },
     setPosition: function setPosition() {
@@ -1187,7 +1230,7 @@
     setTargetValue: function setTargetValue() {
       var _this2 = this;
       if (!this.options.targetValueInput) return;
-      var targetInputList = document.querySelectorAll(this.options.targetValueInput);
+      var targetInputList = this.options.targetValueInput instanceof HTMLElement ? [this.options.targetValueInput] : document.querySelectorAll(this.options.targetValueInput);
       if (!targetInputList || !targetInputList.length) return;
       targetInputList.forEach(function (targetInput) {
         targetInput.value = getConvertedValue(_this2);
@@ -1232,19 +1275,42 @@
       this._draw();
     },
     _dpContainer: void 0,
-    overlayElm: void 0,
+    overlayElement: void 0,
+    _scrollParent: void 0,
+    _scrollHandler: void 0,
     _today: void 0,
     _initDate: null,
     _initTime: null,
     _value: null,
     isShow: false
   };
+  function applyZIndex() {
+    var _jalaliDatepicker$_dp, _jalaliDatepicker$ove;
+    var zIndex = jalaliDatepicker.options.zIndex;
+    if (typeof zIndex !== "number") return;
+    if ((_jalaliDatepicker$_dp = jalaliDatepicker._dpContainer) != null && _jalaliDatepicker$_dp.isConnected) {
+      jalaliDatepicker._dpContainer.style.zIndex = String(zIndex);
+    }
+    if ((_jalaliDatepicker$ove = jalaliDatepicker.overlayElement) != null && _jalaliDatepicker$ove.isConnected) {
+      jalaliDatepicker.overlayElement.style.zIndex = String(zIndex - 1);
+    }
+  }
+  function onScrollHandler() {
+    jalaliDatepicker.setPosition();
+  }
   function setScrollOnParent(input) {
-    _getScrollParent(input).addEventListener("scroll", function () {
-      jalaliDatepicker.setPosition();
-    }, {
+    removeScrollOnParent();
+    jalaliDatepicker._scrollParent = _getScrollParent(input);
+    jalaliDatepicker._scrollHandler = onScrollHandler;
+    jalaliDatepicker._scrollParent.addEventListener("scroll", jalaliDatepicker._scrollHandler, {
       passive: true
     });
+  }
+  function removeScrollOnParent() {
+    if (!jalaliDatepicker._scrollParent || !jalaliDatepicker._scrollHandler) return;
+    jalaliDatepicker._scrollParent.removeEventListener("scroll", jalaliDatepicker._scrollHandler);
+    jalaliDatepicker._scrollParent = void 0;
+    jalaliDatepicker._scrollHandler = void 0;
   }
   function setReadOnly(input, options) {
     if (options.autoReadOnlyInput && !input.readOnly) {
@@ -1260,21 +1326,30 @@
     window.removeEventListener("resize", onResizeHandler);
     window.addEventListener("resize", onResizeHandler);
   }
+  var onInputFocusCallback = function onInputFocusCallback(e) {
+    if (!jalaliDatepicker.options.autoShow) {
+      return;
+    }
+    if (e.target && e.target.matches(jalaliDatepicker.options.selector)) {
+      jalaliDatepicker.show(e.target);
+    }
+  };
   function addEventListenerOnInputs(querySelector) {
+    document.body.removeEventListener(EVENT_FOCUS_STR, onInputFocusCallback);
     if (!querySelector) return;
-    document.body.addEventListener(EVENT_FOCUS_STR, function (e) {
-      if (e.target && e.target.matches(querySelector)) {
-        jalaliDatepicker.show(e.target);
-      }
-    });
+    document.body.addEventListener(EVENT_FOCUS_STR, onInputFocusCallback);
   }
+  var onBodyClickCallback = function onBodyClickCallback(e) {
+    var clickInsideDatePicker = containsDom(jalaliDatepicker.dpContainer, e);
+    var clickOnInput = getEventTarget(e) === jalaliDatepicker.input;
+    if (!jalaliDatepicker.options.autoHide || !jalaliDatepicker.isShow || clickInsideDatePicker || clickOnInput) {
+      return;
+    }
+    jalaliDatepicker.hide();
+  };
   function addEventListenerOnBody() {
-    document.body.addEventListener("click", function (e) {
-      if (!jalaliDatepicker.isShow || containsDom(jalaliDatepicker.dpContainer, e) || getEventTarget(e) === jalaliDatepicker.input) {
-        return;
-      }
-      jalaliDatepicker.hide();
-    });
+    document.body.removeEventListener("click", onBodyClickCallback);
+    document.body.addEventListener("click", onBodyClickCallback);
   }
   function handleEscKey(event) {
     if (event.key === "Escape") {
