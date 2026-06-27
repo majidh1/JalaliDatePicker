@@ -181,6 +181,16 @@
   var escapeRegex = function escapeRegex(value) {
     return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
   };
+  var getDateStringLength = function getDateStringLength(jdp) {
+    return 8 + jdp.options.separatorChars.date.length * 2;
+  };
+  var hasValidPartLengths = function hasValidPartLengths(parts, lengths) {
+    if (parts.length !== lengths.length) return false;
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].length !== lengths[i]) return false;
+    }
+    return true;
+  };
   var getFallbackDate = function getFallbackDate(jdp) {
     if (jdp._initDate) return jdp._initDate;
     if (jdp.options.initDate && typeof jdp.options.initDate === "object") return jdp.options.initDate;
@@ -292,30 +302,22 @@
     return months;
   };
   var isValidDate = function isValidDate(jdp, year, month, day) {
-    var date = getDateValueStringFromValueObject(jdp, {
+    var date = getDateNumber({
       year: year,
       month: month,
       day: day
     });
-    var maxDateStr = date;
-    var minDateStr = date;
+    var maxDateNumber = date;
+    var minDateNumber = date;
     var maxDate = jdp.options.maxDate;
     var minDate = jdp.options.minDate;
     if (!isNotObjectOrIsEmptyObject(minDate)) {
-      minDateStr = getDateValueStringFromValueObject(jdp, {
-        year: minDate.year,
-        month: minDate.month,
-        day: minDate.day
-      });
+      minDateNumber = getDateNumber(minDate);
     }
     if (!isNotObjectOrIsEmptyObject(maxDate)) {
-      maxDateStr = getDateValueStringFromValueObject(jdp, {
-        year: maxDate.year,
-        month: maxDate.month,
-        day: maxDate.day
-      });
+      maxDateNumber = getDateNumber(maxDate);
     }
-    return date <= maxDateStr && date >= minDateStr;
+    return date <= maxDateNumber && date >= minDateNumber;
   };
   var isValidDateToday = function isValidDateToday(jdp) {
     return isValidDate(jdp, jdp.today.year, jdp.today.month, jdp.today.day);
@@ -333,18 +335,31 @@
     var regex = new RegExp("^" + datePattern + (datePattern && timePattern ? betweenSeparator : "") + timePattern + "$");
     return regex.test(str);
   };
-  var getValueObjectFromString = function getValueObjectFromString(jdp, str) {
+  var getDatePartsFromString = function getDatePartsFromString(jdp, str) {
+    if (!jdp.options.date) return [];
+    return str.substr(0, getDateStringLength(jdp)).split(jdp.options.separatorChars.date);
+  };
+  var getTimePartsFromString = function getTimePartsFromString(jdp, str) {
     var sepOpt = jdp.options.separatorChars;
-    var sep = str.split(sepOpt.between);
-    var date = jdp.options.date ? sep[0].split(sepOpt.date) : [];
-    var time = jdp.options.date ? jdp.options.time && sep[1] ? sep[1].split(sepOpt.time) : [] : sep[0].split(sepOpt.time);
+    if (jdp.options.date) {
+      var timeStart = getDateStringLength(jdp) + sepOpt.between.length;
+      return jdp.options.time && str.length > timeStart ? str.substr(timeStart).split(sepOpt.time) : [];
+    }
+    return str.split(sepOpt.time);
+  };
+  var isValidTimeParts = function isValidTimeParts(parts, hasSecond) {
+    return hasValidPartLengths(parts, hasSecond ? [2, 2, 2] : [2, 2]);
+  };
+  var getValueObjectFromString = function getValueObjectFromString(jdp, str) {
+    var date = getDatePartsFromString(jdp, str);
+    var time = getTimePartsFromString(jdp, str);
     return {
-      year: parseInt(date[0]),
-      month: parseInt(date[1]),
-      day: parseInt(date[2]),
-      hour: parseInt(time[0]) || 0,
-      minute: parseInt(time[1]) || 0,
-      second: parseInt(time[2]) || 0
+      year: parseInt(date[0], 10),
+      month: parseInt(date[1], 10),
+      day: parseInt(date[2], 10),
+      hour: parseInt(time[0], 10) || 0,
+      minute: parseInt(time[1], 10) || 0,
+      second: parseInt(time[2], 10) || 0
     };
   };
   var getDateValueStringFromValueObjectWithSep = function getDateValueStringFromValueObjectWithSep(jdp, obj, forTarget) {
@@ -358,9 +373,6 @@
     var betweenStr = dateStr && timeStr ? between : "";
     return dateStr + betweenStr + timeStr;
   };
-  var getDateValueStringFromValueObject = function getDateValueStringFromValueObject(jdp, obj) {
-    return getDateValueStringFromValueObjectWithSep(jdp, obj);
-  };
   var getValueStringFromValueObject = function getValueStringFromValueObject(jdp, obj) {
     return getDateValueStringFromValueObjectWithSep(jdp, obj);
   };
@@ -368,17 +380,13 @@
     if (!str) {
       return false;
     }
-    var date = str.substr(0, 10).split(jdp.options.separatorChars.date);
-    return date.length === 3 && date[0].length === 4 && date[1].length === 2 && date[2].length === 2;
+    return hasValidPartLengths(getDatePartsFromString(jdp, str), [4, 2, 2]);
   };
   var isValidTimeString = function isValidTimeString(jdp, str) {
     if (!str) {
       return false;
     }
-    var time = str.substr(jdp.options.date ? 11 : 0, 8).split(jdp.options.separatorChars.time);
-    return time.length === (jdp.options.hasSecond ? 3 : 2) && !time.find(function (t) {
-      return t.toString().length !== 2;
-    });
+    return isValidTimeParts(getTimePartsFromString(jdp, str), jdp.options.hasSecond);
   };
   var getConvertedValue = function getConvertedValue(jdp) {
     var _jdp$input;
@@ -550,46 +558,55 @@
   var getSelectedTimePart = function getSelectedTimePart(event) {
     return Number(event.target.value);
   };
+  var getMinTime = function getMinTime(jdp) {
+    return _extend({
+      hour: 0,
+      minute: 0,
+      second: 0
+    }, jdp.options.minTime || {});
+  };
+  var getMaxTime = function getMaxTime(jdp) {
+    return _extend({
+      hour: 23,
+      minute: 59,
+      second: 59
+    }, jdp.options.maxTime || {});
+  };
+  var getMinuteItems = function getMinuteItems(jdp, minTime, maxTime) {
+    if (minTime.hour === maxTime.hour) {
+      return getArrayNumbersStringTo(minTime.minute, maxTime.minute, jdp.options.minuteIncrement);
+    }
+    if (jdp.initTime.hour === minTime.hour) {
+      return getArrayNumbersStringTo(minTime.minute, 59, jdp.options.minuteIncrement);
+    }
+    if (jdp.initTime.hour === maxTime.hour) {
+      return getArrayNumbersStringTo(0, maxTime.minute, jdp.options.minuteIncrement);
+    }
+    return getArrayNumbersStringTo(0, 59, jdp.options.minuteIncrement);
+  };
+  var getSecondItems = function getSecondItems(jdp, minTime, maxTime) {
+    if (minTime.hour === maxTime.hour && minTime.minute === maxTime.minute) {
+      return getArrayNumbersStringTo(minTime.second, maxTime.second);
+    }
+    if (jdp.initTime.hour === minTime.hour && jdp.initTime.minute === minTime.minute) {
+      return getArrayNumbersStringTo(minTime.second, 59);
+    }
+    if (jdp.initTime.hour === maxTime.hour && jdp.initTime.minute === maxTime.minute) {
+      return getArrayNumbersStringTo(0, maxTime.second);
+    }
+    return getArrayNumbersStringTo(0, 59);
+  };
   var timeDropdownRender = function timeDropdownRender(jdp, timePickerContainer, type) {
     var getItemForType = function getItemForType() {
-      var minTime = _extend({
-        hour: 0,
-        minute: 0,
-        second: 0
-      }, jdp.options.minTime || {});
-      var maxTime = _extend({
-        hour: 23,
-        minute: 59,
-        second: 59
-      }, jdp.options.maxTime || {});
+      var minTime = getMinTime(jdp);
+      var maxTime = getMaxTime(jdp);
       if (type === "hour") {
         return getArrayNumbersStringTo(minTime.hour, maxTime.hour, jdp.options.hourIncrement);
       }
       if (type === "minute") {
-        if (minTime.hour === maxTime.hour) {
-          return getArrayNumbersStringTo(minTime.minute, maxTime.minute, jdp.options.minuteIncrement);
-        }
-        if (jdp.initTime.hour === minTime.hour) {
-          return getArrayNumbersStringTo(minTime.minute, 59, jdp.options.minuteIncrement);
-        }
-        if (jdp.initTime.hour === maxTime.hour) {
-          return getArrayNumbersStringTo(0, maxTime.minute, jdp.options.minuteIncrement);
-        }
-        return getArrayNumbersStringTo(0, 59, jdp.options.minuteIncrement);
+        return getMinuteItems(jdp, minTime, maxTime);
       }
-      if (type === "second") {
-        if (minTime.hour === maxTime.hour && minTime.minute === maxTime.minute) {
-          return getArrayNumbersStringTo(minTime.second, maxTime.second);
-        }
-        if (jdp.initTime.hour === minTime.hour && jdp.initTime.minute === minTime.minute) {
-          return getArrayNumbersStringTo(minTime.second, 59);
-        }
-        if (jdp.initTime.hour === maxTime.hour && jdp.initTime.minute === maxTime.minute) {
-          return getArrayNumbersStringTo(0, maxTime.second);
-        }
-        return getArrayNumbersStringTo(0, 59);
-      }
-      return getArrayNumbersStringTo(minTime.second, maxTime.second);
+      return getSecondItems(jdp, minTime, maxTime);
     };
     var container = createElement(TIME_DROPDOWN_PARENT_ELEMENT_QUERY, timePickerContainer);
     var dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, function (event) {
@@ -622,28 +639,24 @@
     var _jdp$options$maxDate2, _jdp$options$maxDate3, _jdp$options$minDate2, _jdp$options$minDate3;
     var isPlus = mode === "PLUS";
     var className = "";
-    var event = null;
     var elementQuery = isPlus ? PLUS_ICON_ELEMENT_QUERY : MINUS_ICON_ELEMENT_QUERY;
     var isMaxYear = isPlus && ((_jdp$options$maxDate2 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate2.year) === jdp.initDate.year;
     var isMaxMonth = isPlus && ((_jdp$options$maxDate3 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate3.month) === jdp.initDate.month;
     var isMinYear = !isPlus && ((_jdp$options$minDate2 = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate2.year) === jdp.initDate.year;
     var isMinMonth = !isPlus && ((_jdp$options$minDate3 = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate3.month) === jdp.initDate.month;
     var html = isPlus ? jdp.options.plusHtml : jdp.options.minusHtml;
+    var event = function event() {
+      if (isYear) {
+        if (isPlus) jdp.increaseYear();else jdp.decreaseYear();
+      } else {
+        if (isPlus) jdp.increaseMonth();else jdp.decreaseMonth();
+      }
+    };
     if (isYear) {
-      if (isPlus) event = function event() {
-        jdp.increaseYear();
-      };else event = function event() {
-        jdp.decreaseYear();
-      };
       if (isMaxYear || isMinYear) {
         className = DISABLE_CLASS_NAME;
       }
     } else {
-      if (isPlus) event = function event() {
-        jdp.increaseMonth();
-      };else event = function event() {
-        jdp.decreaseMonth();
-      };
       if (isMaxYear && isMaxMonth || isMinYear && isMinMonth) {
         className = DISABLE_CLASS_NAME;
       }
@@ -853,94 +866,82 @@
     targetTime: ":"
   };
   var TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
+  var ATTR_OPTION_NAMES = {
+    initDate: INIT_DATE_ATTR_NAME,
+    minDate: MIN_DATE_ATTR_NAME,
+    maxDate: MAX_DATE_ATTR_NAME,
+    minTime: MIN_TIME_ATTR_NAME,
+    maxTime: MAX_TIME_ATTR_NAME,
+    targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
+    targetValueType: TARGET_VALUE_TYPE_ATTR_NAME
+  };
+  var TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
   var DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
   var DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
-  var getTimeValueObjectFromTimeString = function getTimeValueObjectFromTimeString(timeString, separator, hasSecond) {
-    var parts = timeString.split(separator);
-    var expectedLength = hasSecond ? 3 : 2;
-    if (parts.length !== expectedLength || parts.some(function (part) {
-      return part.length !== 2;
-    })) {
+  var getTimeValueObjectFromParts = function getTimeValueObjectFromParts(parts, hasSecond) {
+    if (!isValidTimeParts(parts, hasSecond)) {
       return null;
     }
     return {
-      hour: parseInt(parts[0]),
-      minute: parseInt(parts[1]),
-      second: parseInt(parts[2]) || 0
+      hour: parseInt(parts[0], 10),
+      minute: parseInt(parts[1], 10),
+      second: parseInt(parts[2], 10) || 0
     };
+  };
+  var getTimeValueObjectFromTimeOnlyString = function getTimeValueObjectFromTimeOnlyString(jdp, timeString) {
+    return getTimeValueObjectFromParts(timeString.split(jdp.options.separatorChars.time), jdp.options.hasSecond);
   };
   var normalizeOptions = function normalizeOptions(externalOptions, internalOptions, jdp) {
     var setDefaultValue = function setDefaultValue(propertyName, defaultValue) {
       var _ref;
       var extValue = externalOptions[propertyName];
       var intValue = internalOptions[propertyName];
-      var externalValue = TODAY_DATE_OPTION_NAMES.includes(propertyName) && extValue === MIN_MAX_TODAY_SETTING ? internalOptions.today : extValue;
+      var externalValue = TODAY_DATE_OPTION_NAMES.indexOf(propertyName) > -1 && extValue === MIN_MAX_TODAY_SETTING ? internalOptions.today : extValue;
       var descriptor = Object.getOwnPropertyDescriptor(internalOptions, propertyName);
       if (descriptor != null && descriptor.get && !descriptor.set) {
         delete internalOptions[propertyName];
       }
       internalOptions[propertyName] = (_ref = externalValue != null ? externalValue : intValue) != null ? _ref : defaultValue;
     };
-    function setDefinePropertyFromAttr(propertyName) {
-      var getDefaultFromAttr = function getDefaultFromAttr(attrName, isTime) {
-        var _jdp$input3;
-        var attrVal = (_jdp$input3 = jdp.input) == null ? void 0 : _jdp$input3.getAttribute(attrName);
-        if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clone(jdp.today);
-        if (!isString(attrVal)) return {};
-        try {
-          attrVal = document.querySelector(attrVal).value;
-        } catch (_unused) {}
-        if (isTime) {
-          if (isValidTimeString(jdp, attrVal)) {
-            attrVal = getValueObjectFromString(jdp, attrVal);
-          } else {
-            attrVal = getTimeValueObjectFromTimeString(attrVal, jdp.options.separatorChars.time, jdp.options.hasSecond) || {};
-          }
-        } else {
-          if (isValidDateString(jdp, attrVal)) {
-            attrVal = getValueObjectFromString(jdp, attrVal);
-          } else {
-            attrVal = {};
-          }
-        }
-        return attrVal;
+    var getDateOrTimeDefaultFromAttr = function getDateOrTimeDefaultFromAttr(attrName, isTime) {
+      var _jdp$input3;
+      var attrVal = (_jdp$input3 = jdp.input) == null ? void 0 : _jdp$input3.getAttribute(attrName);
+      if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clone(jdp.today);
+      if (!isString(attrVal)) return {};
+      try {
+        attrVal = document.querySelector(attrVal).value;
+      } catch (_unused) {}
+      if (isTime) {
+        if (isValidTimeString(jdp, attrVal)) return getValueObjectFromString(jdp, attrVal);
+        return getTimeValueObjectFromTimeOnlyString(jdp, attrVal) || {};
+      }
+      if (isValidDateString(jdp, attrVal)) return getValueObjectFromString(jdp, attrVal);
+      return {};
+    };
+    var getAttrGetter = function getAttrGetter(propertyName) {
+      if (propertyName === "targetValueInput") return function () {
+        var _jdp$input4;
+        return (_jdp$input4 = jdp.input) == null ? void 0 : _jdp$input4.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
       };
+      if (propertyName === "targetValueType") return function () {
+        var _jdp$input5;
+        return (_jdp$input5 = jdp.input) == null ? void 0 : _jdp$input5.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
+      };
+      var attrName = ATTR_OPTION_NAMES[propertyName];
+      var isTime = TIME_ATTR_OPTION_NAMES.indexOf(propertyName) > -1;
+      return function () {
+        return getDateOrTimeDefaultFromAttr(attrName, isTime);
+      };
+    };
+    function setDefinePropertyFromAttr(propertyName) {
       if (externalOptions[propertyName] === OPTION_ATTR_SETTING || propertyName === "date" || propertyName === "time") {
         if (propertyName !== "date" && propertyName !== "time") {
           delete internalOptions[propertyName];
         }
-        var getterFunc = function getterFunc() {};
-        if (propertyName === "initDate") {
-          getterFunc = function getterFunc() {
-            return getDefaultFromAttr(INIT_DATE_ATTR_NAME);
-          };
-        } else if (propertyName === "minDate") {
-          getterFunc = function getterFunc() {
-            return getDefaultFromAttr(MIN_DATE_ATTR_NAME);
-          };
-        } else if (propertyName === "maxDate") {
-          getterFunc = function getterFunc() {
-            return getDefaultFromAttr(MAX_DATE_ATTR_NAME);
-          };
-        } else if (propertyName === "minTime") {
-          getterFunc = function getterFunc() {
-            return getDefaultFromAttr(MIN_TIME_ATTR_NAME, true);
-          };
-        } else if (propertyName === "maxTime") {
-          getterFunc = function getterFunc() {
-            return getDefaultFromAttr(MAX_TIME_ATTR_NAME, true);
-          };
-        } else if (propertyName === "targetValueInput") {
-          getterFunc = function getterFunc() {
-            var _jdp$input4;
-            return (_jdp$input4 = jdp.input) == null ? void 0 : _jdp$input4.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
-          };
-        } else if (propertyName === "targetValueType") {
-          getterFunc = function getterFunc() {
-            var _jdp$input5;
-            return (_jdp$input5 = jdp.input) == null ? void 0 : _jdp$input5.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
-          };
-        } else if (propertyName === "date") {
+        var getterFunc = function getterFunc() {
+          return {};
+        };
+        if (propertyName === "date") {
           var _externalOptions$date;
           var _date = (_externalOptions$date = externalOptions.date) != null ? _externalOptions$date : internalOptions.date;
           delete internalOptions[propertyName];
@@ -956,6 +957,8 @@
             var _jdp$input8, _jdp$input9;
             return !((_jdp$input8 = jdp.input) != null && _jdp$input8.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input9 = jdp.input) == null ? void 0 : _jdp$input9.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
           };
+        } else {
+          getterFunc = getAttrGetter(propertyName);
         }
         window.Object.defineProperty(internalOptions, propertyName, {
           get: getterFunc,
@@ -1226,13 +1229,13 @@
       this.setTargetValue();
     },
     setTargetValue: function setTargetValue() {
-      var _this2 = this;
       if (!this.options.targetValueInput) return;
       var targetInputList = this.options.targetValueInput instanceof HTMLElement ? [this.options.targetValueInput] : document.querySelectorAll(this.options.targetValueInput);
       if (!targetInputList || !targetInputList.length) return;
-      targetInputList.forEach(function (targetInput) {
-        targetInput.value = getConvertedValue(_this2);
-      });
+      for (var i = 0; i < targetInputList.length; i++) {
+        var targetInput = targetInputList[i];
+        targetInput.value = getConvertedValue(this);
+      }
     },
     increaseMonth: function increaseMonth() {
       if (!this._initDate) return;
@@ -1343,9 +1346,7 @@
     removeScrollOnParent();
     jalaliDatepicker._scrollParent = _getScrollParent(input);
     jalaliDatepicker._scrollHandler = onScrollHandler;
-    jalaliDatepicker._scrollParent.addEventListener("scroll", jalaliDatepicker._scrollHandler, {
-      passive: true
-    });
+    jalaliDatepicker._scrollParent.addEventListener("scroll", jalaliDatepicker._scrollHandler, false);
   }
   function removeScrollOnParent() {
     if (!jalaliDatepicker._scrollParent || !jalaliDatepicker._scrollHandler) return;

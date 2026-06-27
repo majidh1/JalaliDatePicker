@@ -1,12 +1,12 @@
 @use "sass:color";
 @use "sass:math";
 
-$daySize: 39px;
+$daySize: var(--jdp-day-size);
 $radius: 4px;
 $container-padding: 0.3rem;
-$padding: math.div($daySize, 16);
-$dayMargin: 2px;
-$calendarWidth: ($daySize * 7 + $dayMargin * 14 + $padding * 2 + 2);
+$daySize-all: calc($daySize * 7);
+$rowPadding: calc($container-padding * 2);
+$calendarWidth: calc($daySize-all + $rowPadding);
 $controls-parent-width: 45%;
 $controls-btn-size: 1.5rem;
 $controls-btn-padding: math.div($controls-btn-size, 6);
@@ -29,6 +29,7 @@ jdp-overlay {
 }
 
 jdp-container {
+	--jdp-day-size: 43px;
 	--jdp-color-0: #fff;
 	--jdp-color-1: #f0f0f0;
 	--jdp-color-2: #e0e0e0;
@@ -45,7 +46,12 @@ jdp-container {
 	display: none;
 	direction: rtl;
 	padding: 0.5rem 0;
-	box-shadow: 1px 0 0 var(--jdp-color-2), -1px 0 0 var(--jdp-color-2), 0 1px 0 var(--jdp-color-2), 0 -1px 0 var(--jdp-color-2), 0 3px 13px var(--jdp-color-2);
+	box-shadow:
+		1px 0 0 var(--jdp-color-2),
+		-1px 0 0 var(--jdp-color-2),
+		0 1px 0 var(--jdp-color-2),
+		0 -1px 0 var(--jdp-color-2),
+		0 3px 13px var(--jdp-color-2);
 	border-radius: $radius;
 	overflow: hidden;
 	touch-action: manipulation;
@@ -203,8 +209,8 @@ jdp-container {
 			font-weight: 400;
 			width: 14.2857143%;
 			flex-basis: 14.2857143%;
-			height: $daySize - 8;
-			line-height: $daySize - 8;
+			height: calc($daySize - 11px);
+			line-height: calc($daySize - 11px);
 			margin: 2px 0;
 			display: inline-block;
 			position: relative;

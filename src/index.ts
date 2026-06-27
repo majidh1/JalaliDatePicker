@@ -195,9 +195,10 @@ const jalaliDatepicker: JalaliDatePicker = {
 		const targetInputList =
 			this.options.targetValueInput instanceof HTMLElement ? [this.options.targetValueInput] : document.querySelectorAll(this.options.targetValueInput as string);
 		if (!targetInputList || !targetInputList.length) return;
-		targetInputList.forEach((targetInput: Element | HTMLElement) => {
+		for (let i = 0; i < targetInputList.length; i++) {
+			const targetInput = targetInputList[i];
 			(targetInput as HTMLInputElement).value = getConvertedValue(this);
-		});
+		}
 	},
 	increaseMonth() {
 		if (!this._initDate) return;
@@ -315,9 +316,7 @@ function setScrollOnParent(input: HTMLInputElement) {
 	removeScrollOnParent();
 	jalaliDatepicker._scrollParent = getScrollParent(input);
 	jalaliDatepicker._scrollHandler = onScrollHandler;
-	jalaliDatepicker._scrollParent.addEventListener("scroll", jalaliDatepicker._scrollHandler, {
-		passive: true
-	});
+	jalaliDatepicker._scrollParent.addEventListener("scroll", jalaliDatepicker._scrollHandler, false);
 }
 
 function removeScrollOnParent() {

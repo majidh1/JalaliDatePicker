@@ -36,35 +36,27 @@ const getLastWeekClassIfNecessary = (dayOfWeek: number) => (dayOfWeek === 6 ? `.
 const createElementPlusMinus = (jdp: JalaliDatePicker, container: string | HTMLElement, isYear: boolean, mode: "PLUS" | "MINUS") => {
 	const isPlus = mode === "PLUS";
 	let className = "";
-	let event = null;
 	const elementQuery = isPlus ? PLUS_ICON_ELEMENT_QUERY : MINUS_ICON_ELEMENT_QUERY;
 	const isMaxYear = isPlus && jdp.options.maxDate?.year === jdp.initDate.year;
 	const isMaxMonth = isPlus && jdp.options.maxDate?.month === jdp.initDate.month;
 	const isMinYear = !isPlus && jdp.options.minDate?.year === jdp.initDate.year;
 	const isMinMonth = !isPlus && jdp.options.minDate?.month === jdp.initDate.month;
 	const html = isPlus ? jdp.options.plusHtml : jdp.options.minusHtml;
+	const event = () => {
+		if (isYear) {
+			if (isPlus) jdp.increaseYear();
+			else jdp.decreaseYear();
+		} else {
+			if (isPlus) jdp.increaseMonth();
+			else jdp.decreaseMonth();
+		}
+	};
 
 	if (isYear) {
-		if (isPlus)
-			event = () => {
-				jdp.increaseYear();
-			};
-		else
-			event = () => {
-				jdp.decreaseYear();
-			};
 		if (isMaxYear || isMinYear) {
 			className = DISABLE_CLASS_NAME;
 		}
 	} else {
-		if (isPlus)
-			event = () => {
-				jdp.increaseMonth();
-			};
-		else
-			event = () => {
-				jdp.decreaseMonth();
-			};
 		if ((isMaxYear && isMaxMonth) || (isMinYear && isMinMonth)) {
 			className = DISABLE_CLASS_NAME;
 		}

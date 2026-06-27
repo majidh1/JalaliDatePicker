@@ -17,6 +17,7 @@ jdp-overlay {
 }
 
 jdp-container {
+  --jdp-day-size: 43px;
   --jdp-color-0: #fff;
   --jdp-color-1: #f0f0f0;
   --jdp-color-2: #e0e0e0;
@@ -26,8 +27,8 @@ jdp-container {
   --jdp-primary: #569ff7;
   --jdp-red: #f44336;
   position: absolute;
-  max-width: 307.875px;
-  min-width: 307.875px;
+  max-width: calc(var(--jdp-day-size) * 7 + 0.6rem);
+  min-width: calc(var(--jdp-day-size) * 7 + 0.6rem);
   background: var(--jdp-color-0);
   display: none;
   direction: rtl;
@@ -185,8 +186,8 @@ jdp-container .jdp-day, jdp-container .jdp-day-name {
   font-weight: 400;
   width: 14.2857143%;
   flex-basis: 14.2857143%;
-  height: 31px;
-  line-height: 31px;
+  height: calc(var(--jdp-day-size) - 11px);
+  line-height: calc(var(--jdp-day-size) - 11px);
   margin: 2px 0;
   display: inline-block;
   position: relative;

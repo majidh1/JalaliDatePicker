@@ -12,7 +12,7 @@ import {
 	TARGET_VALUE_TYPE_ATTR_NAME
 } from "../constants";
 import { DateObject, JalaliDatePickerOptions, TimeObject, SeparatorChars, JalaliDatePicker, ValueObject, DayOptions } from "./types";
-import { getValueObjectFromString, isValidDateString, isValidTimeString } from "../utils";
+import { getValueObjectFromString, isValidDateString, isValidTimeParts, isValidTimeString } from "../utils";
 import { jalaliToday } from "../utils/jalali";
 import { clone, isNotObjectOrIsEmptyObject, isString, isFunction } from "../utils/object";
 
@@ -28,23 +28,34 @@ const DEFAULT_SEPARATOR_CHARS = {
 	targetTime: ":"
 };
 const TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
+const ATTR_OPTION_NAMES = {
+	initDate: INIT_DATE_ATTR_NAME,
+	minDate: MIN_DATE_ATTR_NAME,
+	maxDate: MAX_DATE_ATTR_NAME,
+	minTime: MIN_TIME_ATTR_NAME,
+	maxTime: MAX_TIME_ATTR_NAME,
+	targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
+	targetValueType: TARGET_VALUE_TYPE_ATTR_NAME
+};
+const TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
 // eslint-disable-next-line @typescript-eslint/quotes, quotes
 const DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
 // eslint-disable-next-line @typescript-eslint/quotes, quotes
 const DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
 
-const getTimeValueObjectFromTimeString = (timeString: string, separator: string, hasSecond: boolean): ValueObject | null => {
-	const parts = timeString.split(separator);
-	const expectedLength = hasSecond ? 3 : 2;
-	if (parts.length !== expectedLength || parts.some((part) => part.length !== 2)) {
+const getTimeValueObjectFromParts = (parts: string[], hasSecond: boolean): ValueObject | null => {
+	if (!isValidTimeParts(parts, hasSecond)) {
 		return null;
 	}
 	return {
-		hour: parseInt(parts[0]),
-		minute: parseInt(parts[1]),
-		second: parseInt(parts[2]) || 0
+		hour: parseInt(parts[0], 10),
+		minute: parseInt(parts[1], 10),
+		second: parseInt(parts[2], 10) || 0
 	};
 };
+
+const getTimeValueObjectFromTimeOnlyString = (jdp: JalaliDatePicker, timeString: string) =>
+	getTimeValueObjectFromParts(timeString.split(jdp.options.separatorChars.time), jdp.options.hasSecond);
 
 const normalizeOptions = (
 	externalOptions: Partial<JalaliDatePickerOptions>,
@@ -54,12 +65,44 @@ const normalizeOptions = (
 	const setDefaultValue = <K extends keyof JalaliDatePickerOptions>(propertyName: K, defaultValue: NonNullable<JalaliDatePickerInternalOptions[K]>) => {
 		const extValue = externalOptions[propertyName];
 		const intValue = internalOptions[propertyName];
-		const externalValue = TODAY_DATE_OPTION_NAMES.includes(propertyName) && extValue === MIN_MAX_TODAY_SETTING ? internalOptions.today : extValue;
+		const externalValue = TODAY_DATE_OPTION_NAMES.indexOf(propertyName as string) > -1 && extValue === MIN_MAX_TODAY_SETTING ? internalOptions.today : extValue;
 		const descriptor = Object.getOwnPropertyDescriptor(internalOptions, propertyName);
 		if (descriptor?.get && !descriptor.set) {
 			delete internalOptions[propertyName];
 		}
 		internalOptions[propertyName] = (externalValue ?? intValue ?? defaultValue) as JalaliDatePickerInternalOptions[K];
+	};
+	const getDateOrTimeDefaultFromAttr = (attrName: string, isTime?: boolean): ValueObject | {} => {
+		let attrVal: ValueObject | string | null | undefined = jdp.input?.getAttribute(attrName);
+
+		if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clone(jdp.today);
+		if (!isString(attrVal)) return {};
+
+		try {
+			attrVal = (document.querySelector(attrVal) as HTMLInputElement).value;
+		} catch {
+			//
+		}
+
+		if (isTime) {
+			if (isValidTimeString(jdp, attrVal)) return getValueObjectFromString(jdp, attrVal);
+			return getTimeValueObjectFromTimeOnlyString(jdp, attrVal) || {};
+		}
+
+		if (isValidDateString(jdp, attrVal)) return getValueObjectFromString(jdp, attrVal);
+		return {};
+	};
+	const getAttrGetter = (
+		propertyName: keyof Pick<
+			JalaliDatePickerOptions,
+			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType"
+		>
+	) => {
+		if (propertyName === "targetValueInput") return () => jdp.input?.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
+		if (propertyName === "targetValueType") return () => jdp.input?.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
+		const attrName = ATTR_OPTION_NAMES[propertyName as keyof typeof ATTR_OPTION_NAMES];
+		const isTime = TIME_ATTR_OPTION_NAMES.indexOf(propertyName) > -1;
+		return () => getDateOrTimeDefaultFromAttr(attrName, isTime);
 	};
 	function setDefinePropertyFromAttr(
 		propertyName: keyof Pick<
@@ -67,58 +110,14 @@ const normalizeOptions = (
 			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType"
 		>
 	) {
-		const getDefaultFromAttr = (attrName: string, isTime?: boolean): any => {
-			let attrVal: ValueObject | string | null | undefined = jdp.input?.getAttribute(attrName);
-
-			if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clone(jdp.today);
-
-			if (!isString(attrVal)) return {};
-
-			try {
-				attrVal = (document.querySelector(attrVal) as HTMLInputElement).value;
-			} catch {
-				//
-			}
-
-			if (isTime) {
-				if (isValidTimeString(jdp, attrVal)) {
-					attrVal = getValueObjectFromString(jdp, attrVal);
-				} else {
-					attrVal = getTimeValueObjectFromTimeString(attrVal, jdp.options.separatorChars.time, jdp.options.hasSecond) || {};
-				}
-			} else {
-				if (isValidDateString(jdp, attrVal)) {
-					attrVal = getValueObjectFromString(jdp, attrVal);
-				} else {
-					attrVal = {};
-				}
-			}
-			return attrVal;
-		};
 		if (externalOptions[propertyName] === OPTION_ATTR_SETTING || propertyName === "date" || propertyName === "time") {
 			if (propertyName !== "date" && propertyName !== "time") {
 				delete internalOptions[propertyName];
 			}
 
-			let getterFunc = () => {
-				//
-			};
+			let getterFunc: () => unknown = () => ({});
 
-			if (propertyName === "initDate") {
-				getterFunc = () => getDefaultFromAttr(INIT_DATE_ATTR_NAME);
-			} else if (propertyName === "minDate") {
-				getterFunc = () => getDefaultFromAttr(MIN_DATE_ATTR_NAME);
-			} else if (propertyName === "maxDate") {
-				getterFunc = () => getDefaultFromAttr(MAX_DATE_ATTR_NAME);
-			} else if (propertyName === "minTime") {
-				getterFunc = () => getDefaultFromAttr(MIN_TIME_ATTR_NAME, true);
-			} else if (propertyName === "maxTime") {
-				getterFunc = () => getDefaultFromAttr(MAX_TIME_ATTR_NAME, true);
-			} else if (propertyName === "targetValueInput") {
-				getterFunc = () => jdp.input?.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
-			} else if (propertyName === "targetValueType") {
-				getterFunc = () => jdp.input?.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
-			} else if (propertyName === "date") {
+			if (propertyName === "date") {
 				const _date = externalOptions.date ?? internalOptions.date;
 				delete (internalOptions as Partial<JalaliDatePickerInternalOptions>)[propertyName];
 
@@ -130,6 +129,8 @@ const normalizeOptions = (
 
 				getterFunc = () =>
 					!jdp.input?.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME) && (_time || jdp.input?.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME));
+			} else {
+				getterFunc = getAttrGetter(propertyName);
 			}
 
 			window.Object.defineProperty(internalOptions, propertyName, {

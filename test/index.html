@@ -16,6 +16,28 @@
 			body {
 				font-family: vazir;
 			}
+
+			body.jdp-dark-theme jdp-container {
+				--jdp-color-0: #1f242d;
+				--jdp-color-1: #2a303b;
+				--jdp-color-2: #3a4250;
+				--jdp-color-3: #596477;
+				--jdp-color-4: #aab4c4;
+				--jdp-color-5: #f4f7fb;
+				--jdp-primary: #67b7ff;
+				--jdp-red: #ff6b64;
+			}
+
+			body.jdp-dark-theme jdp-container {
+				box-shadow: 1px 0 0 var(--jdp-color-2), -1px 0 0 var(--jdp-color-2), 0 1px 0 var(--jdp-color-2), 0 -1px 0 var(--jdp-color-2),
+					0 8px 24px rgba(0, 0, 0, 0.45);
+			}
+
+			body.jdp-dark-theme jdp-container select,
+			body.jdp-dark-theme jdp-container input {
+				color: var(--jdp-color-5);
+				background-color: var(--jdp-color-0);
+			}
 		</style>
 	</head>
 
@@ -42,6 +64,11 @@
 							<option>Tahoma</option>
 							<option>B Shadi</option>
 						</select>
+
+						<div class="form-check form-switch mt-2">
+							<input class="form-check-input" type="checkbox" id="dark-theme-switch" />
+							<label class="form-check-label" for="dark-theme-switch">Dark Datepicker Theme</label>
+						</div>
 
 						<h5>Dynamic Settings</h5>
 						<table id="dynamic-settings" class="w-100 table-sm">
@@ -350,6 +377,9 @@
 				jalaliDatepicker.startWatch(initialOptions);
 				document.getElementById("font-selector").addEventListener("change", (event) => {
 					document.body.style.fontFamily = event.target.value;
+				});
+				document.getElementById("dark-theme-switch").addEventListener("change", (event) => {
+					document.body.classList.toggle("jdp-dark-theme", event.target.checked);
 				});
 
 				const settingsContainer = document.getElementById("dynamic-settings");

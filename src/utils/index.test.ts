@@ -144,6 +144,32 @@ describe("value parsing and formatting", () => {
 		).toBe("1403+01+09-08:05:03");
 	});
 
+	it("parses values when date and between separators are the same", () => {
+		const jdp = createJdp({
+			options: createOptions({
+				separatorChars: {
+					date: "-",
+					between: "-",
+					time: ":",
+					targetDate: "-",
+					targetBetween: " ",
+					targetTime: ":"
+				}
+			})
+		});
+
+		expect(isValidValueString(jdp, "1403-01-09-08:05:03")).toBe(true);
+		expect(isValidTimeString(jdp, "1403-01-09-08:05:03")).toBe(true);
+		expect(getValueObjectFromString(jdp, "1403-01-09-08:05:03")).toEqual({
+			year: 1403,
+			month: 1,
+			day: 9,
+			hour: 8,
+			minute: 5,
+			second: 3
+		});
+	});
+
 	it("converts target values to Gregorian when requested", () => {
 		const input = document.createElement("input");
 		input.value = "1403/01/01 08:05:03";

@@ -17,41 +17,46 @@ const getArrayNumbersStringTo = (min: number, max: number, increment?: number) =
 };
 
 const getSelectedTimePart = (event: Event) => Number((event.target as HTMLSelectElement).value);
+const getMinTime = (jdp: JalaliDatePicker) => extend({ hour: 0, minute: 0, second: 0 } as TimeObject, jdp.options.minTime || {});
+const getMaxTime = (jdp: JalaliDatePicker) => extend({ hour: 23, minute: 59, second: 59 } as TimeObject, jdp.options.maxTime || {});
+
+const getMinuteItems = (jdp: JalaliDatePicker, minTime: TimeObject, maxTime: TimeObject) => {
+	if (minTime.hour === maxTime.hour) {
+		return getArrayNumbersStringTo(minTime.minute, maxTime.minute, jdp.options.minuteIncrement);
+	}
+	if (jdp.initTime.hour === minTime.hour) {
+		return getArrayNumbersStringTo(minTime.minute, 59, jdp.options.minuteIncrement);
+	}
+	if (jdp.initTime.hour === maxTime.hour) {
+		return getArrayNumbersStringTo(0, maxTime.minute, jdp.options.minuteIncrement);
+	}
+	return getArrayNumbersStringTo(0, 59, jdp.options.minuteIncrement);
+};
+
+const getSecondItems = (jdp: JalaliDatePicker, minTime: TimeObject, maxTime: TimeObject) => {
+	if (minTime.hour === maxTime.hour && minTime.minute === maxTime.minute) {
+		return getArrayNumbersStringTo(minTime.second, maxTime.second);
+	}
+	if (jdp.initTime.hour === minTime.hour && jdp.initTime.minute === minTime.minute) {
+		return getArrayNumbersStringTo(minTime.second, 59);
+	}
+	if (jdp.initTime.hour === maxTime.hour && jdp.initTime.minute === maxTime.minute) {
+		return getArrayNumbersStringTo(0, maxTime.second);
+	}
+	return getArrayNumbersStringTo(0, 59);
+};
 
 const timeDropdownRender = (jdp: JalaliDatePicker, timePickerContainer: HTMLElement, type: "hour" | "minute" | "second") => {
 	const getItemForType = () => {
-		const minTime = extend({ hour: 0, minute: 0, second: 0 } as TimeObject, jdp.options.minTime || {});
-		const maxTime = extend({ hour: 23, minute: 59, second: 59 } as TimeObject, jdp.options.maxTime || {});
+		const minTime = getMinTime(jdp);
+		const maxTime = getMaxTime(jdp);
 		if (type === "hour") {
 			return getArrayNumbersStringTo(minTime.hour, maxTime.hour, jdp.options.hourIncrement);
 		}
 		if (type === "minute") {
-			if (minTime.hour === maxTime.hour) {
-				return getArrayNumbersStringTo(minTime.minute, maxTime.minute, jdp.options.minuteIncrement);
-			}
-			if (jdp.initTime.hour === minTime.hour) {
-				return getArrayNumbersStringTo(minTime.minute, 59, jdp.options.minuteIncrement);
-			}
-			if (jdp.initTime.hour === maxTime.hour) {
-				return getArrayNumbersStringTo(0, maxTime.minute, jdp.options.minuteIncrement);
-			}
-			return getArrayNumbersStringTo(0, 59, jdp.options.minuteIncrement);
+			return getMinuteItems(jdp, minTime, maxTime);
 		}
-
-		if (type === "second") {
-			if (minTime.hour === maxTime.hour && minTime.minute === maxTime.minute) {
-				return getArrayNumbersStringTo(minTime.second, maxTime.second);
-			}
-			if (jdp.initTime.hour === minTime.hour && jdp.initTime.minute === minTime.minute) {
-				return getArrayNumbersStringTo(minTime.second, 59);
-			}
-			if (jdp.initTime.hour === maxTime.hour && jdp.initTime.minute === maxTime.minute) {
-				return getArrayNumbersStringTo(0, maxTime.second);
-			}
-			return getArrayNumbersStringTo(0, 59);
-		}
-
-		return getArrayNumbersStringTo(minTime.second, maxTime.second);
+		return getSecondItems(jdp, minTime, maxTime);
 	};
 	const container = createElement(TIME_DROPDOWN_PARENT_ELEMENT_QUERY, timePickerContainer);
 
