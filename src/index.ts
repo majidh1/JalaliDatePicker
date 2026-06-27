@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { DateObject, JalaliDatePicker, IJalaliDatePickerExternalOptions, TimeObject } from "./models/types";
+import { DateObject, JalaliDatePicker, JalaliDatePickerOptions, TimeObject } from "./models/types";
 import {
 	isValidValueString,
 	getValueObjectFromString,
@@ -30,13 +30,13 @@ import "./styles/index.scss";
 import { JalaliDatePickerInternalOptions } from "./models/internalOption.model";
 
 const jalaliDatepicker: JalaliDatePicker = {
-	init(options: Partial<IJalaliDatePickerExternalOptions>) {
+	init(options: Partial<JalaliDatePickerOptions>) {
 		this.updateOptions(options);
 		addEventListenerOnResize();
 		addEventListenerOnBody();
 		addEventListenerOnInputs(this.options.selector);
 	},
-	updateOptions(options: Partial<IJalaliDatePickerExternalOptions>) {
+	updateOptions(options: Partial<JalaliDatePickerOptions>) {
 		if (isNotObjectOrIsEmptyObject(this.options)) {
 			this.options = new JalaliDatePickerInternalOptions(options, this);
 		} else {
@@ -44,7 +44,7 @@ const jalaliDatepicker: JalaliDatePicker = {
 		}
 		applyZIndex();
 	},
-	options: {} as any,
+	options: {} as JalaliDatePickerInternalOptions,
 	input: null,
 	isTransitioning: false,
 	get dpContainer() {
@@ -82,57 +82,26 @@ const jalaliDatepicker: JalaliDatePicker = {
 		if (this._initDate) {
 			return this._initDate;
 		}
-		let initDate: string | DateObject = this.input?.value || "";
-
-		if (!initDate) {
-			initDate = this.options.initDate || clone(this.today);
-		} else if (isString(initDate) && isValidDateString(this, initDate)) {
-			initDate = getValueObjectFromString(this, initDate) as DateObject;
-		} else {
-			initDate = clone(this.today);
-		}
-
-		this._initDate = normalizeMinMaxDate(this, initDate);
+		this._initDate = normalizeMinMaxDate(this, getInitialDate(this));
 		return this._initDate;
 	},
 	get initTime() {
 		if (this._initTime) {
 			return this._initTime;
 		}
-		const date = new Date();
-		const defaultInit = {
-			hour: date.getHours(),
-			minute: date.getMinutes(),
-			second: 0
-		};
-		let initTime: string | TimeObject = this.input?.value || this.options.initTime || defaultInit;
-
-		if (isString(initTime)) {
-			if (isValidTimeString(this, initTime)) {
-				initTime = getValueObjectFromString(this, initTime) as TimeObject;
-			} else {
-				initTime = defaultInit;
-			}
-		}
-		this._initTime = normalizeMinMaxTime(this, initTime);
+		this._initTime = normalizeMinMaxTime(this, getInitialTime(this));
 		return this._initTime;
 	},
 	_draw: draw,
 	show(input: HTMLInputElement) {
-		this._initDate = null;
-		this._initTime = null;
-		this._value = null;
+		resetCurrentInputState(this);
 		this.input = input;
 		this._draw();
 		setReadOnly(input, this.options);
 		this.isTransitioning = true;
-		this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
-		this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-		if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
+		setPickerVisibility(this, true);
 		setTimeout(() => {
-			this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
-			this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-			if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
+			setPickerVisibility(this, true);
 			this.isShow = true;
 			this.isTransitioning = false;
 		}, 300);
@@ -141,9 +110,7 @@ const jalaliDatepicker: JalaliDatePicker = {
 		document.addEventListener(EVENT_KEYDOWN_STR, handleEscKey);
 	},
 	hide() {
-		this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
-		this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
-		if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_HIDDEN;
+		setPickerVisibility(this, false);
 		this.isShow = false;
 		removeScrollOnParent();
 		document.removeEventListener(EVENT_KEYDOWN_STR, handleEscKey);
@@ -281,6 +248,54 @@ const jalaliDatepicker: JalaliDatePicker = {
 	isShow: false
 };
 
+function getCurrentTime(): TimeObject {
+	const date = new Date();
+	return {
+		hour: date.getHours(),
+		minute: date.getMinutes(),
+		second: 0
+	};
+}
+
+function getInitialDate(jdp: JalaliDatePicker): DateObject {
+	const inputValue = jdp.input?.value || "";
+
+	if (!inputValue) {
+		return jdp.options.initDate || clone(jdp.today);
+	}
+	if (isValidDateString(jdp, inputValue)) {
+		return getValueObjectFromString(jdp, inputValue) as DateObject;
+	}
+	return clone(jdp.today);
+}
+
+function getInitialTime(jdp: JalaliDatePicker): TimeObject {
+	const defaultInit = getCurrentTime();
+	const initTime: string | TimeObject = jdp.input?.value || jdp.options.initTime || defaultInit;
+
+	if (!isString(initTime)) {
+		return initTime;
+	}
+	if (isValidTimeString(jdp, initTime)) {
+		return getValueObjectFromString(jdp, initTime) as TimeObject;
+	}
+	return defaultInit;
+}
+
+function resetCurrentInputState(jdp: JalaliDatePicker) {
+	jdp._initDate = null;
+	jdp._initTime = null;
+	jdp._value = null;
+}
+
+function setPickerVisibility(jdp: JalaliDatePicker, isVisible: boolean) {
+	jdp.dpContainer.style.visibility = isVisible ? STYLE_VISIBILITY_VISIBLE : STYLE_VISIBILITY_HIDDEN;
+	jdp.dpContainer.style.display = isVisible ? STYLE_DISPLAY_BLOCK : STYLE_DISPLAY_HIDDEN;
+	if (jdp.overlayElement) {
+		jdp.overlayElement.style.display = isVisible ? STYLE_DISPLAY_BLOCK : STYLE_DISPLAY_HIDDEN;
+	}
+}
+
 function applyZIndex() {
 	const zIndex = jalaliDatepicker.options.zIndex;
 	if (typeof zIndex !== "number") return;
@@ -375,7 +390,7 @@ function handleEscKey(event: KeyboardEvent) {
 }
 
 (window as any).jalaliDatepicker = {
-	startWatch(options: Partial<IJalaliDatePickerExternalOptions> = {}) {
+	startWatch(options: Partial<JalaliDatePickerOptions> = {}) {
 		jalaliDatepicker.init(options);
 	},
 	show(input: HTMLInputElement) {
@@ -384,7 +399,7 @@ function handleEscKey(event: KeyboardEvent) {
 	hide() {
 		jalaliDatepicker.hide();
 	},
-	updateOptions(options: Partial<IJalaliDatePickerExternalOptions>) {
+	updateOptions(options: Partial<JalaliDatePickerOptions>) {
 		jalaliDatepicker.updateOptions(options);
 	}
 };

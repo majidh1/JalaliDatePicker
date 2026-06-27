@@ -36,16 +36,16 @@ export const toJalali = (gy: number, gm: number, gd: number) => {
 		gy -= 621;
 	}
 	const gy2 = gm > 2 ? gy + 1 : gy;
-	days = 365 * gy + parseInt(((gy2 + 3) / 4) as any) - parseInt(((gy2 + 99) / 100) as any) + parseInt(((gy2 + 399) / 400) as any) - 80 + gd + gdm[gm - 1];
-	jy += 33 * parseInt((days / 12053) as any);
+	days = 365 * gy + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];
+	jy += 33 * Math.floor(days / 12053);
 	days %= 12053;
-	jy += 4 * parseInt((days / 1461) as any);
+	jy += 4 * Math.floor(days / 1461);
 	days %= 1461;
 	if (days > 365) {
-		jy += parseInt(((days - 1) / 365) as any);
+		jy += Math.floor((days - 1) / 365);
 		days = (days - 1) % 365;
 	}
-	const jm = days < 186 ? 1 + parseInt((days / 31) as any) : 7 + parseInt(((days - 186) / 30) as any);
+	const jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
 	const jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
 
 	return {

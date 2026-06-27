@@ -95,16 +95,16 @@
       gy -= 621;
     }
     var gy2 = gm > 2 ? gy + 1 : gy;
-    days = 365 * gy + parseInt((gy2 + 3) / 4) - parseInt((gy2 + 99) / 100) + parseInt((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];
-    jy += 33 * parseInt(days / 12053);
+    days = 365 * gy + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];
+    jy += 33 * Math.floor(days / 12053);
     days %= 12053;
-    jy += 4 * parseInt(days / 1461);
+    jy += 4 * Math.floor(days / 1461);
     days %= 1461;
     if (days > 365) {
-      jy += parseInt((days - 1) / 365);
+      jy += Math.floor((days - 1) / 365);
       days = (days - 1) % 365;
     }
-    var jm = days < 186 ? 1 + parseInt(days / 31) : 7 + parseInt((days - 186) / 30);
+    var jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
     var jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
     return {
       year: jy,
@@ -547,6 +547,9 @@
     for (var i = min; i <= max; i += increment) items.push(addLeadingZero(i));
     return items;
   };
+  var getSelectedTimePart = function getSelectedTimePart(event) {
+    return Number(event.target.value);
+  };
   var timeDropdownRender = function timeDropdownRender(jdp, timePickerContainer, type) {
     var getItemForType = function getItemForType() {
       var minTime = _extend({
@@ -589,9 +592,9 @@
       return getArrayNumbersStringTo(minTime.second, maxTime.second);
     };
     var container = createElement(TIME_DROPDOWN_PARENT_ELEMENT_QUERY, timePickerContainer);
-    var dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, function (e) {
+    var dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, function (event) {
       var _normalizeMinMaxTime;
-      jdp.setValue(normalizeMinMaxTime(jdp, jdp.initTime, (_normalizeMinMaxTime = {}, _normalizeMinMaxTime[type] = e.target.value, _normalizeMinMaxTime)));
+      jdp.setValue(normalizeMinMaxTime(jdp, jdp.initTime, (_normalizeMinMaxTime = {}, _normalizeMinMaxTime[type] = getSelectedTimePart(event), _normalizeMinMaxTime)));
     });
     dropdownContainer.tabIndex = -1;
     var items = getItemForType();
@@ -600,7 +603,7 @@
       var optionElement = createElement("option", dropdownContainer);
       optionElement.value = currentItem.toString();
       optionElement.text = toPersianDigitsIfNeeded(currentItem, jdp.options.persianDigits).toString();
-      optionElement.selected = parseInt(currentItem) === parseInt(jdp.getValue[type] || jdp.initTime[type]);
+      optionElement.selected = parseInt(currentItem) === Number(jdp.getValue[type] || jdp.initTime[type]);
     }
   };
   var renderTimePicker = function renderTimePicker(jdp) {
@@ -653,6 +656,9 @@
   var createElementMinus = function createElementMinus(jdp, container, isYear) {
     createElementPlusMinus(jdp, container, isYear, "MINUS");
   };
+  var getInputValue = function getInputValue(event) {
+    return event.target.value;
+  };
   var renderYear = function renderYear(jdp) {
     var _jdp$options$useDropd;
     var yearsContainer = createElement(YEARS_ELEMENT_QUERY, jdp.dpContainer);
@@ -661,9 +667,10 @@
     createElementMinus(jdp, yearsContainer, true);
     var useDropdownYears = (_jdp$options$useDropd = jdp.options.useDropdownYears) != null ? _jdp$options$useDropd : jdp.options.useDropDownYears;
     var yearInputTagName = useDropdownYears ? "select" : "input";
-    var yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, function (e) {
-      if (e.target.value < 1e3 || e.target.value > 2e3) return;
-      jdp.yearChange(e.target.value);
+    var yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, function (event) {
+      var year = Number(getInputValue(event));
+      if (year < 1e3 || year > 2e3) return;
+      jdp.yearChange(year);
     });
     if (useDropdownYears) {
       yearInput.setAttribute("tabindex", "-1");
@@ -685,8 +692,8 @@
     createElementPlus(jdp, monthsContainer, false);
     var monthContainer = createElement(MONTH_ELEMENT_QUERY, monthsContainer);
     createElementMinus(jdp, monthsContainer, false);
-    var monthDropdownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, function (e) {
-      jdp.monthChange(parseFloat(e.target.value));
+    var monthDropdownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, function (event) {
+      jdp.monthChange(Number(getInputValue(event)));
     });
     monthDropdownContainer.tabIndex = -1;
     var months = getValidMonths(jdp);
@@ -835,16 +842,44 @@
     render(this);
   }
   var isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test((_window$navigator = window.navigator) == null || (_window$navigator = _window$navigator.userAgent) == null ? void 0 : _window$navigator.toLowerCase());
+  var DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+  var DEFAULT_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+  var DEFAULT_SEPARATOR_CHARS = {
+    date: "/",
+    between: " ",
+    time: ":",
+    targetDate: "-",
+    targetBetween: " ",
+    targetTime: ":"
+  };
+  var TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
+  var DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
+  var DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
+  var getTimeValueObjectFromTimeString = function getTimeValueObjectFromTimeString(timeString, separator, hasSecond) {
+    var parts = timeString.split(separator);
+    var expectedLength = hasSecond ? 3 : 2;
+    if (parts.length !== expectedLength || parts.some(function (part) {
+      return part.length !== 2;
+    })) {
+      return null;
+    }
+    return {
+      hour: parseInt(parts[0]),
+      minute: parseInt(parts[1]),
+      second: parseInt(parts[2]) || 0
+    };
+  };
   var normalizeOptions = function normalizeOptions(externalOptions, internalOptions, jdp) {
     var setDefaultValue = function setDefaultValue(propertyName, defaultValue) {
       var _ref;
       var extValue = externalOptions[propertyName];
       var intValue = internalOptions[propertyName];
+      var externalValue = TODAY_DATE_OPTION_NAMES.includes(propertyName) && extValue === MIN_MAX_TODAY_SETTING ? internalOptions.today : extValue;
       var descriptor = Object.getOwnPropertyDescriptor(internalOptions, propertyName);
       if (descriptor != null && descriptor.get && !descriptor.set) {
         delete internalOptions[propertyName];
       }
-      internalOptions[propertyName] = (_ref = extValue != null ? extValue : intValue) != null ? _ref : defaultValue;
+      internalOptions[propertyName] = (_ref = externalValue != null ? externalValue : intValue) != null ? _ref : defaultValue;
     };
     function setDefinePropertyFromAttr(propertyName) {
       var getDefaultFromAttr = function getDefaultFromAttr(attrName, isTime) {
@@ -859,7 +894,7 @@
           if (isValidTimeString(jdp, attrVal)) {
             attrVal = getValueObjectFromString(jdp, attrVal);
           } else {
-            attrVal = {};
+            attrVal = getTimeValueObjectFromTimeString(attrVal, jdp.options.separatorChars.time, jdp.options.hasSecond) || {};
           }
         } else {
           if (isValidDateString(jdp, attrVal)) {
@@ -953,21 +988,12 @@
     setDefaultValue("hasSecond", true);
     setDefaultValue("date", true);
     setDefaultValue("time", false);
-    setDefaultValue("days", ["ش", "ی", "د", "س", "چ", "پ", "ج"]);
-    setDefaultValue("months", ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]);
-    setDefaultValue("separatorChars", {
-      date: "/",
-      between: " ",
-      time: ":",
-      targetDate: "-",
-      targetBetween: " ",
-      targetTime: ":"
-    });
+    setDefaultValue("days", DEFAULT_DAYS);
+    setDefaultValue("months", DEFAULT_MONTHS);
+    setDefaultValue("separatorChars", DEFAULT_SEPARATOR_CHARS);
     setDefaultValue("persianDigits", false);
-    setDefaultValue("plusHtml",
-    // eslint-disable-next-line @typescript-eslint/quotes, quotes
-    '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>');
-    setDefaultValue("minusHtml", '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>');
+    setDefaultValue("plusHtml", DEFAULT_PLUS_HTML);
+    setDefaultValue("minusHtml", DEFAULT_MINUS_HTML);
     if (externalOptions.useDropDownYears !== void 0 && externalOptions.useDropdownYears === void 0) {
       internalOptions.useDropdownYears = externalOptions.useDropDownYears;
     }
@@ -978,6 +1004,10 @@
     setDefaultValue("minuteIncrement", 1);
     setDefaultValue("hourIncrement", 1);
     if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
+    if (externalOptions.initTime && externalOptions.initTime !== MIN_MAX_TODAY_SETTING && externalOptions.initTime !== OPTION_ATTR_SETTING) {
+      internalOptions.initTime = externalOptions.initTime;
+    }
+    if (externalOptions.initDate === MIN_MAX_TODAY_SETTING) internalOptions.initDate = internalOptions.today;
     if (externalOptions.minDate === MIN_MAX_TODAY_SETTING) internalOptions.minDate = internalOptions.today;
     if (externalOptions.maxDate === MIN_MAX_TODAY_SETTING) internalOptions.maxDate = internalOptions.today;
     internalOptions = setDefinePropertyFromAttr("time");
@@ -1086,63 +1116,33 @@
       return {};
     },
     get initDate() {
-      var _this$input2;
       if (this.options.initDate) {
         return this.options.initDate;
       }
       if (this._initDate) {
         return this._initDate;
       }
-      var initDate = ((_this$input2 = this.input) == null ? void 0 : _this$input2.value) || "";
-      if (!initDate) {
-        initDate = this.options.initDate || clone(this.today);
-      } else if (isString(initDate) && isValidDateString(this, initDate)) {
-        initDate = getValueObjectFromString(this, initDate);
-      } else {
-        initDate = clone(this.today);
-      }
-      this._initDate = normalizeMinMaxDate(this, initDate);
+      this._initDate = normalizeMinMaxDate(this, getInitialDate(this));
       return this._initDate;
     },
     get initTime() {
-      var _this$input3;
       if (this._initTime) {
         return this._initTime;
       }
-      var date = /* @__PURE__ */new Date();
-      var defaultInit = {
-        hour: date.getHours(),
-        minute: date.getMinutes(),
-        second: 0
-      };
-      var initTime = ((_this$input3 = this.input) == null ? void 0 : _this$input3.value) || this.options.initTime || defaultInit;
-      if (isString(initTime)) {
-        if (isValidTimeString(this, initTime)) {
-          initTime = getValueObjectFromString(this, initTime);
-        } else {
-          initTime = defaultInit;
-        }
-      }
-      this._initTime = normalizeMinMaxTime(this, initTime);
+      this._initTime = normalizeMinMaxTime(this, getInitialTime(this));
       return this._initTime;
     },
     _draw: draw,
     show: function show(input) {
       var _this = this;
-      this._initDate = null;
-      this._initTime = null;
-      this._value = null;
+      resetCurrentInputState(this);
       this.input = input;
       this._draw();
       setReadOnly(input, this.options);
       this.isTransitioning = true;
-      this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
-      this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-      if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
+      setPickerVisibility(this, true);
       setTimeout(function () {
-        _this.dpContainer.style.visibility = STYLE_VISIBILITY_VISIBLE;
-        _this.dpContainer.style.display = STYLE_DISPLAY_BLOCK;
-        if (_this.overlayElement) _this.overlayElement.style.display = STYLE_DISPLAY_BLOCK;
+        setPickerVisibility(_this, true);
         _this.isShow = true;
         _this.isTransitioning = false;
       }, 300);
@@ -1151,9 +1151,7 @@
       document.addEventListener(EVENT_KEYDOWN_STR, handleEscKey);
     },
     hide: function hide() {
-      this.dpContainer.style.visibility = STYLE_VISIBILITY_HIDDEN;
-      this.dpContainer.style.display = STYLE_DISPLAY_HIDDEN;
-      if (this.overlayElement) this.overlayElement.style.display = STYLE_DISPLAY_HIDDEN;
+      setPickerVisibility(this, false);
       this.isShow = false;
       removeScrollOnParent();
       document.removeEventListener(EVENT_KEYDOWN_STR, handleEscKey);
@@ -1284,6 +1282,49 @@
     _value: null,
     isShow: false
   };
+  function getCurrentTime() {
+    var date = /* @__PURE__ */new Date();
+    return {
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: 0
+    };
+  }
+  function getInitialDate(jdp) {
+    var _jdp$input0;
+    var inputValue = ((_jdp$input0 = jdp.input) == null ? void 0 : _jdp$input0.value) || "";
+    if (!inputValue) {
+      return jdp.options.initDate || clone(jdp.today);
+    }
+    if (isValidDateString(jdp, inputValue)) {
+      return getValueObjectFromString(jdp, inputValue);
+    }
+    return clone(jdp.today);
+  }
+  function getInitialTime(jdp) {
+    var _jdp$input1;
+    var defaultInit = getCurrentTime();
+    var initTime = ((_jdp$input1 = jdp.input) == null ? void 0 : _jdp$input1.value) || jdp.options.initTime || defaultInit;
+    if (!isString(initTime)) {
+      return initTime;
+    }
+    if (isValidTimeString(jdp, initTime)) {
+      return getValueObjectFromString(jdp, initTime);
+    }
+    return defaultInit;
+  }
+  function resetCurrentInputState(jdp) {
+    jdp._initDate = null;
+    jdp._initTime = null;
+    jdp._value = null;
+  }
+  function setPickerVisibility(jdp, isVisible) {
+    jdp.dpContainer.style.visibility = isVisible ? STYLE_VISIBILITY_VISIBLE : STYLE_VISIBILITY_HIDDEN;
+    jdp.dpContainer.style.display = isVisible ? STYLE_DISPLAY_BLOCK : STYLE_DISPLAY_HIDDEN;
+    if (jdp.overlayElement) {
+      jdp.overlayElement.style.display = isVisible ? STYLE_DISPLAY_BLOCK : STYLE_DISPLAY_HIDDEN;
+    }
+  }
   function applyZIndex() {
     var _jalaliDatepicker$_dp, _jalaliDatepicker$ove;
     var zIndex = jalaliDatepicker.options.zIndex;

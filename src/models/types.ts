@@ -40,8 +40,8 @@ export interface DayOptions {
 	weekDay: number;
 }
 
-export class IJalaliDatePickerExternalOptions {
-	dayRendering?(day: DayOptions, input: HTMLInputElement | null): DayOptions; // Will refine later
+export interface JalaliDatePickerOptions {
+	dayRendering?(day: DayOptions, input: HTMLInputElement | null): DayOptions;
 	minDate?: DateObject | "today" | "attr";
 	maxDate?: DateObject | "today" | "attr";
 	initDate?: DateObject | "today" | "attr";
@@ -83,9 +83,14 @@ export class IJalaliDatePickerExternalOptions {
 	hourIncrement: number;
 }
 
+/**
+ * @deprecated Use JalaliDatePickerOptions.
+ */
+export type IJalaliDatePickerExternalOptions = JalaliDatePickerOptions;
+
 export interface JalaliDatePicker {
-	init(options: Partial<IJalaliDatePickerExternalOptions>): void;
-	updateOptions(options: Partial<IJalaliDatePickerExternalOptions>): void;
+	init(options: Partial<JalaliDatePickerOptions>): void;
+	updateOptions(options: Partial<JalaliDatePickerOptions>): void;
 	options: JalaliDatePickerInternalOptions;
 	input: HTMLInputElement | null;
 	isTransitioning: boolean;

@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from "vitest";
 
-import { DateObject } from "./models/types";
+import { DateObject, DayOptions } from "./models/types";
 import { EVENT_CHANGE_INPUT_STR } from "./constants";
 
 declare global {
@@ -124,6 +124,120 @@ describe("jalaliDatepicker public API", () => {
 
 		expect(input.value).toBe("1403/01/01");
 		expect(findDay(5, 1, 1403)?.classList.contains("disabled-day")).toBe(true);
+	});
+
+	it("selects valid 31-day Jalali dates without JavaScript Date autocorrection", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			today: {
+				year: 1405,
+				month: 2,
+				day: 1
+			}
+		});
+		jdp.show(input);
+		findDay(31, 2, 1405)?.click();
+
+		expect(input.value).toBe("1405/02/31");
+	});
+
+	it("uses dayRendering to disable a specific day", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		input.value = "1403/01/01";
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			today: {
+				year: 1403,
+				month: 1,
+				day: 1
+			},
+			dayRendering(dayOptions: DayOptions) {
+				if (dayOptions.year === 1403 && dayOptions.month === 1 && dayOptions.day === 10) {
+					return {
+						...dayOptions,
+						isValid: false
+					};
+				}
+				return dayOptions;
+			}
+		});
+		jdp.show(input);
+		findDay(10, 1, 1403)?.click();
+
+		expect(input.value).toBe("1403/01/01");
+		expect(findDay(10, 1, 1403)?.classList.contains("disabled-day")).toBe(true);
+	});
+
+	it("uses today as the initial date when initDate is today", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			initDate: "today",
+			today: {
+				year: 1405,
+				month: 6,
+				day: 31
+			}
+		});
+		jdp.show(input);
+		findDay(30, 6, 1405)?.click();
+
+		expect(input.value).toBe("1405/06/30");
+	});
+
+	it("selects time-only values without seconds when hasSecond is false", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			date: false,
+			time: true,
+			hasSecond: false,
+			initTime: {
+				hour: 9,
+				minute: 5,
+				second: 0
+			}
+		});
+		jdp.show(input);
+		document.querySelector<HTMLElement>(".jdp-btn-today")?.click();
+
+		expect(input.value).toBe("09:05");
+	});
+
+	it("uses min time from attributes as a time-only value", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		input.setAttribute("data-jdp-min-time", "09:15:00");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			date: false,
+			time: true,
+			minTime: "attr",
+			initTime: {
+				hour: 8,
+				minute: 0,
+				second: 0
+			}
+		});
+		jdp.show(input);
+		document.querySelector<HTMLElement>(".jdp-btn-today")?.click();
+
+		expect(input.value).toBe("09:15:00");
 	});
 
 	it("updates a target HTMLElement with a Gregorian value", async () => {

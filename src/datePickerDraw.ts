@@ -79,6 +79,8 @@ const createElementMinus = (jdp: JalaliDatePicker, container: string | HTMLEleme
 	createElementPlusMinus(jdp, container, isYear, "MINUS");
 };
 
+const getInputValue = (event: Event) => (event.target as HTMLInputElement | HTMLSelectElement).value;
+
 const renderYear = (jdp: JalaliDatePicker) => {
 	const yearsContainer = createElement(YEARS_ELEMENT_QUERY, jdp.dpContainer);
 	createElementPlus(jdp, yearsContainer, true);
@@ -87,9 +89,10 @@ const renderYear = (jdp: JalaliDatePicker) => {
 
 	const useDropdownYears = jdp.options.useDropdownYears ?? jdp.options.useDropDownYears;
 	const yearInputTagName = useDropdownYears ? "select" : "input";
-	const yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, (e: any) => {
-		if (e.target.value < 1000 || e.target.value > 2000) return;
-		jdp.yearChange(e.target.value);
+	const yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, (event) => {
+		const year = Number(getInputValue(event));
+		if (year < 1000 || year > 2000) return;
+		jdp.yearChange(year);
 	}) as HTMLInputElement;
 	if (useDropdownYears) {
 		yearInput.setAttribute("tabindex", "-1");
@@ -113,8 +116,8 @@ const renderMonths = (jdp: JalaliDatePicker) => {
 	const monthContainer = createElement(MONTH_ELEMENT_QUERY, monthsContainer);
 	createElementMinus(jdp, monthsContainer, false);
 
-	const monthDropdownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, (e: any) => {
-		jdp.monthChange(parseFloat(e.target.value));
+	const monthDropdownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, (event) => {
+		jdp.monthChange(Number(getInputValue(event)));
 	});
 	monthDropdownContainer.tabIndex = -1;
 

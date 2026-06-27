@@ -16,6 +16,8 @@ const getArrayNumbersStringTo = (min: number, max: number, increment?: number) =
 	return items;
 };
 
+const getSelectedTimePart = (event: Event) => Number((event.target as HTMLSelectElement).value);
+
 const timeDropdownRender = (jdp: JalaliDatePicker, timePickerContainer: HTMLElement, type: "hour" | "minute" | "second") => {
 	const getItemForType = () => {
 		const minTime = extend({ hour: 0, minute: 0, second: 0 } as TimeObject, jdp.options.minTime || {});
@@ -53,10 +55,10 @@ const timeDropdownRender = (jdp: JalaliDatePicker, timePickerContainer: HTMLElem
 	};
 	const container = createElement(TIME_DROPDOWN_PARENT_ELEMENT_QUERY, timePickerContainer);
 
-	const dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, (e: any) => {
+	const dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, (event) => {
 		jdp.setValue(
 			normalizeMinMaxTime(jdp, jdp.initTime, {
-				[type]: e.target.value
+				[type]: getSelectedTimePart(event)
 			})
 		);
 	});
@@ -69,7 +71,7 @@ const timeDropdownRender = (jdp: JalaliDatePicker, timePickerContainer: HTMLElem
 		const optionElement = createElement("option", dropdownContainer) as HTMLOptionElement;
 		optionElement.value = currentItem.toString();
 		optionElement.text = toPersianDigitsIfNeeded(currentItem, jdp.options.persianDigits).toString();
-		optionElement.selected = parseInt(currentItem) === parseInt((jdp.getValue[type] || jdp.initTime[type]) as any);
+		optionElement.selected = parseInt(currentItem) === Number(jdp.getValue[type] || jdp.initTime[type]);
 	}
 };
 
