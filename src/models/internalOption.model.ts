@@ -1,15 +1,22 @@
 import {
-	INIT_DATE_ATTR_NAME,
-	MAX_DATE_ATTR_NAME,
-	MAX_TIME_ATTR_NAME,
-	MIN_DATE_ATTR_NAME,
+	ATTR_OPTION_NAMES,
+	DEFAULT_DAYS,
+	DEFAULT_MINUS_HTML,
+	DEFAULT_MONTHS,
+	DEFAULT_MULTIPLE_SEPARATOR,
+	DEFAULT_PLUS_HTML,
+	DEFAULT_RANGE_SEPARATOR,
+	DEFAULT_SEPARATOR_CHARS,
 	MIN_MAX_TODAY_SETTING,
-	MIN_TIME_ATTR_NAME,
+	MODE_ATTR_NAME,
 	ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME,
 	ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME,
 	OPTION_ATTR_SETTING,
+	SELECTION_MODE_NAMES,
 	TARGET_VALUE_INPUT_ATTR_NAME,
-	TARGET_VALUE_TYPE_ATTR_NAME
+	TARGET_VALUE_TYPE_ATTR_NAME,
+	TIME_ATTR_OPTION_NAMES,
+	TODAY_DATE_OPTION_NAMES
 } from "../constants";
 import { DateObject, JalaliDatePickerOptions, TimeObject, SeparatorChars, JalaliDatePicker, ValueObject, DayOptions } from "./types";
 import { getValueObjectFromString, isValidDateString, isValidTimeParts, isValidTimeString } from "../utils";
@@ -17,31 +24,6 @@ import { jalaliToday } from "../utils/jalali";
 import { clone, isNotObjectOrIsEmptyObject, isString, isFunction } from "../utils/object";
 
 const isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test(window.navigator?.userAgent?.toLowerCase());
-const DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
-const DEFAULT_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-const DEFAULT_SEPARATOR_CHARS = {
-	date: "/",
-	between: " ",
-	time: ":",
-	targetDate: "-",
-	targetBetween: " ",
-	targetTime: ":"
-};
-const TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
-const ATTR_OPTION_NAMES = {
-	initDate: INIT_DATE_ATTR_NAME,
-	minDate: MIN_DATE_ATTR_NAME,
-	maxDate: MAX_DATE_ATTR_NAME,
-	minTime: MIN_TIME_ATTR_NAME,
-	maxTime: MAX_TIME_ATTR_NAME,
-	targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
-	targetValueType: TARGET_VALUE_TYPE_ATTR_NAME
-};
-const TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
-// eslint-disable-next-line @typescript-eslint/quotes, quotes
-const DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
-// eslint-disable-next-line @typescript-eslint/quotes, quotes
-const DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
 
 const getTimeValueObjectFromParts = (parts: string[], hasSecond: boolean): ValueObject | null => {
 	if (!isValidTimeParts(parts, hasSecond)) {
@@ -56,6 +38,8 @@ const getTimeValueObjectFromParts = (parts: string[], hasSecond: boolean): Value
 
 const getTimeValueObjectFromTimeOnlyString = (jdp: JalaliDatePicker, timeString: string) =>
 	getTimeValueObjectFromParts(timeString.split(jdp.options.separatorChars.time), jdp.options.hasSecond);
+
+const normalizeSelectionMode = (mode: string | null | undefined) => (mode && SELECTION_MODE_NAMES.indexOf(mode) > -1 ? mode : "single");
 
 const normalizeOptions = (
 	externalOptions: Partial<JalaliDatePickerOptions>,
@@ -95,11 +79,12 @@ const normalizeOptions = (
 	const getAttrGetter = (
 		propertyName: keyof Pick<
 			JalaliDatePickerOptions,
-			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType"
+			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType" | "mode"
 		>
 	) => {
 		if (propertyName === "targetValueInput") return () => jdp.input?.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
 		if (propertyName === "targetValueType") return () => jdp.input?.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
+		if (propertyName === "mode") return () => normalizeSelectionMode(jdp.input?.getAttribute(MODE_ATTR_NAME));
 		const attrName = ATTR_OPTION_NAMES[propertyName as keyof typeof ATTR_OPTION_NAMES];
 		const isTime = TIME_ATTR_OPTION_NAMES.indexOf(propertyName) > -1;
 		return () => getDateOrTimeDefaultFromAttr(attrName, isTime);
@@ -107,7 +92,7 @@ const normalizeOptions = (
 	function setDefinePropertyFromAttr(
 		propertyName: keyof Pick<
 			JalaliDatePickerOptions,
-			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType"
+			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType" | "mode"
 		>
 	) {
 		if (externalOptions[propertyName] === OPTION_ATTR_SETTING || propertyName === "date" || propertyName === "time") {
@@ -179,6 +164,9 @@ const normalizeOptions = (
 	setDefaultValue("position", "left");
 	setDefaultValue("minuteIncrement", 1);
 	setDefaultValue("hourIncrement", 1);
+	setDefaultValue("mode", "single");
+	setDefaultValue("rangeSeparator", DEFAULT_RANGE_SEPARATOR);
+	setDefaultValue("multipleSeparator", DEFAULT_MULTIPLE_SEPARATOR);
 
 	if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
 	if (externalOptions.initTime && externalOptions.initTime !== MIN_MAX_TODAY_SETTING && externalOptions.initTime !== OPTION_ATTR_SETTING) {
@@ -197,6 +185,7 @@ const normalizeOptions = (
 	internalOptions = setDefinePropertyFromAttr("maxTime");
 	internalOptions = setDefinePropertyFromAttr("targetValueInput");
 	internalOptions = setDefinePropertyFromAttr("targetValueType");
+	internalOptions = setDefinePropertyFromAttr("mode");
 
 	return internalOptions;
 };
@@ -238,10 +227,16 @@ export class JalaliDatePickerInternalOptions implements JalaliDatePickerOptions 
 	plusHtml: string;
 	minusHtml: string;
 	useDropdownYears: boolean;
-	useDropDownYears: boolean;
+	/**
+	 * @deprecated change to useDropdownYears
+	 */
+	useDropDownYears?: boolean;
 	position: "left" | "right" | "center";
 	minuteIncrement: number;
 	hourIncrement: number;
+	mode: "single" | "range" | "multiple";
+	rangeSeparator: string;
+	multipleSeparator: string;
 
 	constructor(externalOptions: Partial<JalaliDatePickerOptions>, jdp: JalaliDatePicker) {
 		normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);

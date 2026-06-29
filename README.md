@@ -195,6 +195,53 @@ jalaliDatepicker.updateOptions(options);
 
 اگر کاربر `1403/01/01` را انتخاب کند، مقدار target به صورت `2024-03-20` نوشته می‌شود.
 
+### انتخاب بازه تاریخ
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "range",
+  rangeSeparator: " - "
+ });
+</script>
+```
+
+با انتخاب `1403/01/01` و `1403/01/05` مقدار input برابر `1403/01/01 - 1403/01/05` می‌شود.
+حالت‌های `range` و `multiple` خروجی را به صورت فقط تاریخ می‌نویسند.
+
+### انتخاب چند تاریخ
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "multiple",
+  multipleSeparator: ", "
+ });
+</script>
+```
+
+تاریخ‌های انتخاب‌شده مرتب می‌شوند و به صورت لیست جداشده نوشته می‌شوند، مثلا `1403/01/01, 1403/01/05`.
+حالت‌های `range` و `multiple` خروجی را به صورت فقط تاریخ می‌نویسند.
+
+### تعیین حالت انتخاب برای هر input
+
+```html
+<input data-jdp data-jdp-mode="range">
+<input data-jdp data-jdp-mode="multiple">
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "attr"
+ });
+</script>
+```
+
+وقتی `mode` برابر `"attr"` باشد، هر input حالت انتخاب خودش را از `data-jdp-mode` می‌خواند. مقدارهای معتبر: `single`، `range` و `multiple`.
+
 ### سفارشی‌سازی روزها با `dayRendering`
 
 ```js
@@ -245,12 +292,15 @@ jalaliDatepicker.startWatch({
 | `overflowSpace` | `-10` | فاصله مجاز از لبه پنجره هنگام جلوگیری از خروج از صفحه |
 | `minuteIncrement` | `1` | گام دقیقه‌ها در dropdown زمان |
 | `hourIncrement` | `1` | گام ساعت‌ها در dropdown زمان |
+| `mode` | `"single"` | حالت انتخاب تاریخ. مقدارهای مجاز: `"single"`, `"range"`, `"multiple"`, `"attr"` |
+| `rangeSeparator` | `" - "` | جداکننده تاریخ شروع و پایان در حالت range |
+| `multipleSeparator` | `", "` | جداکننده تاریخ‌ها در حالت multiple |
 | `persianDigits` | `false` | نمایش ارقام فارسی به جای ارقام انگلیسی |
 | `days` | `["ش", "ی", "د", "س", "چ", "پ", "ج"]` | نام روزهای هفته |
 | `months` | نام ماه‌های فارسی | نام ماه‌ها در dropdown ماه |
 | `separatorChars` | object | جداکننده‌های تاریخ/زمان و target |
-| `targetValueInput` | `undefined` | selector یا `HTMLInputElement` برای نوشتن مقدار تبدیل‌شده |
-| `targetValueType` | `undefined` | اگر `"gregorian"` باشد مقدار target به میلادی تبدیل می‌شود. |
+| `targetValueInput` | `undefined` | selector یا `HTMLInputElement` برای نوشتن مقدار تبدیل‌شده. با `"attr"` از `data-jdp-target-value-input` خوانده می‌شود |
+| `targetValueType` | `undefined` | اگر `"gregorian"` باشد مقدار target به میلادی تبدیل می‌شود. با `"attr"` از `data-jdp-target-value-type` خوانده می‌شود |
 | `plusHtml` | SVG داخلی | HTML دکمه افزایش سال/ماه |
 | `minusHtml` | SVG داخلی | HTML دکمه کاهش سال/ماه |
 | `dayRendering` | `undefined` | callback برای تغییر وضعیت یا ظاهر روزها |
@@ -300,10 +350,11 @@ jalaliDatepicker.startWatch({
 | `data-jdp-max-time` | حداکثر زمان مجاز |
 | `data-jdp-only-date` | فقط انتخاب تاریخ برای این input |
 | `data-jdp-only-time` | فقط انتخاب زمان برای این input |
+| `data-jdp-mode` | حالت انتخاب برای این input وقتی `mode: "attr"` باشد. مقدارهای معتبر: `single`، `range`، `multiple` |
 | `data-jdp-target-value-input` | selector مربوط به input مقصد |
 | `data-jdp-target-value-type` | نوع مقدار مقصد، مثل `gregorian` |
 
-مثال:
+مثال با attributeهای هر input:
 
 ```html
 <input
@@ -428,3 +479,4 @@ dist/jalalidatepicker.min.js
 - [راهنمای مشارکت](/CONTRIBUTING.md)
 
 </div>
+

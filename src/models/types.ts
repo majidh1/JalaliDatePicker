@@ -22,6 +22,8 @@ export interface SeparatorChars {
 	targetTime: string;
 }
 
+export type DateSelectionMode = "single" | "range" | "multiple";
+
 export interface ValueObject extends Partial<DateObject>, Partial<TimeObject> {}
 
 export interface DayOptions {
@@ -76,11 +78,17 @@ export interface JalaliDatePickerOptions {
 	persianDigits: boolean;
 	plusHtml: string;
 	minusHtml: string;
-	useDropdownYears?: boolean;
-	useDropDownYears: boolean;
+	useDropdownYears: boolean;
+	/**
+	 * @deprecated change to useDropdownYears
+	 */
+	useDropDownYears?: boolean;
 	position: "left" | "right" | "center";
 	minuteIncrement: number;
 	hourIncrement: number;
+	mode: DateSelectionMode | "attr";
+	rangeSeparator: string;
+	multipleSeparator: string;
 }
 
 /**
@@ -106,6 +114,7 @@ export interface JalaliDatePicker {
 	_initDate: DateObject | null;
 	initTime: TimeObject;
 	_initTime: TimeObject | null;
+	selectedDates: DateObject[];
 	_draw(): void;
 	show(input: HTMLInputElement): void;
 	hide(): void;

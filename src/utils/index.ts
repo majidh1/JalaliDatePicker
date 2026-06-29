@@ -3,7 +3,7 @@ import { isNotObjectOrIsEmptyObject, addLeadingZero, extend } from "./object";
 import { getDaysInMonth, toGregorian } from "./jalali";
 import { DateObject, JalaliDatePicker, TimeObject, ValueObject } from "../models/types";
 
-const getDateNumber = (date: DateObject) => date.year * 10000 + date.month * 100 + date.day;
+export const getDateNumber = (date: DateObject) => date.year * 10000 + date.month * 100 + date.day;
 
 const isValidYear = (year: number) => !isNaN(year) && year >= 1000 && year <= 1999;
 const isValidMonth = (month: number) => !isNaN(month) && month >= 1 && month <= 12;
@@ -224,9 +224,61 @@ export const getDateValueStringFromValueObjectWithSep = (jdp: JalaliDatePicker, 
 	return dateStr + betweenStr + timeStr;
 };
 
+const getDateOnlyValueStringWithSep = (jdp: JalaliDatePicker, obj: DateObject, forTarget?: boolean) => {
+	const dateSeparator = forTarget ? jdp.options.separatorChars.targetDate : jdp.options.separatorChars.date;
+	return `${obj.year}${dateSeparator}${addLeadingZero(obj.month)}${dateSeparator}${addLeadingZero(obj.day)}`;
+};
+
 export const getDateValueStringFromValueObject = (jdp: JalaliDatePicker, obj: DateObject) => getDateValueStringFromValueObjectWithSep(jdp, obj);
 
 export const getValueStringFromValueObject = (jdp: JalaliDatePicker, obj: ValueObject) => getDateValueStringFromValueObjectWithSep(jdp, obj);
+
+export const areSameDates = (firstDate: DateObject, secondDate: DateObject) => getDateNumber(firstDate) === getDateNumber(secondDate);
+
+export const sortDates = (dates: DateObject[]) =>
+	dates.slice().sort((firstDate, secondDate) => {
+		const firstDateNumber = getDateNumber(firstDate);
+		const secondDateNumber = getDateNumber(secondDate);
+		if (firstDateNumber < secondDateNumber) return -1;
+		if (firstDateNumber > secondDateNumber) return 1;
+		return 0;
+	});
+
+export const isDateInRange = (date: DateObject, startDate: DateObject, endDate: DateObject) => {
+	const dateNumber = getDateNumber(date);
+	const sortedDates = sortDates([startDate, endDate]);
+	return dateNumber > getDateNumber(sortedDates[0]) && dateNumber < getDateNumber(sortedDates[1]);
+};
+
+export const getDateSelectionValueString = (jdp: JalaliDatePicker, selectedDates: DateObject[], forTarget?: boolean) => {
+	if (!selectedDates.length) return "";
+	const mode = jdp.options.mode || "single";
+	const dates = mode === "range" ? sortDates(selectedDates).slice(0, 2) : selectedDates;
+	const separator = mode === "range" ? jdp.options.rangeSeparator : jdp.options.multipleSeparator;
+	return dates.map((date) => getDateOnlyValueStringWithSep(jdp, date, forTarget)).join(separator);
+};
+
+export const getSelectedDatesFromString = (jdp: JalaliDatePicker, value: string): DateObject[] => {
+	const mode = jdp.options.mode || "single";
+	if (!value || mode === "single") return [];
+	const separator = mode === "range" ? jdp.options.rangeSeparator : jdp.options.multipleSeparator;
+	const dateParts = value.split(separator);
+	const selectedDates: DateObject[] = [];
+
+	for (let i = 0; i < dateParts.length; i++) {
+		const dateValue = dateParts[i].trim();
+		if (isValidDateString(jdp, dateValue)) {
+			const dateObject = getValueObjectFromString(jdp, dateValue);
+			selectedDates.push({
+				year: dateObject.year as number,
+				month: dateObject.month as number,
+				day: dateObject.day as number
+			});
+		}
+	}
+
+	return mode === "range" ? sortDates(selectedDates).slice(0, 2) : selectedDates;
+};
 
 export const isValidDateString = (jdp: JalaliDatePicker, str: string) => {
 	if (!str) {
@@ -249,6 +301,14 @@ export const getConvertedValue = (jdp: JalaliDatePicker) => {
 		return "";
 	}
 	if (jdp.options.targetValueType) {
+		if ((jdp.options.mode || "single") !== "single") {
+			const selectedDates = getSelectedDatesFromString(jdp, value);
+			if (jdp.options.targetValueType === "gregorian") {
+				const gregorianDates = selectedDates.map((date) => extend(date, toGregorian(date.year, date.month, date.day)));
+				return getDateSelectionValueString(jdp, gregorianDates, true);
+			}
+			return value;
+		}
 		const normalValue = getValueObjectFromString(jdp, value);
 		if (jdp.options.targetValueType === "gregorian") {
 			const gregorianValue = toGregorian(normalValue.year, normalValue.month, normalValue.day);

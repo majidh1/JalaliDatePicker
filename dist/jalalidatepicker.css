@@ -27,8 +27,8 @@ jdp-container {
   --jdp-primary: #569ff7;
   --jdp-red: #f44336;
   position: absolute;
-  max-width: calc(var(--jdp-day-size) * 7 + 0.6rem);
-  min-width: calc(var(--jdp-day-size) * 7 + 0.6rem);
+  max-width: calc(var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + 0.6rem);
+  min-width: calc(var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + var(--jdp-day-size) + 0.6rem);
   background: var(--jdp-color-0);
   display: none;
   direction: rtl;
@@ -202,6 +202,16 @@ jdp-container .jdp-day.selected, jdp-container .jdp-day-name.selected {
   background-color: var(--jdp-primary) !important;
   color: var(--jdp-color-0) !important;
   opacity: 1 !important;
+}
+jdp-container .jdp-day.in-range, jdp-container .jdp-day-name.in-range {
+  background-color: var(--jdp-color-2);
+  border-radius: 0;
+}
+jdp-container .jdp-day.range-start, jdp-container .jdp-day-name.range-start {
+  border-radius: 4px 0 0 4px;
+}
+jdp-container .jdp-day.range-end, jdp-container .jdp-day-name.range-end {
+  border-radius: 0 4px 4px 0;
 }
 jdp-container .jdp-day.last-week, jdp-container .jdp-day.holiday-day, jdp-container .jdp-day.holly-day, jdp-container .jdp-day-name.last-week, jdp-container .jdp-day-name.holiday-day, jdp-container .jdp-day-name.holly-day {
   color: var(--jdp-red);

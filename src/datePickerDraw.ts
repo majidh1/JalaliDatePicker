@@ -19,10 +19,13 @@ import {
 	SELECTED_CLASS_NAME,
 	LAST_WEEK_CLASS_NAME,
 	HOLIDAY_CLASS_NAME,
-	DISABLE_CLASS_NAME
+	DISABLE_CLASS_NAME,
+	RANGE_START_CLASS_NAME,
+	RANGE_END_CLASS_NAME,
+	IN_RANGE_CLASS_NAME
 } from "./constants";
 
-import { getValidYears, getValidMonths, isValidDate } from "./utils";
+import { areSameDates, getValidYears, getValidMonths, isDateInRange, isValidDate } from "./utils";
 
 import { extend, isFunction } from "./utils/object";
 
@@ -32,6 +35,33 @@ import { createElement, toPersianDigitsIfNeeded } from "./utils/dom";
 import { DayOptions, JalaliDatePicker } from "./models/types";
 
 const getLastWeekClassIfNecessary = (dayOfWeek: number) => (dayOfWeek === 6 ? `.${LAST_WEEK_CLASS_NAME}.${HOLIDAY_CLASS_NAME}` : "");
+
+const getDateFromDayOptions = (dayOptions: DayOptions) => ({
+	year: dayOptions.year,
+	month: dayOptions.month,
+	day: dayOptions.day
+});
+
+const getSelectionClassName = (jdp: JalaliDatePicker, dayOptions: DayOptions) => {
+	const dayDate = getDateFromDayOptions(dayOptions);
+	const mode = jdp.options.mode || "single";
+	if (mode === "single") {
+		return jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month
+			? `.${SELECTED_CLASS_NAME}`
+			: "";
+	}
+	if (mode === "multiple") {
+		for (let i = 0; i < jdp.selectedDates.length; i++) {
+			if (areSameDates(dayDate, jdp.selectedDates[i])) return `.${SELECTED_CLASS_NAME}`;
+		}
+		return "";
+	}
+	if (!jdp.selectedDates.length) return "";
+	if (areSameDates(dayDate, jdp.selectedDates[0])) return `.${SELECTED_CLASS_NAME}.${RANGE_START_CLASS_NAME}`;
+	if (jdp.selectedDates.length === 2 && areSameDates(dayDate, jdp.selectedDates[1])) return `.${SELECTED_CLASS_NAME}.${RANGE_END_CLASS_NAME}`;
+	if (jdp.selectedDates.length === 2 && isDateInRange(dayDate, jdp.selectedDates[0], jdp.selectedDates[1])) return `.${IN_RANGE_CLASS_NAME}`;
+	return "";
+};
 
 const createElementPlusMinus = (jdp: JalaliDatePicker, container: string | HTMLElement, isYear: boolean, mode: "PLUS" | "MINUS") => {
 	const isPlus = mode === "PLUS";
@@ -189,9 +219,7 @@ const renderDays = (jdp: JalaliDatePicker) => {
 		dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
 		dayOptions.className = getLastWeekClassIfNecessary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
 
-		if (jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month) {
-			dayOptions.className += `.${SELECTED_CLASS_NAME}`;
-		}
+		dayOptions.className += getSelectionClassName(jdp, dayOptions);
 		if (jdp.today.day === dayOptions.day && jdp.today.year === dayOptions.year && jdp.today.month === dayOptions.month) {
 			dayOptions.className += `.${TODAY_CLASS_NAME}`;
 		}

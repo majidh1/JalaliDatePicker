@@ -263,4 +263,118 @@ describe("jalaliDatepicker public API", () => {
 		expect(input.value).toBe("1403/01/02");
 		expect(target.value).toBe("2024-03-21");
 	});
+
+	it("reads target value input and type from attributes", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		const target = document.createElement("input");
+		target.id = "gregorian-date-attr";
+		input.value = "1403/01/01";
+		input.setAttribute("data-jdp-target-value-input", "#gregorian-date-attr");
+		input.setAttribute("data-jdp-target-value-type", "gregorian");
+		document.body.append(input, target);
+
+		jdp.startWatch({
+			autoShow: false,
+			targetValueInput: "attr",
+			targetValueType: "attr",
+			today: {
+				year: 1403,
+				month: 1,
+				day: 1
+			}
+		});
+		jdp.show(input);
+		findDay(2, 1, 1403)?.click();
+
+		expect(input.value).toBe("1403/01/02");
+		expect(target.value).toBe("2024-03-21");
+	});
+
+	it("selects a date range and highlights the days inside it", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			hideAfterChange: false,
+			mode: "range",
+			today: {
+				year: 1403,
+				month: 1,
+				day: 1
+			}
+		});
+		jdp.show(input);
+		findDay(10, 1, 1403)?.click();
+		findDay(12, 1, 1403)?.click();
+
+		expect(input.value).toBe("1403/01/10 - 1403/01/12");
+		expect(findDay(10, 1, 1403)?.classList.contains("range-start")).toBe(true);
+		expect(findDay(11, 1, 1403)?.classList.contains("in-range")).toBe(true);
+		expect(findDay(12, 1, 1403)?.classList.contains("range-end")).toBe(true);
+	});
+
+	it("selects and toggles multiple dates", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			mode: "multiple",
+			today: {
+				year: 1403,
+				month: 1,
+				day: 1
+			}
+		});
+		jdp.show(input);
+		findDay(12, 1, 1403)?.click();
+		findDay(10, 1, 1403)?.click();
+
+		expect(input.value).toBe("1403/01/10, 1403/01/12");
+		expect(findDay(10, 1, 1403)?.classList.contains("selected")).toBe(true);
+		expect(findDay(12, 1, 1403)?.classList.contains("selected")).toBe(true);
+
+		findDay(10, 1, 1403)?.click();
+
+		expect(input.value).toBe("1403/01/12");
+		expect(findDay(10, 1, 1403)?.classList.contains("selected")).toBe(false);
+		expect(findDay(12, 1, 1403)?.classList.contains("selected")).toBe(true);
+	});
+
+	it("reads selection mode from each input attribute", async () => {
+		const jdp = await loadDatepicker();
+		const rangeInput = document.createElement("input");
+		const multipleInput = document.createElement("input");
+		rangeInput.setAttribute("data-jdp-mode", "range");
+		multipleInput.setAttribute("data-jdp-mode", "multiple");
+		document.body.append(rangeInput, multipleInput);
+
+		jdp.startWatch({
+			autoShow: false,
+			hideAfterChange: false,
+			mode: "attr",
+			today: {
+				year: 1403,
+				month: 1,
+				day: 1
+			}
+		});
+
+		jdp.show(rangeInput);
+		findDay(3, 1, 1403)?.click();
+		findDay(5, 1, 1403)?.click();
+
+		expect(rangeInput.value).toBe("1403/01/03 - 1403/01/05");
+
+		jdp.show(multipleInput);
+		findDay(7, 1, 1403)?.click();
+		findDay(9, 1, 1403)?.click();
+
+		expect(multipleInput.value).toBe("1403/01/07, 1403/01/09");
+	});
 });
+

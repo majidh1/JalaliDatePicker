@@ -4,9 +4,8 @@
 $daySize: var(--jdp-day-size);
 $radius: 4px;
 $container-padding: 0.3rem;
-$daySize-all: calc($daySize * 7);
 $rowPadding: calc($container-padding * 2);
-$calendarWidth: calc($daySize-all + $rowPadding);
+$calendarWidth: calc($daySize + $daySize + $daySize + $daySize + $daySize + $daySize + $daySize + $rowPadding);
 $controls-parent-width: 45%;
 $controls-btn-size: 1.5rem;
 $controls-btn-padding: math.div($controls-btn-size, 6);
@@ -226,6 +225,19 @@ jdp-container {
 				background-color: var(--jdp-primary) !important;
 				color: var(--jdp-color-0) !important;
 				opacity: 1 !important;
+			}
+
+			&.in-range {
+				background-color: var(--jdp-color-2);
+				border-radius: 0;
+			}
+
+			&.range-start {
+				border-radius: $radius 0 0 $radius;
+			}
+
+			&.range-end {
+				border-radius: 0 $radius $radius 0;
 			}
 
 			&.last-week,

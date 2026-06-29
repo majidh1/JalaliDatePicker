@@ -8,7 +8,11 @@ import {
 	normalizeMinMaxTime,
 	isValidDateString,
 	isValidTimeString,
-	getConvertedValue
+	getConvertedValue,
+	getDateSelectionValueString,
+	getSelectedDatesFromString,
+	sortDates,
+	areSameDates
 } from "./utils";
 import { extend, clone, isString, isNotObjectOrIsEmptyObject } from "./utils/object";
 import { getScrollParent, getEventTarget, containsDom, triggerEvent, createElement } from "./utils/dom";
@@ -96,6 +100,7 @@ const jalaliDatepicker: JalaliDatePicker = {
 	show(input: HTMLInputElement) {
 		resetCurrentInputState(this);
 		this.input = input;
+		setSelectedDatesFromInput(this);
 		this._draw();
 		setReadOnly(input, this.options);
 		this.isTransitioning = true;
@@ -160,6 +165,10 @@ const jalaliDatepicker: JalaliDatePicker = {
 		return this._value;
 	},
 	setValue(objValue) {
+		if (this.options.date && (this.options.mode || "single") !== "single" && isDateValue(objValue)) {
+			setDateSelectionValue(this, objValue);
+			return;
+		}
 		this._value = extend(
 			{
 				year: this.today.year,
@@ -184,6 +193,7 @@ const jalaliDatepicker: JalaliDatePicker = {
 		}
 	},
 	cleanValue() {
+		this.selectedDates = [];
 		if (this.input) {
 			this.input.value = "";
 			triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
@@ -246,6 +256,7 @@ const jalaliDatepicker: JalaliDatePicker = {
 	_initDate: null,
 	_initTime: null,
 	_value: null,
+	selectedDates: [],
 	isShow: false
 };
 
@@ -287,6 +298,64 @@ function resetCurrentInputState(jdp: JalaliDatePicker) {
 	jdp._initDate = null;
 	jdp._initTime = null;
 	jdp._value = null;
+	jdp.selectedDates = [];
+}
+
+function isDateValue(value: Partial<DateObject>): value is DateObject {
+	return typeof value.year === "number" && typeof value.month === "number" && typeof value.day === "number";
+}
+
+function setSelectedDatesFromInput(jdp: JalaliDatePicker) {
+	if ((jdp.options.mode || "single") === "single") return;
+	jdp.selectedDates = getSelectedDatesFromString(jdp, jdp.input?.value || "");
+}
+
+function setDateSelectionValue(jdp: JalaliDatePicker, date: DateObject) {
+	if ((jdp.options.mode || "single") === "range") {
+		setRangeDateSelection(jdp, date);
+	} else {
+		setMultipleDateSelection(jdp, date);
+	}
+	writeDateSelectionValue(jdp);
+}
+
+function setRangeDateSelection(jdp: JalaliDatePicker, date: DateObject) {
+	if (!jdp.selectedDates.length || jdp.selectedDates.length === 2) {
+		jdp.selectedDates = [date];
+		return;
+	}
+	jdp.selectedDates = sortDates([jdp.selectedDates[0], date]);
+}
+
+function setMultipleDateSelection(jdp: JalaliDatePicker, date: DateObject) {
+	const selectedDates: DateObject[] = [];
+	let shouldAddDate = true;
+
+	for (let i = 0; i < jdp.selectedDates.length; i++) {
+		if (areSameDates(jdp.selectedDates[i], date)) {
+			shouldAddDate = false;
+		} else {
+			selectedDates.push(jdp.selectedDates[i]);
+		}
+	}
+
+	if (shouldAddDate) {
+		selectedDates.push(date);
+	}
+	jdp.selectedDates = sortDates(selectedDates);
+}
+
+function writeDateSelectionValue(jdp: JalaliDatePicker) {
+	if (jdp.input) {
+		jdp.input.value = getDateSelectionValueString(jdp, jdp.selectedDates);
+		triggerEvent(jdp.input, EVENT_CHANGE_INPUT_STR);
+	}
+	jdp.setTargetValue();
+	if ((jdp.options.mode || "single") === "range" && jdp.selectedDates.length === 2 && jdp.options.hideAfterChange) {
+		jdp.hide();
+	} else {
+		jdp._draw();
+	}
 }
 
 function setPickerVisibility(jdp: JalaliDatePicker, isVisible: boolean) {

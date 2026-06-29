@@ -182,6 +182,33 @@ describe("value parsing and formatting", () => {
 
 		expect(getConvertedValue(jdp)).toBe("2024-03-20 08:05:03");
 	});
+
+	it("converts range and multiple target values to Gregorian when requested", () => {
+		const rangeInput = document.createElement("input");
+		rangeInput.value = "1403/01/01 - 1403/01/02";
+		const rangeJdp = createJdp({
+			input: rangeInput,
+			options: createOptions({
+				mode: "range",
+				rangeSeparator: " - ",
+				targetValueType: "gregorian"
+			})
+		});
+
+		const multipleInput = document.createElement("input");
+		multipleInput.value = "1403/01/01, 1403/01/02";
+		const multipleJdp = createJdp({
+			input: multipleInput,
+			options: createOptions({
+				mode: "multiple",
+				multipleSeparator: ", ",
+				targetValueType: "gregorian"
+			})
+		});
+
+		expect(getConvertedValue(rangeJdp)).toBe("2024-03-20 - 2024-03-21");
+		expect(getConvertedValue(multipleJdp)).toBe("2024-03-20, 2024-03-21");
+	});
 });
 
 describe("min/max normalization", () => {
@@ -270,3 +297,4 @@ describe("min/max normalization", () => {
 		});
 	});
 });
+

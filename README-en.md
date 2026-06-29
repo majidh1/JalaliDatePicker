@@ -193,6 +193,53 @@ jalaliDatepicker.updateOptions(options);
 
 If the user selects `1403/01/01`, the target input receives `2024-03-20`.
 
+### Range Selection
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "range",
+  rangeSeparator: " - "
+ });
+</script>
+```
+
+Selecting `1403/01/01` and `1403/01/05` writes `1403/01/01 - 1403/01/05`.
+Range and multiple modes write date-only values.
+
+### Multiple Date Selection
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "multiple",
+  multipleSeparator: ", "
+ });
+</script>
+```
+
+Selected dates are sorted and written as a separated list, for example `1403/01/01, 1403/01/05`.
+Range and multiple modes write date-only values.
+
+### Per-Input Selection Mode
+
+```html
+<input data-jdp data-jdp-mode="range">
+<input data-jdp data-jdp-mode="multiple">
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "attr"
+ });
+</script>
+```
+
+When `mode` is `"attr"`, each input reads its mode from `data-jdp-mode`. Valid values are `single`, `range`, and `multiple`.
+
 ### Customize Day Rendering
 
 ```js
@@ -243,12 +290,15 @@ jalaliDatepicker.startWatch({
 | `overflowSpace` | `-10` | Edge spacing used when preventing viewport overflow |
 | `minuteIncrement` | `1` | Minute dropdown step |
 | `hourIncrement` | `1` | Hour dropdown step |
+| `mode` | `"single"` | Date selection mode: `"single"`, `"range"`, `"multiple"`, or `"attr"` |
+| `rangeSeparator` | `" - "` | Separator used between start and end dates in range mode |
+| `multipleSeparator` | `", "` | Separator used between dates in multiple mode |
 | `persianDigits` | `false` | Displays Persian digits instead of English digits |
 | `days` | `["ش", "ی", "د", "س", "چ", "پ", "ج"]` | Weekday labels |
 | `months` | Persian month names | Month dropdown labels |
 | `separatorChars` | object | Date/time and target separators |
-| `targetValueInput` | `undefined` | Selector or `HTMLInputElement` that receives the converted value |
-| `targetValueType` | `undefined` | Use `"gregorian"` to write Gregorian values to the target. |
+| `targetValueInput` | `undefined` | Selector or `HTMLInputElement` that receives the converted value. Use `"attr"` to read it from `data-jdp-target-value-input` |
+| `targetValueType` | `undefined` | Use `"gregorian"` to write Gregorian values to the target, or `"attr"` to read the type from `data-jdp-target-value-type` |
 | `plusHtml` | Built-in SVG | HTML used for the year/month increment button |
 | `minusHtml` | Built-in SVG | HTML used for the year/month decrement button |
 | `dayRendering` | `undefined` | Callback for changing day state or classes |
@@ -296,10 +346,11 @@ jalaliDatepicker.startWatch({
 | `data-jdp-max-time` | Maximum allowed time |
 | `data-jdp-only-date` | Enables date-only mode for this input |
 | `data-jdp-only-time` | Enables time-only mode for this input |
+| `data-jdp-mode` | Selection mode for this input when `mode: "attr"` is used. Valid values: `single`, `range`, `multiple` |
 | `data-jdp-target-value-input` | Selector for the target input |
 | `data-jdp-target-value-type` | Target value type, such as `gregorian` |
 
-Example:
+Example with per-input attributes:
 
 ```html
 <input
@@ -422,3 +473,4 @@ dist/jalalidatepicker.min.js
 - [Changelog](/ChangeLog-en.md)
 - [Samples](/Sample.md)
 - [Contributing](/CONTRIBUTING.md)
+

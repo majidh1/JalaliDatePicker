@@ -27,6 +27,9 @@ export const TODAY_CLASS_NAME = "today";
 export const LAST_WEEK_CLASS_NAME = "last-week";
 export const DISABLE_CLASS_NAME = "not-in-range";
 export const HOLIDAY_CLASS_NAME = "holiday-day";
+export const RANGE_START_CLASS_NAME = "range-start";
+export const RANGE_END_CLASS_NAME = "range-end";
+export const IN_RANGE_CLASS_NAME = "in-range";
 
 export const CONTAINER_ELM_QUERY = CONTAINER_ELEMENT_QUERY;
 export const OVERLAY_ELM_QUERY = OVERLAY_ELEMENT_QUERY;
@@ -68,8 +71,39 @@ export const MAX_TIME_ATTR_NAME = DATA_JDP + "max-time";
 export const MIN_TIME_ATTR_NAME = DATA_JDP + "min-time";
 export const TARGET_VALUE_INPUT_ATTR_NAME = DATA_JDP + "target-value-input";
 export const TARGET_VALUE_TYPE_ATTR_NAME = DATA_JDP + "target-value-type";
+export const MODE_ATTR_NAME = DATA_JDP + "mode";
 export const ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-date";
 export const ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-time";
+
+export const DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+export const DEFAULT_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+export const DEFAULT_SEPARATOR_CHARS = {
+	date: "/",
+	between: " ",
+	time: ":",
+	targetDate: "-",
+	targetBetween: " ",
+	targetTime: ":"
+};
+export const TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
+export const ATTR_OPTION_NAMES = {
+	initDate: INIT_DATE_ATTR_NAME,
+	minDate: MIN_DATE_ATTR_NAME,
+	maxDate: MAX_DATE_ATTR_NAME,
+	minTime: MIN_TIME_ATTR_NAME,
+	maxTime: MAX_TIME_ATTR_NAME,
+	targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
+	targetValueType: TARGET_VALUE_TYPE_ATTR_NAME,
+	mode: MODE_ATTR_NAME
+};
+export const TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
+export const SELECTION_MODE_NAMES = ["single", "range", "multiple"];
+export const DEFAULT_RANGE_SEPARATOR = " - ";
+export const DEFAULT_MULTIPLE_SEPARATOR = ", ";
+// eslint-disable-next-line @typescript-eslint/quotes, quotes
+export const DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
+// eslint-disable-next-line @typescript-eslint/quotes, quotes
+export const DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
 
 export const STYLE_VISIBILITY_VISIBLE = "visible";
 export const STYLE_VISIBILITY_HIDDEN = "hidden";

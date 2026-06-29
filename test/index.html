@@ -1,4 +1,4 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml">
 	<head>
 		<title>Test</title>
 		<meta charset="UTF-8" />
@@ -46,7 +46,13 @@
 			<div class="row">
 				<div class="col d-flex flex-column gap-3">
 					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</button>
-					<input data-jdp-target-value-input="#gregorianDateSample" data-jdp placeholder="simple" class="form-control" value="1404/04/05 > 1404/04/10" />
+					<input
+						data-jdp-target-value-input="#gregorianDateSample"
+						data-jdp-target-value-type="gregorian"
+						data-jdp
+						placeholder="simple"
+						class="form-control"
+						value="1404/04/05 - 1404/04/10" />
 					<input id="gregorianDateSample" />
 					<input type="text" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" data-jdp-only-date class="form-control" />
 					<input type="text" data-jdp data-jdp-min-date="today" placeholder="نمایش تاریخ از امروز" data-jdp-only-date class="form-control" />
@@ -54,6 +60,8 @@
 					<input type="text" data-jdp data-jdp-max-date="1400/05/10" placeholder="نمایش تاریخ تا 1400/05/10" data-jdp-only-date class="form-control" />
 					<input type="text" data-jdp placeholder="انتخاب تاریخ و زمان" class="form-control" />
 					<input type="text" data-jdp placeholder="امکان انتخاب فقط زمان" data-jdp-only-time class="form-control" />
+					<input type="text" data-jdp data-jdp-mode="range" placeholder="انتخاب بازه تاریخ" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-mode="multiple" placeholder="انتخاب چند تاریخ" data-jdp-only-date class="form-control" />
 				</div>
 				<div class="col">
 					<div class="bg-warning p-2 rounded">
@@ -231,6 +239,17 @@
 										</select>
 									</div>
 								</td>
+								<td>
+									<div>
+										<label for="mode-selector" class="form-label">Selection Mode</label>
+										<select id="mode-selector" class="form-select" data-key="mode">
+											<option value="single" selected>Single</option>
+											<option value="range">Range</option>
+											<option value="multiple">Multiple</option>
+											<option value="attr">Read From Attribute</option>
+										</select>
+									</div>
+								</td>
 							</tr>
 							<tr>
 								<td>
@@ -257,6 +276,42 @@
 									<div>
 										<label for="maxTime" class="form-label">maxTime</label>
 										<input class="form-control" type="text" id="maxTime" data-key="maxTime" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<h5 class="mt-2">Target Value</h5>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="targetValueInput" class="form-label">targetValueInput</label>
+										<input class="form-control" type="text" id="targetValueInput" data-key="targetValueInput" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="targetValueType" class="form-label">targetValueType</label>
+										<select id="targetValueType" class="form-select" data-key="targetValueType">
+											<option value="attr">Read From Attribute</option>
+											<option value="gregorian">Gregorian</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="rangeSeparator" class="form-label">rangeSeparator</label>
+										<input class="form-control" type="text" id="rangeSeparator" data-key="rangeSeparator" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="multipleSeparator" class="form-label">multipleSeparator</label>
+										<input class="form-control" type="text" id="multipleSeparator" data-key="multipleSeparator" />
 									</div>
 								</td>
 							</tr>
@@ -351,7 +406,7 @@
 					zIndex: 9999,
 					position: "right",
 					targetValueInput: "attr",
-					targetValueType: "gregorian",
+					targetValueType: "attr",
 					useDropDownYears: false,
 					persianDigits: false,
 					autoShow: true,
@@ -360,6 +415,9 @@
 					showSelectTimeBtnAlways: false,
 					minuteIncrement: 1,
 					hourIncrement: 1,
+					mode: "single",
+					rangeSeparator: " - ",
+					multipleSeparator: ", ",
 					separatorChars: {
 						date: "/",
 						between: " ",
@@ -436,3 +494,4 @@
 			crossorigin="anonymous"></script>
 	</body>
 </html>
+

@@ -373,8 +373,57 @@
     var betweenStr = dateStr && timeStr ? between : "";
     return dateStr + betweenStr + timeStr;
   };
+  var getDateOnlyValueStringWithSep = function getDateOnlyValueStringWithSep(jdp, obj, forTarget) {
+    var dateSeparator = forTarget ? jdp.options.separatorChars.targetDate : jdp.options.separatorChars.date;
+    return "" + obj.year + dateSeparator + addLeadingZero(obj.month) + dateSeparator + addLeadingZero(obj.day);
+  };
   var getValueStringFromValueObject = function getValueStringFromValueObject(jdp, obj) {
     return getDateValueStringFromValueObjectWithSep(jdp, obj);
+  };
+  var areSameDates = function areSameDates(firstDate, secondDate) {
+    return getDateNumber(firstDate) === getDateNumber(secondDate);
+  };
+  var sortDates = function sortDates(dates) {
+    return dates.slice().sort(function (firstDate, secondDate) {
+      var firstDateNumber = getDateNumber(firstDate);
+      var secondDateNumber = getDateNumber(secondDate);
+      if (firstDateNumber < secondDateNumber) return -1;
+      if (firstDateNumber > secondDateNumber) return 1;
+      return 0;
+    });
+  };
+  var isDateInRange = function isDateInRange(date, startDate, endDate) {
+    var dateNumber = getDateNumber(date);
+    var sortedDates = sortDates([startDate, endDate]);
+    return dateNumber > getDateNumber(sortedDates[0]) && dateNumber < getDateNumber(sortedDates[1]);
+  };
+  var getDateSelectionValueString = function getDateSelectionValueString(jdp, selectedDates, forTarget) {
+    if (!selectedDates.length) return "";
+    var mode = jdp.options.mode || "single";
+    var dates = mode === "range" ? sortDates(selectedDates).slice(0, 2) : selectedDates;
+    var separator = mode === "range" ? jdp.options.rangeSeparator : jdp.options.multipleSeparator;
+    return dates.map(function (date) {
+      return getDateOnlyValueStringWithSep(jdp, date, forTarget);
+    }).join(separator);
+  };
+  var getSelectedDatesFromString = function getSelectedDatesFromString(jdp, value) {
+    var mode = jdp.options.mode || "single";
+    if (!value || mode === "single") return [];
+    var separator = mode === "range" ? jdp.options.rangeSeparator : jdp.options.multipleSeparator;
+    var dateParts = value.split(separator);
+    var selectedDates = [];
+    for (var i = 0; i < dateParts.length; i++) {
+      var dateValue = dateParts[i].trim();
+      if (isValidDateString(jdp, dateValue)) {
+        var dateObject = getValueObjectFromString(jdp, dateValue);
+        selectedDates.push({
+          year: dateObject.year,
+          month: dateObject.month,
+          day: dateObject.day
+        });
+      }
+    }
+    return mode === "range" ? sortDates(selectedDates).slice(0, 2) : selectedDates;
   };
   var isValidDateString = function isValidDateString(jdp, str) {
     if (!str) {
@@ -395,6 +444,16 @@
       return "";
     }
     if (jdp.options.targetValueType) {
+      if ((jdp.options.mode || "single") !== "single") {
+        var selectedDates = getSelectedDatesFromString(jdp, value);
+        if (jdp.options.targetValueType === "gregorian") {
+          var gregorianDates = selectedDates.map(function (date) {
+            return _extend(date, toGregorian(date.year, date.month, date.day));
+          });
+          return getDateSelectionValueString(jdp, gregorianDates, true);
+        }
+        return value;
+      }
       var normalValue = getValueObjectFromString(jdp, value);
       if (jdp.options.targetValueType === "gregorian") {
         var gregorianValue = toGregorian(normalValue.year, normalValue.month, normalValue.day);
@@ -431,6 +490,9 @@
   var LAST_WEEK_CLASS_NAME = "last-week";
   var DISABLE_CLASS_NAME = "not-in-range";
   var HOLIDAY_CLASS_NAME = "holiday-day";
+  var RANGE_START_CLASS_NAME = "range-start";
+  var RANGE_END_CLASS_NAME = "range-end";
+  var IN_RANGE_CLASS_NAME = "in-range";
   var EVENT_CHANGE_INPUT_STR = NAMESPACE + ":change";
   var EVENT_CHANGE_MONTH_DROPDOWN_STR = "change";
   var EVENT_CHANGE_TIME_DROPDOWN_STR = EVENT_CHANGE_MONTH_DROPDOWN_STR;
@@ -448,8 +510,36 @@
   var MIN_TIME_ATTR_NAME = DATA_JDP + "min-time";
   var TARGET_VALUE_INPUT_ATTR_NAME = DATA_JDP + "target-value-input";
   var TARGET_VALUE_TYPE_ATTR_NAME = DATA_JDP + "target-value-type";
+  var MODE_ATTR_NAME = DATA_JDP + "mode";
   var ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-date";
   var ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-time";
+  var DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+  var DEFAULT_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+  var DEFAULT_SEPARATOR_CHARS = {
+    date: "/",
+    between: " ",
+    time: ":",
+    targetDate: "-",
+    targetBetween: " ",
+    targetTime: ":"
+  };
+  var TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
+  var ATTR_OPTION_NAMES = {
+    initDate: INIT_DATE_ATTR_NAME,
+    minDate: MIN_DATE_ATTR_NAME,
+    maxDate: MAX_DATE_ATTR_NAME,
+    minTime: MIN_TIME_ATTR_NAME,
+    maxTime: MAX_TIME_ATTR_NAME,
+    targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
+    targetValueType: TARGET_VALUE_TYPE_ATTR_NAME,
+    mode: MODE_ATTR_NAME
+  };
+  var TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
+  var SELECTION_MODE_NAMES = ["single", "range", "multiple"];
+  var DEFAULT_RANGE_SEPARATOR = " - ";
+  var DEFAULT_MULTIPLE_SEPARATOR = ", ";
+  var DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
+  var DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
   var STYLE_VISIBILITY_VISIBLE = "visible";
   var STYLE_VISIBILITY_HIDDEN = "hidden";
   var STYLE_DISPLAY_BLOCK = "block";
@@ -635,6 +725,31 @@
   var getLastWeekClassIfNecessary = function getLastWeekClassIfNecessary(dayOfWeek) {
     return dayOfWeek === 6 ? "." + LAST_WEEK_CLASS_NAME + "." + HOLIDAY_CLASS_NAME : "";
   };
+  var getDateFromDayOptions = function getDateFromDayOptions(dayOptions) {
+    return {
+      year: dayOptions.year,
+      month: dayOptions.month,
+      day: dayOptions.day
+    };
+  };
+  var getSelectionClassName = function getSelectionClassName(jdp, dayOptions) {
+    var dayDate = getDateFromDayOptions(dayOptions);
+    var mode = jdp.options.mode || "single";
+    if (mode === "single") {
+      return jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month ? "." + SELECTED_CLASS_NAME : "";
+    }
+    if (mode === "multiple") {
+      for (var i = 0; i < jdp.selectedDates.length; i++) {
+        if (areSameDates(dayDate, jdp.selectedDates[i])) return "." + SELECTED_CLASS_NAME;
+      }
+      return "";
+    }
+    if (!jdp.selectedDates.length) return "";
+    if (areSameDates(dayDate, jdp.selectedDates[0])) return "." + SELECTED_CLASS_NAME + "." + RANGE_START_CLASS_NAME;
+    if (jdp.selectedDates.length === 2 && areSameDates(dayDate, jdp.selectedDates[1])) return "." + SELECTED_CLASS_NAME + "." + RANGE_END_CLASS_NAME;
+    if (jdp.selectedDates.length === 2 && isDateInRange(dayDate, jdp.selectedDates[0], jdp.selectedDates[1])) return "." + IN_RANGE_CLASS_NAME;
+    return "";
+  };
   var createElementPlusMinus = function createElementPlusMinus(jdp, container, isYear, mode) {
     var _jdp$options$maxDate2, _jdp$options$maxDate3, _jdp$options$minDate2, _jdp$options$minDate3;
     var isPlus = mode === "PLUS";
@@ -771,9 +886,7 @@
       }
       dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
       dayOptions.className = getLastWeekClassIfNecessary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
-      if (jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month) {
-        dayOptions.className += "." + SELECTED_CLASS_NAME;
-      }
+      dayOptions.className += getSelectionClassName(jdp, dayOptions);
       if (jdp.today.day === dayOptions.day && jdp.today.year === dayOptions.year && jdp.today.month === dayOptions.month) {
         dayOptions.className += "." + TODAY_CLASS_NAME;
       }
@@ -855,29 +968,6 @@
     render(this);
   }
   var isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test((_window$navigator = window.navigator) == null || (_window$navigator = _window$navigator.userAgent) == null ? void 0 : _window$navigator.toLowerCase());
-  var DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
-  var DEFAULT_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-  var DEFAULT_SEPARATOR_CHARS = {
-    date: "/",
-    between: " ",
-    time: ":",
-    targetDate: "-",
-    targetBetween: " ",
-    targetTime: ":"
-  };
-  var TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
-  var ATTR_OPTION_NAMES = {
-    initDate: INIT_DATE_ATTR_NAME,
-    minDate: MIN_DATE_ATTR_NAME,
-    maxDate: MAX_DATE_ATTR_NAME,
-    minTime: MIN_TIME_ATTR_NAME,
-    maxTime: MAX_TIME_ATTR_NAME,
-    targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
-    targetValueType: TARGET_VALUE_TYPE_ATTR_NAME
-  };
-  var TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
-  var DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
-  var DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
   var getTimeValueObjectFromParts = function getTimeValueObjectFromParts(parts, hasSecond) {
     if (!isValidTimeParts(parts, hasSecond)) {
       return null;
@@ -890,6 +980,9 @@
   };
   var getTimeValueObjectFromTimeOnlyString = function getTimeValueObjectFromTimeOnlyString(jdp, timeString) {
     return getTimeValueObjectFromParts(timeString.split(jdp.options.separatorChars.time), jdp.options.hasSecond);
+  };
+  var normalizeSelectionMode = function normalizeSelectionMode(mode) {
+    return mode && SELECTION_MODE_NAMES.indexOf(mode) > -1 ? mode : "single";
   };
   var normalizeOptions = function normalizeOptions(externalOptions, internalOptions, jdp) {
     var setDefaultValue = function setDefaultValue(propertyName, defaultValue) {
@@ -927,6 +1020,10 @@
         var _jdp$input5;
         return (_jdp$input5 = jdp.input) == null ? void 0 : _jdp$input5.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
       };
+      if (propertyName === "mode") return function () {
+        var _jdp$input6;
+        return normalizeSelectionMode((_jdp$input6 = jdp.input) == null ? void 0 : _jdp$input6.getAttribute(MODE_ATTR_NAME));
+      };
       var attrName = ATTR_OPTION_NAMES[propertyName];
       var isTime = TIME_ATTR_OPTION_NAMES.indexOf(propertyName) > -1;
       return function () {
@@ -946,16 +1043,16 @@
           var _date = (_externalOptions$date = externalOptions.date) != null ? _externalOptions$date : internalOptions.date;
           delete internalOptions[propertyName];
           getterFunc = function getterFunc() {
-            var _jdp$input6, _jdp$input7;
-            return !((_jdp$input6 = jdp.input) != null && _jdp$input6.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (_date || ((_jdp$input7 = jdp.input) == null ? void 0 : _jdp$input7.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));
+            var _jdp$input7, _jdp$input8;
+            return !((_jdp$input7 = jdp.input) != null && _jdp$input7.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (_date || ((_jdp$input8 = jdp.input) == null ? void 0 : _jdp$input8.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));
           };
         } else if (propertyName === "time") {
           var _externalOptions$time;
           var _time = (_externalOptions$time = externalOptions.time) != null ? _externalOptions$time : internalOptions.time;
           delete internalOptions[propertyName];
           getterFunc = function getterFunc() {
-            var _jdp$input8, _jdp$input9;
-            return !((_jdp$input8 = jdp.input) != null && _jdp$input8.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input9 = jdp.input) == null ? void 0 : _jdp$input9.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
+            var _jdp$input9, _jdp$input0;
+            return !((_jdp$input9 = jdp.input) != null && _jdp$input9.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input0 = jdp.input) == null ? void 0 : _jdp$input0.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
           };
         } else {
           getterFunc = getAttrGetter(propertyName);
@@ -1006,6 +1103,9 @@
     setDefaultValue("position", "left");
     setDefaultValue("minuteIncrement", 1);
     setDefaultValue("hourIncrement", 1);
+    setDefaultValue("mode", "single");
+    setDefaultValue("rangeSeparator", DEFAULT_RANGE_SEPARATOR);
+    setDefaultValue("multipleSeparator", DEFAULT_MULTIPLE_SEPARATOR);
     if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
     if (externalOptions.initTime && externalOptions.initTime !== MIN_MAX_TODAY_SETTING && externalOptions.initTime !== OPTION_ATTR_SETTING) {
       internalOptions.initTime = externalOptions.initTime;
@@ -1022,6 +1122,7 @@
     internalOptions = setDefinePropertyFromAttr("maxTime");
     internalOptions = setDefinePropertyFromAttr("targetValueInput");
     internalOptions = setDefinePropertyFromAttr("targetValueType");
+    internalOptions = setDefinePropertyFromAttr("mode");
     return internalOptions;
   };
   var JalaliDatePickerInternalOptions = /*#__PURE__*/function () {
@@ -1062,10 +1163,16 @@
       this.plusHtml = void 0;
       this.minusHtml = void 0;
       this.useDropdownYears = void 0;
+      /**
+       * @deprecated change to useDropdownYears
+       */
       this.useDropDownYears = void 0;
       this.position = void 0;
       this.minuteIncrement = void 0;
       this.hourIncrement = void 0;
+      this.mode = void 0;
+      this.rangeSeparator = void 0;
+      this.multipleSeparator = void 0;
       normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
     }
     var _proto = JalaliDatePickerInternalOptions.prototype;
@@ -1140,6 +1247,7 @@
       var _this = this;
       resetCurrentInputState(this);
       this.input = input;
+      setSelectedDatesFromInput(this);
       this._draw();
       setReadOnly(input, this.options);
       this.isTransitioning = true;
@@ -1201,6 +1309,10 @@
       return this._value;
     },
     setValue: function setValue(objValue) {
+      if (this.options.date && (this.options.mode || "single") !== "single" && isDateValue(objValue)) {
+        setDateSelectionValue(this, objValue);
+        return;
+      }
       this._value = _extend({
         year: this.today.year,
         month: this.today.month,
@@ -1222,6 +1334,7 @@
       }
     },
     cleanValue: function cleanValue() {
+      this.selectedDates = [];
       if (this.input) {
         this.input.value = "";
         triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
@@ -1283,6 +1396,7 @@
     _initDate: null,
     _initTime: null,
     _value: null,
+    selectedDates: [],
     isShow: false
   };
   function getCurrentTime() {
@@ -1294,8 +1408,8 @@
     };
   }
   function getInitialDate(jdp) {
-    var _jdp$input0;
-    var inputValue = ((_jdp$input0 = jdp.input) == null ? void 0 : _jdp$input0.value) || "";
+    var _jdp$input1;
+    var inputValue = ((_jdp$input1 = jdp.input) == null ? void 0 : _jdp$input1.value) || "";
     if (!inputValue) {
       return jdp.options.initDate || clone(jdp.today);
     }
@@ -1305,9 +1419,9 @@
     return clone(jdp.today);
   }
   function getInitialTime(jdp) {
-    var _jdp$input1;
+    var _jdp$input10;
     var defaultInit = getCurrentTime();
-    var initTime = ((_jdp$input1 = jdp.input) == null ? void 0 : _jdp$input1.value) || jdp.options.initTime || defaultInit;
+    var initTime = ((_jdp$input10 = jdp.input) == null ? void 0 : _jdp$input10.value) || jdp.options.initTime || defaultInit;
     if (!isString(initTime)) {
       return initTime;
     }
@@ -1320,6 +1434,57 @@
     jdp._initDate = null;
     jdp._initTime = null;
     jdp._value = null;
+    jdp.selectedDates = [];
+  }
+  function isDateValue(value) {
+    return typeof value.year === "number" && typeof value.month === "number" && typeof value.day === "number";
+  }
+  function setSelectedDatesFromInput(jdp) {
+    var _jdp$input11;
+    if ((jdp.options.mode || "single") === "single") return;
+    jdp.selectedDates = getSelectedDatesFromString(jdp, ((_jdp$input11 = jdp.input) == null ? void 0 : _jdp$input11.value) || "");
+  }
+  function setDateSelectionValue(jdp, date) {
+    if ((jdp.options.mode || "single") === "range") {
+      setRangeDateSelection(jdp, date);
+    } else {
+      setMultipleDateSelection(jdp, date);
+    }
+    writeDateSelectionValue(jdp);
+  }
+  function setRangeDateSelection(jdp, date) {
+    if (!jdp.selectedDates.length || jdp.selectedDates.length === 2) {
+      jdp.selectedDates = [date];
+      return;
+    }
+    jdp.selectedDates = sortDates([jdp.selectedDates[0], date]);
+  }
+  function setMultipleDateSelection(jdp, date) {
+    var selectedDates = [];
+    var shouldAddDate = true;
+    for (var i = 0; i < jdp.selectedDates.length; i++) {
+      if (areSameDates(jdp.selectedDates[i], date)) {
+        shouldAddDate = false;
+      } else {
+        selectedDates.push(jdp.selectedDates[i]);
+      }
+    }
+    if (shouldAddDate) {
+      selectedDates.push(date);
+    }
+    jdp.selectedDates = sortDates(selectedDates);
+  }
+  function writeDateSelectionValue(jdp) {
+    if (jdp.input) {
+      jdp.input.value = getDateSelectionValueString(jdp, jdp.selectedDates);
+      triggerEvent(jdp.input, EVENT_CHANGE_INPUT_STR);
+    }
+    jdp.setTargetValue();
+    if ((jdp.options.mode || "single") === "range" && jdp.selectedDates.length === 2 && jdp.options.hideAfterChange) {
+      jdp.hide();
+    } else {
+      jdp._draw();
+    }
   }
   function setPickerVisibility(jdp, isVisible) {
     jdp.dpContainer.style.visibility = isVisible ? STYLE_VISIBILITY_VISIBLE : STYLE_VISIBILITY_HIDDEN;
