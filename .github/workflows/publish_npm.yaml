@@ -12,14 +12,15 @@ jobs:
   deploy_npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0 # اطمینان از دریافت تاریخچه کامل گیت
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: "22.x"
+          node-version: 20
           registry-url: "https://registry.npmjs.org"
+          cache: npm
 
       - name: Check if version needs publishing
         id: check_version
@@ -40,7 +41,7 @@ jobs:
 
       - name: Install dependencies
         if: env.publish == 'true'
-        run: npm install
+        run: npm ci
 
       - name: Run build and prepare release
         if: env.publish == 'true'
