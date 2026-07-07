@@ -1,0 +1,39 @@
+name: درخواست قابلیت
+description: پیشنهاد یک بهبود یا قابلیت جدید برای JalaliDatePicker
+title: "قابلیت: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ممنون بابت پیشنهادتان. لطفاً کاربرد اصلی را واضح توضیح دهید تا API کتابخانه ساده و کاربردی باقی بماند.
+  - type: textarea
+    id: problem
+    attributes:
+      label: کاربرد یا مسئله
+      description: چه نیازی دارید یا چه مشکلی را می‌خواهید حل کنید؟
+      placeholder: می‌خواهم بتوانم ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: API یا رفتار پیشنهادی
+      description: دوست دارید JalaliDatePicker چه چیزی را پشتیبانی کند؟
+      placeholder: |
+        jalaliDatepicker.startWatch({
+          ...
+        });
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: راه‌حل‌های جایگزین
+      description: آیا راه‌حل موقت یا شکل دیگری از API را امتحان کرده‌اید؟
+  - type: textarea
+    id: context
+    attributes:
+      label: توضیحات تکمیلی
+      description: اگر مفید است اسکرین‌شات، نمونه کد یا لینک اضافه کنید.

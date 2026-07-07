@@ -1,0 +1,62 @@
+name: گزارش باگ
+description: گزارش یک مشکل قابل بازتولید در JalaliDatePicker
+title: "باگ: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        ممنون که برای بهتر شدن JalaliDatePicker وقت می‌گذارید. لطفاً اطلاعات کافی برای بازتولید مشکل را وارد کنید.
+  - type: textarea
+    id: description
+    attributes:
+      label: شرح مشکل
+      description: چه مشکلی رخ داده است؟
+      placeholder: مشکلی که مشاهده کرده‌اید را توضیح دهید.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: مراحل بازتولید
+      description: مراحل دقیق یا یک نمونه کوتاه HTML/JS برای بازتولید مشکل را وارد کنید.
+      placeholder: |
+        1. دیت‌پیکر را با این تنظیمات فعال کردم: ...
+        2. روی ... کلیک کردم.
+        3. نتیجه این شد که ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: نتیجه مورد انتظار
+      description: انتظار داشتید چه اتفاقی بیفتد؟
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: نتیجه فعلی
+      description: در حال حاضر چه رفتاری رخ می‌دهد؟
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: نسخه JalaliDatePicker
+      placeholder: "1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: مرورگر و سیستم‌عامل
+      placeholder: "مثلاً Chrome 126 روی Windows 11 یا Safari روی iOS 17"
+    validations:
+      required: true
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: اسکرین‌شات، لاگ یا لینک نمونه
+      description: اگر ممکن است اسکرین‌شات، خطای کنسول، یا لینک نمونه قابل اجرا را اضافه کنید.
