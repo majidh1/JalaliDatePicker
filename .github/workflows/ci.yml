@@ -12,6 +12,8 @@ jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      NODE_ENV: development
 
     steps:
       - name: Checkout
@@ -33,7 +35,10 @@ jobs:
 
       - name: Install dependencies
         timeout-minutes: 5
-        run: npm ci --no-audit --no-fund --loglevel=notice
+        run: npm ci --include=dev --no-audit --no-fund --loglevel=notice
+
+      - name: Verify test dependencies
+        run: npm ls vitest --depth=0
 
       - name: Test
         run: npm test
