@@ -245,6 +245,13 @@ When `mode` is `"attr"`, each input reads its mode from `data-jdp-mode`. Valid v
 ```js
 jalaliDatepicker.startWatch({
  dayRendering(dayOptions, input) {
+  if (dayOptions.weekDay === 6) {
+   return {
+    ...dayOptions,
+    isValid: false
+   };
+  }
+
   return {
    isHoliday: dayOptions.month === 1 && dayOptions.day <= 4,
    className: dayOptions.month === 1 && dayOptions.day <= 4 ? "nowruz" : "",
@@ -254,7 +261,7 @@ jalaliDatepicker.startWatch({
 });
 ```
 
-`dayRendering` can mark days as holidays, add CSS classes, or disable specific days.
+`dayRendering` can mark days as holidays, add CSS classes, or disable specific days. `dayOptions.weekDay` is also available; with the default Jalali weekday order, Saturday is `0` and Friday is `6`.
 
 ## Options
 

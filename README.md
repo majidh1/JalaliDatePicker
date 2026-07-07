@@ -247,6 +247,13 @@ jalaliDatepicker.updateOptions(options);
 ```js
 jalaliDatepicker.startWatch({
  dayRendering(dayOptions, input) {
+  if (dayOptions.weekDay === 6) {
+   return {
+    ...dayOptions,
+    isValid: false
+   };
+  }
+
   return {
    isHoliday: dayOptions.month === 1 && dayOptions.day <= 4,
    className: dayOptions.month === 1 && dayOptions.day <= 4 ? "nowruz" : "",
@@ -256,7 +263,7 @@ jalaliDatepicker.startWatch({
 });
 ```
 
-با `dayRendering` می‌توانید روزها را disabled کنید، class اضافه کنید، یا روز را به عنوان تعطیل نمایش دهید.
+با `dayRendering` می‌توانید روزها را disabled کنید، class اضافه کنید، یا روز را به عنوان تعطیل نمایش دهید. مقدار `weekDay` هم داخل `dayOptions` در دسترس است؛ در ترتیب پیش‌فرض روزهای شمسی، شنبه `0` و جمعه `6` است.
 
 ## Options
 

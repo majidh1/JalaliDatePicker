@@ -175,6 +175,36 @@ describe("jalaliDatepicker public API", () => {
 		expect(findDay(10, 1, 1403)?.classList.contains("disabled-day")).toBe(true);
 	});
 
+	it("uses dayRendering weekDay to disable a whole weekday", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		input.value = "1403/01/01";
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			today: {
+				year: 1403,
+				month: 1,
+				day: 1
+			},
+			dayRendering(dayOptions: DayOptions) {
+				if (dayOptions.weekDay === 6) {
+					return {
+						...dayOptions,
+						isValid: false
+					};
+				}
+				return dayOptions;
+			}
+		});
+		jdp.show(input);
+		findDay(3, 1, 1403)?.click();
+
+		expect(input.value).toBe("1403/01/01");
+		expect(findDay(3, 1, 1403)?.classList.contains("disabled-day")).toBe(true);
+	});
+
 	it("uses today as the initial date when initDate is today", async () => {
 		const jdp = await loadDatepicker();
 		const input = document.createElement("input");
@@ -217,6 +247,31 @@ describe("jalaliDatepicker public API", () => {
 		expect(input.value).toBe("09:05");
 	});
 
+	it("renders time dropdowns with configured hour and minute increments", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			date: false,
+			time: true,
+			hasSecond: false,
+			hourIncrement: 2,
+			minuteIncrement: 15,
+			initTime: {
+				hour: 8,
+				minute: 0,
+				second: 0
+			}
+		});
+		jdp.show(input);
+		const selects = Array.from(document.querySelectorAll<HTMLSelectElement>(".jdp-time select"));
+
+		expect(Array.from(selects[0].options).map((option) => option.value)).toEqual(["00", "15", "30", "45"]);
+		expect(Array.from(selects[1].options).map((option) => option.value).slice(0, 4)).toEqual(["00", "02", "04", "06"]);
+	});
+
 	it("uses min time from attributes as a time-only value", async () => {
 		const jdp = await loadDatepicker();
 		const input = document.createElement("input");
@@ -238,6 +293,31 @@ describe("jalaliDatepicker public API", () => {
 		document.querySelector<HTMLElement>(".jdp-btn-today")?.click();
 
 		expect(input.value).toBe("09:15:00");
+	});
+
+	it("hides after date changes when time is enabled and hideAfterChangeWithTime is true", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		input.value = "1403/01/01 09:00:00";
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			date: true,
+			time: true,
+			hideAfterChange: true,
+			hideAfterChangeWithTime: true,
+			today: {
+				year: 1403,
+				month: 1,
+				day: 1
+			}
+		});
+		jdp.show(input);
+		findDay(2, 1, 1403)?.click();
+
+		expect(input.value).toBe("1403/01/02 09:00:00");
+		expect(document.querySelector<HTMLElement>("jdp-container")?.style.display).toBe("none");
 	});
 
 	it("updates a target HTMLElement with a Gregorian value", async () => {
