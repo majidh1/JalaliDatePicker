@@ -35,7 +35,7 @@ jobs:
 
       - name: Install dependencies
         timeout-minutes: 5
-        run: npm ci --include=dev --no-audit --no-fund --loglevel=notice
+        run: npm i
 
       - name: Verify test dependencies
         run: npm ls vitest --depth=0
