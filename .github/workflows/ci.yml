@@ -11,6 +11,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
 
     steps:
       - name: Checkout
@@ -22,8 +23,17 @@ jobs:
           node-version: 20
           cache: npm
 
+      - name: Show tool versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Use stable npm
+        run: npm install -g npm@10.9.2
+
       - name: Install dependencies
-        run: npm ci
+        timeout-minutes: 5
+        run: npm ci --no-audit --no-fund --loglevel=notice
 
       - name: Test
         run: npm test
