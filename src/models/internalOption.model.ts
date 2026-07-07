@@ -40,6 +40,10 @@ const getTimeValueObjectFromTimeOnlyString = (jdp: JalaliDatePicker, timeString:
 	getTimeValueObjectFromParts(timeString.split(jdp.options.separatorChars.time), jdp.options.hasSecond);
 
 const normalizeSelectionMode = (mode: string | null | undefined) => (mode && SELECTION_MODE_NAMES.indexOf(mode) > -1 ? mode : "single");
+const normalizeBooleanAttr = (value: string | null | undefined, defaultValue: boolean) => {
+	if (value === null || value === undefined || value === "") return defaultValue;
+	return value !== "false";
+};
 
 const normalizeOptions = (
 	externalOptions: Partial<JalaliDatePickerOptions>,
@@ -79,12 +83,13 @@ const normalizeOptions = (
 	const getAttrGetter = (
 		propertyName: keyof Pick<
 			JalaliDatePickerOptions,
-			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType" | "mode"
+			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType" | "mode" | "hasSecond"
 		>
 	) => {
 		if (propertyName === "targetValueInput") return () => jdp.input?.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
 		if (propertyName === "targetValueType") return () => jdp.input?.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
 		if (propertyName === "mode") return () => normalizeSelectionMode(jdp.input?.getAttribute(MODE_ATTR_NAME));
+		if (propertyName === "hasSecond") return () => normalizeBooleanAttr(jdp.input?.getAttribute(ATTR_OPTION_NAMES.hasSecond), true);
 		const attrName = ATTR_OPTION_NAMES[propertyName as keyof typeof ATTR_OPTION_NAMES];
 		const isTime = TIME_ATTR_OPTION_NAMES.indexOf(propertyName) > -1;
 		return () => getDateOrTimeDefaultFromAttr(attrName, isTime);
@@ -92,7 +97,7 @@ const normalizeOptions = (
 	function setDefinePropertyFromAttr(
 		propertyName: keyof Pick<
 			JalaliDatePickerOptions,
-			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType" | "mode"
+			"date" | "time" | "minDate" | "maxDate" | "minTime" | "maxTime" | "initDate" | "targetValueInput" | "targetValueType" | "mode" | "hasSecond"
 		>
 	) {
 		if (externalOptions[propertyName] === OPTION_ATTR_SETTING || propertyName === "date" || propertyName === "time") {
@@ -186,6 +191,7 @@ const normalizeOptions = (
 	internalOptions = setDefinePropertyFromAttr("targetValueInput");
 	internalOptions = setDefinePropertyFromAttr("targetValueType");
 	internalOptions = setDefinePropertyFromAttr("mode");
+	internalOptions = setDefinePropertyFromAttr("hasSecond");
 
 	return internalOptions;
 };

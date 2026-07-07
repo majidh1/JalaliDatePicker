@@ -69,7 +69,7 @@ export interface JalaliDatePickerOptions {
 	date: boolean;
 	time: boolean;
 	today: DateObject;
-	hasSecond: boolean;
+	hasSecond: boolean | "attr";
 	targetValueInput?: string | HTMLInputElement | "attr";
 	targetValueType?: "gregorian" | "attr";
 	days: string[];

@@ -10,6 +10,7 @@
 - اضافه شدن پشتیبانی از `targetValueInput` برای نوشتن مقدار تبدیل‌شده در input مقصد.
 - اضافه شدن `targetValueType: "gregorian"` برای تولید مقدار میلادی در target.
 - اضافه شدن `minuteIncrement` و `hourIncrement` برای کنترل گام dropdownهای زمان.
+- اضافه شدن `data-jdp-has-second` برای کنترل نمایش ثانیه به صورت جداگانه برای هر input.
 - اضافه شدن مقدار `weekDay` به `dayRendering`.
 - اضافه شدن جایگاه `position: "left" | "right" | "center"` برای datepicker.
 - پشتیبانی از نام‌های تمیزتر و سازگار: `JalaliDatePicker`، `useDropdownYears` و `isHoliday` همراه با حفظ aliasهای قدیمی برای سازگاری.

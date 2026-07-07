@@ -511,6 +511,7 @@
   var TARGET_VALUE_INPUT_ATTR_NAME = DATA_JDP + "target-value-input";
   var TARGET_VALUE_TYPE_ATTR_NAME = DATA_JDP + "target-value-type";
   var MODE_ATTR_NAME = DATA_JDP + "mode";
+  var HAS_SECOND_ATTR_NAME = DATA_JDP + "has-second";
   var ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-date";
   var ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-time";
   var DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
@@ -532,7 +533,8 @@
     maxTime: MAX_TIME_ATTR_NAME,
     targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
     targetValueType: TARGET_VALUE_TYPE_ATTR_NAME,
-    mode: MODE_ATTR_NAME
+    mode: MODE_ATTR_NAME,
+    hasSecond: HAS_SECOND_ATTR_NAME
   };
   var TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
   var SELECTION_MODE_NAMES = ["single", "range", "multiple"];
@@ -984,6 +986,10 @@
   var normalizeSelectionMode = function normalizeSelectionMode(mode) {
     return mode && SELECTION_MODE_NAMES.indexOf(mode) > -1 ? mode : "single";
   };
+  var normalizeBooleanAttr = function normalizeBooleanAttr(value, defaultValue) {
+    if (value === null || value === void 0 || value === "") return defaultValue;
+    return value !== "false";
+  };
   var normalizeOptions = function normalizeOptions(externalOptions, internalOptions, jdp) {
     var setDefaultValue = function setDefaultValue(propertyName, defaultValue) {
       var _ref;
@@ -1024,6 +1030,10 @@
         var _jdp$input6;
         return normalizeSelectionMode((_jdp$input6 = jdp.input) == null ? void 0 : _jdp$input6.getAttribute(MODE_ATTR_NAME));
       };
+      if (propertyName === "hasSecond") return function () {
+        var _jdp$input7;
+        return normalizeBooleanAttr((_jdp$input7 = jdp.input) == null ? void 0 : _jdp$input7.getAttribute(ATTR_OPTION_NAMES.hasSecond), true);
+      };
       var attrName = ATTR_OPTION_NAMES[propertyName];
       var isTime = TIME_ATTR_OPTION_NAMES.indexOf(propertyName) > -1;
       return function () {
@@ -1043,16 +1053,16 @@
           var _date = (_externalOptions$date = externalOptions.date) != null ? _externalOptions$date : internalOptions.date;
           delete internalOptions[propertyName];
           getterFunc = function getterFunc() {
-            var _jdp$input7, _jdp$input8;
-            return !((_jdp$input7 = jdp.input) != null && _jdp$input7.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (_date || ((_jdp$input8 = jdp.input) == null ? void 0 : _jdp$input8.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));
+            var _jdp$input8, _jdp$input9;
+            return !((_jdp$input8 = jdp.input) != null && _jdp$input8.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (_date || ((_jdp$input9 = jdp.input) == null ? void 0 : _jdp$input9.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));
           };
         } else if (propertyName === "time") {
           var _externalOptions$time;
           var _time = (_externalOptions$time = externalOptions.time) != null ? _externalOptions$time : internalOptions.time;
           delete internalOptions[propertyName];
           getterFunc = function getterFunc() {
-            var _jdp$input9, _jdp$input0;
-            return !((_jdp$input9 = jdp.input) != null && _jdp$input9.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input0 = jdp.input) == null ? void 0 : _jdp$input0.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
+            var _jdp$input0, _jdp$input1;
+            return !((_jdp$input0 = jdp.input) != null && _jdp$input0.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input1 = jdp.input) == null ? void 0 : _jdp$input1.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
           };
         } else {
           getterFunc = getAttrGetter(propertyName);
@@ -1123,6 +1133,7 @@
     internalOptions = setDefinePropertyFromAttr("targetValueInput");
     internalOptions = setDefinePropertyFromAttr("targetValueType");
     internalOptions = setDefinePropertyFromAttr("mode");
+    internalOptions = setDefinePropertyFromAttr("hasSecond");
     return internalOptions;
   };
   var JalaliDatePickerInternalOptions = /*#__PURE__*/function () {
@@ -1408,8 +1419,8 @@
     };
   }
   function getInitialDate(jdp) {
-    var _jdp$input1;
-    var inputValue = ((_jdp$input1 = jdp.input) == null ? void 0 : _jdp$input1.value) || "";
+    var _jdp$input10;
+    var inputValue = ((_jdp$input10 = jdp.input) == null ? void 0 : _jdp$input10.value) || "";
     if (!inputValue) {
       return jdp.options.initDate || clone(jdp.today);
     }
@@ -1419,9 +1430,9 @@
     return clone(jdp.today);
   }
   function getInitialTime(jdp) {
-    var _jdp$input10;
+    var _jdp$input11;
     var defaultInit = getCurrentTime();
-    var initTime = ((_jdp$input10 = jdp.input) == null ? void 0 : _jdp$input10.value) || jdp.options.initTime || defaultInit;
+    var initTime = ((_jdp$input11 = jdp.input) == null ? void 0 : _jdp$input11.value) || jdp.options.initTime || defaultInit;
     if (!isString(initTime)) {
       return initTime;
     }
@@ -1440,9 +1451,9 @@
     return typeof value.year === "number" && typeof value.month === "number" && typeof value.day === "number";
   }
   function setSelectedDatesFromInput(jdp) {
-    var _jdp$input11;
+    var _jdp$input12;
     if ((jdp.options.mode || "single") === "single") return;
-    jdp.selectedDates = getSelectedDatesFromString(jdp, ((_jdp$input11 = jdp.input) == null ? void 0 : _jdp$input11.value) || "");
+    jdp.selectedDates = getSelectedDatesFromString(jdp, ((_jdp$input12 = jdp.input) == null ? void 0 : _jdp$input12.value) || "");
   }
   function setDateSelectionValue(jdp, date) {
     if ((jdp.options.mode || "single") === "range") {

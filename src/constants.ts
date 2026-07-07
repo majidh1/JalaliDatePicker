@@ -72,6 +72,7 @@ export const MIN_TIME_ATTR_NAME = DATA_JDP + "min-time";
 export const TARGET_VALUE_INPUT_ATTR_NAME = DATA_JDP + "target-value-input";
 export const TARGET_VALUE_TYPE_ATTR_NAME = DATA_JDP + "target-value-type";
 export const MODE_ATTR_NAME = DATA_JDP + "mode";
+export const HAS_SECOND_ATTR_NAME = DATA_JDP + "has-second";
 export const ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-date";
 export const ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-time";
 
@@ -94,7 +95,8 @@ export const ATTR_OPTION_NAMES = {
 	maxTime: MAX_TIME_ATTR_NAME,
 	targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
 	targetValueType: TARGET_VALUE_TYPE_ATTR_NAME,
-	mode: MODE_ATTR_NAME
+	mode: MODE_ATTR_NAME,
+	hasSecond: HAS_SECOND_ATTR_NAME
 };
 export const TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
 export const SELECTION_MODE_NAMES = ["single", "range", "multiple"];

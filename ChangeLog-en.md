@@ -9,6 +9,7 @@ Stable 1.0.0 release with a rebuilt project structure.
 - Added `targetValueInput` support for writing converted values to a target input.
 - Added `targetValueType: "gregorian"` for writing Gregorian values to the target input.
 - Added `minuteIncrement` and `hourIncrement` to control time dropdown steps.
+- Added `data-jdp-has-second` for per-input seconds dropdown control.
 - Added `weekDay` to `dayRendering`.
 - Added `position: "left" | "right" | "center"` for datepicker placement.
 - Added cleaner compatible names: `JalaliDatePicker`, `useDropdownYears`, and `isHoliday`, while keeping legacy aliases.

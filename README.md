@@ -133,10 +133,12 @@ jalaliDatepicker.updateOptions(options);
 
 ```html
 <input data-jdp data-jdp-only-time>
+<input data-jdp data-jdp-only-time data-jdp-has-second="false">
 
 <script>
  jalaliDatepicker.startWatch({
-  time: true
+  time: true,
+  hasSecond: "attr"
  });
 </script>
 ```
@@ -271,7 +273,7 @@ jalaliDatepicker.startWatch({
 | --- | --- | --- |
 | `date` | `true` | فعال بودن انتخاب تاریخ |
 | `time` | `false` | فعال بودن انتخاب زمان |
-| `hasSecond` | `true` | نمایش dropdown ثانیه در حالت زمان |
+| `hasSecond` | `true` | نمایش dropdown ثانیه در حالت زمان. با مقدار `"attr"` از `data-jdp-has-second` هر input خوانده می‌شود |
 | `initDate` | تاریخ امروز یا مقدار input | تاریخ اولیه نمایش داده‌شده |
 | `initTime` | زمان فعلی سیستم | زمان اولیه نمایش داده‌شده |
 | `minDate` | `undefined` | حداقل تاریخ مجاز. می‌تواند object، مقدار `"today"` یا `"attr"` باشد |
@@ -357,6 +359,7 @@ jalaliDatepicker.startWatch({
 | `data-jdp-max-time` | حداکثر زمان مجاز |
 | `data-jdp-only-date` | فقط انتخاب تاریخ برای این input |
 | `data-jdp-only-time` | فقط انتخاب زمان برای این input |
+| `data-jdp-has-second` | نمایش یا عدم نمایش ثانیه برای این input وقتی `hasSecond: "attr"` باشد. برای حذف ثانیه مقدار `"false"` بگذارید |
 | `data-jdp-mode` | حالت انتخاب برای این input وقتی `mode: "attr"` باشد. مقدارهای معتبر: `single`، `range`، `multiple` |
 | `data-jdp-target-value-input` | selector مربوط به input مقصد |
 | `data-jdp-target-value-type` | نوع مقدار مقصد، مثل `gregorian` |

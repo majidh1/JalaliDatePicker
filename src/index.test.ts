@@ -247,6 +247,30 @@ describe("jalaliDatepicker public API", () => {
 		expect(input.value).toBe("09:05");
 	});
 
+	it("reads hasSecond from each input attribute", async () => {
+		const jdp = await loadDatepicker();
+		const input = document.createElement("input");
+		input.setAttribute("data-jdp-has-second", "false");
+		document.body.appendChild(input);
+
+		jdp.startWatch({
+			autoShow: false,
+			date: false,
+			time: true,
+			hasSecond: "attr",
+			initTime: {
+				hour: 9,
+				minute: 5,
+				second: 30
+			}
+		});
+		jdp.show(input);
+		document.querySelector<HTMLElement>(".jdp-btn-today")?.click();
+
+		expect(input.value).toBe("09:05");
+		expect(document.querySelectorAll<HTMLSelectElement>(".jdp-time select")).toHaveLength(2);
+	});
+
 	it("renders time dropdowns with configured hour and minute increments", async () => {
 		const jdp = await loadDatepicker();
 		const input = document.createElement("input");

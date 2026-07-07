@@ -131,10 +131,12 @@ jalaliDatepicker.updateOptions(options);
 
 ```html
 <input data-jdp data-jdp-only-time>
+<input data-jdp data-jdp-only-time data-jdp-has-second="false">
 
 <script>
  jalaliDatepicker.startWatch({
-  time: true
+  time: true,
+  hasSecond: "attr"
  });
 </script>
 ```
@@ -269,7 +271,7 @@ jalaliDatepicker.startWatch({
 | --- | --- | --- |
 | `date` | `true` | Enables date selection |
 | `time` | `false` | Enables time selection |
-| `hasSecond` | `true` | Shows the seconds dropdown when time selection is enabled |
+| `hasSecond` | `true` | Shows the seconds dropdown when time selection is enabled. Use `"attr"` to read it from each input's `data-jdp-has-second` attribute |
 | `initDate` | Today or input value | Initially displayed date |
 | `initTime` | Current system time | Initially displayed time |
 | `minDate` | `undefined` | Minimum allowed date. Can be an object, `"today"`, or `"attr"` |
@@ -353,6 +355,7 @@ jalaliDatepicker.startWatch({
 | `data-jdp-max-time` | Maximum allowed time |
 | `data-jdp-only-date` | Enables date-only mode for this input |
 | `data-jdp-only-time` | Enables time-only mode for this input |
+| `data-jdp-has-second` | Shows or hides seconds for this input when `hasSecond: "attr"` is used. Set it to `"false"` to hide seconds |
 | `data-jdp-mode` | Selection mode for this input when `mode: "attr"` is used. Valid values: `single`, `range`, `multiple` |
 | `data-jdp-target-value-input` | Selector for the target input |
 | `data-jdp-target-value-type` | Target value type, such as `gregorian` |
