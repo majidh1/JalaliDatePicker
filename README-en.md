@@ -1,6 +1,7 @@
-<div  align="center">
+<div align="center">
 
-# JalaliDatePicker-
+# JalaliDatePicker
+
 [![npm version](https://badge.fury.io/js/%40majidh1%2Fjalalidatepicker.svg)](https://www.npmjs.com/package/@majidh1/jalalidatepicker)
 <img src="res/filesizegzip.svg" width="102px"/>
 <img src="res/filesize.svg" width="87px"/>
@@ -10,181 +11,476 @@
 
 </div>
 
-<div class="img">
-<img src="res/sample1.png" width="32%"/>
-<img src="res/sample5.png" width="32%"/>
-<img src="res/sample2.png" width="32%"/>
-<img src="res/jdp-time-min.png" width="32%"/>
-<img src="res/jdp-datetime-min.png" width="32%"/>
-<img src="res/jdp-minmax-min.png" width="32%"/> 
-</div>
+A lightweight dependency-free Jalali/Persian datepicker for selecting dates, times, or date-time values in browser forms.
 
-<br>
+<p align="center">
+ <img src="res/sample1.png" width="32%"/>
+ <img src="res/sample5.png" width="32%"/>
+ <img src="res/sample2.png" width="32%"/>
+ <img src="res/jdp-time-min.png" width="32%"/>
+ <img src="res/jdp-datetime-min.png" width="32%"/>
+ <img src="res/jdp-minmax-min.png" width="32%"/>
+</p>
 
-# introduction
+## Table Of Contents
 
-Jalali, Shamsi, Solar hijri is the names of the calendars used as the official calendars by the people of Iran and Afghanistan.
-
-The extracted calendars show that its months were the same length as the 30-day Yazdgardi chronology with 5 additional days, months with the same names (April (Esfand) to March (Farvardin) with a Jalali suffix), and days with numbers. However, some theories claim that new names were also mentioned for the months and days, or the length of the months, or both. Based on the relative stoppage of the sun in the constellations, another feature of the solar hijri chronology derived from Jalali, it is also known that months have a length of between 29 and 31 days. [Wikipedia](https://en.wikipedia.org/wiki/Jalali_calendar)
-
-This calendar year begins on March 22nd, which is the first of the Farvardin, and ends on March 21st, which is the 29th of Esfand, with the exception of every four years, when the first of the Farvardin begins on March 23rd (leap year)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Public API](#public-api)
+- [Examples](#examples)
+- [Options](#options)
+- [Input Attributes](#input-attributes)
+- [Events](#events)
+- [Value Formats](#value-formats)
+- [Development](#development)
 
 ## Installation
 
-#### With npm:
-- JalaliDatePicker may be installed on your project using the npm command.
+### npm
 
-```sh
+```shell
 npm i @majidh1/jalalidatepicker
 ```
-Then, just call it wherever you need it in your projects
-```html
-<!-- CSS -->
-<link type="text/css" rel="stylesheet" href="jalalidatepicker.min.css"/>
 
-<!-- js -->
-<script type="text/javascript" src="jalalidatepicker.min.js"></script>
+Then include the generated CSS and JS files in your page:
+
+```html
+<link rel="stylesheet" href="jalalidatepicker.min.css">
+<script src="jalalidatepicker.min.js"></script>
 ```
 
-- OR manual installation
- ```sh
-git clone https://github.com/majidh1/JalaliDatePicker.git
+### CDN
 
-cd JalaliDatePicker/
-
-mv dist/ /path/to/your/project
- ```
-
-#### With CDN:
-If you'd like, you may utilise CDN as well.
-1. UNPKG:
 ```html
-<!-- CSS -->
 <link rel="stylesheet" href="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.css">
-
-<!-- JS -->
-<script type="text/javascript" src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js">
+<script src="https://unpkg.com/@majidh1/jalalidatepicker/dist/jalalidatepicker.min.js"></script>
 ```
 
-2. JSDELIVR:
-```html
-<!-- CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jalalidatepicker@latest/dist/jalalidatepicker.min.css">
+### Manual
 
-<!-- JS -->
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jalalidatepicker@latest/dist/jalalidatepicker.min.js">
-```
-3. MANUAL:
-```html
-<!-- CSS -->
-<link type="text/css" rel="stylesheet" href="/path/to/jalalidatepicker.min.css" />
+You can also copy the ready-to-use files from `dist`:
 
-<!-- JS -->
-<script type="text/javascript" src="/path/to/jalalidatepicker.min.js"></script>
+```text
+dist/jalalidatepicker.min.css
+dist/jalalidatepicker.min.js
 ```
 
-## Usage
-1. Automatic detection:
+## Quick Start
 
-- In order to initiate the calendar, add the following attribute anywhere you need to.
+Add the `data-jdp` attribute to an input:
 
 ```html
 <input data-jdp>
 ```
-- Then, call the calendar function by using the following JavaScript code.
-```js
-jalaliDatepicker.startWatch();
+
+Start the watcher after the JS file is loaded:
+
+```html
+<script>
+ jalaliDatepicker.startWatch();
+</script>
 ```
 
-2. Manual use:
-- You might want to initialise the JalaliDatePicker without auto detection for any reason. All that is required is that you pass the input's id name to the following JavaScript code:
+By default, every input matching `input[data-jdp]` opens the datepicker on focus.
+
+## Public API
+
+The JS bundle exposes a global `jalaliDatepicker` object:
+
 ```js
-jalaliDatepicker.show(document.getElementById('YOUR_INPUT_ID'));
-```
-
-## How it works?
-Each time the JS file is loaded, a global object with these four methods is created.
-
-``` js
-jalaliDatepicker.startWatch(options: object);
-jalaliDatepicker.show(input: document);
-jalaliDatepicker.updateOptions(options: object);
+jalaliDatepicker.startWatch(options);
+jalaliDatepicker.show(input);
 jalaliDatepicker.hide();
+jalaliDatepicker.updateOptions(options);
 ```
-1. The ```startWatch()``` method: will start the auto detection, adding JalaliDatePicker for you whenever the attribute ```data-jdp``` is present.
 
-2. The ```show()``` method: manually display the datepicker on the input.
+| Method | Description |
+| --- | --- |
+| `startWatch(options)` | Enables automatic datepicker behavior for inputs matching `selector` |
+| `show(input)` | Manually shows the datepicker for an `HTMLInputElement` |
+| `hide()` | Hides the current datepicker |
+| `updateOptions(options)` | Updates options after `startWatch` |
 
-3. The ```hide()``` method: hide the displayed datepicker.
+## Examples
 
-4. The ```updateOptions()``` method: You might use this to refresh the choices if you initially launched the datepicker.
+### Date Picker
 
-> for `updateOptions()` and `startWatch()` method you need an object which are the following
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch();
+</script>
+```
+
+### Date And Time Picker
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  date: true,
+  time: true,
+  hasSecond: true
+ });
+</script>
+```
+
+### Time Only
+
+```html
+<input data-jdp data-jdp-only-time>
+<input data-jdp data-jdp-only-time data-jdp-has-second="false">
+
+<script>
+ jalaliDatepicker.startWatch({
+  time: true,
+  hasSecond: "attr"
+ });
+</script>
+```
+
+### Date Boundaries
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  minDate: {
+   year: 1403,
+   month: 1,
+   day: 10
+  },
+  maxDate: {
+   year: 1403,
+   month: 12,
+   day: 29
+  }
+ });
+</script>
+```
+
+### Boundaries From Attributes
+
+```html
+<input
+ data-jdp
+ data-jdp-min-date="1403/01/10"
+ data-jdp-max-date="1403/12/29"
+>
+
+<script>
+ jalaliDatepicker.startWatch({
+  minDate: "attr",
+  maxDate: "attr"
+ });
+</script>
+```
+
+### Write Gregorian Value To Another Input
+
+```html
+<input data-jdp>
+<input id="gregorian-date">
+
+<script>
+ jalaliDatepicker.startWatch({
+  targetValueInput: "#gregorian-date",
+  targetValueType: "gregorian"
+ });
+</script>
+```
+
+If the user selects `1403/01/01`, the target input receives `2024-03-20`.
+
+### Range Selection
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "range",
+  rangeSeparator: " - "
+ });
+</script>
+```
+
+Selecting `1403/01/01` and `1403/01/05` writes `1403/01/01 - 1403/01/05`.
+Range and multiple modes write date-only values.
+
+### Multiple Date Selection
+
+```html
+<input data-jdp>
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "multiple",
+  multipleSeparator: ", "
+ });
+</script>
+```
+
+Selected dates are sorted and written as a separated list, for example `1403/01/01, 1403/01/05`.
+Range and multiple modes write date-only values.
+
+### Per-Input Selection Mode
+
+```html
+<input data-jdp data-jdp-mode="range">
+<input data-jdp data-jdp-mode="multiple">
+
+<script>
+ jalaliDatepicker.startWatch({
+  mode: "attr"
+ });
+</script>
+```
+
+When `mode` is `"attr"`, each input reads its mode from `data-jdp-mode`. Valid values are `single`, `range`, and `multiple`.
+
+### Customize Day Rendering
+
+```js
+jalaliDatepicker.startWatch({
+ dayRendering(dayOptions, input) {
+  if (dayOptions.weekDay === 6) {
+   return {
+    ...dayOptions,
+    isValid: false
+   };
+  }
+
+  return {
+   isHoliday: dayOptions.month === 1 && dayOptions.day <= 4,
+   className: dayOptions.month === 1 && dayOptions.day <= 4 ? "nowruz" : "",
+   isValid: dayOptions.isValid
+  };
+ }
+});
+```
+
+`dayRendering` can mark days as holidays, add CSS classes, or disable specific days. `dayOptions.weekDay` is also available; with the default Jalali weekday order, Saturday is `0` and Friday is `6`.
 
 ## Options
-These are the possibilities for using it in your project.
 
-Key | Default | Description
-----|---------|------------
-`date` | true: bool | Show the date on DatePicker
-`time` | false: bool | Show the time on DatePicker
-`hasSecond` | true: bool | Can choose second when the `time` on
-`initTime` | null: string | Default time
-`autoShow` | true: bool | Auto show wherever `data-jdp` is present
-`autoHide` | true: bool | Auto hide after click out of datepicker or input
-`hideAfterChange` | true: bool | hide after choose a dateTime
-`useDropDownYears` | true: bool | Can choose year with Dropdown
-`separatorChars(option)` | date: `'/'` <br/> between: `' '` <br/> time: `':'` |  Separator between year, month, day <br/> Separator between date and time <br/>Separator between hour, min, sec
-`persianDigits` | false: bool | replacing English letters with Persian Unicode characters
-`minDate` | `null`: string | Date minimum specifier. It is the current day if it equals `today`. If not, it is equivalent to the `data-attribute-jdp-min-date`
-`maxDate` | `null`: string | Date maximum specifier. It is the current day if it equals `today`. If not, it is equivalent to the `data-attribute-jdp-max-date`
-`initDate` | `null`: string | If a date is not specified, it is set to be the `today` by default.
-`today` | return the date that you need | It is derived by default from the system date and is equivalent to the date object to determine the current day.
-`plusHtml` | `"svg"`: string | Year and month increase buttons
-`minusHtml` | `"svg"`: string | Year and month decrease buttons
-`container` | `document.body`: string | Where datepicker should be generating 
-`selector` | `input[data-jdp]`: string | Selector of the Auto show
-`zIndex` | `1000` : int | zIndex of the datepicker
-`days` | ["ش", "ی", "د", "س", "چ", "پ", "ج"]: list | Days in Persian
-`months` | ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"]: list | Months in persian
-`changeMonthRotateYear` | `false`: bool | If the month is through, move on to the following year?
-`showTodayBtn` | `true`: bool | Today button
-`showEmptyBtn` | `true`: bool | Clear input button
-`showCloseBtn` | `dynamic` | Show the datepicker close button
-`autoReadOnlyInput` | `dynamic` | Make input 
-`topSpace` | `0: int` | The empty space between the top of the datepicker and the input (when the datepicker is at the bottom of the input)
-`bottomSpace` | `0`: int | The empty space between the top of the datepicker and the input (when the datepicker is at the top of the input)
-`bottomSpace` | `-10`: int | The empty space between the corner of the page (window) and datePicker (when the datepicker goes out of the page)
-`dayRendering` | `callable`: callable | The render method of a day is the output of an object from the day setting
+| Key | Default | Description |
+| --- | --- | --- |
+| `date` | `true` | Enables date selection |
+| `time` | `false` | Enables time selection |
+| `hasSecond` | `true` | Shows the seconds dropdown when time selection is enabled. Use `"attr"` to read it from each input's `data-jdp-has-second` attribute |
+| `initDate` | Today or input value | Initially displayed date |
+| `initTime` | Current system time | Initially displayed time |
+| `minDate` | `undefined` | Minimum allowed date. Can be an object, `"today"`, or `"attr"` |
+| `maxDate` | `undefined` | Maximum allowed date. Can be an object, `"today"`, or `"attr"` |
+| `minTime` | `undefined` | Minimum allowed time. Can be an object or `"attr"` |
+| `maxTime` | `undefined` | Maximum allowed time. Can be an object or `"attr"` |
+| `today` | System date | Date used for the today highlight and today button |
+| `selector` | `"input[data-jdp]"` | Selector used by automatic showing |
+| `container` | `"body"` | Parent where the datepicker and overlay are created |
+| `zIndex` | `1000` | Datepicker z-index |
+| `autoShow` | `true` | Automatically shows on focus |
+| `autoHide` | `true` | Automatically hides when clicking outside the datepicker and input |
+| `autoReadOnlyInput` | Mobile-dependent | Makes the input readonly when the datepicker opens |
+| `hideAfterChange` | `true` | Hides after a value is selected |
+| `hideAfterChangeWithTime` | `false` | Hides after changes even when time selection is enabled |
+| `changeMonthRotateYear` | `false` | Changes year when navigating from month 12 to 1 or 1 to 12 |
+| `showTodayBtn` | `true` | Shows the today button |
+| `showEmptyBtn` | `true` | Shows the clear button |
+| `showCloseBtn` | Mobile-dependent | Shows the close button |
+| `showSelectTimeBtnAlways` | `false` | Always shows the select button in time-only mode |
+| `useDropdownYears` | `true` | Uses a dropdown for year selection. The legacy `useDropDownYears` option is still supported for compatibility |
+| `position` | `"left"` | Horizontal placement relative to input: `"left"`, `"right"`, or `"center"` |
+| `topSpace` | `0` | Space between the input and datepicker when shown below |
+| `bottomSpace` | `0` | Space between the input and datepicker when shown above |
+| `overflowSpace` | `-10` | Edge spacing used when preventing viewport overflow |
+| `minuteIncrement` | `1` | Minute dropdown step |
+| `hourIncrement` | `1` | Hour dropdown step |
+| `mode` | `"single"` | Date selection mode: `"single"`, `"range"`, `"multiple"`, or `"attr"` |
+| `rangeSeparator` | `" - "` | Separator used between start and end dates in range mode |
+| `multipleSeparator` | `", "` | Separator used between dates in multiple mode |
+| `persianDigits` | `false` | Displays Persian digits instead of English digits |
+| `days` | `["ش", "ی", "د", "س", "چ", "پ", "ج"]` | Weekday labels |
+| `months` | Persian month names | Month dropdown labels |
+| `separatorChars` | object | Date/time and target separators |
+| `targetValueInput` | `undefined` | Selector or `HTMLInputElement` that receives the converted value. Use `"attr"` to read it from `data-jdp-target-value-input` |
+| `targetValueType` | `undefined` | Use `"gregorian"` to write Gregorian values to the target, or `"attr"` to read the type from `data-jdp-target-value-type` |
+| `plusHtml` | Built-in SVG | HTML used for the year/month increment button |
+| `minusHtml` | Built-in SVG | HTML used for the year/month decrement button |
+| `dayRendering` | `undefined` | Callback for changing day state or classes |
 
-### Example of _`dayRendering`_:
+### Date And Time Objects
 
 ```js
-// first start watch
-jalaliDatepicker.startWatch({
-  dayRendering: (dayOptions,input) => {
-    return {
-     isHollyDay: dayOptions.month==1 && dayOptions.day<=4,
-     // isValid = false, disable the days
-     // className = "nowruz", add class
-    }
-  }
-})
+const date = {
+ year: 1403,
+ month: 1,
+ day: 1
+};
+
+const time = {
+ hour: 13,
+ minute: 45,
+ second: 0
+};
 ```
 
+### `separatorChars`
 
-### Attributes:
+```js
+jalaliDatepicker.startWatch({
+ separatorChars: {
+  date: "/",
+  between: " ",
+  time: ":",
+  targetDate: "-",
+  targetBetween: " ",
+  targetTime: ":"
+ }
+});
+```
 
-- `jdp`
+## Input Attributes
 
-- `data-jdp-min-date`
+| Attribute | Description |
+| --- | --- |
+| `data-jdp` | Enables the datepicker for the input |
+| `data-jdp-init-date` | Initial date |
+| `data-jdp-min-date` | Minimum allowed date |
+| `data-jdp-max-date` | Maximum allowed date |
+| `data-jdp-min-time` | Minimum allowed time |
+| `data-jdp-max-time` | Maximum allowed time |
+| `data-jdp-only-date` | Enables date-only mode for this input |
+| `data-jdp-only-time` | Enables time-only mode for this input |
+| `data-jdp-has-second` | Shows or hides seconds for this input when `hasSecond: "attr"` is used. Set it to `"false"` to hide seconds |
+| `data-jdp-mode` | Selection mode for this input when `mode: "attr"` is used. Valid values: `single`, `range`, `multiple` |
+| `data-jdp-target-value-input` | Selector for the target input |
+| `data-jdp-target-value-type` | Target value type, such as `gregorian` |
 
-- `data-jdp-max-date`
+Example with per-input attributes:
 
-- `data-jdp-only-date`
+```html
+<input
+ data-jdp
+ data-jdp-init-date="1403/01/01"
+ data-jdp-min-date="1403/01/10"
+ data-jdp-max-date="1403/12/29"
+ data-jdp-target-value-input="#gregorian-date"
+ data-jdp-target-value-type="gregorian"
+>
+<input id="gregorian-date">
 
-- `data-jdp-only-time`
+<script>
+ jalaliDatepicker.startWatch({
+  initDate: "attr",
+  minDate: "attr",
+  maxDate: "attr",
+  targetValueInput: "attr",
+  targetValueType: "attr"
+ });
+</script>
+```
 
+## Events
 
+After the input value changes, the following events are dispatched on the input:
 
-## [Changelog](/ChangeLog-en.md)
+- `jdp:change`
+- `change`
+- `input`
+
+Example:
+
+```js
+document.querySelector("input[data-jdp]").addEventListener("jdp:change", function (event) {
+ console.log(event.target.value);
+});
+```
+
+## Value Formats
+
+Default date format:
+
+```text
+1403/01/09
+```
+
+Default time format:
+
+```text
+13:05:00
+```
+
+Default date-time format:
+
+```text
+1403/01/09 13:05:00
+```
+
+When `hasSecond: false`, the time value has no seconds:
+
+```text
+13:05
+```
+
+## Samples
+
+- [HTML/JS sample](https://codesandbox.io/p/sandbox/jalalidatepicker-js-753tph)
+- [ModuleJS sample](https://codesandbox.io/p/sandbox/jalalidatepicker-js-module-r8jxyj)
+- [React sample](https://codesandbox.io/p/sandbox/jalalidatepicker-react-s9tsrk)
+- [Angular sample](https://codesandbox.io/p/devbox/jalalidatepicker-angular-2hzzg9)
+- [Vue sample](https://codesandbox.io/p/devbox/jalalidatepicker-vue-x2gpj7)
+- [Modal sample](https://codesandbox.io/p/sandbox/2spjyv)
+- [CodePen collection](https://codepen.io/collection/wajWMo)
+
+## Development
+
+Install dependencies:
+
+```shell
+npm install
+```
+
+Start the development server:
+
+```shell
+npm run dev
+```
+
+Run tests:
+
+```shell
+npm test
+```
+
+Run lint:
+
+```shell
+npm run lint
+```
+
+Build production files:
+
+```shell
+npm run build
+```
+
+Generated files:
+
+```text
+dist/jalalidatepicker.css
+dist/jalalidatepicker.js
+dist/jalalidatepicker.min.css
+dist/jalalidatepicker.min.js
+```
+
+## Links
+
+- [مستندات فارسی](/README.md)
+- [Changelog](/ChangeLog-en.md)
+- [Samples](/Sample.md)
+- [Contributing](/CONTRIBUTING.md)
+

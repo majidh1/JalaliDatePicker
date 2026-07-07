@@ -1,186 +1,1598 @@
-/*
- * ATTENTION: The "eval" devtool has been used (maybe by default in mode: "development").
- * This devtool is neither made for production nor for readable output files.
- * It uses "eval()" calls to create a separate source file in the browser devtools.
- * If you are trying to read the output file, select a different devtool (https://webpack.js.org/configuration/devtool/)
- * or disable the default devtool with "devtool: false".
- * If you are looking for production-ready output files, see mode: "production" (https://webpack.js.org/configuration/mode/).
- */
-/******/ (function() { // webpackBootstrap
-/******/ 	"use strict";
-/******/ 	var __webpack_modules__ = ({
+(function (_window$navigator) {
+  "use strict";
 
-/***/ "./src/constants.js":
-/*!**************************!*\
-  !*** ./src/constants.js ***!
-  \**************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"NAMESPACE\": function() { return /* binding */ NAMESPACE; },\n/* harmony export */   \"CONTAINER_ELM_QUERY\": function() { return /* binding */ CONTAINER_ELM_QUERY; },\n/* harmony export */   \"OVERLAY_ELM_QUERY\": function() { return /* binding */ OVERLAY_ELM_QUERY; },\n/* harmony export */   \"YEARS_ELM_QUERY\": function() { return /* binding */ YEARS_ELM_QUERY; },\n/* harmony export */   \"YEAR_ELM_QUERY\": function() { return /* binding */ YEAR_ELM_QUERY; },\n/* harmony export */   \"MONTHS_ELM_QUERY\": function() { return /* binding */ MONTHS_ELM_QUERY; },\n/* harmony export */   \"MONTH_ELM_QUERY\": function() { return /* binding */ MONTH_ELM_QUERY; },\n/* harmony export */   \"DAYS_ELM_QUERY\": function() { return /* binding */ DAYS_ELM_QUERY; },\n/* harmony export */   \"DAY_ELM_QUERY\": function() { return /* binding */ DAY_ELM_QUERY; },\n/* harmony export */   \"DAY_NOTINMONTH_ELM_QUERY\": function() { return /* binding */ DAY_NOTINMONTH_ELM_QUERY; },\n/* harmony export */   \"DAY_DISABLED_ELM_QUERY\": function() { return /* binding */ DAY_DISABLED_ELM_QUERY; },\n/* harmony export */   \"DAY_DISABLED_NOTINMONTH_ELM_QUERY\": function() { return /* binding */ DAY_DISABLED_NOTINMONTH_ELM_QUERY; },\n/* harmony export */   \"DAY_NAME_ELM_QUERY\": function() { return /* binding */ DAY_NAME_ELM_QUERY; },\n/* harmony export */   \"PLUS_ICON_ELM_QUERY\": function() { return /* binding */ PLUS_ICON_ELM_QUERY; },\n/* harmony export */   \"MINUS_ICON_ELM_QUERY\": function() { return /* binding */ MINUS_ICON_ELM_QUERY; },\n/* harmony export */   \"FOOTER_ELM_QUERY\": function() { return /* binding */ FOOTER_ELM_QUERY; },\n/* harmony export */   \"TODAY_BTN_ELM_QUERY\": function() { return /* binding */ TODAY_BTN_ELM_QUERY; },\n/* harmony export */   \"EMPTY_BTN_ELM_QUERY\": function() { return /* binding */ EMPTY_BTN_ELM_QUERY; },\n/* harmony export */   \"CLOSE_BTN_ELM_QUERY\": function() { return /* binding */ CLOSE_BTN_ELM_QUERY; },\n/* harmony export */   \"FOOTER_TIME_ELM_QUERY\": function() { return /* binding */ FOOTER_TIME_ELM_QUERY; },\n/* harmony export */   \"TIME_DROPDOWN_PARENT_ELM_QUERY\": function() { return /* binding */ TIME_DROPDOWN_PARENT_ELM_QUERY; },\n/* harmony export */   \"SELECTED_CLASS_NAME\": function() { return /* binding */ SELECTED_CLASS_NAME; },\n/* harmony export */   \"TODAY_CLASS_NAME\": function() { return /* binding */ TODAY_CLASS_NAME; },\n/* harmony export */   \"LAST_WEEK_CLASS_NAME\": function() { return /* binding */ LAST_WEEK_CLASS_NAME; },\n/* harmony export */   \"DISABLE_CLASS_NAME\": function() { return /* binding */ DISABLE_CLASS_NAME; },\n/* harmony export */   \"HOLLY_DAY_CLASS_NAME\": function() { return /* binding */ HOLLY_DAY_CLASS_NAME; },\n/* harmony export */   \"EVENT_CHANGE_INPUT_STR\": function() { return /* binding */ EVENT_CHANGE_INPUT_STR; },\n/* harmony export */   \"EVENT_CHANGE_MONTH_DROPDOWN_STR\": function() { return /* binding */ EVENT_CHANGE_MONTH_DROPDOWN_STR; },\n/* harmony export */   \"EVENT_CHANGE_YEAR_INPUT_STR\": function() { return /* binding */ EVENT_CHANGE_YEAR_INPUT_STR; },\n/* harmony export */   \"EVENT_CHANGE_TIME_DROPDOWN_STR\": function() { return /* binding */ EVENT_CHANGE_TIME_DROPDOWN_STR; },\n/* harmony export */   \"EVENT_CLICK_STR\": function() { return /* binding */ EVENT_CLICK_STR; },\n/* harmony export */   \"EVENT_FOCUS_STR\": function() { return /* binding */ EVENT_FOCUS_STR; },\n/* harmony export */   \"EVENT_KEYDOWN_STR\": function() { return /* binding */ EVENT_KEYDOWN_STR; },\n/* harmony export */   \"MIN_MAX_TODAY_SETTING\": function() { return /* binding */ MIN_MAX_TODAY_SETTING; },\n/* harmony export */   \"MIN_MAX_ATTR_SETTING\": function() { return /* binding */ MIN_MAX_ATTR_SETTING; },\n/* harmony export */   \"INIT_DATE_ATTR_NAME\": function() { return /* binding */ INIT_DATE_ATTR_NAME; },\n/* harmony export */   \"MAX_DATE_ATTR_NAME\": function() { return /* binding */ MAX_DATE_ATTR_NAME; },\n/* harmony export */   \"MIN_DATE_ATTR_NAME\": function() { return /* binding */ MIN_DATE_ATTR_NAME; },\n/* harmony export */   \"MAX_TIME_ATTR_NAME\": function() { return /* binding */ MAX_TIME_ATTR_NAME; },\n/* harmony export */   \"MIN_TIME_ATTR_NAME\": function() { return /* binding */ MIN_TIME_ATTR_NAME; },\n/* harmony export */   \"ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME\": function() { return /* binding */ ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME; },\n/* harmony export */   \"ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME\": function() { return /* binding */ ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME; },\n/* harmony export */   \"DATA_ATTR\": function() { return /* binding */ DATA_ATTR; },\n/* harmony export */   \"STYLE_VISIBILITY_VISIBLE\": function() { return /* binding */ STYLE_VISIBILITY_VISIBLE; },\n/* harmony export */   \"STYLE_VISIBILITY_HIDDEN\": function() { return /* binding */ STYLE_VISIBILITY_HIDDEN; },\n/* harmony export */   \"STYLE_DISPLAY_BLOCK\": function() { return /* binding */ STYLE_DISPLAY_BLOCK; },\n/* harmony export */   \"STYLE_DISPLAY_HIDDEN\": function() { return /* binding */ STYLE_DISPLAY_HIDDEN; },\n/* harmony export */   \"STYLE_POSITION_FIXED\": function() { return /* binding */ STYLE_POSITION_FIXED; }\n/* harmony export */ });\nvar NAMESPACE = \"jdp\";\nvar CONTAINER_ELM_QUERY = \"\".concat(NAMESPACE, \"-container\");\nvar OVERLAY_ELM_QUERY = \"\".concat(NAMESPACE, \"-overlay\");\nvar YEARS_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-years\");\nvar YEAR_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-year\");\nvar MONTHS_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-months\");\nvar MONTH_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-month\");\nvar DAYS_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-days\");\nvar DAY_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-day\");\nvar DAY_NOTINMONTH_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-day.not-in-month\");\nvar DAY_DISABLED_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-day.disabled-day\");\nvar DAY_DISABLED_NOTINMONTH_ELM_QUERY = \"\".concat(DAY_NOTINMONTH_ELM_QUERY, \".disabled-day\");\nvar DAY_NAME_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-day-name\");\nvar PLUS_ICON_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-icon-plus\");\nvar MINUS_ICON_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-icon-minus\");\nvar FOOTER_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-footer\");\nvar TODAY_BTN_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-btn-today\");\nvar EMPTY_BTN_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-btn-empty\");\nvar CLOSE_BTN_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-btn-close\");\nvar FOOTER_TIME_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-time-container\");\nvar TIME_DROPDOWN_PARENT_ELM_QUERY = \"div.\".concat(NAMESPACE, \"-time\");\nvar SELECTED_CLASS_NAME = \"selected\";\nvar TODAY_CLASS_NAME = \"today\";\nvar LAST_WEEK_CLASS_NAME = \"last-week\";\nvar DISABLE_CLASS_NAME = \"not-in-range\";\nvar HOLLY_DAY_CLASS_NAME = \"holly-day\";\nvar EVENT_CHANGE_INPUT_STR = \"\".concat(NAMESPACE, \":change\");\nvar EVENT_CHANGE_MONTH_DROPDOWN_STR = \"change\";\nvar EVENT_CHANGE_YEAR_INPUT_STR = \"keyup change\";\nvar EVENT_CHANGE_TIME_DROPDOWN_STR = \"change\";\nvar EVENT_CLICK_STR = \"click\";\nvar EVENT_FOCUS_STR = \"focusin\";\nvar EVENT_KEYDOWN_STR = \"keydown\";\nvar MIN_MAX_TODAY_SETTING = \"today\";\nvar MIN_MAX_ATTR_SETTING = \"attr\";\nvar INIT_DATE_ATTR_NAME = \"data-jdp-init-date\";\nvar MAX_DATE_ATTR_NAME = \"data-jdp-max-date\";\nvar MIN_DATE_ATTR_NAME = \"data-jdp-min-date\";\nvar MAX_TIME_ATTR_NAME = \"data-jdp-max-time\";\nvar MIN_TIME_ATTR_NAME = \"data-jdp-min-time\";\nvar ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = \"data-jdp-only-date\";\nvar ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = \"data-jdp-only-time\";\nvar DATA_ATTR = \"data-\".concat(NAMESPACE);\nvar STYLE_VISIBILITY_VISIBLE = \"visible\";\nvar STYLE_VISIBILITY_HIDDEN = \"hidden\";\nvar STYLE_DISPLAY_BLOCK = \"block\";\nvar STYLE_DISPLAY_HIDDEN = \"none\";\nvar STYLE_POSITION_FIXED = \"fixed\";\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/constants.js?");
-
-/***/ }),
-
-/***/ "./src/datePickerDraw.js":
-/*!*******************************!*\
-  !*** ./src/datePickerDraw.js ***!
-  \*******************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"renderDatePicker\": function() { return /* binding */ renderDatePicker; }\n/* harmony export */ });\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ \"./src/constants.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/utils/index.js\");\n/* harmony import */ var _utils_object__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/object */ \"./src/utils/object.js\");\n/* harmony import */ var _utils_jalali__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/jalali */ \"./src/utils/jalali.js\");\n/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utils/dom */ \"./src/utils/dom.js\");\n\n\n\n\n\n\nvar getLastWeekClassIfNessesary = function getLastWeekClassIfNessesary(dayOfWeek) {\n  return dayOfWeek === 6 ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.LAST_WEEK_CLASS_NAME, \".\").concat(_constants__WEBPACK_IMPORTED_MODULE_0__.HOLLY_DAY_CLASS_NAME) : \"\";\n};\n\nvar createElementPlus = function createElementPlus(jdp, container, isYear) {\n  (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.PLUS_ICON_ELM_QUERY + (isYear ? jdp.options.maxDate.year === jdp.initDate.year ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\" : jdp.options.maxDate.year === jdp.initDate.year && jdp.options.maxDate.month === jdp.initDate.month ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\"), container, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, isYear ? function () {\n    jdp.increaseYear();\n  } : function () {\n    jdp.increaseMonth();\n  }, jdp.options.plusHtml);\n};\n\nvar createElementMinus = function createElementMinus(jdp, container, isYear) {\n  (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.MINUS_ICON_ELM_QUERY + (isYear ? jdp.options.minDate.year === jdp.initDate.year ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\" : jdp.options.minDate.year === jdp.initDate.year && jdp.options.minDate.month === jdp.initDate.month ? \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.DISABLE_CLASS_NAME) : \"\"), container, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, isYear ? function () {\n    jdp.decreaseYear();\n  } : function () {\n    jdp.decreaseMonth();\n  }, jdp.options.minusHtml);\n};\n\nvar renderYear = function renderYear(jdp) {\n  var yearsContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.YEARS_ELM_QUERY, jdp.dpContainer);\n  createElementPlus(jdp, yearsContainer, true);\n  var yearContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.YEAR_ELM_QUERY, yearsContainer);\n  createElementMinus(jdp, yearsContainer, true);\n  var useDropDownYears = jdp.options.useDropDownYears;\n  var yearInputTagName = useDropDownYears ? \"select\" : \"input\";\n  var yearInput = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(yearInputTagName, yearContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CHANGE_YEAR_INPUT_STR, function (e) {\n    if (e.target.value < 1000 || e.target.value > 2000) return;\n    jdp.yearChange(e.target.value);\n  });\n\n  if (useDropDownYears) {\n    var validYears = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getValidYears)(jdp);\n\n    for (var i = validYears.min; i <= validYears.max; i++) {\n      var optionElm = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(\"option\", yearInput);\n      optionElm.value = i;\n      optionElm.text = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.toPersianDigitsIfNeeded)(i, jdp.options.persianDigits);\n      optionElm.selected = i === jdp.initDate.year;\n    }\n  } else {\n    yearInput.tabIndex = -1;\n    yearInput.value = jdp.initDate.year;\n    yearInput.type = \"number\";\n  }\n};\n\nvar renderMonths = function renderMonths(jdp) {\n  var monthsContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.MONTHS_ELM_QUERY, jdp.dpContainer);\n  createElementPlus(jdp, monthsContainer, false);\n  var monthContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.MONTH_ELM_QUERY, monthsContainer);\n  createElementMinus(jdp, monthsContainer, false);\n  var monthDropDownContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(\"select\", monthContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CHANGE_MONTH_DROPDOWN_STR, function (e) {\n    jdp.monthChange(e.target.value);\n  });\n  monthDropDownContainer.tabIndex = -1;\n  var months = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.getValidMonths)(jdp);\n  var monthsName = jdp.options.months;\n\n  for (var i = 0; i < months.length; i++) {\n    var optionElm = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(\"option\", monthDropDownContainer);\n    optionElm.value = months[i];\n    optionElm.text = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.toPersianDigitsIfNeeded)(monthsName[months[i] - 1], jdp.options.persianDigits);\n    optionElm.selected = months[i] === jdp.initDate.month;\n  }\n};\n\nvar renderDays = function renderDays(jdp) {\n  var daysContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.DAYS_ELM_QUERY, jdp.dpContainer);\n\n  for (var i = 0; i < 7; i++) {\n    //nameOfDay\n    (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.DAY_NAME_ELM_QUERY + getLastWeekClassIfNessesary(i), daysContainer, null, null, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.toPersianDigitsIfNeeded)(jdp.options.days[i], jdp.options.persianDigits));\n  }\n\n  var setDefaultOptions = function setDefaultOptions(opt) {\n    if (!opt.day || opt.inBeforeMonth) {\n      opt.day = 1;\n    } else {\n      opt.day += 1;\n    }\n\n    opt.inBeforeMonth = false;\n    opt.inAfterMonth = false;\n    opt.isValid = false;\n    opt.isHollyDay = false;\n    opt.className = \"\";\n    opt.year = jdp.initDate.year;\n    opt.month = jdp.initDate.month;\n    return opt;\n  };\n\n  var dayOptions = setDefaultOptions({});\n  var daysInMonth = (0,_utils_jalali__WEBPACK_IMPORTED_MODULE_3__.getDaysInMonth)(dayOptions.year, dayOptions.month);\n  var firstWeekDay = (0,_utils_jalali__WEBPACK_IMPORTED_MODULE_3__.getWeekDay)(dayOptions.year, dayOptions.month, 1);\n  var maxDaysInCalendar = 7 * Math.ceil((firstWeekDay + daysInMonth) / 7) - 1;\n  var beforeMonthNumber = dayOptions.month == 1 ? 12 : dayOptions.month - 1;\n  var afterMonthNumber = dayOptions.month == 12 ? 1 : dayOptions.month + 1;\n  var beforeMonthYearNumber = beforeMonthNumber == 12 ? dayOptions.year - 1 : dayOptions.year;\n  var afterMonthYearNumber = afterMonthNumber == 1 ? dayOptions.year + 1 : dayOptions.year;\n  var beforeMonthDays = dayOptions.month == 1 ? (0,_utils_jalali__WEBPACK_IMPORTED_MODULE_3__.getDaysInMonth)(dayOptions.year - 1, beforeMonthNumber) : (0,_utils_jalali__WEBPACK_IMPORTED_MODULE_3__.getDaysInMonth)(dayOptions.year, beforeMonthNumber);\n  var startWeekDayInMonth = (0,_utils_jalali__WEBPACK_IMPORTED_MODULE_3__.getWeekDay)(dayOptions.year, dayOptions.month, dayOptions.day);\n  var beforeDayInMonth = beforeMonthDays - startWeekDayInMonth;\n  var afterDayInMonth = 0;\n\n  var _loop = function _loop(_i) {\n    dayOptions.inBeforeMonth = dayOptions.day <= startWeekDayInMonth && _i < startWeekDayInMonth;\n    dayOptions.inAfterMonth = _i >= daysInMonth + startWeekDayInMonth;\n\n    if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {\n      if (dayOptions.inBeforeMonth) {\n        beforeDayInMonth++;\n        dayOptions.day = beforeDayInMonth;\n        dayOptions.year = beforeMonthYearNumber;\n        dayOptions.month = beforeMonthNumber;\n      } else {\n        afterDayInMonth++;\n        dayOptions.day = afterDayInMonth;\n        dayOptions.year = afterMonthYearNumber;\n        dayOptions.month = afterMonthNumber;\n      }\n    }\n\n    dayOptions.isValid = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.isValidDate)(jdp, dayOptions.year, dayOptions.month, dayOptions.day);\n    dayOptions.className = getLastWeekClassIfNessesary((0,_utils_jalali__WEBPACK_IMPORTED_MODULE_3__.getWeekDay)(dayOptions.year, dayOptions.month, dayOptions.day));\n\n    if (jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month) {\n      dayOptions.className += \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.SELECTED_CLASS_NAME);\n    }\n\n    if (jdp.today.day === dayOptions.day && jdp.today.year === dayOptions.year && jdp.today.month === dayOptions.month) {\n      dayOptions.className += \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.TODAY_CLASS_NAME);\n    }\n\n    if ((0,_utils_object__WEBPACK_IMPORTED_MODULE_2__.isFunction)(jdp.options.dayRendering)) {\n      (0,_utils_object__WEBPACK_IMPORTED_MODULE_2__.extend)(dayOptions, jdp.options.dayRendering(dayOptions, jdp.input));\n    }\n\n    if (dayOptions.isHollyDay) {\n      dayOptions.className += \".\".concat(_constants__WEBPACK_IMPORTED_MODULE_0__.HOLLY_DAY_CLASS_NAME);\n    }\n\n    var query = dayOptions.isValid ? _constants__WEBPACK_IMPORTED_MODULE_0__.DAY_ELM_QUERY : _constants__WEBPACK_IMPORTED_MODULE_0__.DAY_DISABLED_ELM_QUERY;\n\n    if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {\n      query = _constants__WEBPACK_IMPORTED_MODULE_0__.DAY_NOTINMONTH_ELM_QUERY;\n\n      if (!dayOptions.isValid) {\n        query = _constants__WEBPACK_IMPORTED_MODULE_0__.DAY_DISABLED_NOTINMONTH_ELM_QUERY;\n      }\n    }\n\n    var dayContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.createElement)(query + dayOptions.className, daysContainer, null, null, (0,_utils_dom__WEBPACK_IMPORTED_MODULE_4__.toPersianDigitsIfNeeded)(dayOptions.day, jdp.options.persianDigits));\n    dayContainer.day = dayOptions.day;\n    dayContainer.month = dayOptions.month;\n    dayContainer.year = dayOptions.year;\n\n    if (dayOptions.isValid) {\n      dayContainer.addEventListener(_constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, function () {\n        jdp.setValue({\n          year: dayContainer.year,\n          month: dayContainer.month,\n          day: dayContainer.day\n        });\n      });\n    }\n\n    setDefaultOptions(dayOptions);\n  };\n\n  for (var _i = 0; _i <= maxDaysInCalendar; _i++) {\n    _loop(_i);\n  }\n};\n\nvar renderDatePicker = function renderDatePicker(jdp) {\n  renderYear(jdp);\n  renderMonths(jdp);\n  renderDays(jdp);\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/datePickerDraw.js?");
-
-/***/ }),
-
-/***/ "./src/defaults.js":
-/*!*************************!*\
-  !*** ./src/defaults.js ***!
-  \*************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils_object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils/object */ \"./src/utils/object.js\");\nvar _window$navigator, _window$navigator$use;\n\nvar isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test((_window$navigator = window.navigator) === null || _window$navigator === void 0 ? void 0 : (_window$navigator$use = _window$navigator.userAgent) === null || _window$navigator$use === void 0 ? void 0 : _window$navigator$use.toLowerCase());\n\n/* harmony default export */ __webpack_exports__[\"default\"] = ((0,_utils_object__WEBPACK_IMPORTED_MODULE_0__.clon)({\n  days: [\"ش\", \"ی\", \"د\", \"س\", \"چ\", \"پ\", \"ج\"],\n  months: [\"فروردین\", \"اردیبهشت\", \"خرداد\", \"تیر\", \"مرداد\", \"شهریور\", \"مهر\", \"آبان\", \"آذر\", \"دی\", \"بهمن\", \"اسفند\"],\n  //sample {year:1400,month:11,day:29}\n  initDate: null,\n  //sample {year:1400,month:11,day:29}\n  today: null,\n  //{hour:12,minute:11,second:10}\n  initTime: null,\n  hasSecond: true,\n  time: false,\n  date: true,\n  //sample {year:1399,month:11,day:29} || today || attr\n  minDate: {},\n  //sample {year:1400,month:11,day:29} || today || attr\n  maxDate: {},\n  minTime: {},\n  maxTime: {},\n  separatorChars: {\n    date: \"/\",\n    between: \" \",\n    time: \":\"\n  },\n  persianDigits: false,\n  zIndex: 1000,\n  container: \"body\",\n  selector: \"input[data-jdp]\",\n  autoShow: true,\n  autoHide: true,\n  hideAfterChange: true,\n  plusHtml: \"<svg viewBox=\\\"0 0 1024 1024\\\"><g><path d=\\\"M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z\\\"></path></g></svg>\",\n  minusHtml: \"<svg viewBox=\\\"0 0 1024 1024\\\"><g><path d=\\\"M810 554h-596v-84h596v84z\\\"></path></g></svg>\",\n  changeMonthRotateYear: false,\n  showTodayBtn: true,\n  showEmptyBtn: true,\n  showCloseBtn: isMobile,\n  showSelectTimeBtnAlways: false,\n  autoReadOnlyInput: isMobile,\n  useDropDownYears: true,\n  topSpace: 0,\n  bottomSpace: 0,\n  overflowSpace: -10\n}));\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/defaults.js?");
-
-/***/ }),
-
-/***/ "./src/draw.js":
-/*!*********************!*\
-  !*** ./src/draw.js ***!
-  \*********************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"render\": function() { return /* binding */ render; },\n/* harmony export */   \"default\": function() { return /* export default binding */ __WEBPACK_DEFAULT_EXPORT__; }\n/* harmony export */ });\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ \"./src/constants.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils */ \"./src/utils/index.js\");\n/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/dom */ \"./src/utils/dom.js\");\n/* harmony import */ var _timePickerDraw__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./timePickerDraw */ \"./src/timePickerDraw.js\");\n/* harmony import */ var _datePickerDraw__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./datePickerDraw */ \"./src/datePickerDraw.js\");\n\n\n\n\n\n\nvar renderFooter = function renderFooter(jdp) {\n  var _jdp$input;\n\n  var footerContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.FOOTER_ELM_QUERY, jdp.dpContainer);\n\n  if (jdp.options.showTodayBtn && jdp.options.date) {\n    var isActiveToday = (0,_utils__WEBPACK_IMPORTED_MODULE_1__.isValidDateToday)(jdp);\n    (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.TODAY_BTN_ELM_QUERY + (isActiveToday ? \"\" : \".disabled-btn\"), footerContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, function () {\n      isActiveToday && jdp.setValue(jdp.today);\n    }, \"امروز\");\n  }\n\n  if (!jdp.options.date && jdp.options.time && (!((_jdp$input = jdp.input) !== null && _jdp$input !== void 0 && _jdp$input.value) || !!jdp.options.showSelectTimeBtnAlways)) {\n    (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.TODAY_BTN_ELM_QUERY, footerContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, function () {\n      jdp.setValue(jdp.initTime);\n      jdp.hide();\n    }, \"انتخاب\");\n  }\n\n  if (jdp.options.showEmptyBtn) {\n    (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.EMPTY_BTN_ELM_QUERY, footerContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, function () {\n      jdp.input.value = \"\";\n      (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.triggerEvent)(jdp.input, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CHANGE_INPUT_STR);\n      if (jdp.options.hideAfterChange) jdp.hide();\n    }, \"خالی\");\n  }\n\n  if (jdp.options.showCloseBtn) {\n    (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.CLOSE_BTN_ELM_QUERY, footerContainer, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CLICK_STR, function () {\n      jdp.hide();\n    }, \"بستن\");\n  }\n};\n\nvar render = function render(jdp) {\n  (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.setInnerHTML)(jdp.dpContainer, \"\");\n\n  if (jdp.options.date) {\n    (0,_datePickerDraw__WEBPACK_IMPORTED_MODULE_4__.renderDatePicker)(jdp);\n  }\n\n  if (jdp.options.time) {\n    (0,_timePickerDraw__WEBPACK_IMPORTED_MODULE_3__.renderTimePicker)(jdp);\n  }\n\n  renderFooter(jdp);\n};\n/* harmony default export */ function __WEBPACK_DEFAULT_EXPORT__() {\n  render(this);\n}\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/draw.js?");
-
-/***/ }),
-
-/***/ "./src/index.js":
-/*!**********************!*\
-  !*** ./src/index.js ***!
-  \**********************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utils */ \"./src/utils/index.js\");\n/* harmony import */ var _utils_object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/object */ \"./src/utils/object.js\");\n/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/dom */ \"./src/utils/dom.js\");\n/* harmony import */ var _utils_jalali__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils/jalali */ \"./src/utils/jalali.js\");\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./constants */ \"./src/constants.js\");\n/* harmony import */ var _draw__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./draw */ \"./src/draw.js\");\n/* harmony import */ var _defaults__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./defaults */ \"./src/defaults.js\");\n\n\n\n\n\n\n\nvar jalaliDatepicker = {\n  isInitialized: false,\n  init: function init(options) {\n    this.updateOptions(options);\n    addEventListenerOnResize();\n    if (this.options.autoHide) addEventListenerOnBody();\n    if (this.options.autoShow) addEventListenerOnInputs(this.options.selector);\n    this.isInitialized = true;\n  },\n  updateOptions: function updateOptions(options) {\n    this.options = normalizeOptions(options);\n  },\n  options: _defaults__WEBPACK_IMPORTED_MODULE_6__.default,\n  input: null,\n  isTransitioning: false,\n\n  get dpContainer() {\n    if (!this._dpContainer || !this._dpContainer.isConnected) {\n      this._dpContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_4__.CONTAINER_ELM_QUERY, this.options.container);\n      this.dpContainer.style.zIndex = this.options.zIndex;\n    }\n\n    if (!this.overlayElm || !this.overlayElm.isConnected) {\n      this.overlayElm = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_4__.OVERLAY_ELM_QUERY, this.options.container);\n      this.overlayElm.style.zIndex = this.options.zIndex - 1;\n    }\n\n    return this._dpContainer;\n  },\n\n  get today() {\n    this._today = this._today || this.options.today || (0,_utils_jalali__WEBPACK_IMPORTED_MODULE_3__.jalaliToday)();\n    return this._today;\n  },\n\n  get inputValue() {\n    var inputValue = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(this.input.value);\n\n    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidValueString)(this, inputValue)) {\n      inputValue = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getValueObjectFromString)(this, inputValue);\n    } else if ((0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isString)(inputValue) && (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidDateString)(this, inputValue)) {\n      inputValue = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getValueObjectFromString)(this, inputValue);\n    } else {\n      inputValue = {};\n    }\n\n    return inputValue;\n  },\n\n  get initDate() {\n    if (this.options.initDate) {\n      return this.options.initDate;\n    }\n\n    if (this._initDate) {\n      return this._initDate;\n    }\n\n    this._initDate = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(this.input.value) || {};\n\n    if ((0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isPlainObject)(this._initDate)) {\n      this._initDate = this.options.initDate || (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(this.today);\n    } else if ((0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isString)(this._initDate) && (0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidDateString)(this, this._initDate)) {\n      this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getValueObjectFromString)(this, this._initDate);\n    } else {\n      this._initDate = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(this.today);\n    }\n\n    this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.normalizeMinMaxDate)(this, this._initDate);\n    return this._initDate;\n  },\n\n  get initTime() {\n    if (this._initTime) {\n      return this._initTime;\n    }\n\n    var date = new Date();\n    var defaultInit = {\n      hour: date.getHours(),\n      minute: date.getMinutes(),\n      second: 0\n    };\n    this._initTime = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(this.input.value) || this.options.initTime || defaultInit;\n\n    if ((0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isString)(this._initTime)) {\n      if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidTimeString)(this, this._initTime)) {\n        this._initTime = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getValueObjectFromString)(this, this._initTime);\n      } else {\n        this._initTime = defaultInit;\n      }\n    }\n\n    this._initTime = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.normalizeMinMaxTime)(this, this._initTime);\n    return this._initTime;\n  },\n\n  _draw: _draw__WEBPACK_IMPORTED_MODULE_5__.default,\n  show: function show(input) {\n    var _this = this;\n\n    this._initDate = null;\n    this._initTime = null;\n    this._value = null;\n    this.input = input;\n\n    this._draw();\n\n    setReadOnly(input, this.options);\n    this.isTransitioning = true;\n    this.dpContainer.style.visibility = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_VISIBILITY_VISIBLE;\n    this.dpContainer.style.display = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_DISPLAY_BLOCK;\n    this.overlayElm.style.display = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_DISPLAY_BLOCK;\n    setTimeout(function () {\n      _this.dpContainer.style.visibility = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_VISIBILITY_VISIBLE;\n      _this.dpContainer.style.display = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_DISPLAY_BLOCK;\n      _this.overlayElm.style.display = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_DISPLAY_BLOCK;\n      _this.isShow = true;\n      _this.isTransitioning = false;\n    }, 300);\n    this.setPosition();\n    setScrollOnParent(input);\n    document.addEventListener(_constants__WEBPACK_IMPORTED_MODULE_4__.EVENT_KEYDOWN_STR, handleEscKey);\n  },\n  hide: function hide() {\n    this.dpContainer.style.visibility = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_VISIBILITY_HIDDEN;\n    this.dpContainer.style.display = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_DISPLAY_HIDDEN;\n    this.overlayElm.style.display = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_DISPLAY_HIDDEN;\n    this.isShow = false;\n    document.removeEventListener(_constants__WEBPACK_IMPORTED_MODULE_4__.EVENT_KEYDOWN_STR, handleEscKey);\n  },\n  setPosition: function setPosition() {\n    if (this.dpContainer.style.visibility !== _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_VISIBILITY_VISIBLE) {\n      return;\n    }\n\n    var inputBounds = this.input.getBoundingClientRect();\n    var inputHeight = inputBounds.height;\n    var left = inputBounds.left;\n    var top = inputBounds.top + inputHeight;\n    top += this.options.topSpace;\n    var windowWidth = window.document.body.offsetWidth;\n    var dpContainerWidth = this.dpContainer.offsetWidth;\n    var dpContainerHeight = this.dpContainer.offsetHeight;\n\n    if (left + dpContainerWidth >= windowWidth) {\n      left -= left + dpContainerWidth - (windowWidth + this.options.overflowSpace);\n    }\n\n    if (top - inputHeight >= dpContainerHeight && top + dpContainerHeight >= window.innerHeight) {\n      top -= dpContainerHeight + inputHeight + this.options.bottomSpace + this.options.topSpace;\n    }\n\n    this.dpContainer.style.position = _constants__WEBPACK_IMPORTED_MODULE_4__.STYLE_POSITION_FIXED;\n    this.dpContainer.style.left = left + \"px\";\n    this.dpContainer.style.top = top + \"px\";\n  },\n\n  get getValue() {\n    this._value = this._value || this.inputValue || {};\n    return this._value;\n  },\n\n  setValue: function setValue(objValue) {\n    this._value = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.extend)({\n      year: this.today.year,\n      month: this.today.month,\n      day: this.today.day,\n      hour: this.initTime.hour,\n      minute: this.initTime.minute,\n      second: this.initTime.second\n    }, (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.extend)(this._value, objValue));\n    this._initTime = null;\n    this.input.value = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getValueStringFromValueObject)(this, this._value);\n    (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.triggerEvent)(this.input, _constants__WEBPACK_IMPORTED_MODULE_4__.EVENT_CHANGE_INPUT_STR);\n\n    if (!this.options.time && this.options.hideAfterChange) {\n      this.hide();\n    } else {\n      this._draw();\n    }\n  },\n  increaseMonth: function increaseMonth() {\n    var isLastMonth = this._initDate.month === 12;\n\n    if (this.options.changeMonthRotateYear && isLastMonth) {\n      this.increaseYear();\n    }\n\n    this.monthChange(isLastMonth ? 1 : this._initDate.month + 1);\n  },\n  decreaseMonth: function decreaseMonth() {\n    var isFirstMonth = this._initDate.month === 1;\n\n    if (this.options.changeMonthRotateYear && isFirstMonth) {\n      this.decreaseYear();\n    }\n\n    this.monthChange(isFirstMonth ? 12 : this._initDate.month - 1);\n  },\n  monthChange: function monthChange(month) {\n    this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.normalizeMinMaxDate)(this, this._initDate, {\n      month: month\n    });\n\n    this._draw();\n  },\n  increaseYear: function increaseYear() {\n    this.yearChange(this._initDate.year + 1);\n  },\n  decreaseYear: function decreaseYear() {\n    this.yearChange(this._initDate.year - 1);\n  },\n  yearChange: function yearChange(year) {\n    this._initDate = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.normalizeMinMaxDate)(this, this._initDate, {\n      year: year\n    });\n\n    this._draw();\n  }\n};\n\nvar getDefaultFromAttr = function getDefaultFromAttr(attrName, isTime) {\n  var _jalaliDatepicker$inp;\n\n  var attrVal = (_jalaliDatepicker$inp = jalaliDatepicker.input) === null || _jalaliDatepicker$inp === void 0 ? void 0 : _jalaliDatepicker$inp.getAttribute(attrName);\n  if (!isTime && attrVal === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_TODAY_SETTING) return (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(jalaliDatepicker.today);\n  if (!(0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isString)(attrVal)) return {};\n\n  try {\n    attrVal = document.querySelector(attrVal).value;\n  } catch (_unused) {//\n  }\n\n  if (isTime) {\n    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidTimeString)(jalaliDatepicker, attrVal)) {\n      attrVal = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getValueObjectFromString)(jalaliDatepicker, attrVal);\n    } else {\n      attrVal = {};\n    }\n  } else {\n    if ((0,_utils__WEBPACK_IMPORTED_MODULE_0__.isValidDateString)(jalaliDatepicker, attrVal)) {\n      attrVal = (0,_utils__WEBPACK_IMPORTED_MODULE_0__.getValueObjectFromString)(jalaliDatepicker, attrVal);\n    } else {\n      attrVal = {};\n    }\n  }\n\n  return attrVal;\n};\n\nvar normalizeOptions = function normalizeOptions(options) {\n  if (!(0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isUndefined)(jalaliDatepicker.options._date) && (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isUndefined)(options.date)) {\n    options.date = jalaliDatepicker.options._date;\n  }\n\n  if (!(0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isUndefined)(jalaliDatepicker.options._time) && (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.isUndefined)(options.time)) {\n    options.time = jalaliDatepicker.options._time;\n  }\n\n  options.separatorChars = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.extend)(jalaliDatepicker.options.separatorChars, options.separatorChars);\n  options = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.extend)({}, jalaliDatepicker.options, options);\n  if (options.minDate === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_TODAY_SETTING) options.minDate = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(jalaliDatepicker.today);\n  if (options.maxDate === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_TODAY_SETTING) options.maxDate = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.clon)(jalaliDatepicker.today);\n\n  if (options.initDate === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_ATTR_SETTING || options._initDateIsAttr) {\n    delete options.initDate;\n    options._initDateIsAttr = true;\n    window.Object.defineProperty(options, \"initDate\", {\n      get: function get() {\n        return getDefaultFromAttr(_constants__WEBPACK_IMPORTED_MODULE_4__.INIT_DATE_ATTR_NAME);\n      },\n      enumerable: true\n    });\n  }\n\n  if (options.minDate === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_ATTR_SETTING || options._minDateIsAttr) {\n    delete options.minDate;\n    options._minDateIsAttr = true;\n    window.Object.defineProperty(options, \"minDate\", {\n      get: function get() {\n        return getDefaultFromAttr(_constants__WEBPACK_IMPORTED_MODULE_4__.MIN_DATE_ATTR_NAME);\n      },\n      enumerable: true\n    });\n  }\n\n  if (options.maxDate === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_ATTR_SETTING || options._maxDateIsAttr) {\n    delete options.maxDate;\n    options._maxDateIsAttr = true;\n    window.Object.defineProperty(options, \"maxDate\", {\n      get: function get() {\n        return getDefaultFromAttr(_constants__WEBPACK_IMPORTED_MODULE_4__.MAX_DATE_ATTR_NAME);\n      },\n      enumerable: true\n    });\n  }\n\n  if (options.minTime === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_ATTR_SETTING || options._minTimeIsAttr) {\n    delete options.minTime;\n    options._minTimeIsAttr = true;\n    window.Object.defineProperty(options, \"minTime\", {\n      get: function get() {\n        return getDefaultFromAttr(_constants__WEBPACK_IMPORTED_MODULE_4__.MIN_TIME_ATTR_NAME, true);\n      },\n      enumerable: true\n    });\n  }\n\n  if (options.maxTime === _constants__WEBPACK_IMPORTED_MODULE_4__.MIN_MAX_ATTR_SETTING || options._maxTimeIsAttr) {\n    delete options.maxTime;\n    options._maxTimeIsAttr = true;\n    window.Object.defineProperty(options, \"maxTime\", {\n      get: function get() {\n        return getDefaultFromAttr(_constants__WEBPACK_IMPORTED_MODULE_4__.MAX_TIME_ATTR_NAME, true);\n      },\n      enumerable: true\n    });\n  }\n\n  options._date = options.date;\n  delete options.date;\n  window.Object.defineProperty(options, \"date\", {\n    get: function get() {\n      var _jalaliDatepicker$inp2, _jalaliDatepicker$inp3;\n\n      return !((_jalaliDatepicker$inp2 = jalaliDatepicker.input) !== null && _jalaliDatepicker$inp2 !== void 0 && _jalaliDatepicker$inp2.hasAttribute(_constants__WEBPACK_IMPORTED_MODULE_4__.ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (options._date || ((_jalaliDatepicker$inp3 = jalaliDatepicker.input) === null || _jalaliDatepicker$inp3 === void 0 ? void 0 : _jalaliDatepicker$inp3.hasAttribute(_constants__WEBPACK_IMPORTED_MODULE_4__.ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));\n    },\n    enumerable: true\n  });\n  options._time = options.time;\n  delete options.time;\n  window.Object.defineProperty(options, \"time\", {\n    get: function get() {\n      var _jalaliDatepicker$inp4, _jalaliDatepicker$inp5;\n\n      return !((_jalaliDatepicker$inp4 = jalaliDatepicker.input) !== null && _jalaliDatepicker$inp4 !== void 0 && _jalaliDatepicker$inp4.hasAttribute(_constants__WEBPACK_IMPORTED_MODULE_4__.ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (options._time || ((_jalaliDatepicker$inp5 = jalaliDatepicker.input) === null || _jalaliDatepicker$inp5 === void 0 ? void 0 : _jalaliDatepicker$inp5.hasAttribute(_constants__WEBPACK_IMPORTED_MODULE_4__.ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));\n    },\n    enumerable: true\n  });\n  return options;\n};\n\nfunction setScrollOnParent(input) {\n  (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.getScrollParent)(input).addEventListener(\"scroll\", function () {\n    jalaliDatepicker.setPosition();\n  }, {\n    passive: true\n  });\n}\n\nfunction setReadOnly(input, options) {\n  if (options.autoReadOnlyInput && !input.readOnly) {\n    input.setAttribute(\"readonly\", \"readonly\");\n    input.readOnly = true;\n  }\n}\n\nfunction addEventListenerOnResize() {\n  Element.prototype.matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector;\n  window.addEventListener(\"resize\", function () {\n    jalaliDatepicker.setPosition();\n  });\n}\n\nfunction addEventListenerOnInputs(querySelector) {\n  document.body.addEventListener(_constants__WEBPACK_IMPORTED_MODULE_4__.EVENT_FOCUS_STR, function (e) {\n    if (e.target && e.target.matches(querySelector)) {\n      jalaliDatepicker.show(e.target);\n    }\n  });\n}\n\nfunction addEventListenerOnBody() {\n  document.body.addEventListener(\"click\", function (e) {\n    if (!jalaliDatepicker.isShow || (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.containsDom)(jalaliDatepicker.dpContainer, e) || (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.getEventTarget)(e) === jalaliDatepicker.input) {\n      return;\n    }\n\n    jalaliDatepicker.hide();\n  });\n}\n\nfunction handleEscKey(event) {\n  if (event.key === \"Escape\") {\n    if (!jalaliDatepicker.isTransitioning) {\n      var _jalaliDatepicker$inp6, _jalaliDatepicker$inp7;\n\n      (_jalaliDatepicker$inp6 = jalaliDatepicker.input) === null || _jalaliDatepicker$inp6 === void 0 ? void 0 : (_jalaliDatepicker$inp7 = _jalaliDatepicker$inp6.blur) === null || _jalaliDatepicker$inp7 === void 0 ? void 0 : _jalaliDatepicker$inp7.call(_jalaliDatepicker$inp6);\n      jalaliDatepicker.hide();\n    }\n  }\n}\n\nwindow.jalaliDatepicker = {\n  startWatch: function startWatch() {\n    var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};\n    jalaliDatepicker.init(options);\n  },\n  show: function show(input) {\n    jalaliDatepicker.show(input);\n  },\n  hide: function hide() {\n    jalaliDatepicker.hide();\n  },\n  updateOptions: function updateOptions(options) {\n    jalaliDatepicker.updateOptions(options);\n  }\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/index.js?");
-
-/***/ }),
-
-/***/ "./src/timePickerDraw.js":
-/*!*******************************!*\
-  !*** ./src/timePickerDraw.js ***!
-  \*******************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"renderTimePicker\": function() { return /* binding */ renderTimePicker; }\n/* harmony export */ });\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ \"./src/constants.js\");\n/* harmony import */ var _utils_object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utils/object */ \"./src/utils/object.js\");\n/* harmony import */ var _utils_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./utils/dom */ \"./src/utils/dom.js\");\n/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ \"./src/utils/index.js\");\nfunction _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }\n\n\n\n\n\n\nvar getArrayNumbersStringTo = function getArrayNumbersStringTo(min, max) {\n  var items = [];\n\n  for (var i = min; i <= max; i++) {\n    items.push((0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.addLeadingZero)(i));\n  }\n\n  return items;\n};\n\nvar timeDropDownRender = function timeDropDownRender(jdp, timePickerContainer, type) {\n  var getItemForType = function getItemForType() {\n    var minTime = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.extend)({\n      hour: 0,\n      minute: 0,\n      second: 0\n    }, jdp.options.minTime);\n    var maxTime = (0,_utils_object__WEBPACK_IMPORTED_MODULE_1__.extend)({\n      hour: 23,\n      minute: 59,\n      second: 59\n    }, jdp.options.maxTime);\n\n    if (type == \"hour\") {\n      return getArrayNumbersStringTo(minTime.hour, maxTime.hour);\n    }\n\n    if (type == \"minute\") {\n      if (minTime.hour == maxTime.hour) {\n        return getArrayNumbersStringTo(minTime.minute, maxTime.minute);\n      }\n\n      if (jdp.initTime.hour == minTime.hour) {\n        return getArrayNumbersStringTo(minTime.minute, 59);\n      }\n\n      if (jdp.initTime.hour == maxTime.hour) {\n        return getArrayNumbersStringTo(0, maxTime.minute);\n      }\n\n      return getArrayNumbersStringTo(0, 59);\n    }\n\n    if (type == \"second\") {\n      if (minTime.hour == maxTime.hour && minTime.minute == maxTime.minute) {\n        return getArrayNumbersStringTo(minTime.second, maxTime.second);\n      }\n\n      if (jdp.initTime.hour == minTime.hour && jdp.initTime.minute == minTime.minute) {\n        return getArrayNumbersStringTo(minTime.second, 59);\n      }\n\n      if (jdp.initTime.hour == maxTime.hour && jdp.initTime.minute == maxTime.minute) {\n        return getArrayNumbersStringTo(0, maxTime.second);\n      }\n\n      return getArrayNumbersStringTo(0, 59);\n    }\n\n    return getArrayNumbersStringTo(minTime.second, maxTime.second);\n  };\n\n  var container = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(_constants__WEBPACK_IMPORTED_MODULE_0__.TIME_DROPDOWN_PARENT_ELM_QUERY, timePickerContainer);\n  var dropDownContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(\"select\", container, _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CHANGE_TIME_DROPDOWN_STR, function (e) {\n    jdp.setValue((0,_utils__WEBPACK_IMPORTED_MODULE_3__.normalizeMinMaxTime)(jdp, jdp.initTime, _defineProperty({}, type, e.target.value)));\n  });\n  dropDownContainer.tabIndex = -1;\n  var items = getItemForType();\n\n  for (var i = 0; i < items.length; i++) {\n    var optionElm = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(\"option\", dropDownContainer);\n    optionElm.value = items[i].toString();\n    optionElm.text = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.toPersianDigitsIfNeeded)(items[i], jdp.options.persianDigits);\n    optionElm.selected = parseInt(items[i]) === parseInt(jdp.getValue[type] || jdp.initTime[type]);\n  }\n};\n\nvar renderTimePicker = function renderTimePicker(jdp) {\n  var elmQuery = _constants__WEBPACK_IMPORTED_MODULE_0__.FOOTER_TIME_ELM_QUERY + (jdp.options.time && !jdp.options.date ? \".jdp-only-time\" : \"\");\n  var timePickerContainer = (0,_utils_dom__WEBPACK_IMPORTED_MODULE_2__.createElement)(elmQuery, jdp.dpContainer);\n\n  if (jdp.options.hasSecond) {\n    timeDropDownRender(jdp, timePickerContainer, \"second\");\n  }\n\n  timeDropDownRender(jdp, timePickerContainer, \"minute\");\n  timeDropDownRender(jdp, timePickerContainer, \"hour\");\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/timePickerDraw.js?");
-
-/***/ }),
-
-/***/ "./src/utils/dom.js":
-/*!**************************!*\
-  !*** ./src/utils/dom.js ***!
-  \**************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"getScrollParent\": function() { return /* binding */ getScrollParent; },\n/* harmony export */   \"getEventTarget\": function() { return /* binding */ getEventTarget; },\n/* harmony export */   \"containsDom\": function() { return /* binding */ containsDom; },\n/* harmony export */   \"triggerEvent\": function() { return /* binding */ triggerEvent; },\n/* harmony export */   \"createElement\": function() { return /* binding */ createElement; },\n/* harmony export */   \"setInnerHTML\": function() { return /* binding */ setInnerHTML; },\n/* harmony export */   \"toPersianDigitsIfNeeded\": function() { return /* binding */ toPersianDigitsIfNeeded; }\n/* harmony export */ });\n/* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../constants */ \"./src/constants.js\");\n/* harmony import */ var _object__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./object */ \"./src/utils/object.js\");\n\n\nvar getScrollParent = function getScrollParent(node) {\n  if ([\"html\", \"body\", \"#document\"].indexOf((node.nodeName || \"\").toLowerCase()) >= 0) {\n    return window;\n  }\n\n  if (node instanceof HTMLElement) {\n    var _window$getComputedSt = window.getComputedStyle(node),\n        overflow = _window$getComputedSt.overflow,\n        overflowX = _window$getComputedSt.overflowX,\n        overflowY = _window$getComputedSt.overflowY;\n\n    if (/auto|scroll|overlay/.test(overflow + overflowY + overflowX)) {\n      return node;\n    }\n  }\n\n  return getScrollParent(node.parentNode);\n};\nvar getEventTarget = function getEventTarget(event) {\n  try {\n    if ((0,_object__WEBPACK_IMPORTED_MODULE_1__.isFunction)(event.composedPath)) {\n      return event.composedPath()[0];\n    }\n\n    return event.target;\n  } catch (error) {\n    return event.target;\n  }\n};\nvar containsDom = function containsDom(parent, event) {\n  var path = event.path || event.composedPath && event.composedPath() || false;\n\n  if (!path) {\n    return parent.outerHTML.indexOf(event.target.outerHTML) > -1;\n  }\n\n  return path.indexOf(parent) !== -1;\n};\n\nvar createEvent = function createEvent(name) {\n  var e = document.createEvent(\"Event\");\n  e.initEvent(name, true, true);\n  return e;\n};\n\nvar triggerEvent = function triggerEvent(elm, event) {\n  if (!elm) return;\n  elm.dispatchEvent(createEvent(event));\n\n  if (event === _constants__WEBPACK_IMPORTED_MODULE_0__.EVENT_CHANGE_INPUT_STR) {\n    elm.dispatchEvent(createEvent(\"change\"));\n    elm.dispatchEvent(createEvent(\"input\"));\n  }\n};\n\nvar addListenerMulti = function addListenerMulti(element, eventNames, listener) {\n  var events = eventNames.split(\" \");\n\n  for (var i = 0, iLen = events.length; i < iLen; i++) {\n    element.addEventListener(events[i], listener, false);\n  }\n};\n\nvar createElement = function createElement(tag, parent, eventNames, event, content) {\n  var splits = tag.split(\".\");\n  tag = splits.shift() || \"div\";\n  var className = splits;\n  var element = window.document.createElement(tag);\n\n  if ((0,_object__WEBPACK_IMPORTED_MODULE_1__.isString)(parent)) {\n    window.document.querySelector(parent).appendChild(element);\n  } else {\n    parent.appendChild(element);\n  }\n\n  if (className.length) {\n    element.className = className.join(\" \");\n  }\n\n  if (eventNames && event) {\n    addListenerMulti(element, eventNames, event);\n  }\n\n  if (!(0,_object__WEBPACK_IMPORTED_MODULE_1__.isUndefined)(content)) {\n    setInnerHTML(element, content);\n  }\n\n  return element;\n};\nvar setInnerHTML = function setInnerHTML(element, html) {\n  element.innerHTML = html;\n};\nvar toPersianDigitsIfNeeded = function toPersianDigitsIfNeeded(data, convert) {\n  if (convert) return data.toString().replace(/\\d/g, function (d) {\n    return \"۰۱۲۳۴۵۶۷۸۹\"[d];\n  });\n  return data;\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/utils/dom.js?");
-
-/***/ }),
-
-/***/ "./src/utils/index.js":
-/*!****************************!*\
-  !*** ./src/utils/index.js ***!
-  \****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"normalizeMinMaxDate\": function() { return /* binding */ normalizeMinMaxDate; },\n/* harmony export */   \"normalizeMinMaxTime\": function() { return /* binding */ normalizeMinMaxTime; },\n/* harmony export */   \"getValidYears\": function() { return /* binding */ getValidYears; },\n/* harmony export */   \"getValidMonths\": function() { return /* binding */ getValidMonths; },\n/* harmony export */   \"isValidDate\": function() { return /* binding */ isValidDate; },\n/* harmony export */   \"isValidDateToday\": function() { return /* binding */ isValidDateToday; },\n/* harmony export */   \"isValidValueString\": function() { return /* binding */ isValidValueString; },\n/* harmony export */   \"getValueObjectFromString\": function() { return /* binding */ getValueObjectFromString; },\n/* harmony export */   \"getValueStringFromValueObject\": function() { return /* binding */ getValueStringFromValueObject; },\n/* harmony export */   \"getDateValueStringFromValueObject\": function() { return /* binding */ getDateValueStringFromValueObject; },\n/* harmony export */   \"isValidDateString\": function() { return /* binding */ isValidDateString; },\n/* harmony export */   \"isValidTimeString\": function() { return /* binding */ isValidTimeString; }\n/* harmony export */ });\n/* harmony import */ var _object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./object */ \"./src/utils/object.js\");\n\nvar normalizeMinMaxDate = function normalizeMinMaxDate(jdp, dateObj, updateObj) {\n  var _dateObj = (0,_object__WEBPACK_IMPORTED_MODULE_0__.extend)(dateObj, updateObj);\n\n  var initDate = jdp.initDate;\n  var maxDate = jdp.options.maxDate;\n  var minDate = jdp.options.minDate;\n  var year = _dateObj.year;\n  var month = _dateObj.month;\n  var day = _dateObj.day;\n\n  if (isNaN(year) || year < 1000 || year > 1999) {\n    year = initDate.year;\n  } else {\n    if (year < minDate.year) {\n      year = minDate.year;\n      month = 1;\n    } else if (year > maxDate.year) {\n      year = maxDate.year;\n    }\n  }\n\n  if (isNaN(month) || month < 1 || month > 12) {\n    month = initDate.month;\n  } else {\n    if (year <= minDate.year && month < minDate.month) {\n      month = minDate.month;\n      day = 1;\n    } else if (year >= maxDate.year && month > maxDate.month) {\n      month = maxDate.month;\n    }\n  }\n\n  if (isNaN(day) || day < 1) {\n    day = initDate.day;\n  } else {\n    if (month <= minDate.month && day < minDate.day) {\n      day = minDate.day;\n    } else if (month >= maxDate.month && day > maxDate.day) {\n      day = maxDate.day;\n    }\n  }\n\n  return {\n    year: parseInt(year),\n    month: parseInt(month),\n    day: parseInt(day)\n  };\n};\nvar normalizeMinMaxTime = function normalizeMinMaxTime(jdp, timeObj, updateObj) {\n  var _timeObj = (0,_object__WEBPACK_IMPORTED_MODULE_0__.extend)(timeObj, updateObj);\n\n  var initTime = jdp.initTime;\n  var maxTime = jdp.options.maxTime;\n  var minTime = jdp.options.minTime;\n  var hour = _timeObj.hour;\n  var minute = _timeObj.minute;\n  var second = _timeObj.second;\n\n  if (isNaN(hour) || hour < 0 || hour > 23) {\n    hour = initTime.hour;\n  } else {\n    if (hour < minTime.hour) {\n      hour = minTime.hour;\n    } else if (hour > maxTime.hour) {\n      hour = maxTime.hour;\n    }\n  }\n\n  if (isNaN(minute) || minute < 0 || minute > 59) {\n    minute = initTime.minute;\n  } else {\n    if (hour <= minTime.hour && minute < minTime.minute) {\n      minute = minTime.minute;\n    } else if (hour >= maxTime.hour && minute > maxTime.minute) {\n      minute = maxTime.minute;\n    }\n  }\n\n  if (isNaN(second) || second < 0 || second > 59) {\n    second = initTime.second;\n  } else {\n    if (hour <= minTime.hour && minute <= minTime.minute && second < minTime.second) {\n      second = minTime.second;\n    } else if (hour >= maxTime.hour && minute >= maxTime.minute && second > maxTime.second) {\n      second = maxTime.second;\n    }\n  }\n\n  return {\n    hour: parseInt(hour),\n    minute: parseInt(minute),\n    second: parseInt(second)\n  };\n};\nvar getValidYears = function getValidYears(jdp) {\n  function rnd(val) {\n    return Math.round(val / 100) * 100;\n  }\n\n  var initYear = jdp.initDate.year;\n  var min = jdp.options.minDate.year || rnd(initYear - 200);\n  var max = jdp.options.maxDate.year || rnd(initYear + 200);\n  return {\n    min: min,\n    max: max\n  };\n};\nvar getValidMonths = function getValidMonths(jdp) {\n  var initYear = jdp.initDate.year;\n  var minDate = jdp.options.minDate;\n  var maxDate = jdp.options.maxDate;\n  var months = [];\n  var start = 1;\n  var finish = 12;\n\n  if (initYear === minDate.year) {\n    start = minDate.month;\n\n    if (initYear === maxDate.year) {\n      finish = maxDate.month;\n    }\n  } else if (initYear === maxDate.year) {\n    start = 1;\n    finish = maxDate.month;\n  }\n\n  for (var i = start; i <= finish; i++) {\n    months.push(i);\n  }\n\n  return months;\n};\nvar isValidDate = function isValidDate(jdp, year, month, day) {\n  var minDate = jdp.options.minDate;\n  var maxDate = jdp.options.maxDate;\n  var date = getDateValueStringFromValueObject(jdp, {\n    year: year,\n    month: month,\n    day: day\n  });\n  minDate = (0,_object__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(minDate) ? date : getDateValueStringFromValueObject(jdp, {\n    year: minDate.year,\n    month: minDate.month,\n    day: minDate.day\n  });\n  maxDate = (0,_object__WEBPACK_IMPORTED_MODULE_0__.isPlainObject)(maxDate) ? date : getDateValueStringFromValueObject(jdp, {\n    year: maxDate.year,\n    month: maxDate.month,\n    day: maxDate.day\n  });\n  return date <= maxDate && date >= minDate;\n};\nvar isValidDateToday = function isValidDateToday(jdp) {\n  return isValidDate(jdp, jdp.today.year, jdp.today.month, jdp.today.day);\n};\nvar isValidValueString = function isValidValueString(jdp, str) {\n  if (!str) {\n    return false;\n  }\n\n  var sepOpt = jdp.options.separatorChars;\n  var datePattern = jdp.options.date ? \"\\\\d{4}\".concat(sepOpt.date, \"\\\\d{2}\").concat(sepOpt.date, \"\\\\d{2}\") : \"\";\n  var timePattern = jdp.options.time ? \"\\\\d{2}\".concat(sepOpt.time, \"\\\\d{2}\") + (jdp.options.hasSecond ? \"\".concat(sepOpt.time, \"\\\\d{2}\") : \"\") : \"\";\n  var regex = new RegExp(datePattern + (datePattern && timePattern ? sepOpt.between : \"\") + timePattern);\n  return regex.test(str, \"g\");\n};\nvar getValueObjectFromString = function getValueObjectFromString(jdp, str) {\n  var sepOpt = jdp.options.separatorChars;\n  var sep = str.split(sepOpt.between);\n  var date = jdp.options.date ? sep[0].split(sepOpt.date) : {};\n  var time = jdp.options.date ? jdp.options.time && sep[1] ? sep[1].split(sepOpt.time) : {} : sep[0].split(sepOpt.time);\n  return {\n    year: parseInt(date[0]),\n    month: parseInt(date[1]),\n    day: parseInt(date[2]),\n    hour: parseInt(time[0]),\n    minute: parseInt(time[1]),\n    second: parseInt(time[2])\n  };\n};\nvar getValueStringFromValueObject = function getValueStringFromValueObject(jdp, obj) {\n  var sepChar = jdp.options.separatorChars;\n  var dateStr = jdp.options.date ? \"\".concat(obj.year).concat(sepChar.date).concat((0,_object__WEBPACK_IMPORTED_MODULE_0__.addLeadingZero)(obj.month)).concat(sepChar.date).concat((0,_object__WEBPACK_IMPORTED_MODULE_0__.addLeadingZero)(obj.day)) : \"\";\n  var timeStr = jdp.options.time ? \"\".concat((0,_object__WEBPACK_IMPORTED_MODULE_0__.addLeadingZero)(obj.hour)).concat(sepChar.time).concat((0,_object__WEBPACK_IMPORTED_MODULE_0__.addLeadingZero)(obj.minute)) + (jdp.options.hasSecond ? sepChar.time + (0,_object__WEBPACK_IMPORTED_MODULE_0__.addLeadingZero)(obj.second) : \"\") : \"\";\n  var betweenStr = dateStr && timeStr ? sepChar.between : \"\";\n  return dateStr + betweenStr + timeStr;\n};\nvar getDateValueStringFromValueObject = function getDateValueStringFromValueObject(jdp, obj) {\n  var sepChar = jdp.options.separatorChars;\n  return \"\".concat(obj.year).concat(sepChar.date).concat((0,_object__WEBPACK_IMPORTED_MODULE_0__.addLeadingZero)(obj.month)).concat(sepChar.date).concat((0,_object__WEBPACK_IMPORTED_MODULE_0__.addLeadingZero)(obj.day));\n};\nvar isValidDateString = function isValidDateString(jdp, str) {\n  if (!str) {\n    return false;\n  }\n\n  var date = str.substr(0, 10).split(jdp.options.separatorChars.date);\n  return date.length === 3 && date[0].length === 4 && date[1].length === 2 && date[2].length === 2;\n};\nvar isValidTimeString = function isValidTimeString(jdp, str) {\n  if (!str) {\n    return false;\n  }\n\n  var time = str.substr(jdp.options.date ? 11 : 0, 8).split(jdp.options.separatorChars.time);\n  return time.length === (jdp.options.hasSecond ? 3 : 2) && !time.find(function (t) {\n    return t.toString().length !== 2;\n  });\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/utils/index.js?");
-
-/***/ }),
-
-/***/ "./src/utils/jalali.js":
-/*!*****************************!*\
-  !*** ./src/utils/jalali.js ***!
-  \*****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"jalaliToday\": function() { return /* binding */ jalaliToday; },\n/* harmony export */   \"getWeekDay\": function() { return /* binding */ getWeekDay; },\n/* harmony export */   \"getDaysInMonth\": function() { return /* binding */ getDaysInMonth; }\n/* harmony export */ });\n/* harmony import */ var _object__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./object */ \"./src/utils/object.js\");\n\n\nvar isLeapYear = function isLeapYear(jy) {\n  function div(a, b) {\n    return ~~(a / b);\n  }\n\n  var breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178],\n      bl = breaks.length;\n  var jump = 0,\n      leapJ = -14,\n      jp = breaks[0],\n      leap;\n\n  for (var i = 1; i < bl; i += 1) {\n    var jm = breaks[i];\n    jump = jm - jp;\n    if (jy < jm) break;\n    leapJ = leapJ + div(jump, 33) * 8 + div((0,_object__WEBPACK_IMPORTED_MODULE_0__.mod)(jump, 33), 4);\n    jp = jm;\n  }\n\n  var n = jy - jp;\n  if (jump - n < 6) n = n - jump + div(jump + 4, 33) * 33;\n  leap = (0,_object__WEBPACK_IMPORTED_MODULE_0__.mod)((0,_object__WEBPACK_IMPORTED_MODULE_0__.mod)(n + 1, 33) - 1, 4);\n  if (leap === -1) leap = 4;\n  return leap === 0;\n};\n\nvar jalaliToday = function jalaliToday() {\n  var date = new Date();\n  var gy = parseInt(date.getFullYear());\n  var gm = parseInt(date.getMonth()) + 1;\n  var gd = parseInt(date.getDate());\n  var jy, days;\n  var gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];\n\n  if (gy > 1600) {\n    jy = 979;\n    gy -= 1600;\n  } else {\n    jy = 0;\n    gy -= 621;\n  }\n\n  var gy2 = gm > 2 ? gy + 1 : gy;\n  days = 365 * gy + parseInt((gy2 + 3) / 4) - parseInt((gy2 + 99) / 100) + parseInt((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];\n  jy += 33 * parseInt(days / 12053);\n  days %= 12053;\n  jy += 4 * parseInt(days / 1461);\n  days %= 1461;\n\n  if (days > 365) {\n    jy += parseInt((days - 1) / 365);\n    days = (days - 1) % 365;\n  }\n\n  var jm = days < 186 ? 1 + parseInt(days / 31) : 7 + parseInt((days - 186) / 30);\n  var jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);\n  return {\n    year: jy,\n    month: jm,\n    day: jd\n  };\n};\nvar getWeekDay = function getWeekDay(year, month, day) {\n  var getDays = function getDays(month, day) {\n    if (month < 8) return (month - 1) * 31 + day;\n    return 6 * 31 + (month - 7) * 30 + day;\n  };\n\n  var getDiffDays = function getDiffDays(year1, month1, day1, year2, month2, day2) {\n    var diffDays = getDays(month2, day2) - getDays(month1, day1);\n    var y1 = year1 < year2 ? year1 : year2;\n    var y2 = year1 < year2 ? year2 : year1;\n\n    for (var y = y1; y < y2; y++) {\n      if (isLeapYear(y)) diffDays += year1 < year2 ? 366 : -366;else diffDays += year1 < year2 ? 365 : -365;\n    }\n\n    return diffDays;\n  };\n\n  return (0,_object__WEBPACK_IMPORTED_MODULE_0__.mod)(getDiffDays(1392, 3, 25, year, month, day), 7);\n};\nvar getDaysInMonth = function getDaysInMonth(year, month) {\n  return [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/utils/jalali.js?");
-
-/***/ }),
-
-/***/ "./src/utils/object.js":
-/*!*****************************!*\
-  !*** ./src/utils/object.js ***!
-  \*****************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export */ __webpack_require__.d(__webpack_exports__, {\n/* harmony export */   \"isUndefined\": function() { return /* binding */ isUndefined; },\n/* harmony export */   \"isFunction\": function() { return /* binding */ isFunction; },\n/* harmony export */   \"isString\": function() { return /* binding */ isString; },\n/* harmony export */   \"clon\": function() { return /* binding */ clon; },\n/* harmony export */   \"isPlainObject\": function() { return /* binding */ isPlainObject; },\n/* harmony export */   \"extend\": function() { return /* binding */ extend; },\n/* harmony export */   \"mod\": function() { return /* binding */ mod; },\n/* harmony export */   \"addLeadingZero\": function() { return /* binding */ addLeadingZero; }\n/* harmony export */ });\nvar _this = undefined;\n\nfunction _typeof(obj) { \"@babel/helpers - typeof\"; if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj; }; } return _typeof(obj); }\n\nvar isUndefined = function isUndefined(value) {\n  return typeof value === \"undefined\";\n};\nvar isFunction = function isFunction(value) {\n  return typeof value === \"function\";\n};\nvar isString = function isString(value) {\n  return typeof value === \"string\";\n};\nvar clon = function clon(a) {\n  return JSON.parse(JSON.stringify(a));\n};\nvar isPlainObject = function isPlainObject(obj) {\n  if (!obj || !obj.constructor || obj.nodeType) {\n    return false;\n  }\n\n  try {\n    return JSON.stringify(obj) === \"{}\";\n  } catch (e) {\n    return true;\n  }\n};\nvar extend = function extend() {\n  var options;\n  var src;\n  var copy;\n  var copyIsArray;\n  var clone;\n\n  for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {\n    params[_key] = arguments[_key];\n  }\n\n  var target = params[0] || {};\n  var i = 1;\n  var length = params.length;\n  var deep = false; // Handle a deep copy situation\n\n  if (typeof target === \"boolean\") {\n    deep = target; // Skip the boolean and the target\n\n    target = params[i] || {};\n    i += 1;\n  } // Handle case when target is a string or something (possible in deep copy)\n\n\n  if (_typeof(target) !== \"object\" && isFunction(target)) {\n    target = {};\n  } // Extend jQuery itself if only one argument is passed\n\n\n  if (i === length) {\n    target = _this;\n    i -= 1;\n  }\n\n  for (; i < length; i++) {\n    options = params[i]; // Only deal with non-null/undefined values\n\n    if (!isUndefined(options) && options !== null) {\n      // Extend the base object\n      for (var j = 0; j < window.Object.keys(options).length; j++) {\n        var name = window.Object.keys(options)[j];\n\n        if (Object.prototype.hasOwnProperty.call(options, name)) {\n          copy = options[name]; // Prevent Object.prototype pollution\n          // Prevent never-ending loop\n\n          if (name === \"__proto__\" || target === copy) {\n            return true;\n          }\n\n          copyIsArray = Array.isArray(copy); // Recurse if we're merging plain objects or arrays\n\n          if (deep && copy && (isPlainObject(copy) || copyIsArray)) {\n            src = target[name]; // Ensure proper type for the source value\n\n            if (copyIsArray && !Array.isArray(src)) {\n              clone = [];\n            } else if (!copyIsArray && !isPlainObject(src)) {\n              clone = {};\n            } else {\n              clone = src;\n            } // Never move original objects, clone them\n\n\n            target[name] = extend(deep, clone, copy); // Don't bring in undefined values\n          } else if (!isUndefined(copy)) {\n            target[name] = copy;\n          }\n        }\n      }\n    }\n  } // Return the modified object\n\n\n  return target;\n};\nvar mod = function mod(a, b) {\n  return window.Math.abs(a - b * window.Math.floor(a / b));\n};\nvar addLeadingZero = function addLeadingZero(value) {\n  var length = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 2;\n  var str = String(Math.abs(value));\n  var i = str.length;\n  var result = \"\";\n\n  if (value < 0) {\n    result += \"-\";\n  }\n\n  while (i < length) {\n    i += 1;\n    result += \"0\";\n  }\n\n  return result + str;\n};\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/utils/object.js?");
-
-/***/ }),
-
-/***/ "./src/styles/index.scss":
-/*!*******************************!*\
-  !*** ./src/styles/index.scss ***!
-  \*******************************/
-/***/ (function(__unused_webpack_module, __webpack_exports__, __webpack_require__) {
-
-eval("__webpack_require__.r(__webpack_exports__);\n// extracted by mini-css-extract-plugin\n\n\n//# sourceURL=webpack://@majidh1/jalalidatepicker/./src/styles/index.scss?");
-
-/***/ })
-
-/******/ 	});
-/************************************************************************/
-/******/ 	// The module cache
-/******/ 	var __webpack_module_cache__ = {};
-/******/ 	
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/ 		// Check if module is in cache
-/******/ 		if(__webpack_module_cache__[moduleId]) {
-/******/ 			return __webpack_module_cache__[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = __webpack_module_cache__[moduleId] = {
-/******/ 			// no module.id needed
-/******/ 			// no module.loaded needed
-/******/ 			exports: {}
-/******/ 		};
-/******/ 	
-/******/ 		// Execute the module function
-/******/ 		__webpack_modules__[moduleId](module, module.exports, __webpack_require__);
-/******/ 	
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/ 	
-/************************************************************************/
-/******/ 	/* webpack/runtime/define property getters */
-/******/ 	!function() {
-/******/ 		// define getter functions for harmony exports
-/******/ 		__webpack_require__.d = function(exports, definition) {
-/******/ 			for(var key in definition) {
-/******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
-/******/ 					Object.defineProperty(exports, key, { enumerable: true, get: definition[key] });
-/******/ 				}
-/******/ 			}
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/hasOwnProperty shorthand */
-/******/ 	!function() {
-/******/ 		__webpack_require__.o = function(obj, prop) { return Object.prototype.hasOwnProperty.call(obj, prop); }
-/******/ 	}();
-/******/ 	
-/******/ 	/* webpack/runtime/make namespace object */
-/******/ 	!function() {
-/******/ 		// define __esModule on exports
-/******/ 		__webpack_require__.r = function(exports) {
-/******/ 			if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 				Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 			}
-/******/ 			Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 		};
-/******/ 	}();
-/******/ 	
-/************************************************************************/
-/******/ 	
-/******/ 	// startup
-/******/ 	// Load entry module and return exports
-/******/ 	// This entry module can't be inlined because the eval devtool is used.
-/******/ 	__webpack_require__("./src/index.js");
-/******/ 	var __webpack_exports__ = __webpack_require__("./src/styles/index.scss");
-/******/ 	
-/******/ })()
-;
+  var isUndefined = function isUndefined(value) {
+    return typeof value === "undefined";
+  };
+  var isFunction = function isFunction(value) {
+    return typeof value === "function";
+  };
+  var isString = function isString(value) {
+    return typeof value === "string";
+  };
+  var isObject = function isObject(value) {
+    return value !== null && typeof value === "object";
+  };
+  var clone = function clone(value) {
+    return JSON.parse(JSON.stringify(value));
+  };
+  var isNotObjectOrIsEmptyObject = function isNotObjectOrIsEmptyObject(obj) {
+    if (!isObject(obj)) {
+      return true;
+    }
+    try {
+      return JSON.stringify(obj) === "{}";
+    } catch (e) {
+      return false;
+    }
+  };
+  var _extend = function extend(target, source) {
+    for (var key in source) {
+      if (source.hasOwnProperty(key)) {
+        var sourceValue = source[key];
+        var targetValue = target[key];
+        if (sourceValue && typeof sourceValue === "object" && !Array.isArray(sourceValue)) {
+          target[key] = _extend(targetValue && typeof targetValue === "object" ? targetValue : {}, sourceValue);
+        } else {
+          target[key] = sourceValue;
+        }
+      }
+    }
+    return target;
+  };
+  var mod = function mod(a, b) {
+    return window.Math.abs(a - b * window.Math.floor(a / b));
+  };
+  var addLeadingZero = function addLeadingZero(value, length) {
+    if (length === void 0) {
+      length = 2;
+    }
+    if (isUndefined(value)) {
+      return value;
+    }
+    var str = String(Math.abs(value));
+    var i = str.length;
+    var result = "";
+    if (value < 0) {
+      result += "-";
+    }
+    while (i < length) {
+      i += 1;
+      result += "0";
+    }
+    return result + str;
+  };
+  var isLeapYear = function isLeapYear(jy) {
+    function div(a, b) {
+      return ~~(a / b);
+    }
+    var breaks = [-61, 9, 38, 199, 426, 686, 756, 818, 1111, 1181, 1210, 1635, 2060, 2097, 2192, 2262, 2324, 2394, 2456, 3178];
+    var bl = breaks.length;
+    var jump = 0;
+    var jp = breaks[0];
+    var leap;
+    for (var i = 1; i < bl; i += 1) {
+      var jm = breaks[i];
+      jump = jm - jp;
+      if (jy < jm) break;
+      jp = jm;
+    }
+    var n = jy - jp;
+    if (jump - n < 6) n = n - jump + div(jump + 4, 33) * 33;
+    leap = mod(mod(n + 1, 33) - 1, 4);
+    if (leap === -1) leap = 4;
+    return leap === 0;
+  };
+  var toJalali = function toJalali(gy, gm, gd) {
+    var jy;
+    var days;
+    var gdm = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+    if (gy > 1600) {
+      jy = 979;
+      gy -= 1600;
+    } else {
+      jy = 0;
+      gy -= 621;
+    }
+    var gy2 = gm > 2 ? gy + 1 : gy;
+    days = 365 * gy + Math.floor((gy2 + 3) / 4) - Math.floor((gy2 + 99) / 100) + Math.floor((gy2 + 399) / 400) - 80 + gd + gdm[gm - 1];
+    jy += 33 * Math.floor(days / 12053);
+    days %= 12053;
+    jy += 4 * Math.floor(days / 1461);
+    days %= 1461;
+    if (days > 365) {
+      jy += Math.floor((days - 1) / 365);
+      days = (days - 1) % 365;
+    }
+    var jm = days < 186 ? 1 + Math.floor(days / 31) : 7 + Math.floor((days - 186) / 30);
+    var jd = 1 + (days < 186 ? days % 31 : (days - 186) % 30);
+    return {
+      year: jy,
+      month: jm,
+      day: jd
+    };
+  };
+  var jalaliToday = function jalaliToday() {
+    var date = /* @__PURE__ */new Date();
+    var gy = date.getFullYear();
+    var gm = date.getMonth() + 1;
+    var gd = date.getDate();
+    return toJalali(gy, gm, gd);
+  };
+  var getWeekDay = function getWeekDay(year, month, day) {
+    var getDays = function getDays(_month, _day) {
+      if (_month < 8) return (_month - 1) * 31 + _day;
+      return 6 * 31 + (_month - 7) * 30 + _day;
+    };
+    var getDiffDays = function getDiffDays(year1, month1, day1, year2, month2, day2) {
+      var diffDays = getDays(month2, day2) - getDays(month1, day1);
+      var y1 = year1 < year2 ? year1 : year2;
+      var y2 = year1 < year2 ? year2 : year1;
+      for (var y = y1; y < y2; y++) {
+        if (isLeapYear(y)) diffDays += year1 < year2 ? 366 : -366;else diffDays += year1 < year2 ? 365 : -365;
+      }
+      return diffDays;
+    };
+    return mod(getDiffDays(1392, 3, 25, year, month, day), 7);
+  };
+  var getDaysInMonth = function getDaysInMonth(year, month) {
+    return [0, 31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, isLeapYear(year) ? 30 : 29][month];
+  };
+  var toGregorian = function toGregorian(jy, jm, jd) {
+    var gy = jy <= 979 ? 621 : 1600;
+    jy -= jy <= 979 ? 0 : 979;
+    var days = 365 * jy + Math.floor(jy / 33) * 8 + Math.floor((jy % 33 + 3) / 4) + 78 + jd + (jm < 7 ? (jm - 1) * 31 : (jm - 7) * 30 + 186);
+    gy += 400 * Math.floor(days / 146097);
+    days %= 146097;
+    if (days > 36524) {
+      gy += 100 * Math.floor(--days / 36524);
+      days %= 36524;
+      if (days >= 365) days++;
+    }
+    gy += 4 * Math.floor(days / 1461);
+    days %= 1461;
+    if (days > 365) {
+      gy += Math.floor((days - 1) / 365);
+      days = (days - 1) % 365;
+    }
+    var gd = days + 1;
+    var sal_a = [0, 31, gy % 4 === 0 && gy % 100 !== 0 || gy % 400 === 0 ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+    var gm;
+    for (gm = 0; gm < 13; gm++) {
+      var v = sal_a[gm];
+      if (gd <= v) break;
+      gd -= v;
+    }
+    return {
+      year: gy,
+      month: gm,
+      day: gd
+    };
+  };
+  var getDateNumber = function getDateNumber(date) {
+    return date.year * 1e4 + date.month * 100 + date.day;
+  };
+  var isValidYear = function isValidYear(year) {
+    return !isNaN(year) && year >= 1e3 && year <= 1999;
+  };
+  var isValidMonth = function isValidMonth(month) {
+    return !isNaN(month) && month >= 1 && month <= 12;
+  };
+  var escapeRegex = function escapeRegex(value) {
+    return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  };
+  var getDateStringLength = function getDateStringLength(jdp) {
+    return 8 + jdp.options.separatorChars.date.length * 2;
+  };
+  var hasValidPartLengths = function hasValidPartLengths(parts, lengths) {
+    if (parts.length !== lengths.length) return false;
+    for (var i = 0; i < parts.length; i++) {
+      if (parts[i].length !== lengths[i]) return false;
+    }
+    return true;
+  };
+  var getFallbackDate = function getFallbackDate(jdp) {
+    if (jdp._initDate) return jdp._initDate;
+    if (jdp.options.initDate && typeof jdp.options.initDate === "object") return jdp.options.initDate;
+    return jdp.today;
+  };
+  var getFallbackTime = function getFallbackTime(jdp) {
+    if (jdp._initTime) return jdp._initTime;
+    if (jdp.options.initTime && typeof jdp.options.initTime === "object") return jdp.options.initTime;
+    return {
+      hour: 0,
+      minute: 0,
+      second: 0
+    };
+  };
+  var normalizeMinMaxDate = function normalizeMinMaxDate(jdp, dateObj, updateObj) {
+    var _dateObj = _extend(dateObj || {}, updateObj || {});
+    var fallbackDate = getFallbackDate(jdp);
+    var maxDate = jdp.options.maxDate;
+    var minDate = jdp.options.minDate;
+    var year = isValidYear(_dateObj.year) ? _dateObj.year : fallbackDate.year;
+    var month = isValidMonth(_dateObj.month) ? _dateObj.month : fallbackDate.month;
+    var day = !isNaN(_dateObj.day) && _dateObj.day >= 1 ? _dateObj.day : fallbackDate.day;
+    var daysInMonth = getDaysInMonth(year, month);
+    if (day > daysInMonth) {
+      day = daysInMonth;
+    }
+    var normalizedDate = {
+      year: year,
+      month: month,
+      day: day
+    };
+    if (minDate && getDateNumber(normalizedDate) < getDateNumber(minDate)) return minDate;
+    if (maxDate && getDateNumber(normalizedDate) > getDateNumber(maxDate)) return maxDate;
+    return normalizedDate;
+  };
+  var normalizeMinMaxTime = function normalizeMinMaxTime(jdp, timeObj, updateObj) {
+    var _timeObj = _extend(timeObj || {}, updateObj || {});
+    var initTime = getFallbackTime(jdp);
+    var maxTime = jdp.options.maxTime;
+    var minTime = jdp.options.minTime;
+    var hour = _timeObj.hour;
+    var minute = _timeObj.minute;
+    var second = _timeObj.second;
+    if (isNaN(hour) || hour < 0 || hour > 23) {
+      hour = initTime.hour;
+    } else {
+      if (minTime && hour < minTime.hour) {
+        hour = minTime.hour;
+      } else if (maxTime && hour > maxTime.hour) {
+        hour = maxTime.hour;
+      }
+    }
+    if (isNaN(minute) || minute < 0 || minute > 59) {
+      minute = initTime.minute;
+    } else {
+      if (minTime && hour <= minTime.hour && minute < minTime.minute) {
+        minute = minTime.minute;
+      } else if (maxTime && hour >= maxTime.hour && minute > maxTime.minute) {
+        minute = maxTime.minute;
+      }
+    }
+    if (isNaN(second) || second < 0 || second > 59) {
+      second = initTime.second;
+    } else {
+      if (minTime && hour <= minTime.hour && minute <= minTime.minute && second < minTime.second) {
+        second = minTime.second;
+      } else if (maxTime && hour >= maxTime.hour && minute >= maxTime.minute && second > maxTime.second) {
+        second = maxTime.second;
+      }
+    }
+    return {
+      hour: hour,
+      minute: minute,
+      second: second
+    };
+  };
+  var getValidYears = function getValidYears(jdp) {
+    var _jdp$options$minDate, _jdp$options$maxDate;
+    function rnd(val) {
+      return Math.round(val / 100) * 100;
+    }
+    var initYear = jdp.initDate.year;
+    var min = ((_jdp$options$minDate = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate.year) || rnd(initYear - 200);
+    var max = ((_jdp$options$maxDate = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate.year) || rnd(initYear + 200);
+    return {
+      min: min,
+      max: max
+    };
+  };
+  var getValidMonths = function getValidMonths(jdp) {
+    var initYear = jdp.initDate.year;
+    var minDate = jdp.options.minDate;
+    var maxDate = jdp.options.maxDate;
+    var months = [];
+    var start = 1;
+    var finish = 12;
+    if (initYear === (minDate == null ? void 0 : minDate.year)) {
+      start = minDate.month;
+      if (initYear === (maxDate == null ? void 0 : maxDate.year)) {
+        finish = maxDate.month;
+      }
+    } else if (initYear === (maxDate == null ? void 0 : maxDate.year)) {
+      start = 1;
+      finish = maxDate.month;
+    }
+    for (var i = start; i <= finish; i++) {
+      months.push(i);
+    }
+    return months;
+  };
+  var isValidDate = function isValidDate(jdp, year, month, day) {
+    var date = getDateNumber({
+      year: year,
+      month: month,
+      day: day
+    });
+    var maxDateNumber = date;
+    var minDateNumber = date;
+    var maxDate = jdp.options.maxDate;
+    var minDate = jdp.options.minDate;
+    if (!isNotObjectOrIsEmptyObject(minDate)) {
+      minDateNumber = getDateNumber(minDate);
+    }
+    if (!isNotObjectOrIsEmptyObject(maxDate)) {
+      maxDateNumber = getDateNumber(maxDate);
+    }
+    return date <= maxDateNumber && date >= minDateNumber;
+  };
+  var isValidDateToday = function isValidDateToday(jdp) {
+    return isValidDate(jdp, jdp.today.year, jdp.today.month, jdp.today.day);
+  };
+  var isValidValueString = function isValidValueString(jdp, str) {
+    if (!str) {
+      return false;
+    }
+    var sepOpt = jdp.options.separatorChars;
+    var dateSeparator = escapeRegex(sepOpt.date);
+    var timeSeparator = escapeRegex(sepOpt.time);
+    var betweenSeparator = escapeRegex(sepOpt.between);
+    var datePattern = jdp.options.date ? "\\d{4}" + dateSeparator + "\\d{2}" + dateSeparator + "\\d{2}" : "";
+    var timePattern = jdp.options.time ? "\\d{2}" + timeSeparator + "\\d{2}" + (jdp.options.hasSecond ? timeSeparator + "\\d{2}" : "") : "";
+    var regex = new RegExp("^" + datePattern + (datePattern && timePattern ? betweenSeparator : "") + timePattern + "$");
+    return regex.test(str);
+  };
+  var getDatePartsFromString = function getDatePartsFromString(jdp, str) {
+    if (!jdp.options.date) return [];
+    return str.substr(0, getDateStringLength(jdp)).split(jdp.options.separatorChars.date);
+  };
+  var getTimePartsFromString = function getTimePartsFromString(jdp, str) {
+    var sepOpt = jdp.options.separatorChars;
+    if (jdp.options.date) {
+      var timeStart = getDateStringLength(jdp) + sepOpt.between.length;
+      return jdp.options.time && str.length > timeStart ? str.substr(timeStart).split(sepOpt.time) : [];
+    }
+    return str.split(sepOpt.time);
+  };
+  var isValidTimeParts = function isValidTimeParts(parts, hasSecond) {
+    return hasValidPartLengths(parts, hasSecond ? [2, 2, 2] : [2, 2]);
+  };
+  var getValueObjectFromString = function getValueObjectFromString(jdp, str) {
+    var date = getDatePartsFromString(jdp, str);
+    var time = getTimePartsFromString(jdp, str);
+    return {
+      year: parseInt(date[0], 10),
+      month: parseInt(date[1], 10),
+      day: parseInt(date[2], 10),
+      hour: parseInt(time[0], 10) || 0,
+      minute: parseInt(time[1], 10) || 0,
+      second: parseInt(time[2], 10) || 0
+    };
+  };
+  var getDateValueStringFromValueObjectWithSep = function getDateValueStringFromValueObjectWithSep(jdp, obj, forTarget) {
+    var opt = jdp.options;
+    var separatorChars = opt.separatorChars;
+    var date = forTarget ? separatorChars.targetDate : separatorChars.date;
+    var time = forTarget ? separatorChars.targetTime : separatorChars.time;
+    var between = forTarget ? separatorChars.targetBetween : separatorChars.between;
+    var dateStr = opt.date ? "" + obj.year + date + addLeadingZero(obj.month) + date + addLeadingZero(obj.day) : "";
+    var timeStr = opt.time ? "" + addLeadingZero(obj.hour) + time + addLeadingZero(obj.minute) + (opt.hasSecond ? time + addLeadingZero(obj.second) : "") : "";
+    var betweenStr = dateStr && timeStr ? between : "";
+    return dateStr + betweenStr + timeStr;
+  };
+  var getDateOnlyValueStringWithSep = function getDateOnlyValueStringWithSep(jdp, obj, forTarget) {
+    var dateSeparator = forTarget ? jdp.options.separatorChars.targetDate : jdp.options.separatorChars.date;
+    return "" + obj.year + dateSeparator + addLeadingZero(obj.month) + dateSeparator + addLeadingZero(obj.day);
+  };
+  var getValueStringFromValueObject = function getValueStringFromValueObject(jdp, obj) {
+    return getDateValueStringFromValueObjectWithSep(jdp, obj);
+  };
+  var areSameDates = function areSameDates(firstDate, secondDate) {
+    return getDateNumber(firstDate) === getDateNumber(secondDate);
+  };
+  var sortDates = function sortDates(dates) {
+    return dates.slice().sort(function (firstDate, secondDate) {
+      var firstDateNumber = getDateNumber(firstDate);
+      var secondDateNumber = getDateNumber(secondDate);
+      if (firstDateNumber < secondDateNumber) return -1;
+      if (firstDateNumber > secondDateNumber) return 1;
+      return 0;
+    });
+  };
+  var isDateInRange = function isDateInRange(date, startDate, endDate) {
+    var dateNumber = getDateNumber(date);
+    var sortedDates = sortDates([startDate, endDate]);
+    return dateNumber > getDateNumber(sortedDates[0]) && dateNumber < getDateNumber(sortedDates[1]);
+  };
+  var getDateSelectionValueString = function getDateSelectionValueString(jdp, selectedDates, forTarget) {
+    if (!selectedDates.length) return "";
+    var mode = jdp.options.mode || "single";
+    var dates = mode === "range" ? sortDates(selectedDates).slice(0, 2) : selectedDates;
+    var separator = mode === "range" ? jdp.options.rangeSeparator : jdp.options.multipleSeparator;
+    return dates.map(function (date) {
+      return getDateOnlyValueStringWithSep(jdp, date, forTarget);
+    }).join(separator);
+  };
+  var getSelectedDatesFromString = function getSelectedDatesFromString(jdp, value) {
+    var mode = jdp.options.mode || "single";
+    if (!value || mode === "single") return [];
+    var separator = mode === "range" ? jdp.options.rangeSeparator : jdp.options.multipleSeparator;
+    var dateParts = value.split(separator);
+    var selectedDates = [];
+    for (var i = 0; i < dateParts.length; i++) {
+      var dateValue = dateParts[i].trim();
+      if (isValidDateString(jdp, dateValue)) {
+        var dateObject = getValueObjectFromString(jdp, dateValue);
+        selectedDates.push({
+          year: dateObject.year,
+          month: dateObject.month,
+          day: dateObject.day
+        });
+      }
+    }
+    return mode === "range" ? sortDates(selectedDates).slice(0, 2) : selectedDates;
+  };
+  var isValidDateString = function isValidDateString(jdp, str) {
+    if (!str) {
+      return false;
+    }
+    return hasValidPartLengths(getDatePartsFromString(jdp, str), [4, 2, 2]);
+  };
+  var isValidTimeString = function isValidTimeString(jdp, str) {
+    if (!str) {
+      return false;
+    }
+    return isValidTimeParts(getTimePartsFromString(jdp, str), jdp.options.hasSecond);
+  };
+  var getConvertedValue = function getConvertedValue(jdp) {
+    var _jdp$input;
+    var value = (_jdp$input = jdp.input) == null ? void 0 : _jdp$input.value;
+    if (!value) {
+      return "";
+    }
+    if (jdp.options.targetValueType) {
+      if ((jdp.options.mode || "single") !== "single") {
+        var selectedDates = getSelectedDatesFromString(jdp, value);
+        if (jdp.options.targetValueType === "gregorian") {
+          var gregorianDates = selectedDates.map(function (date) {
+            return _extend(date, toGregorian(date.year, date.month, date.day));
+          });
+          return getDateSelectionValueString(jdp, gregorianDates, true);
+        }
+        return value;
+      }
+      var normalValue = getValueObjectFromString(jdp, value);
+      if (jdp.options.targetValueType === "gregorian") {
+        var gregorianValue = toGregorian(normalValue.year, normalValue.month, normalValue.day);
+        return getDateValueStringFromValueObjectWithSep(jdp, _extend(normalValue, gregorianValue), true);
+      }
+    }
+    return value;
+  };
+  var NAMESPACE = "jdp";
+  var DIV_NAMESPACE = "div." + NAMESPACE;
+  var CONTAINER_ELEMENT_QUERY = NAMESPACE + "-container";
+  var OVERLAY_ELEMENT_QUERY = NAMESPACE + "-overlay";
+  var YEARS_ELEMENT_QUERY = DIV_NAMESPACE + "-years";
+  var YEAR_ELEMENT_QUERY = DIV_NAMESPACE + "-year";
+  var MONTHS_ELEMENT_QUERY = DIV_NAMESPACE + "-months";
+  var MONTH_ELEMENT_QUERY = DIV_NAMESPACE + "-month";
+  var DAYS_ELEMENT_QUERY = DIV_NAMESPACE + "-days";
+  var DAYS_HEADER_ELEMENT_QUERY = DIV_NAMESPACE + "-days-header";
+  var DAY_ELEMENT_QUERY = DIV_NAMESPACE + "-day";
+  var DAY_NOT_IN_MONTH_ELEMENT_QUERY = DIV_NAMESPACE + "-day.not-in-month";
+  var DAY_DISABLED_ELEMENT_QUERY = DIV_NAMESPACE + "-day.disabled-day";
+  var DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY = DAY_NOT_IN_MONTH_ELEMENT_QUERY + ".disabled-day";
+  var DAY_NAME_ELEMENT_QUERY = DIV_NAMESPACE + "-day-name";
+  var PLUS_ICON_ELEMENT_QUERY = DIV_NAMESPACE + "-icon-plus";
+  var MINUS_ICON_ELEMENT_QUERY = DIV_NAMESPACE + "-icon-minus";
+  var FOOTER_ELEMENT_QUERY = DIV_NAMESPACE + "-footer";
+  var TODAY_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-today";
+  var EMPTY_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-empty";
+  var CLOSE_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-close";
+  var FOOTER_TIME_ELEMENT_QUERY = DIV_NAMESPACE + "-time-container";
+  var TIME_DROPDOWN_PARENT_ELEMENT_QUERY = DIV_NAMESPACE + "-time";
+  var SELECTED_CLASS_NAME = "selected";
+  var TODAY_CLASS_NAME = "today";
+  var LAST_WEEK_CLASS_NAME = "last-week";
+  var DISABLE_CLASS_NAME = "not-in-range";
+  var HOLIDAY_CLASS_NAME = "holiday-day";
+  var RANGE_START_CLASS_NAME = "range-start";
+  var RANGE_END_CLASS_NAME = "range-end";
+  var IN_RANGE_CLASS_NAME = "in-range";
+  var EVENT_CHANGE_INPUT_STR = NAMESPACE + ":change";
+  var EVENT_CHANGE_MONTH_DROPDOWN_STR = "change";
+  var EVENT_CHANGE_TIME_DROPDOWN_STR = EVENT_CHANGE_MONTH_DROPDOWN_STR;
+  var EVENT_CHANGE_YEAR_INPUT_STR = "keyup change";
+  var EVENT_CLICK_STR = "click";
+  var EVENT_FOCUS_STR = "focusin";
+  var EVENT_KEYDOWN_STR = "keydown";
+  var MIN_MAX_TODAY_SETTING = "today";
+  var OPTION_ATTR_SETTING = "attr";
+  var DATA_JDP = "data-jdp-";
+  var INIT_DATE_ATTR_NAME = DATA_JDP + "init-date";
+  var MAX_DATE_ATTR_NAME = DATA_JDP + "max-date";
+  var MIN_DATE_ATTR_NAME = DATA_JDP + "min-date";
+  var MAX_TIME_ATTR_NAME = DATA_JDP + "max-time";
+  var MIN_TIME_ATTR_NAME = DATA_JDP + "min-time";
+  var TARGET_VALUE_INPUT_ATTR_NAME = DATA_JDP + "target-value-input";
+  var TARGET_VALUE_TYPE_ATTR_NAME = DATA_JDP + "target-value-type";
+  var MODE_ATTR_NAME = DATA_JDP + "mode";
+  var HAS_SECOND_ATTR_NAME = DATA_JDP + "has-second";
+  var ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-date";
+  var ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-time";
+  var DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+  var DEFAULT_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+  var DEFAULT_SEPARATOR_CHARS = {
+    date: "/",
+    between: " ",
+    time: ":",
+    targetDate: "-",
+    targetBetween: " ",
+    targetTime: ":"
+  };
+  var TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
+  var ATTR_OPTION_NAMES = {
+    initDate: INIT_DATE_ATTR_NAME,
+    minDate: MIN_DATE_ATTR_NAME,
+    maxDate: MAX_DATE_ATTR_NAME,
+    minTime: MIN_TIME_ATTR_NAME,
+    maxTime: MAX_TIME_ATTR_NAME,
+    targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
+    targetValueType: TARGET_VALUE_TYPE_ATTR_NAME,
+    mode: MODE_ATTR_NAME,
+    hasSecond: HAS_SECOND_ATTR_NAME
+  };
+  var TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
+  var SELECTION_MODE_NAMES = ["single", "range", "multiple"];
+  var DEFAULT_RANGE_SEPARATOR = " - ";
+  var DEFAULT_MULTIPLE_SEPARATOR = ", ";
+  var DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
+  var DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
+  var STYLE_VISIBILITY_VISIBLE = "visible";
+  var STYLE_VISIBILITY_HIDDEN = "hidden";
+  var STYLE_DISPLAY_BLOCK = "block";
+  var STYLE_DISPLAY_HIDDEN = "none";
+  var STYLE_POSITION_FIXED = "fixed";
+  var _getScrollParent = function getScrollParent(node) {
+    if (["html", "body", "#document"].indexOf((node.nodeName || "").toLowerCase()) >= 0) {
+      return window;
+    }
+    if (node instanceof HTMLElement) {
+      var _window$getComputedSt = window.getComputedStyle(node),
+        overflow = _window$getComputedSt.overflow,
+        overflowX = _window$getComputedSt.overflowX,
+        overflowY = _window$getComputedSt.overflowY;
+      if (/auto|scroll|overlay/.test(overflow + overflowY + overflowX)) {
+        return node;
+      }
+    }
+    return _getScrollParent(node.parentNode);
+  };
+  var getEventTarget = function getEventTarget(event) {
+    try {
+      if (isFunction(event.composedPath)) {
+        return event.composedPath()[0];
+      }
+      return event.target;
+    } catch (error) {
+      return event.target;
+    }
+  };
+  var containsDom = function containsDom(parent, event) {
+    var path = event.path || event.composedPath && event.composedPath() || false;
+    if (!path) {
+      return parent.outerHTML.indexOf(event.target.outerHTML) > -1;
+    }
+    return path.indexOf(parent) !== -1;
+  };
+  var createEvent = function createEvent(name) {
+    var e = document.createEvent("Event");
+    e.initEvent(name, true, true);
+    return e;
+  };
+  var triggerEvent = function triggerEvent(elm, event) {
+    if (!elm) return;
+    elm.dispatchEvent(createEvent(event));
+    {
+      elm.dispatchEvent(createEvent("change"));
+      elm.dispatchEvent(createEvent("input"));
+    }
+  };
+  var addListenerMulti = function addListenerMulti(element, eventNames, listener) {
+    var events = eventNames.split(" ");
+    for (var i = 0, iLen = events.length; i < iLen; i++) {
+      element.addEventListener(events[i], listener, false);
+    }
+  };
+  var setInnerHTML = function setInnerHTML(element, html) {
+    element.innerHTML = html;
+  };
+  var createElement = function createElement(tag, parent, eventNames, event, content, contentMode) {
+    if (contentMode === void 0) {
+      contentMode = "text";
+    }
+    var splits = tag.split(".");
+    tag = splits.shift() || "div";
+    var className = splits;
+    var element = window.document.createElement(tag);
+    if (isString(parent)) {
+      var parentElement = window.document.querySelector(parent);
+      if (!parentElement) {
+        throw new Error("Parent element not found: " + parent);
+      }
+      parentElement.appendChild(element);
+    } else {
+      parent.appendChild(element);
+    }
+    if (className.length) {
+      element.className = className.join(" ");
+    }
+    if (eventNames && event) {
+      addListenerMulti(element, eventNames, event);
+    }
+    if (!isUndefined(content)) {
+      if (contentMode === "html") {
+        setInnerHTML(element, content);
+      } else {
+        element.textContent = content;
+      }
+    }
+    return element;
+  };
+  var toPersianDigitsIfNeeded = function toPersianDigitsIfNeeded(data, convert) {
+    if (convert) return data.toString().replace(/\d/g, function (d) {
+      return "۰۱۲۳۴۵۶۷۸۹"[parseInt(d, 10)];
+    });
+    return data;
+  };
+  var getArrayNumbersStringTo = function getArrayNumbersStringTo(min, max, increment) {
+    var items = [];
+    if (!increment || increment <= 0) {
+      increment = 1;
+    }
+    for (var i = min; i <= max; i += increment) items.push(addLeadingZero(i));
+    return items;
+  };
+  var getSelectedTimePart = function getSelectedTimePart(event) {
+    return Number(event.target.value);
+  };
+  var getMinTime = function getMinTime(jdp) {
+    return _extend({
+      hour: 0,
+      minute: 0,
+      second: 0
+    }, jdp.options.minTime || {});
+  };
+  var getMaxTime = function getMaxTime(jdp) {
+    return _extend({
+      hour: 23,
+      minute: 59,
+      second: 59
+    }, jdp.options.maxTime || {});
+  };
+  var getMinuteItems = function getMinuteItems(jdp, minTime, maxTime) {
+    if (minTime.hour === maxTime.hour) {
+      return getArrayNumbersStringTo(minTime.minute, maxTime.minute, jdp.options.minuteIncrement);
+    }
+    if (jdp.initTime.hour === minTime.hour) {
+      return getArrayNumbersStringTo(minTime.minute, 59, jdp.options.minuteIncrement);
+    }
+    if (jdp.initTime.hour === maxTime.hour) {
+      return getArrayNumbersStringTo(0, maxTime.minute, jdp.options.minuteIncrement);
+    }
+    return getArrayNumbersStringTo(0, 59, jdp.options.minuteIncrement);
+  };
+  var getSecondItems = function getSecondItems(jdp, minTime, maxTime) {
+    if (minTime.hour === maxTime.hour && minTime.minute === maxTime.minute) {
+      return getArrayNumbersStringTo(minTime.second, maxTime.second);
+    }
+    if (jdp.initTime.hour === minTime.hour && jdp.initTime.minute === minTime.minute) {
+      return getArrayNumbersStringTo(minTime.second, 59);
+    }
+    if (jdp.initTime.hour === maxTime.hour && jdp.initTime.minute === maxTime.minute) {
+      return getArrayNumbersStringTo(0, maxTime.second);
+    }
+    return getArrayNumbersStringTo(0, 59);
+  };
+  var timeDropdownRender = function timeDropdownRender(jdp, timePickerContainer, type) {
+    var getItemForType = function getItemForType() {
+      var minTime = getMinTime(jdp);
+      var maxTime = getMaxTime(jdp);
+      if (type === "hour") {
+        return getArrayNumbersStringTo(minTime.hour, maxTime.hour, jdp.options.hourIncrement);
+      }
+      if (type === "minute") {
+        return getMinuteItems(jdp, minTime, maxTime);
+      }
+      return getSecondItems(jdp, minTime, maxTime);
+    };
+    var container = createElement(TIME_DROPDOWN_PARENT_ELEMENT_QUERY, timePickerContainer);
+    var dropdownContainer = createElement("select", container, EVENT_CHANGE_TIME_DROPDOWN_STR, function (event) {
+      var _normalizeMinMaxTime;
+      jdp.setValue(normalizeMinMaxTime(jdp, jdp.initTime, (_normalizeMinMaxTime = {}, _normalizeMinMaxTime[type] = getSelectedTimePart(event), _normalizeMinMaxTime)));
+    });
+    dropdownContainer.tabIndex = -1;
+    var items = getItemForType();
+    for (var i = 0; i < items.length; i++) {
+      var currentItem = items[i];
+      var optionElement = createElement("option", dropdownContainer);
+      optionElement.value = currentItem.toString();
+      optionElement.text = toPersianDigitsIfNeeded(currentItem, jdp.options.persianDigits).toString();
+      optionElement.selected = parseInt(currentItem) === Number(jdp.getValue[type] || jdp.initTime[type]);
+    }
+  };
+  var renderTimePicker = function renderTimePicker(jdp) {
+    var elementQuery = FOOTER_TIME_ELEMENT_QUERY + (jdp.options.time && !jdp.options.date ? ".jdp-only-time" : "");
+    var timePickerContainer = createElement(elementQuery, jdp.dpContainer);
+    if (jdp.options.hasSecond) {
+      timeDropdownRender(jdp, timePickerContainer, "second");
+    }
+    timeDropdownRender(jdp, timePickerContainer, "minute");
+    timeDropdownRender(jdp, timePickerContainer, "hour");
+  };
+  var getLastWeekClassIfNecessary = function getLastWeekClassIfNecessary(dayOfWeek) {
+    return dayOfWeek === 6 ? "." + LAST_WEEK_CLASS_NAME + "." + HOLIDAY_CLASS_NAME : "";
+  };
+  var getDateFromDayOptions = function getDateFromDayOptions(dayOptions) {
+    return {
+      year: dayOptions.year,
+      month: dayOptions.month,
+      day: dayOptions.day
+    };
+  };
+  var getSelectionClassName = function getSelectionClassName(jdp, dayOptions) {
+    var dayDate = getDateFromDayOptions(dayOptions);
+    var mode = jdp.options.mode || "single";
+    if (mode === "single") {
+      return jdp.inputValue.day === dayOptions.day && jdp.inputValue.year === dayOptions.year && jdp.inputValue.month === dayOptions.month ? "." + SELECTED_CLASS_NAME : "";
+    }
+    if (mode === "multiple") {
+      for (var i = 0; i < jdp.selectedDates.length; i++) {
+        if (areSameDates(dayDate, jdp.selectedDates[i])) return "." + SELECTED_CLASS_NAME;
+      }
+      return "";
+    }
+    if (!jdp.selectedDates.length) return "";
+    if (areSameDates(dayDate, jdp.selectedDates[0])) return "." + SELECTED_CLASS_NAME + "." + RANGE_START_CLASS_NAME;
+    if (jdp.selectedDates.length === 2 && areSameDates(dayDate, jdp.selectedDates[1])) return "." + SELECTED_CLASS_NAME + "." + RANGE_END_CLASS_NAME;
+    if (jdp.selectedDates.length === 2 && isDateInRange(dayDate, jdp.selectedDates[0], jdp.selectedDates[1])) return "." + IN_RANGE_CLASS_NAME;
+    return "";
+  };
+  var createElementPlusMinus = function createElementPlusMinus(jdp, container, isYear, mode) {
+    var _jdp$options$maxDate2, _jdp$options$maxDate3, _jdp$options$minDate2, _jdp$options$minDate3;
+    var isPlus = mode === "PLUS";
+    var className = "";
+    var elementQuery = isPlus ? PLUS_ICON_ELEMENT_QUERY : MINUS_ICON_ELEMENT_QUERY;
+    var isMaxYear = isPlus && ((_jdp$options$maxDate2 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate2.year) === jdp.initDate.year;
+    var isMaxMonth = isPlus && ((_jdp$options$maxDate3 = jdp.options.maxDate) == null ? void 0 : _jdp$options$maxDate3.month) === jdp.initDate.month;
+    var isMinYear = !isPlus && ((_jdp$options$minDate2 = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate2.year) === jdp.initDate.year;
+    var isMinMonth = !isPlus && ((_jdp$options$minDate3 = jdp.options.minDate) == null ? void 0 : _jdp$options$minDate3.month) === jdp.initDate.month;
+    var html = isPlus ? jdp.options.plusHtml : jdp.options.minusHtml;
+    var event = function event() {
+      if (isYear) {
+        if (isPlus) jdp.increaseYear();else jdp.decreaseYear();
+      } else {
+        if (isPlus) jdp.increaseMonth();else jdp.decreaseMonth();
+      }
+    };
+    if (isYear) {
+      if (isMaxYear || isMinYear) {
+        className = DISABLE_CLASS_NAME;
+      }
+    } else {
+      if (isMaxYear && isMaxMonth || isMinYear && isMinMonth) {
+        className = DISABLE_CLASS_NAME;
+      }
+    }
+    createElement(elementQuery + "." + className, container, EVENT_CLICK_STR, event, html, "html");
+  };
+  var createElementPlus = function createElementPlus(jdp, container, isYear) {
+    createElementPlusMinus(jdp, container, isYear, "PLUS");
+  };
+  var createElementMinus = function createElementMinus(jdp, container, isYear) {
+    createElementPlusMinus(jdp, container, isYear, "MINUS");
+  };
+  var getInputValue = function getInputValue(event) {
+    return event.target.value;
+  };
+  var renderYear = function renderYear(jdp) {
+    var _jdp$options$useDropd;
+    var yearsContainer = createElement(YEARS_ELEMENT_QUERY, jdp.dpContainer);
+    createElementPlus(jdp, yearsContainer, true);
+    var yearContainer = createElement(YEAR_ELEMENT_QUERY, yearsContainer);
+    createElementMinus(jdp, yearsContainer, true);
+    var useDropdownYears = (_jdp$options$useDropd = jdp.options.useDropdownYears) != null ? _jdp$options$useDropd : jdp.options.useDropDownYears;
+    var yearInputTagName = useDropdownYears ? "select" : "input";
+    var yearInput = createElement(yearInputTagName, yearContainer, EVENT_CHANGE_YEAR_INPUT_STR, function (event) {
+      var year = Number(getInputValue(event));
+      if (year < 1e3 || year > 2e3) return;
+      jdp.yearChange(year);
+    });
+    if (useDropdownYears) {
+      yearInput.setAttribute("tabindex", "-1");
+      var validYears = getValidYears(jdp);
+      for (var i = validYears.min; i <= validYears.max; i++) {
+        var optionElement = createElement("option", yearInput);
+        optionElement.value = i.toString();
+        optionElement.text = toPersianDigitsIfNeeded(i, jdp.options.persianDigits).toString();
+        optionElement.selected = i === jdp.initDate.year;
+      }
+    } else {
+      yearInput.tabIndex = -1;
+      yearInput.value = jdp.initDate.year.toString();
+      yearInput.type = "number";
+    }
+  };
+  var renderMonths = function renderMonths(jdp) {
+    var monthsContainer = createElement(MONTHS_ELEMENT_QUERY, jdp.dpContainer);
+    createElementPlus(jdp, monthsContainer, false);
+    var monthContainer = createElement(MONTH_ELEMENT_QUERY, monthsContainer);
+    createElementMinus(jdp, monthsContainer, false);
+    var monthDropdownContainer = createElement("select", monthContainer, EVENT_CHANGE_MONTH_DROPDOWN_STR, function (event) {
+      jdp.monthChange(Number(getInputValue(event)));
+    });
+    monthDropdownContainer.tabIndex = -1;
+    var months = getValidMonths(jdp);
+    var monthsName = jdp.options.months;
+    for (var i = 0; i < months.length; i++) {
+      var optionElement = createElement("option", monthDropdownContainer);
+      optionElement.value = months[i].toString();
+      optionElement.text = toPersianDigitsIfNeeded(monthsName[months[i] - 1], jdp.options.persianDigits).toString();
+      optionElement.selected = months[i] === jdp.initDate.month;
+    }
+  };
+  var renderDays = function renderDays(jdp) {
+    var daysHeaderContainer = createElement(DAYS_HEADER_ELEMENT_QUERY, jdp.dpContainer);
+    var daysContainer = createElement(DAYS_ELEMENT_QUERY, jdp.dpContainer);
+    for (var i = 0; i < 7; i++) {
+      createElement(DAY_NAME_ELEMENT_QUERY + getLastWeekClassIfNecessary(i), daysHeaderContainer, void 0, void 0, toPersianDigitsIfNeeded(jdp.options.days[i], jdp.options.persianDigits).toString());
+    }
+    var setDefaultOptions = function setDefaultOptions(opt) {
+      if (!opt.day || opt.inBeforeMonth) {
+        opt.day = 1;
+      } else {
+        opt.day += 1;
+      }
+      opt.inBeforeMonth = false;
+      opt.inAfterMonth = false;
+      opt.isValid = false;
+      opt.isHoliday = false;
+      opt.isHollyDay = false;
+      opt.className = "";
+      opt.year = jdp.initDate.year;
+      opt.month = jdp.initDate.month;
+      opt.weekDay = getWeekDay(opt.year, opt.month, opt.day);
+      return opt;
+    };
+    var dayOptions = setDefaultOptions({});
+    var daysInMonth = getDaysInMonth(dayOptions.year, dayOptions.month);
+    var startWeekDayInMonth = dayOptions.weekDay;
+    var maxDaysInCalendar = 7 * Math.ceil((startWeekDayInMonth + daysInMonth) / 7) - 1;
+    var beforeMonthNumber = dayOptions.month === 1 ? 12 : dayOptions.month - 1;
+    var afterMonthNumber = dayOptions.month === 12 ? 1 : dayOptions.month + 1;
+    var beforeMonthYearNumber = beforeMonthNumber === 12 ? dayOptions.year - 1 : dayOptions.year;
+    var afterMonthYearNumber = afterMonthNumber === 1 ? dayOptions.year + 1 : dayOptions.year;
+    var beforeMonthDays = dayOptions.month === 1 ? getDaysInMonth(dayOptions.year - 1, beforeMonthNumber) : getDaysInMonth(dayOptions.year, beforeMonthNumber);
+    var beforeDayInMonth = beforeMonthDays - startWeekDayInMonth;
+    var afterDayInMonth = 0;
+    var _loop = function _loop() {
+      dayOptions.inBeforeMonth = dayOptions.day <= startWeekDayInMonth && _i < startWeekDayInMonth;
+      dayOptions.inAfterMonth = _i >= daysInMonth + startWeekDayInMonth;
+      if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {
+        if (dayOptions.inBeforeMonth) {
+          beforeDayInMonth++;
+          dayOptions.day = beforeDayInMonth;
+          dayOptions.year = beforeMonthYearNumber;
+          dayOptions.month = beforeMonthNumber;
+        } else {
+          afterDayInMonth++;
+          dayOptions.day = afterDayInMonth;
+          dayOptions.year = afterMonthYearNumber;
+          dayOptions.month = afterMonthNumber;
+        }
+        dayOptions.weekDay = getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day);
+      }
+      dayOptions.isValid = isValidDate(jdp, dayOptions.year, dayOptions.month, dayOptions.day);
+      dayOptions.className = getLastWeekClassIfNecessary(getWeekDay(dayOptions.year, dayOptions.month, dayOptions.day));
+      dayOptions.className += getSelectionClassName(jdp, dayOptions);
+      if (jdp.today.day === dayOptions.day && jdp.today.year === dayOptions.year && jdp.today.month === dayOptions.month) {
+        dayOptions.className += "." + TODAY_CLASS_NAME;
+      }
+      if (isFunction(jdp.options.dayRendering)) {
+        _extend(dayOptions, jdp.options.dayRendering(dayOptions, jdp.input));
+      }
+      if (dayOptions.isHoliday || dayOptions.isHollyDay) {
+        dayOptions.className += "." + HOLIDAY_CLASS_NAME;
+      }
+      var query = dayOptions.isValid ? DAY_ELEMENT_QUERY : DAY_DISABLED_ELEMENT_QUERY;
+      if (dayOptions.inBeforeMonth || dayOptions.inAfterMonth) {
+        query = DAY_NOT_IN_MONTH_ELEMENT_QUERY;
+        if (!dayOptions.isValid) {
+          query = DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY;
+        }
+      }
+      var dayContainer = createElement(query + dayOptions.className, daysContainer, void 0, void 0, toPersianDigitsIfNeeded(dayOptions.day, jdp.options.persianDigits).toString());
+      dayContainer.day = dayOptions.day;
+      dayContainer.month = dayOptions.month;
+      dayContainer.year = dayOptions.year;
+      if (dayOptions.isValid) {
+        dayContainer.addEventListener(EVENT_CLICK_STR, function () {
+          jdp.setValue({
+            year: dayContainer.year,
+            month: dayContainer.month,
+            day: dayContainer.day
+          });
+        });
+      }
+      setDefaultOptions(dayOptions);
+    };
+    for (var _i = 0; _i <= maxDaysInCalendar; _i++) {
+      _loop();
+    }
+  };
+  var renderDatePicker = function renderDatePicker(jdp) {
+    renderYear(jdp);
+    renderMonths(jdp);
+    renderDays(jdp);
+  };
+  var renderFooter = function renderFooter(jdp) {
+    var _jdp$input2;
+    var footerContainer = createElement(FOOTER_ELEMENT_QUERY, jdp.dpContainer, void 0, void 0, void 0);
+    if (jdp.options.showTodayBtn && jdp.options.date) {
+      var isActiveToday = isValidDateToday(jdp);
+      createElement(TODAY_BUTTON_ELEMENT_QUERY + (isActiveToday ? "" : ".disabled-btn"), footerContainer, EVENT_CLICK_STR, function () {
+        if (isActiveToday) jdp.setValue(jdp.today);
+      }, "امروز");
+    }
+    if (!jdp.options.date && jdp.options.time && (!((_jdp$input2 = jdp.input) != null && _jdp$input2.value) || !!jdp.options.showSelectTimeBtnAlways)) {
+      createElement(TODAY_BUTTON_ELEMENT_QUERY, footerContainer, EVENT_CLICK_STR, function () {
+        jdp.setValue(jdp.initTime);
+        jdp.hide();
+      }, "انتخاب");
+    }
+    if (jdp.options.showEmptyBtn) {
+      createElement(EMPTY_BUTTON_ELEMENT_QUERY, footerContainer, EVENT_CLICK_STR, function () {
+        jdp.cleanValue();
+        if (jdp.options.hideAfterChange) jdp.hide();
+      }, "خالی");
+    }
+    if (jdp.options.showCloseBtn) {
+      createElement(CLOSE_BUTTON_ELEMENT_QUERY, footerContainer, EVENT_CLICK_STR, function () {
+        jdp.hide();
+      }, "بستن");
+    }
+  };
+  var render = function render(jdp) {
+    setInnerHTML(jdp.dpContainer, "");
+    if (jdp.options.date) {
+      renderDatePicker(jdp);
+    }
+    if (jdp.options.time) {
+      renderTimePicker(jdp);
+    }
+    renderFooter(jdp);
+  };
+  function draw() {
+    render(this);
+  }
+  var isMobile = /iphone|ipod|android|ie|blackberry|fennec/.test((_window$navigator = window.navigator) == null || (_window$navigator = _window$navigator.userAgent) == null ? void 0 : _window$navigator.toLowerCase());
+  var getTimeValueObjectFromParts = function getTimeValueObjectFromParts(parts, hasSecond) {
+    if (!isValidTimeParts(parts, hasSecond)) {
+      return null;
+    }
+    return {
+      hour: parseInt(parts[0], 10),
+      minute: parseInt(parts[1], 10),
+      second: parseInt(parts[2], 10) || 0
+    };
+  };
+  var getTimeValueObjectFromTimeOnlyString = function getTimeValueObjectFromTimeOnlyString(jdp, timeString) {
+    return getTimeValueObjectFromParts(timeString.split(jdp.options.separatorChars.time), jdp.options.hasSecond);
+  };
+  var normalizeSelectionMode = function normalizeSelectionMode(mode) {
+    return mode && SELECTION_MODE_NAMES.indexOf(mode) > -1 ? mode : "single";
+  };
+  var normalizeBooleanAttr = function normalizeBooleanAttr(value, defaultValue) {
+    if (value === null || value === void 0 || value === "") return defaultValue;
+    return value !== "false";
+  };
+  var normalizeOptions = function normalizeOptions(externalOptions, internalOptions, jdp) {
+    var setDefaultValue = function setDefaultValue(propertyName, defaultValue) {
+      var _ref;
+      var extValue = externalOptions[propertyName];
+      var intValue = internalOptions[propertyName];
+      var externalValue = TODAY_DATE_OPTION_NAMES.indexOf(propertyName) > -1 && extValue === MIN_MAX_TODAY_SETTING ? internalOptions.today : extValue;
+      var descriptor = Object.getOwnPropertyDescriptor(internalOptions, propertyName);
+      if (descriptor != null && descriptor.get && !descriptor.set) {
+        delete internalOptions[propertyName];
+      }
+      internalOptions[propertyName] = (_ref = externalValue != null ? externalValue : intValue) != null ? _ref : defaultValue;
+    };
+    var getDateOrTimeDefaultFromAttr = function getDateOrTimeDefaultFromAttr(attrName, isTime) {
+      var _jdp$input3;
+      var attrVal = (_jdp$input3 = jdp.input) == null ? void 0 : _jdp$input3.getAttribute(attrName);
+      if (!isTime && attrVal === MIN_MAX_TODAY_SETTING) return clone(jdp.today);
+      if (!isString(attrVal)) return {};
+      try {
+        attrVal = document.querySelector(attrVal).value;
+      } catch (_unused) {}
+      if (isTime) {
+        if (isValidTimeString(jdp, attrVal)) return getValueObjectFromString(jdp, attrVal);
+        return getTimeValueObjectFromTimeOnlyString(jdp, attrVal) || {};
+      }
+      if (isValidDateString(jdp, attrVal)) return getValueObjectFromString(jdp, attrVal);
+      return {};
+    };
+    var getAttrGetter = function getAttrGetter(propertyName) {
+      if (propertyName === "targetValueInput") return function () {
+        var _jdp$input4;
+        return (_jdp$input4 = jdp.input) == null ? void 0 : _jdp$input4.getAttribute(TARGET_VALUE_INPUT_ATTR_NAME);
+      };
+      if (propertyName === "targetValueType") return function () {
+        var _jdp$input5;
+        return (_jdp$input5 = jdp.input) == null ? void 0 : _jdp$input5.getAttribute(TARGET_VALUE_TYPE_ATTR_NAME);
+      };
+      if (propertyName === "mode") return function () {
+        var _jdp$input6;
+        return normalizeSelectionMode((_jdp$input6 = jdp.input) == null ? void 0 : _jdp$input6.getAttribute(MODE_ATTR_NAME));
+      };
+      if (propertyName === "hasSecond") return function () {
+        var _jdp$input7;
+        return normalizeBooleanAttr((_jdp$input7 = jdp.input) == null ? void 0 : _jdp$input7.getAttribute(ATTR_OPTION_NAMES.hasSecond), true);
+      };
+      var attrName = ATTR_OPTION_NAMES[propertyName];
+      var isTime = TIME_ATTR_OPTION_NAMES.indexOf(propertyName) > -1;
+      return function () {
+        return getDateOrTimeDefaultFromAttr(attrName, isTime);
+      };
+    };
+    function setDefinePropertyFromAttr(propertyName) {
+      if (externalOptions[propertyName] === OPTION_ATTR_SETTING || propertyName === "date" || propertyName === "time") {
+        if (propertyName !== "date" && propertyName !== "time") {
+          delete internalOptions[propertyName];
+        }
+        var getterFunc = function getterFunc() {
+          return {};
+        };
+        if (propertyName === "date") {
+          var _externalOptions$date;
+          var _date = (_externalOptions$date = externalOptions.date) != null ? _externalOptions$date : internalOptions.date;
+          delete internalOptions[propertyName];
+          getterFunc = function getterFunc() {
+            var _jdp$input8, _jdp$input9;
+            return !((_jdp$input8 = jdp.input) != null && _jdp$input8.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)) && (_date || ((_jdp$input9 = jdp.input) == null ? void 0 : _jdp$input9.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)));
+          };
+        } else if (propertyName === "time") {
+          var _externalOptions$time;
+          var _time = (_externalOptions$time = externalOptions.time) != null ? _externalOptions$time : internalOptions.time;
+          delete internalOptions[propertyName];
+          getterFunc = function getterFunc() {
+            var _jdp$input0, _jdp$input1;
+            return !((_jdp$input0 = jdp.input) != null && _jdp$input0.hasAttribute(ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME)) && (_time || ((_jdp$input1 = jdp.input) == null ? void 0 : _jdp$input1.hasAttribute(ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME)));
+          };
+        } else {
+          getterFunc = getAttrGetter(propertyName);
+        }
+        window.Object.defineProperty(internalOptions, propertyName, {
+          get: getterFunc,
+          enumerable: true,
+          configurable: true
+        });
+      } else {
+        var _temp = internalOptions[propertyName];
+        delete internalOptions[propertyName];
+        setDefaultValue(propertyName, _temp);
+      }
+      return internalOptions;
+    }
+    setDefaultValue("container", "body");
+    setDefaultValue("selector", "input[data-jdp]");
+    setDefaultValue("zIndex", 1e3);
+    setDefaultValue("autoShow", true);
+    setDefaultValue("autoHide", true);
+    setDefaultValue("autoReadOnlyInput", isMobile);
+    setDefaultValue("topSpace", 0);
+    setDefaultValue("bottomSpace", 0);
+    setDefaultValue("overflowSpace", -10);
+    setDefaultValue("hideAfterChange", true);
+    setDefaultValue("hideAfterChangeWithTime", false);
+    setDefaultValue("changeMonthRotateYear", false);
+    setDefaultValue("showTodayBtn", true);
+    setDefaultValue("showEmptyBtn", true);
+    setDefaultValue("showCloseBtn", isMobile);
+    setDefaultValue("showSelectTimeBtnAlways", false);
+    setDefaultValue("hasSecond", true);
+    setDefaultValue("date", true);
+    setDefaultValue("time", false);
+    setDefaultValue("days", DEFAULT_DAYS);
+    setDefaultValue("months", DEFAULT_MONTHS);
+    setDefaultValue("separatorChars", DEFAULT_SEPARATOR_CHARS);
+    setDefaultValue("persianDigits", false);
+    setDefaultValue("plusHtml", DEFAULT_PLUS_HTML);
+    setDefaultValue("minusHtml", DEFAULT_MINUS_HTML);
+    if (externalOptions.useDropDownYears !== void 0 && externalOptions.useDropdownYears === void 0) {
+      internalOptions.useDropdownYears = externalOptions.useDropDownYears;
+    }
+    setDefaultValue("useDropdownYears", true);
+    internalOptions.useDropDownYears = internalOptions.useDropdownYears;
+    setDefaultValue("today", jalaliToday());
+    setDefaultValue("position", "left");
+    setDefaultValue("minuteIncrement", 1);
+    setDefaultValue("hourIncrement", 1);
+    setDefaultValue("mode", "single");
+    setDefaultValue("rangeSeparator", DEFAULT_RANGE_SEPARATOR);
+    setDefaultValue("multipleSeparator", DEFAULT_MULTIPLE_SEPARATOR);
+    if (isFunction(externalOptions.dayRendering)) internalOptions.dayRendering = externalOptions.dayRendering;
+    if (externalOptions.initTime && externalOptions.initTime !== MIN_MAX_TODAY_SETTING && externalOptions.initTime !== OPTION_ATTR_SETTING) {
+      internalOptions.initTime = externalOptions.initTime;
+    }
+    if (externalOptions.initDate === MIN_MAX_TODAY_SETTING) internalOptions.initDate = internalOptions.today;
+    if (externalOptions.minDate === MIN_MAX_TODAY_SETTING) internalOptions.minDate = internalOptions.today;
+    if (externalOptions.maxDate === MIN_MAX_TODAY_SETTING) internalOptions.maxDate = internalOptions.today;
+    internalOptions = setDefinePropertyFromAttr("time");
+    internalOptions = setDefinePropertyFromAttr("date");
+    internalOptions = setDefinePropertyFromAttr("initDate");
+    internalOptions = setDefinePropertyFromAttr("minDate");
+    internalOptions = setDefinePropertyFromAttr("maxDate");
+    internalOptions = setDefinePropertyFromAttr("minTime");
+    internalOptions = setDefinePropertyFromAttr("maxTime");
+    internalOptions = setDefinePropertyFromAttr("targetValueInput");
+    internalOptions = setDefinePropertyFromAttr("targetValueType");
+    internalOptions = setDefinePropertyFromAttr("mode");
+    internalOptions = setDefinePropertyFromAttr("hasSecond");
+    return internalOptions;
+  };
+  var JalaliDatePickerInternalOptions = /*#__PURE__*/function () {
+    function JalaliDatePickerInternalOptions(externalOptions, jdp) {
+      this.container = void 0;
+      this.selector = void 0;
+      this.zIndex = void 0;
+      this.autoShow = void 0;
+      this.autoHide = void 0;
+      this.autoReadOnlyInput = void 0;
+      this.topSpace = void 0;
+      this.bottomSpace = void 0;
+      this.overflowSpace = void 0;
+      this.hideAfterChange = void 0;
+      this.hideAfterChangeWithTime = void 0;
+      this.changeMonthRotateYear = void 0;
+      this.showTodayBtn = void 0;
+      this.showEmptyBtn = void 0;
+      this.showCloseBtn = void 0;
+      this.showSelectTimeBtnAlways = void 0;
+      this.dayRendering = void 0;
+      this.minDate = void 0;
+      this.maxDate = void 0;
+      this.initDate = void 0;
+      this.minTime = void 0;
+      this.maxTime = void 0;
+      this.initTime = void 0;
+      this.date = void 0;
+      this.time = void 0;
+      this.today = void 0;
+      this.hasSecond = void 0;
+      this.targetValueInput = void 0;
+      this.targetValueType = void 0;
+      this.days = void 0;
+      this.months = void 0;
+      this.separatorChars = void 0;
+      this.persianDigits = void 0;
+      this.plusHtml = void 0;
+      this.minusHtml = void 0;
+      this.useDropdownYears = void 0;
+      /**
+       * @deprecated change to useDropdownYears
+       */
+      this.useDropDownYears = void 0;
+      this.position = void 0;
+      this.minuteIncrement = void 0;
+      this.hourIncrement = void 0;
+      this.mode = void 0;
+      this.rangeSeparator = void 0;
+      this.multipleSeparator = void 0;
+      normalizeOptions(externalOptions || {}, isNotObjectOrIsEmptyObject(jdp.options) ? this : jdp.options, jdp);
+    }
+    var _proto = JalaliDatePickerInternalOptions.prototype;
+    _proto.update = function update(externalOptions, jdp) {
+      normalizeOptions(externalOptions || {}, this, jdp);
+    };
+    return JalaliDatePickerInternalOptions;
+  }();
+  var jalaliDatepicker = {
+    init: function init(options) {
+      this.updateOptions(options);
+      addEventListenerOnResize();
+      addEventListenerOnBody();
+      addEventListenerOnInputs(this.options.selector);
+    },
+    updateOptions: function updateOptions(options) {
+      if (isNotObjectOrIsEmptyObject(this.options)) {
+        this.options = new JalaliDatePickerInternalOptions(options, this);
+      } else {
+        this.options.update(options, this);
+      }
+      applyZIndex();
+    },
+    options: {},
+    input: null,
+    isTransitioning: false,
+    get dpContainer() {
+      if (!this._dpContainer || !this._dpContainer.isConnected) {
+        this._dpContainer = createElement(CONTAINER_ELEMENT_QUERY, this.options.container || document.body);
+        this._dpContainer.setAttribute("tabindex", "-1");
+      }
+      if (!this.overlayElement || !this.overlayElement.isConnected) {
+        this.overlayElement = createElement(OVERLAY_ELEMENT_QUERY, this.options.container || document.body);
+      }
+      applyZIndex();
+      return this._dpContainer;
+    },
+    get today() {
+      this._today = this._today || this.options.today || jalaliToday();
+      return this._today;
+    },
+    get inputValue() {
+      var _this$input;
+      var inputValue = ((_this$input = this.input) == null ? void 0 : _this$input.value) || "";
+      if (isValidValueString(this, inputValue)) {
+        return getValueObjectFromString(this, inputValue);
+      }
+      if (isValidDateString(this, inputValue)) {
+        return getValueObjectFromString(this, inputValue);
+      }
+      return {};
+    },
+    get initDate() {
+      if (this.options.initDate) {
+        return this.options.initDate;
+      }
+      if (this._initDate) {
+        return this._initDate;
+      }
+      this._initDate = normalizeMinMaxDate(this, getInitialDate(this));
+      return this._initDate;
+    },
+    get initTime() {
+      if (this._initTime) {
+        return this._initTime;
+      }
+      this._initTime = normalizeMinMaxTime(this, getInitialTime(this));
+      return this._initTime;
+    },
+    _draw: draw,
+    show: function show(input) {
+      var _this = this;
+      resetCurrentInputState(this);
+      this.input = input;
+      setSelectedDatesFromInput(this);
+      this._draw();
+      setReadOnly(input, this.options);
+      this.isTransitioning = true;
+      setPickerVisibility(this, true);
+      setTimeout(function () {
+        setPickerVisibility(_this, true);
+        _this.isShow = true;
+        _this.isTransitioning = false;
+      }, 300);
+      this.setPosition();
+      setScrollOnParent(input);
+      document.addEventListener(EVENT_KEYDOWN_STR, handleEscKey);
+    },
+    hide: function hide() {
+      setPickerVisibility(this, false);
+      this.isShow = false;
+      removeScrollOnParent();
+      document.removeEventListener(EVENT_KEYDOWN_STR, handleEscKey);
+    },
+    setPosition: function setPosition() {
+      if (!this.input || this.dpContainer.style.visibility !== STYLE_VISIBILITY_VISIBLE) {
+        return;
+      }
+      var inputBounds = this.input.getBoundingClientRect();
+      var inputHeight = inputBounds.height;
+      var left = inputBounds.left;
+      var top = inputBounds.top + inputHeight;
+      if (this.options.topSpace) top += this.options.topSpace;
+      var windowWidth = window.document.body.offsetWidth;
+      var dpContainerWidth = this.dpContainer.offsetWidth;
+      var dpContainerHeight = this.dpContainer.offsetHeight;
+      var position = this.options.position;
+      if (position === "right") {
+        left = left + inputBounds.width - dpContainerWidth;
+        if (left + dpContainerWidth >= windowWidth) {
+          left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+        }
+      } else if (position === "center") {
+        left = left + inputBounds.width / 2 - dpContainerWidth / 2;
+        if (left + dpContainerWidth >= windowWidth) {
+          left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+        }
+      }
+      if (left + dpContainerWidth >= windowWidth) {
+        left -= left + dpContainerWidth - (windowWidth + (this.options.overflowSpace || 0));
+      }
+      if (left < 0) {
+        left = 0;
+      }
+      if (top - inputHeight >= dpContainerHeight && top + dpContainerHeight >= window.innerHeight) {
+        top -= dpContainerHeight + inputHeight + (this.options.bottomSpace || 0) + (this.options.topSpace || 0);
+      }
+      this.dpContainer.style.position = STYLE_POSITION_FIXED;
+      this.dpContainer.style.left = left + "px";
+      this.dpContainer.style.top = top + "px";
+    },
+    get getValue() {
+      this._value = this._value || this.inputValue || {};
+      return this._value;
+    },
+    setValue: function setValue(objValue) {
+      if (this.options.date && (this.options.mode || "single") !== "single" && isDateValue(objValue)) {
+        setDateSelectionValue(this, objValue);
+        return;
+      }
+      this._value = _extend({
+        year: this.today.year,
+        month: this.today.month,
+        day: this.today.day,
+        hour: this.initTime.hour,
+        minute: this.initTime.minute,
+        second: this.initTime.second
+      }, _extend(this._value || {}, objValue));
+      this._initTime = null;
+      if (this.input) {
+        this.input.value = getValueStringFromValueObject(this, this._value);
+        triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
+      }
+      this.setTargetValue();
+      if (this.options.hideAfterChange && (!this.options.time || this.options.hideAfterChangeWithTime)) {
+        this.hide();
+      } else {
+        this._draw();
+      }
+    },
+    cleanValue: function cleanValue() {
+      this.selectedDates = [];
+      if (this.input) {
+        this.input.value = "";
+        triggerEvent(this.input, EVENT_CHANGE_INPUT_STR);
+      }
+      this.setTargetValue();
+    },
+    setTargetValue: function setTargetValue() {
+      if (!this.options.targetValueInput) return;
+      var targetInputList = this.options.targetValueInput instanceof HTMLElement ? [this.options.targetValueInput] : document.querySelectorAll(this.options.targetValueInput);
+      if (!targetInputList || !targetInputList.length) return;
+      for (var i = 0; i < targetInputList.length; i++) {
+        var targetInput = targetInputList[i];
+        targetInput.value = getConvertedValue(this);
+      }
+    },
+    increaseMonth: function increaseMonth() {
+      if (!this._initDate) return;
+      var isLastMonth = this._initDate.month === 12;
+      if (this.options.changeMonthRotateYear && isLastMonth) {
+        this.increaseYear();
+      }
+      this.monthChange(isLastMonth ? 1 : this._initDate.month + 1);
+    },
+    decreaseMonth: function decreaseMonth() {
+      if (!this._initDate) return;
+      var isFirstMonth = this._initDate.month === 1;
+      if (this.options.changeMonthRotateYear && isFirstMonth) {
+        this.decreaseYear();
+      }
+      this.monthChange(isFirstMonth ? 12 : this._initDate.month - 1);
+    },
+    monthChange: function monthChange(month) {
+      if (!this._initDate) return;
+      this._initDate = normalizeMinMaxDate(this, this._initDate, {
+        month: month
+      });
+      this._draw();
+    },
+    increaseYear: function increaseYear() {
+      if (!this._initDate) return;
+      this.yearChange(this._initDate.year + 1);
+    },
+    decreaseYear: function decreaseYear() {
+      if (!this._initDate) return;
+      this.yearChange(this._initDate.year - 1);
+    },
+    yearChange: function yearChange(year) {
+      if (!this._initDate) return;
+      this._initDate = normalizeMinMaxDate(this, this._initDate, {
+        year: year
+      });
+      this._draw();
+    },
+    _dpContainer: void 0,
+    overlayElement: void 0,
+    _scrollParent: void 0,
+    _scrollHandler: void 0,
+    _today: void 0,
+    _initDate: null,
+    _initTime: null,
+    _value: null,
+    selectedDates: [],
+    isShow: false
+  };
+  function getCurrentTime() {
+    var date = /* @__PURE__ */new Date();
+    return {
+      hour: date.getHours(),
+      minute: date.getMinutes(),
+      second: 0
+    };
+  }
+  function getInitialDate(jdp) {
+    var _jdp$input10;
+    var inputValue = ((_jdp$input10 = jdp.input) == null ? void 0 : _jdp$input10.value) || "";
+    if (!inputValue) {
+      return jdp.options.initDate || clone(jdp.today);
+    }
+    if (isValidDateString(jdp, inputValue)) {
+      return getValueObjectFromString(jdp, inputValue);
+    }
+    return clone(jdp.today);
+  }
+  function getInitialTime(jdp) {
+    var _jdp$input11;
+    var defaultInit = getCurrentTime();
+    var initTime = ((_jdp$input11 = jdp.input) == null ? void 0 : _jdp$input11.value) || jdp.options.initTime || defaultInit;
+    if (!isString(initTime)) {
+      return initTime;
+    }
+    if (isValidTimeString(jdp, initTime)) {
+      return getValueObjectFromString(jdp, initTime);
+    }
+    return defaultInit;
+  }
+  function resetCurrentInputState(jdp) {
+    jdp._initDate = null;
+    jdp._initTime = null;
+    jdp._value = null;
+    jdp.selectedDates = [];
+  }
+  function isDateValue(value) {
+    return typeof value.year === "number" && typeof value.month === "number" && typeof value.day === "number";
+  }
+  function setSelectedDatesFromInput(jdp) {
+    var _jdp$input12;
+    if ((jdp.options.mode || "single") === "single") return;
+    jdp.selectedDates = getSelectedDatesFromString(jdp, ((_jdp$input12 = jdp.input) == null ? void 0 : _jdp$input12.value) || "");
+  }
+  function setDateSelectionValue(jdp, date) {
+    if ((jdp.options.mode || "single") === "range") {
+      setRangeDateSelection(jdp, date);
+    } else {
+      setMultipleDateSelection(jdp, date);
+    }
+    writeDateSelectionValue(jdp);
+  }
+  function setRangeDateSelection(jdp, date) {
+    if (!jdp.selectedDates.length || jdp.selectedDates.length === 2) {
+      jdp.selectedDates = [date];
+      return;
+    }
+    jdp.selectedDates = sortDates([jdp.selectedDates[0], date]);
+  }
+  function setMultipleDateSelection(jdp, date) {
+    var selectedDates = [];
+    var shouldAddDate = true;
+    for (var i = 0; i < jdp.selectedDates.length; i++) {
+      if (areSameDates(jdp.selectedDates[i], date)) {
+        shouldAddDate = false;
+      } else {
+        selectedDates.push(jdp.selectedDates[i]);
+      }
+    }
+    if (shouldAddDate) {
+      selectedDates.push(date);
+    }
+    jdp.selectedDates = sortDates(selectedDates);
+  }
+  function writeDateSelectionValue(jdp) {
+    if (jdp.input) {
+      jdp.input.value = getDateSelectionValueString(jdp, jdp.selectedDates);
+      triggerEvent(jdp.input, EVENT_CHANGE_INPUT_STR);
+    }
+    jdp.setTargetValue();
+    if ((jdp.options.mode || "single") === "range" && jdp.selectedDates.length === 2 && jdp.options.hideAfterChange) {
+      jdp.hide();
+    } else {
+      jdp._draw();
+    }
+  }
+  function setPickerVisibility(jdp, isVisible) {
+    jdp.dpContainer.style.visibility = isVisible ? STYLE_VISIBILITY_VISIBLE : STYLE_VISIBILITY_HIDDEN;
+    jdp.dpContainer.style.display = isVisible ? STYLE_DISPLAY_BLOCK : STYLE_DISPLAY_HIDDEN;
+    if (jdp.overlayElement) {
+      jdp.overlayElement.style.display = isVisible ? STYLE_DISPLAY_BLOCK : STYLE_DISPLAY_HIDDEN;
+    }
+  }
+  function applyZIndex() {
+    var _jalaliDatepicker$_dp, _jalaliDatepicker$ove;
+    var zIndex = jalaliDatepicker.options.zIndex;
+    if (typeof zIndex !== "number") return;
+    if ((_jalaliDatepicker$_dp = jalaliDatepicker._dpContainer) != null && _jalaliDatepicker$_dp.isConnected) {
+      jalaliDatepicker._dpContainer.style.zIndex = String(zIndex);
+    }
+    if ((_jalaliDatepicker$ove = jalaliDatepicker.overlayElement) != null && _jalaliDatepicker$ove.isConnected) {
+      jalaliDatepicker.overlayElement.style.zIndex = String(zIndex - 1);
+    }
+  }
+  function onScrollHandler() {
+    jalaliDatepicker.setPosition();
+  }
+  function setScrollOnParent(input) {
+    removeScrollOnParent();
+    jalaliDatepicker._scrollParent = _getScrollParent(input);
+    jalaliDatepicker._scrollHandler = onScrollHandler;
+    jalaliDatepicker._scrollParent.addEventListener("scroll", jalaliDatepicker._scrollHandler, false);
+  }
+  function removeScrollOnParent() {
+    if (!jalaliDatepicker._scrollParent || !jalaliDatepicker._scrollHandler) return;
+    jalaliDatepicker._scrollParent.removeEventListener("scroll", jalaliDatepicker._scrollHandler);
+    jalaliDatepicker._scrollParent = void 0;
+    jalaliDatepicker._scrollHandler = void 0;
+  }
+  function setReadOnly(input, options) {
+    if (options.autoReadOnlyInput && !input.readOnly) {
+      input.setAttribute("readonly", "readonly");
+      input.readOnly = true;
+    }
+  }
+  function onResizeHandler() {
+    jalaliDatepicker.setPosition();
+  }
+  function addEventListenerOnResize() {
+    Element.prototype.matches = Element.prototype.matches || Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector;
+    window.removeEventListener("resize", onResizeHandler);
+    window.addEventListener("resize", onResizeHandler);
+  }
+  var onInputFocusCallback = function onInputFocusCallback(e) {
+    if (!jalaliDatepicker.options.autoShow) {
+      return;
+    }
+    if (e.target && e.target.matches(jalaliDatepicker.options.selector)) {
+      jalaliDatepicker.show(e.target);
+    }
+  };
+  function addEventListenerOnInputs(querySelector) {
+    document.body.removeEventListener(EVENT_FOCUS_STR, onInputFocusCallback);
+    if (!querySelector) return;
+    document.body.addEventListener(EVENT_FOCUS_STR, onInputFocusCallback);
+  }
+  var onBodyClickCallback = function onBodyClickCallback(e) {
+    var clickInsideDatePicker = containsDom(jalaliDatepicker.dpContainer, e);
+    var clickOnInput = getEventTarget(e) === jalaliDatepicker.input;
+    if (!jalaliDatepicker.options.autoHide || !jalaliDatepicker.isShow || clickInsideDatePicker || clickOnInput) {
+      return;
+    }
+    jalaliDatepicker.hide();
+  };
+  function addEventListenerOnBody() {
+    document.body.removeEventListener("click", onBodyClickCallback);
+    document.body.addEventListener("click", onBodyClickCallback);
+  }
+  function handleEscKey(event) {
+    if (event.key === "Escape") {
+      if (!jalaliDatepicker.isTransitioning) {
+        var _jalaliDatepicker$inp;
+        (_jalaliDatepicker$inp = jalaliDatepicker.input) == null || _jalaliDatepicker$inp.blur == null || _jalaliDatepicker$inp.blur();
+        jalaliDatepicker.hide();
+      }
+    }
+  }
+  window.jalaliDatepicker = {
+    startWatch: function startWatch(options) {
+      if (options === void 0) {
+        options = {};
+      }
+      jalaliDatepicker.init(options);
+    },
+    show: function show(input) {
+      jalaliDatepicker.show(input);
+    },
+    hide: function hide() {
+      jalaliDatepicker.hide();
+    },
+    updateOptions: function updateOptions(options) {
+      jalaliDatepicker.updateOptions(options);
+    }
+  };
+})();

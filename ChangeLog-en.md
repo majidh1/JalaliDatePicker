@@ -1,3 +1,25 @@
+## V1.0.0
+
+Stable 1.0.0 release with a rebuilt project structure.
+
+- Migrated the source from JavaScript to TypeScript and added internal types for options, dates, times, and the public API.
+- Replaced the old webpack build with Vite, TypeScript, Babel, and refreshed ES5/minified files in `dist`.
+- Added automated tests with Vitest and jsdom for the public API, date conversion, value validation, min/max handling, and custom separators.
+- Reworked the Persian and English documentation with installation, quick start, public API, options, attributes, events, value formats, and development guides.
+- Added `targetValueInput` support for writing converted values to a target input.
+- Added `targetValueType: "gregorian"` for writing Gregorian values to the target input.
+- Added `minuteIncrement` and `hourIncrement` to control time dropdown steps.
+- Added `data-jdp-has-second` for per-input seconds dropdown control.
+- Added `weekDay` to `dayRendering`.
+- Added `position: "left" | "right" | "center"` for datepicker placement.
+- Added cleaner compatible names: `JalaliDatePicker`, `useDropdownYears`, and `isHoliday`, while keeping legacy aliases.
+- Fixed date boundary handling by comparing the full year/month/day value instead of partial date fields.
+- Fixed value string validation for regex-special separators such as `+`.
+- Fixed `zIndex` updates after calling `updateOptions`.
+- Fixed `targetValueInput` support when an `HTMLInputElement` is passed directly.
+- Fixed scroll listener cleanup when showing the datepicker on different inputs.
+- Fixed several UI, modal/bootstrap, weekday, event, and demo issues.
+
 ## V0.9.12
 
 Added the ability to show always Select Button showSelectTimeBtnAlways

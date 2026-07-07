@@ -3,7 +3,7 @@ name: publish npm
 on:
   push:
     tags:
-      - 'version:*'
+      - "version:*"
     branches:
       - main
   workflow_dispatch:
@@ -11,15 +11,27 @@ on:
 jobs:
   deploy_npm:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      NODE_ENV: development
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v5
         with:
           fetch-depth: 0 # اطمینان از دریافت تاریخچه کامل گیت
 
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v6
         with:
-          node-version: '14.x'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: 24
+          registry-url: "https://registry.npmjs.org"
+          cache: npm
+
+      - name: Show tool versions
+        run: |
+          node --version
+          npm --version
+
+      - name: Use stable npm
+        run: npm install -g npm@10.9.2
 
       - name: Check if version needs publishing
         id: check_version
@@ -40,11 +52,16 @@ jobs:
 
       - name: Install dependencies
         if: env.publish == 'true'
-        run: npm install
+        timeout-minutes: 5
+        run: npm ci --include=dev --no-audit --no-fund --loglevel=notice
+
+      - name: Verify build dependencies
+        if: env.publish == 'true'
+        run: npm ls typescript vite vitest --depth=0
 
       - name: Run build and prepare release
         if: env.publish == 'true'
-        run: npm run debug && npm run release
+        run: npm run build
 
       - name: Commit & Push changes
         if: env.publish == 'true'

@@ -1,398 +1,393 @@
-@use 'sass:color';
-@use 'sass:math';
+@use "sass:color";
+@use "sass:math";
 
-$calendarBackground: #fff;
-$daySize: 39px;
+$daySize: var(--jdp-day-size);
 $radius: 4px;
-$padding: math.div($daySize, 16);
-$dayMargin: 2px;
-$calendarWidth: ($daySize*7 + $dayMargin*14 + $padding*2 + 2);
-$calendarBorderColor: #e6e6e6;
+$container-padding: 0.3rem;
+$rowPadding: calc($container-padding * 2);
+$calendarWidth: calc($daySize + $daySize + $daySize + $daySize + $daySize + $daySize + $daySize + $rowPadding);
 $controls-parent-width: 45%;
 $controls-btn-size: 1.5rem;
 $controls-btn-padding: math.div($controls-btn-size, 6);
-$invertedBg: invert($calendarBackground);
-$calendarForeground: color.change($invertedBg, $alpha: 0.9);
-$activeColor: #569ff7;
-$mobileQuerySize:481px;
+$mobileQuerySize: 481px;
 
-jdp-overlay{
-    width: 0px;
-    height: 0px;
-    @media only screen and (max-width: $mobileQuerySize) {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        background-color: rgba(0,0,0,0.3);
-        backdrop-filter: blur(2px);
-        -webkit-backdrop-filter: blur(2px);
-        display: none;
-    }
+jdp-overlay {
+	width: 0;
+	height: 0;
+	@media only screen and (max-width: $mobileQuerySize) {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		left: 0;
+		background-color: rgba(0, 0, 0, 0.3);
+		backdrop-filter: blur(2px);
+		-webkit-backdrop-filter: blur(2px);
+		display: none;
+	}
 }
+
 jdp-container {
-    position: absolute;
-    max-width: $calendarWidth;
-    min-width: $calendarWidth;
-    background: $calendarBackground;
-    display: none;
-    direction: rtl;
-    padding: .5rem 0;
-    box-shadow: 0 1px 6px rgb(0 0 0 / 12%), 0 1px 4px rgb(0 0 0 / 24%);
-    border-radius: $radius;
-    overflow: hidden;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -moz-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
-    -webkit-animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
-    animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
+	--jdp-day-size: 43px;
+	--jdp-color-0: #fff;
+	--jdp-color-1: #f0f0f0;
+	--jdp-color-2: #e0e0e0;
+	--jdp-color-3: #b6b6b6;
+	--jdp-color-4: #838383;
+	--jdp-color-5: #333;
+	--jdp-primary: #569ff7;
+	--jdp-red: #f44336;
 
-    @media only screen and (max-width: $mobileQuerySize) {
-        max-width: 100%;
-        width: 100%;
-        left: 50% !important;
-        bottom: 0% !important;
-        top: unset !important;
-        transform: translateX(-50%) !important;
-        min-width: 280px;
-        border-radius: $radius $radius 0 0;
-        -moz-animation: jdpOpenAnimationMobile 300ms cubic-bezier(0.23, 1, 0.32, 1);
-        -webkit-animation: jdpOpenAnimationMobile 300ms cubic-bezier(0.23, 1, 0.32, 1);
-        animation: jdpOpenAnimationMobile 300ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
+	position: absolute;
+	max-width: $calendarWidth;
+	min-width: $calendarWidth;
+	background: var(--jdp-color-0);
+	display: none;
+	direction: rtl;
+	padding: 0.5rem 0;
+	box-shadow:
+		1px 0 0 var(--jdp-color-2),
+		-1px 0 0 var(--jdp-color-2),
+		0 1px 0 var(--jdp-color-2),
+		0 -1px 0 var(--jdp-color-2),
+		0 3px 13px var(--jdp-color-2);
+	border-radius: $radius;
+	overflow: hidden;
+	touch-action: manipulation;
+	user-select: none;
+	-webkit-user-select: none;
+	animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
+	@media only screen and (max-width: $mobileQuerySize) {
+		max-width: 100%;
+		width: 100%;
+		left: 50% !important;
+		bottom: 0% !important;
+		top: unset !important;
+		transform: translateX(-50%) !important;
+		min-width: 280px;
+		border-radius: $radius $radius 0 0;
+		animation: jdpOpenAnimationMobile 300ms cubic-bezier(0.23, 1, 0.32, 1);
+	}
 
-    &, *, *::after, *::before {
-        -moz-box-sizing: border-box;
-        -webkit-box-sizing: border-box;
-        box-sizing: border-box;
-    }
+	&,
+	*,
+	*::after,
+	*::before {
+		box-sizing: border-box;
+	}
 
-    .jdp {
-        &-icon {
-            &-plus, &-minus {
-                display: inline-block;
-                text-align: center;
-                cursor: pointer;
-                vertical-align: middle;
-                overflow: hidden;
-                flex: none;
-                text-decoration: none;
-                border: 1px solid $calendarBorderColor;
-                border-radius: $radius;
+	.jdp {
+		&-icon {
+			&-plus,
+			&-minus {
+				display: inline-block;
+				text-align: center;
+				cursor: pointer;
+				vertical-align: middle;
+				overflow: hidden;
+				flex: none;
+				text-decoration: none;
+				border: 1px solid var(--jdp-color-3);
+				border-radius: $radius;
 
-                svg {
-                    width: $controls-btn-size;
-                    height: $controls-btn-size;
-                    padding: $controls-btn-padding;
-                    vertical-align: middle;
-                }
+				svg {
+					width: $controls-btn-size;
+					height: 100%;
+					padding: $controls-btn-padding;
+					vertical-align: middle;
+				}
 
-                &.not-in-range {
-                    cursor: not-allowed;
+				&.not-in-range {
+					cursor: not-allowed;
 
-                    svg {
-                        opacity: 0.3;
-                    }
-                }
-            }
-        }
+					svg {
+						opacity: 0.3;
+					}
+				}
+			}
+		}
 
-        &-years, &-months {
-            display: -webkit-inline-box;
-            display: -webkit-flex;
-            display: -ms-inline-flexbox;
-            display: inline-flex;
-            margin: 0 math.div((math.div(100%, 2)-$controls-parent-width), 2);
-            font-size: 120%;
-            color: $calendarForeground;
-            fill: $calendarForeground;
-        }
+		&-years,
+		&-months {
+			display: inline-flex;
+			margin: 0 math.div((math.div(100%, 2)-$controls-parent-width), 2);
+			font-size: 120%;
+			color: var(--jdp-color-5);
+			fill: var(--jdp-color-5);
+		}
 
-        &-months {
-            width: $controls-parent-width + 5;
-        }
+		&-months {
+			width: $controls-parent-width + 5;
+		}
 
-        &-years {
-            width: $controls-parent-width - 5;
-        }
+		&-years {
+			width: $controls-parent-width - 5;
+		}
 
-        &-year, &-month, &-time {
-            &, input, select {
-                width: 100%;
-                height: auto;
-                text-align: center;
-                background: $calendarBackground;
-                border: none;
-                border-radius: 0;
-                padding: 0;
-                margin: 0;
-                display: inline-block;
-                font-size: inherit;
-                font-family: inherit;
-                vertical-align: initial;
-                font-weight: 300;
-                color: inherit;
-                line-height: inherit;
-                outline: none;
+		&-year,
+		&-month,
+		&-time {
+			&,
+			input,
+			select {
+				width: 100%;
+				height: auto;
+				text-align: center;
+				background: var(--jdp-color-0);
+				border: none;
+				border-radius: 0;
+				padding: 0;
+				margin: 0;
+				display: inline-block;
+				font-size: inherit;
+				font-family: inherit;
+				vertical-align: initial;
+				font-weight: 300;
+				color: inherit;
+				line-height: inherit;
+				outline: none;
 
-                &:focus, &:active {
-                    outline: none
-                }
+				&:focus,
+				&:active {
+					outline: none;
+				}
 
-                option {
-                    font-size: 95%;
-                    min-height: 1.3rem;
-                    outline: none;
-                    padding: 0;
-                }
-            }
+				option {
+					font-size: 95%;
+					min-height: 1.3rem;
+					outline: none;
+					padding: 0;
+				}
+			}
 
-            &:hover {
-                filter: brightness(.9);
-            }
+			&:hover {
+				filter: brightness(0.9);
+			}
 
-            input {
-                cursor: text;
-                -webkit-appearance: none;
-                -moz-appearance: textfield;
+			input {
+				cursor: text;
+				-webkit-appearance: none;
+				-moz-appearance: textfield;
 
-                &::-webkit-outer-spin-button,
-                &::-webkit-inner-spin-button {
-                    -webkit-appearance: none;
-                }
-            }
+				&::-webkit-outer-spin-button,
+				&::-webkit-inner-spin-button {
+					-webkit-appearance: none;
+				}
+			}
 
-            select {
-                cursor: pointer;
-                position: relative;
-                -webkit-appearance: menulist;
-                -moz-appearance: menulist;
-            }
-        }
+			select {
+				cursor: pointer;
+				position: relative;
+				-webkit-appearance: menulist;
+				-moz-appearance: menulist;
+			}
+		}
 
-        &-days {
-            padding: .5rem 0 0 0;
-            outline: 0;
-            text-align: left;
-            width: 100%;
-            display: inline-block;
-            display: -ms-flexbox;
-            display: flex;
-            flex-wrap: wrap;
-            -ms-flex-wrap: wrap;
-            -ms-flex-pack: justify;
-            justify-content: space-around;
-        }
+		&-days {
+			padding: 0 $container-padding $container-padding $container-padding;
+			outline: 0;
+			text-align: left;
+			width: 100%;
+			display: inline-block;
+			display: flex;
+			flex-wrap: wrap;
+			justify-content: space-around;
+		}
 
-        &-day, &-day-name {
-            background: none;
-            border: 1px solid transparent;
-            font-weight: 400;
-            width: 14.2857143%;
-            flex-basis: 14.2857143%;
-            height: $daySize - 8;
-            line-height: $daySize - 8;
-            margin: 2px 0;
-            display: inline-block;
-            position: relative;
-            justify-content: center;
-            text-align: center;
-            color: $calendarForeground;
+		&-days-header {
+			width: 100%;
+			padding: 0 $container-padding;
+			margin-top: 0.5rem;
+			background-color: var(--jdp-color-1);
+		}
 
-            &.today {
-                border-color: color.change($invertedBg, $alpha: 0.3);
-            }
+		&-day,
+		&-day-name {
+			background: none;
+			border: 1px solid transparent;
+			font-weight: 400;
+			width: 14.2857143%;
+			flex-basis: 14.2857143%;
+			height: calc($daySize - 11px);
+			line-height: calc($daySize - 11px);
+			margin: 2px 0;
+			display: inline-block;
+			position: relative;
+			justify-content: center;
+			text-align: center;
+			color: var(--jdp-color-5);
 
-            &.selected {
-                background-color: $activeColor !important;
-                color: #fff !important;
-                opacity: 1 !important;
-            }
+			&.today {
+				border-color: var(--jdp-color-3);
+			}
 
-            &.last-week,&.holly-day {
-                color: #f44336;
-            }
-        }
+			&.selected {
+				background-color: var(--jdp-primary) !important;
+				color: var(--jdp-color-0) !important;
+				opacity: 1 !important;
+			}
 
-        &-day {
-            &.not-in-month {
-                opacity: .4;
-            }
+			&.in-range {
+				background-color: var(--jdp-color-2);
+				border-radius: 0;
+			}
 
-            &.disabled-day {
-                opacity: .15;
-                cursor: not-allowed;
-            }
+			&.range-start {
+				border-radius: $radius 0 0 $radius;
+			}
 
-            &:not(.disabled-day) {
-                cursor: pointer;
-                border-radius: $radius;
-                transition: linear .1s;
+			&.range-end {
+				border-radius: 0 $radius $radius 0;
+			}
 
-                &:hover {
-                    background: color.change($invertedBg, $alpha: 0.1);
-                    transform: scale(1.15);
-                    z-index: 1;
-                }
-            }
-        }
+			&.last-week,
+			&.holiday-day,
+			&.holly-day {
+				color: var(--jdp-red);
+			}
+		}
 
-        &-day-name {
-            border-radius: 0;
-            font-weight: 900;
-            font-size: 90%;
-            background-color: color.change($invertedBg, $alpha: 0.1);
-            cursor: default;
-        }
+		&-day {
+			&.not-in-month {
+				opacity: 0.4;
+			}
 
-        &-footer {
-            padding: 0.5rem .5rem 0 .5rem;
-            outline: 0;
-            width: 100%;
-            display: inline-block;
-            display: -ms-flexbox;
-            display: flex;
-            flex-wrap: nowrap;
-            -ms-flex-wrap: nowrap;
-            -ms-flex-pack: justify;
-            justify-content: space-between;
-            @media only screen and (max-width: $mobileQuerySize) {
-                margin: .5rem 0;
-            }
-        }
+			&.disabled-day {
+				opacity: 0.15;
+				cursor: not-allowed;
+			}
 
-        &-btn {
+			&:not(.disabled-day) {
+				cursor: pointer;
+				border-radius: $radius;
+				transition: linear 0.1s;
 
-            &-today,
-            &-empty,
-            &-close {
-                background: $activeColor;
-                font-size: 90%;
-                padding: .3em .6em;
-                border-radius: 5px;
-                font-weight: 400;
-                display: inline-block;
-                text-align: center;
-                color: #fff;
-                cursor: pointer;
+				&:hover {
+					background: var(--jdp-color-2);
+					transform: scale(1.15);
+					z-index: 1;
+				}
+			}
+		}
 
-                @media only screen and (max-width: $mobileQuerySize) {
-                    padding: 0.5em 0.8em;
-                    font-size: 100%;
-                }
+		&-day-name {
+			border-radius: 0;
+			font-weight: 900;
+			font-size: 90%;
+			cursor: default;
+		}
 
-                &.disabled-btn {
-                    opacity: .2;
-                    cursor: not-allowed;
-                }
-            }
+		&-footer {
+			padding: 0.5rem 0.5rem 0 0.5rem;
+			outline: 0;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
 
-            &-today ~ .jdp-btn-empty{
-                @media only screen and (max-width: $mobileQuerySize) {
-                    margin-right: 1em;
-                    margin-left: auto;
-                }
-            }
-        }
+			@media only screen and (max-width: $mobileQuerySize) {
+				margin: 0.5rem 0;
+			}
+		}
 
-        &-time-container {
-            display: flex;
-            padding: 0;
+		&-btn {
+			&-today,
+			&-empty,
+			&-close {
+				background: var(--jdp-primary);
+				font-size: 90%;
+				padding: 0.3em 0.6em;
+				border-radius: 5px;
+				font-weight: 400;
+				display: inline-block;
+				text-align: center;
+				color: var(--jdp-color-0);
+				cursor: pointer;
 
-            .jdp-time {
-                flex: auto;
-                margin: 0 .5rem;
-                position: relative;
+				@media only screen and (max-width: $mobileQuerySize) {
+					padding: 0.5em 0.8em;
+					font-size: 100%;
+				}
 
-                select {
-                    padding: 0.5rem 1rem 0.5rem 7px;
-                    background: color.change($invertedBg, $alpha: 0.03);
-                    border-radius: 5px;
-                }
+				&.disabled-btn {
+					opacity: 0.2;
+					cursor: not-allowed;
+				}
+			}
 
-                &:after {
-                    content: ":";
-                    position: absolute;
-                    right: -.7rem;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    font-size: 1.5rem;
-                    height: 100%;
-                }
+			&-today ~ .jdp-btn-empty {
+				@media only screen and (max-width: $mobileQuerySize) {
+					margin-right: 1em;
+					margin-left: auto;
+				}
+			}
+		}
 
-                &:first-child:after {
-                    display: none
-                }
-            }
+		&-time-container {
+			display: flex;
+			padding: 0;
 
-            &.jdp-only-time{
-                .jdp-time{
-                    select {
-                        padding: .8rem 1rem .8rem 7px;
-                        font-size: 1.5rem;
-                    }
+			.jdp-time {
+				flex: auto;
+				margin: 0 0.5rem;
+				position: relative;
 
-                    &:after {
-                        position: absolute;
-                        right: -.8rem;
-                        font-size: 2.3rem;
-                    }
-                }
+				select {
+					padding: 0.5rem 1rem 0.5rem 7px;
+					background: var(--jdp-color-1);
+					border-radius: 5px;
+				}
 
-            }
-        }
-    }
-}
+				&:after {
+					content: ":";
+					position: absolute;
+					right: -0.7rem;
+					top: 50%;
+					transform: translateY(-50%);
+					font-size: 1.5rem;
+					height: 100%;
+				}
 
-@-webkit-keyframes jdpOpenAnimation {
-    from {
-        opacity: 0;
-        transform: scale(.8);
-    }
+				&:first-child:after {
+					display: none;
+				}
+			}
 
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
+			&.jdp-only-time {
+				.jdp-time {
+					select {
+						padding: 0.8rem 1rem 0.8rem 7px;
+						font-size: 1.5rem;
+					}
+
+					&:after {
+						position: absolute;
+						right: -0.8rem;
+						font-size: 2.3rem;
+					}
+				}
+			}
+		}
+	}
 }
 
 @keyframes jdpOpenAnimation {
-    from {
-        opacity: 0;
-        transform: scale(.8);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-@-webkit-keyframes jdpOpenAnimationMobile {
-    from {
-        bottom: -10%;
-        opacity: 0;
-    }
-
-    to {
-        bottom: 0%;
-        opacity: 1;
-    }
+	from {
+		opacity: 0;
+		transform: scale(0.8);
+	}
+	to {
+		opacity: 1;
+		transform: scale(1);
+	}
 }
 
 @keyframes jdpOpenAnimationMobile {
-    from {
-        margin-bottom: -20%;
-        opacity: 0;
-    }
-
-    to {
-        margin-bottom: 0%;
-        opacity: 1;
-    }
+	from {
+		margin-bottom: -20%;
+		opacity: 0;
+	}
+	to {
+		margin-bottom: 0%;
+		opacity: 1;
+	}
 }

@@ -1,0 +1,114 @@
+export const NAMESPACE = "jdp";
+const DIV_NAMESPACE = "div." + NAMESPACE;
+export const CONTAINER_ELEMENT_QUERY = NAMESPACE + "-container";
+export const OVERLAY_ELEMENT_QUERY = NAMESPACE + "-overlay";
+export const YEARS_ELEMENT_QUERY = DIV_NAMESPACE + "-years";
+export const YEAR_ELEMENT_QUERY = DIV_NAMESPACE + "-year";
+export const MONTHS_ELEMENT_QUERY = DIV_NAMESPACE + "-months";
+export const MONTH_ELEMENT_QUERY = DIV_NAMESPACE + "-month";
+export const DAYS_ELEMENT_QUERY = DIV_NAMESPACE + "-days";
+export const DAYS_HEADER_ELEMENT_QUERY = DIV_NAMESPACE + "-days-header";
+export const DAY_ELEMENT_QUERY = DIV_NAMESPACE + "-day";
+export const DAY_NOT_IN_MONTH_ELEMENT_QUERY = DIV_NAMESPACE + "-day.not-in-month";
+export const DAY_DISABLED_ELEMENT_QUERY = DIV_NAMESPACE + "-day.disabled-day";
+export const DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY = DAY_NOT_IN_MONTH_ELEMENT_QUERY + ".disabled-day";
+export const DAY_NAME_ELEMENT_QUERY = DIV_NAMESPACE + "-day-name";
+export const PLUS_ICON_ELEMENT_QUERY = DIV_NAMESPACE + "-icon-plus";
+export const MINUS_ICON_ELEMENT_QUERY = DIV_NAMESPACE + "-icon-minus";
+export const FOOTER_ELEMENT_QUERY = DIV_NAMESPACE + "-footer";
+export const TODAY_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-today";
+export const EMPTY_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-empty";
+export const CLOSE_BUTTON_ELEMENT_QUERY = DIV_NAMESPACE + "-btn-close";
+export const FOOTER_TIME_ELEMENT_QUERY = DIV_NAMESPACE + "-time-container";
+export const TIME_DROPDOWN_PARENT_ELEMENT_QUERY = DIV_NAMESPACE + "-time";
+
+export const SELECTED_CLASS_NAME = "selected";
+export const TODAY_CLASS_NAME = "today";
+export const LAST_WEEK_CLASS_NAME = "last-week";
+export const DISABLE_CLASS_NAME = "not-in-range";
+export const HOLIDAY_CLASS_NAME = "holiday-day";
+export const RANGE_START_CLASS_NAME = "range-start";
+export const RANGE_END_CLASS_NAME = "range-end";
+export const IN_RANGE_CLASS_NAME = "in-range";
+
+export const CONTAINER_ELM_QUERY = CONTAINER_ELEMENT_QUERY;
+export const OVERLAY_ELM_QUERY = OVERLAY_ELEMENT_QUERY;
+export const YEARS_ELM_QUERY = YEARS_ELEMENT_QUERY;
+export const YEAR_ELM_QUERY = YEAR_ELEMENT_QUERY;
+export const MONTHS_ELM_QUERY = MONTHS_ELEMENT_QUERY;
+export const MONTH_ELM_QUERY = MONTH_ELEMENT_QUERY;
+export const DAYS_ELM_QUERY = DAYS_ELEMENT_QUERY;
+export const DAYS_HEADER_ELM_QUERY = DAYS_HEADER_ELEMENT_QUERY;
+export const DAY_ELM_QUERY = DAY_ELEMENT_QUERY;
+export const DAY_NOTINMONTH_ELM_QUERY = DAY_NOT_IN_MONTH_ELEMENT_QUERY;
+export const DAY_DISABLED_ELM_QUERY = DAY_DISABLED_ELEMENT_QUERY;
+export const DAY_DISABLED_NOTINMONTH_ELM_QUERY = DAY_DISABLED_NOT_IN_MONTH_ELEMENT_QUERY;
+export const DAY_NAME_ELM_QUERY = DAY_NAME_ELEMENT_QUERY;
+export const PLUS_ICON_ELM_QUERY = PLUS_ICON_ELEMENT_QUERY;
+export const MINUS_ICON_ELM_QUERY = MINUS_ICON_ELEMENT_QUERY;
+export const FOOTER_ELM_QUERY = FOOTER_ELEMENT_QUERY;
+export const TODAY_BTN_ELM_QUERY = TODAY_BUTTON_ELEMENT_QUERY;
+export const EMPTY_BTN_ELM_QUERY = EMPTY_BUTTON_ELEMENT_QUERY;
+export const CLOSE_BTN_ELM_QUERY = CLOSE_BUTTON_ELEMENT_QUERY;
+export const FOOTER_TIME_ELM_QUERY = FOOTER_TIME_ELEMENT_QUERY;
+export const TIME_DROPDOWN_PARENT_ELM_QUERY = TIME_DROPDOWN_PARENT_ELEMENT_QUERY;
+
+export const EVENT_CHANGE_INPUT_STR = NAMESPACE + ":change";
+export const EVENT_CHANGE_MONTH_DROPDOWN_STR = "change";
+export const EVENT_CHANGE_TIME_DROPDOWN_STR = EVENT_CHANGE_MONTH_DROPDOWN_STR;
+export const EVENT_CHANGE_YEAR_INPUT_STR = "keyup change";
+export const EVENT_CLICK_STR = "click";
+export const EVENT_FOCUS_STR = "focusin";
+export const EVENT_KEYDOWN_STR = "keydown";
+
+export const MIN_MAX_TODAY_SETTING = "today";
+export const OPTION_ATTR_SETTING = "attr";
+const DATA_JDP = "data-jdp-";
+export const INIT_DATE_ATTR_NAME = DATA_JDP + "init-date";
+export const MAX_DATE_ATTR_NAME = DATA_JDP + "max-date";
+export const MIN_DATE_ATTR_NAME = DATA_JDP + "min-date";
+export const MAX_TIME_ATTR_NAME = DATA_JDP + "max-time";
+export const MIN_TIME_ATTR_NAME = DATA_JDP + "min-time";
+export const TARGET_VALUE_INPUT_ATTR_NAME = DATA_JDP + "target-value-input";
+export const TARGET_VALUE_TYPE_ATTR_NAME = DATA_JDP + "target-value-type";
+export const MODE_ATTR_NAME = DATA_JDP + "mode";
+export const HAS_SECOND_ATTR_NAME = DATA_JDP + "has-second";
+export const ONLY_DATE_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-date";
+export const ONLY_TIME_ATTR_SETTING_MAX_ATTR_NAME = DATA_JDP + "only-time";
+
+export const DEFAULT_DAYS = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+export const DEFAULT_MONTHS = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
+export const DEFAULT_SEPARATOR_CHARS = {
+	date: "/",
+	between: " ",
+	time: ":",
+	targetDate: "-",
+	targetBetween: " ",
+	targetTime: ":"
+};
+export const TODAY_DATE_OPTION_NAMES = ["initDate", "minDate", "maxDate"];
+export const ATTR_OPTION_NAMES = {
+	initDate: INIT_DATE_ATTR_NAME,
+	minDate: MIN_DATE_ATTR_NAME,
+	maxDate: MAX_DATE_ATTR_NAME,
+	minTime: MIN_TIME_ATTR_NAME,
+	maxTime: MAX_TIME_ATTR_NAME,
+	targetValueInput: TARGET_VALUE_INPUT_ATTR_NAME,
+	targetValueType: TARGET_VALUE_TYPE_ATTR_NAME,
+	mode: MODE_ATTR_NAME,
+	hasSecond: HAS_SECOND_ATTR_NAME
+};
+export const TIME_ATTR_OPTION_NAMES = ["minTime", "maxTime"];
+export const SELECTION_MODE_NAMES = ["single", "range", "multiple"];
+export const DEFAULT_RANGE_SEPARATOR = " - ";
+export const DEFAULT_MULTIPLE_SEPARATOR = ", ";
+// eslint-disable-next-line @typescript-eslint/quotes, quotes
+export const DEFAULT_PLUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-256v256h-84v-256h-256v-84h256v-256h84v256h256v84z"></path></g></svg>';
+// eslint-disable-next-line @typescript-eslint/quotes, quotes
+export const DEFAULT_MINUS_HTML = '<svg viewBox="0 0 1024 1024"><g><path d="M810 554h-596v-84h596v84z"></path></g></svg>';
+
+export const STYLE_VISIBILITY_VISIBLE = "visible";
+export const STYLE_VISIBILITY_HIDDEN = "hidden";
+export const STYLE_DISPLAY_BLOCK = "block";
+export const STYLE_DISPLAY_HIDDEN = "none";
+export const STYLE_POSITION_FIXED = "fixed";

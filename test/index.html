@@ -1,96 +1,497 @@
-﻿<html xmlns="http://www.w3.org/1999/xhtml">
-  <head>
-    <title>Test</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1, user-scalable=no" />
-    <script src="../dist/jalalidatepicker.js"></script>
-    <link rel="stylesheet" href="../dist/jalalidatepicker.css" />
-    <style>
-      .modal {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        margin: auto;
-        background: #fff;
-        box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
-        transition: margin-top 0.3s ease, height 0.3s ease;
-        transform: translateZ(0);
-        box-sizing: border-box;
-        z-index: 999;
-        border-radius: 3px;
-        max-width: 600px;
-        display: block;
-        height: 400px;
-        overflow: scroll;
-      }
-    </style>
-  </head>
-  <body>
-    <div style="height: 200px; overflow: scroll">
-      <div dir="rtl">
-        <input data-jdp placeholder="has jdp is" />
-        <br />
-        <input style="margin: 0 200px" data-jdp data-jdp-min-date="#aaa" data-jdp-max-date="today" placeholder="test" />
-      </div>
-      <div style="max-width: 100px; margin: auto; padding: 0 0 700px 0">
-        <br />
-        <input placeholder="no jdp" />
-        <br />
-        <br />
-        <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" />
-        <input data-jdp data-jdp-min-date="today" data-jdp-max-date="1401/10/16" onchange="console.log" id="aaa" placeholder="minOfTest" />
-      </div>
-    </div>
-    <input data-jdp placeholder="has jdp" />
-    <div style="height: 500px; overflow: scroll">
-      <input value="1391/11/27" data-jdp data-jdp-min-date="1398/11/10" />
-    </div>
-    <div class="modal">
-      <input data-jdp placeholder="has jdp" />
-      <input data-jdp value="1401/04/27" />
-      <input data-jdp placeholder="Init Date" data-jdp-init-date="1402/05/01" />
-      <input data-jdp placeholder="min Today" data-jdp-min-date="today" />
-      <input data-jdp placeholder="max Today" data-jdp-max-date="today" />
-      <input data-jdp placeholder="max 1401/10/11" data-jdp-max-date="1401/10/11" />
-      <input data-jdp placeholder="min 1401/03/11" data-jdp-min-date="1401/03/11" />
-      <input data-jdp placeholder="only time" data-jdp-only-time data-jdp-min-time="20:10:10" data-jdp-max-time="20:20:10" />
-      <input data-jdp placeholder="date and time" />
-      <input data-jdp placeholder="only date" data-jdp-only-date />
-      <div style="height: 400px"></div>
-      <input data-jdp placeholder="has jdp" />
-    </div>
-    <div style="height: 400px"></div>
-    <input data-jdp placeholder="last" />
-    <div style="height: 400px"></div>
-    <input data-jdp placeholder="last" />
-    <script>
-      jalaliDatepicker.startWatch({
-        minDate: "attr",
-        maxDate: "attr",
-        minTime: "attr",
-        maxTime: "attr",
-        time: true,
-        date: true,
-        hasSecond: true,
-        hideAfterChange: false,
-        autoHide: true,
-        showTodayBtn: true,
-        showEmptyBtn: true,
-        topSpace: 10,
-        bottomSpace: 30,
-        overflowSpace: -10,
-        dayRendering(opt, input) {
-          return {
-            isHollyDay: opt.day == 1,
-          };
-        },
-      });
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Test</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no,maximum-scale=1,user-scalable=no" />
+		<script type="module" src="../src/index.js"></script>
 
-      document.getElementById("aaa").addEventListener("jdp:change", function (e) {
-        console.log(e);
-      });
-    </script>
-  </body>
+		<link rel="stylesheet" href="/src/styles/index.scss" />
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+			rel="stylesheet"
+			integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+			crossorigin="anonymous" />
+
+		<style>
+			body {
+				font-family: vazir;
+			}
+
+			body.jdp-dark-theme jdp-container {
+				--jdp-color-0: #1f242d;
+				--jdp-color-1: #2a303b;
+				--jdp-color-2: #3a4250;
+				--jdp-color-3: #596477;
+				--jdp-color-4: #aab4c4;
+				--jdp-color-5: #f4f7fb;
+				--jdp-primary: #67b7ff;
+				--jdp-red: #ff6b64;
+			}
+
+			body.jdp-dark-theme jdp-container {
+				box-shadow: 1px 0 0 var(--jdp-color-2), -1px 0 0 var(--jdp-color-2), 0 1px 0 var(--jdp-color-2), 0 -1px 0 var(--jdp-color-2),
+					0 8px 24px rgba(0, 0, 0, 0.45);
+			}
+
+			body.jdp-dark-theme jdp-container select,
+			body.jdp-dark-theme jdp-container input {
+				color: var(--jdp-color-5);
+				background-color: var(--jdp-color-0);
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="container my-2 d-flex gap-3 flex-column">
+			<div class="row">
+				<div class="col d-flex flex-column gap-3">
+					<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Launch demo modal</button>
+					<input
+						data-jdp-target-value-input="#gregorianDateSample"
+						data-jdp-target-value-type="gregorian"
+						data-jdp
+						placeholder="simple"
+						class="form-control"
+						value="1404/04/05 - 1404/04/10" />
+					<input id="gregorianDateSample" />
+					<input type="text" data-jdp placeholder="لطفا یک تاریخ وارد نمایید" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-min-date="today" placeholder="نمایش تاریخ از امروز" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-max-date="today" placeholder="نمایش تاریخ تا امروز" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-max-date="1400/05/10" placeholder="نمایش تاریخ تا 1400/05/10" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp placeholder="انتخاب تاریخ و زمان" class="form-control" />
+					<input type="text" data-jdp placeholder="امکان انتخاب فقط زمان" data-jdp-only-time class="form-control" />
+					<input type="text" data-jdp data-jdp-mode="range" placeholder="انتخاب بازه تاریخ" data-jdp-only-date class="form-control" />
+					<input type="text" data-jdp data-jdp-mode="multiple" placeholder="انتخاب چند تاریخ" data-jdp-only-date class="form-control" />
+				</div>
+				<div class="col">
+					<div class="bg-warning p-2 rounded">
+						<select id="font-selector" class="form-select">
+							<option>Samim</option>
+							<option selected>Vazir</option>
+							<option>Shabnam</option>
+							<option>Tahoma</option>
+							<option>B Shadi</option>
+						</select>
+
+						<div class="form-check form-switch mt-2">
+							<input class="form-check-input" type="checkbox" id="dark-theme-switch" />
+							<label class="form-check-label" for="dark-theme-switch">Dark Datepicker Theme</label>
+						</div>
+
+						<h5>Dynamic Settings</h5>
+						<table id="dynamic-settings" class="w-100 table-sm">
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="time" data-key="time" checked />
+										<label class="form-check-label" for="time">Show Time Picker</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="date" data-key="date" checked />
+										<label class="form-check-label" for="date">Show Date Picker</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showTodayBtn" data-key="showTodayBtn" checked />
+										<label class="form-check-label" for="showTodayBtn">Show Today Button</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showEmptyBtn" data-key="showEmptyBtn" checked />
+										<label class="form-check-label" for="showEmptyBtn">Show Empty Button</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showCloseBtn" data-key="showCloseBtn" />
+										<label class="form-check-label" for="showCloseBtn">Show Close Button</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="changeMonthRotateYear" data-key="changeMonthRotateYear" />
+										<label class="form-check-label" for="changeMonthRotateYear">Change Month Rotates Year</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="useDropDownYears" data-key="useDropDownYears" />
+										<label class="form-check-label" for="useDropDownYears">Use Dropdown for Years</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="persianDigits" data-key="persianDigits" />
+										<label class="form-check-label" for="persianDigits">Use Persian Digits</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="autoShow" data-key="autoShow" />
+										<label class="form-check-label" for="autoShow">Auto Show on Focus</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="autoHide" data-key="autoHide" checked />
+										<label class="form-check-label" for="autoHide">Auto Hide on Blur</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="hideAfterChange" data-key="hideAfterChange" />
+										<label class="form-check-label" for="hideAfterChange">Hide After Change</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="autoReadOnlyInput" data-key="autoReadOnlyInput" />
+										<label class="form-check-label" for="autoReadOnlyInput">Auto ReadOnly Input</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="hideAfterChangeWithTime" data-key="hideAfterChangeWithTime" checked />
+										<label class="form-check-label" for="hideAfterChangeWithTime">Hide After Change With Time</label>
+									</div>
+								</td>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="showSelectTimeBtnAlways" data-key="showSelectTimeBtnAlways" />
+										<label class="form-check-label" for="showSelectTimeBtnAlways">Show Select Time Button Always</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div class="form-check form-switch">
+										<input class="form-check-input" type="checkbox" id="hasSecond" data-key="hasSecond" checked />
+										<label class="form-check-label" for="hasSecond">Has Second</label>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="zIndex" class="form-label">zIndex</label>
+										<input class="form-control" type="number" id="zIndex" data-key="zIndex" value="9999" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="topSpace" class="form-label">topSpace</label>
+										<input class="form-control" type="number" id="topSpace" data-key="topSpace" value="0" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="bottomSpace" class="form-label">bottomSpace</label>
+										<input class="form-control" type="number" id="bottomSpace" data-key="bottomSpace" value="30" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="overflowSpace" class="form-label">overflowSpace</label>
+										<input class="form-control" type="number" id="overflowSpace" data-key="overflowSpace" value="-10" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="minuteIncrement" class="form-label">minuteIncrement</label>
+										<input class="form-control" type="number" id="minuteIncrement" data-key="minuteIncrement" value="1" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="hourIncrement" class="form-label">hourIncrement</label>
+										<input class="form-control" type="number" id="hourIncrement" data-key="hourIncrement" value="1" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="position-selector" class="form-label">Position</label>
+										<select id="position-selector" class="form-select" data-key="position">
+											<option value="left">Left</option>
+											<option value="right" selected>Right</option>
+											<option value="center">Center</option>
+										</select>
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="mode-selector" class="form-label">Selection Mode</label>
+										<select id="mode-selector" class="form-select" data-key="mode">
+											<option value="single" selected>Single</option>
+											<option value="range">Range</option>
+											<option value="multiple">Multiple</option>
+											<option value="attr">Read From Attribute</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="minDate" class="form-label">minDate</label>
+										<input class="form-control" type="text" id="minDate" data-key="minDate" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="maxDate" class="form-label">maxDate</label>
+										<input class="form-control" type="text" id="maxDate" data-key="maxDate" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="minTime" class="form-label">minTime</label>
+										<input class="form-control" type="text" id="minTime" data-key="minTime" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="maxTime" class="form-label">maxTime</label>
+										<input class="form-control" type="text" id="maxTime" data-key="maxTime" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<h5 class="mt-2">Target Value</h5>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="targetValueInput" class="form-label">targetValueInput</label>
+										<input class="form-control" type="text" id="targetValueInput" data-key="targetValueInput" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="targetValueType" class="form-label">targetValueType</label>
+										<select id="targetValueType" class="form-select" data-key="targetValueType">
+											<option value="attr">Read From Attribute</option>
+											<option value="gregorian">Gregorian</option>
+										</select>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="rangeSeparator" class="form-label">rangeSeparator</label>
+										<input class="form-control" type="text" id="rangeSeparator" data-key="rangeSeparator" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="multipleSeparator" class="form-label">multipleSeparator</label>
+										<input class="form-control" type="text" id="multipleSeparator" data-key="multipleSeparator" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="2">
+									<h5 class="mt-2">Separator Chars</h5>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="sep-date" class="form-label">Date</label>
+										<input class="form-control" type="text" id="sep-date" data-group="separatorChars" data-key="date" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="sep-between" class="form-label">Between</label>
+										<input class="form-control" type="text" id="sep-between" data-group="separatorChars" data-key="between" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="sep-time" class="form-label">Time</label>
+										<input class="form-control" type="text" id="sep-time" data-group="separatorChars" data-key="time" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="sep-targetDate" class="form-label">Target Date</label>
+										<input class="form-control" type="text" id="sep-targetDate" data-group="separatorChars" data-key="targetDate" />
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<div>
+										<label for="sep-targetBetween" class="form-label">Target Between</label>
+										<input class="form-control" type="text" id="sep-targetBetween" data-group="separatorChars" data-key="targetBetween" />
+									</div>
+								</td>
+								<td>
+									<div>
+										<label for="sep-targetTime" class="form-label">Target Time</label>
+										<input class="form-control" type="text" id="sep-targetTime" data-group="separatorChars" data-key="targetTime" />
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade" id="exampleModal" aria-modal="true" role="dialog" aria-hidden="true" data-bs-focus="false">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body" style="height: 60vh; overflow: auto">
+						<div style="margin: 150vh 0">
+							<input type="text" data-jdp data-jdp-max-date="1400/05/10" placeholder="نمایش تاریخ تا 1400/05/10" class="form-control" />
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+			document.addEventListener("DOMContentLoaded", () => {
+				const initialOptions = {
+					minDate: "attr",
+					maxDate: "attr",
+					minTime: "attr",
+					maxTime: "attr",
+					time: true,
+					date: true,
+					hasSecond: true,
+					hideAfterChangeWithTime: true,
+					autoHide: true,
+					showTodayBtn: true,
+					showEmptyBtn: true,
+					topSpace: 0,
+					bottomSpace: 30,
+					overflowSpace: -10,
+					zIndex: 9999,
+					position: "right",
+					targetValueInput: "attr",
+					targetValueType: "attr",
+					useDropDownYears: false,
+					persianDigits: false,
+					autoShow: true,
+					hideAfterChange: true,
+					autoReadOnlyInput: false,
+					showSelectTimeBtnAlways: false,
+					minuteIncrement: 1,
+					hourIncrement: 1,
+					mode: "single",
+					rangeSeparator: " - ",
+					multipleSeparator: ", ",
+					separatorChars: {
+						date: "/",
+						between: " ",
+						time: ":",
+						targetDate: "-",
+						targetBetween: " ",
+						targetTime: ":"
+					},
+					dayRendering(opt, input) {
+						return {
+							isHollyDay: opt.weekDay == 1
+						};
+					}
+				};
+				jalaliDatepicker.startWatch(initialOptions);
+				document.getElementById("font-selector").addEventListener("change", (event) => {
+					document.body.style.fontFamily = event.target.value;
+				});
+				document.getElementById("dark-theme-switch").addEventListener("change", (event) => {
+					document.body.classList.toggle("jdp-dark-theme", event.target.checked);
+				});
+
+				const settingsContainer = document.getElementById("dynamic-settings");
+				const inputs = settingsContainer.querySelectorAll("input, select");
+
+				inputs.forEach((input) => {
+					const key = input.dataset.key;
+					const group = input.dataset.group;
+
+					if (group === "separatorChars") {
+						if (initialOptions.separatorChars[key]) {
+							input.value = initialOptions.separatorChars[key];
+						}
+					} else if (initialOptions[key] !== undefined) {
+						if (input.type === "checkbox") {
+							input.checked = initialOptions[key];
+						} else {
+							input.value = initialOptions[key];
+						}
+					}
+				});
+
+				settingsContainer.addEventListener("change", (event) => {
+					const target = event.target;
+					if (!target.matches("input, select")) return;
+
+					const key = target.dataset.key;
+					const group = target.dataset.group;
+
+					if (group === "separatorChars") {
+						const separatorChars = { ...initialOptions.separatorChars };
+						document.querySelectorAll("[data-group=separatorChars]").forEach((el) => {
+							separatorChars[el.dataset.key] = el.value;
+						});
+						Object.assign(initialOptions, { separatorChars });
+						jalaliDatepicker.updateOptions({ separatorChars });
+					} else {
+						let value = target.value;
+						if (target.type === "checkbox") {
+							value = target.checked;
+						} else if (target.type === "number") {
+							value = Number(target.value);
+						}
+
+						Object.assign(initialOptions, { [key]: value });
+						jalaliDatepicker.updateOptions({ [key]: value });
+					}
+				});
+			});
+		</script>
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+			integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+			crossorigin="anonymous"></script>
+	</body>
 </html>
+
