@@ -23,8 +23,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/majidh1/JalaliDatePicker.git"
+    "url": "git+https://github.com/majidh1/JalaliDatePicker.git"
   },
+  "bugs": {
+    "url": "https://github.com/majidh1/JalaliDatePicker/issues",
+    "email": "majidh1@live.com"
+  },
+  "homepage": "https://github.com/majidh1/JalaliDatePicker#readme",
   "scripts": {
     "prepublishOnly": "npm run build",
     "lint": "eslint . --ext .ts",
