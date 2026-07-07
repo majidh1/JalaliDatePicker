@@ -53,7 +53,7 @@ jobs:
       - name: Install dependencies
         if: env.publish == 'true'
         timeout-minutes: 5
-        run: npm ci --include=dev --no-audit --no-fund --loglevel=notice
+        run: npm i
 
       - name: Verify build dependencies
         if: env.publish == 'true'
