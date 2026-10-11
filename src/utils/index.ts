@@ -34,7 +34,7 @@ const getFallbackTime = (jdp: JalaliDatePicker): TimeObject => {
 };
 
 export const normalizeMinMaxDate = (jdp: JalaliDatePicker, dateObj?: DateObject | null, updateObj?: Partial<DateObject> | null) => {
-	const _dateObj = extend(dateObj || {}, updateObj || {}) as DateObject;
+	const _dateObj = extend(extend({}, dateObj || {}), updateObj || {}) as DateObject;
 	const fallbackDate = getFallbackDate(jdp);
 	const maxDate = jdp.options.maxDate;
 	const minDate = jdp.options.minDate;
@@ -53,8 +53,8 @@ export const normalizeMinMaxDate = (jdp: JalaliDatePicker, dateObj?: DateObject 
 		day
 	};
 
-	if (minDate && getDateNumber(normalizedDate) < getDateNumber(minDate)) return minDate;
-	if (maxDate && getDateNumber(normalizedDate) > getDateNumber(maxDate)) return maxDate;
+	if (minDate && getDateNumber(normalizedDate) < getDateNumber(minDate)) return { ...minDate };
+	if (maxDate && getDateNumber(normalizedDate) > getDateNumber(maxDate)) return { ...maxDate };
 	return normalizedDate;
 };
 

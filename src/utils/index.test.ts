@@ -237,6 +237,15 @@ describe("min/max normalization", () => {
 		});
 	});
 
+	it("does not mutate minDate when clamping", () => {
+		const minDate = { year: 1403, month: 2, day: 10 };
+		const jdp = createJdp({ options: createOptions({ minDate }) });
+		const result = normalizeMinMaxDate(jdp, { year: 1403, month: 1, day: 5 });
+		expect(result).toEqual({ year: 1403, month: 2, day: 10 });
+		normalizeMinMaxDate(jdp, result, { month: 3 });
+		expect(minDate).toEqual({ year: 1403, month: 2, day: 10 });
+	});
+
 	it("clamps invalid days to the selected month length", () => {
 		const jdp = createJdp();
 
