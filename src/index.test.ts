@@ -31,6 +31,22 @@ beforeEach(() => {
 });
 
 describe("jalaliDatepicker public API", () => {
+	it("initializes and responds after document.body is created", async () => {
+		const jdp = await loadDatepicker();
+		const oldBody = document.body;
+		document.documentElement.removeChild(oldBody);
+		expect(() => jdp.startWatch({ autoShow: true })).not.toThrow();
+		const newBody = document.createElement("body");
+		const input = document.createElement("input");
+		input.setAttribute("data-jdp", "");
+		newBody.appendChild(input);
+		document.documentElement.appendChild(newBody);
+		document.dispatchEvent(new Event("DOMContentLoaded"));
+		input.dispatchEvent(new FocusEvent("focusin", { bubbles: true }));
+		expect(document.querySelector("jdp-container")).not.toBeNull();
+		expect(document.querySelector<HTMLElement>("jdp-container")?.style.display).toBe("block");
+	});
+
 	it("shows and hides the datepicker for a manual input", async () => {
 		const jdp = await loadDatepicker();
 		const input = document.createElement("input");

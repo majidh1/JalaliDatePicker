@@ -1583,7 +1583,16 @@
       if (options === void 0) {
         options = {};
       }
-      jalaliDatepicker.init(options);
+      var init = function init() {
+        return jalaliDatepicker.init(options);
+      };
+      if (document.body) {
+        init();
+      } else {
+        document.addEventListener("DOMContentLoaded", init, {
+          once: true
+        });
+      }
     },
     show: function show(input) {
       jalaliDatepicker.show(input);

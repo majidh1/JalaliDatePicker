@@ -459,7 +459,12 @@ function handleEscKey(event: KeyboardEvent) {
 
 (window as any).jalaliDatepicker = {
 	startWatch(options: Partial<JalaliDatePickerOptions> = {}) {
-		jalaliDatepicker.init(options);
+		const init = () => jalaliDatepicker.init(options);
+		if (document.body) {
+			init();
+		} else {
+			document.addEventListener("DOMContentLoaded", init, { once: true });
+		}
 	},
 	show(input: HTMLInputElement) {
 		jalaliDatepicker.show(input);
