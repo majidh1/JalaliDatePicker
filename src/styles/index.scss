@@ -1,72 +1,154 @@
-@use "sass:color";
-@use "sass:math";
+// JalaliDatePicker theme
+// Light, soft-glass card with an indigo/violet accent.
+// Every color, radius and size is a CSS custom property on `jdp-container`,
+// so consumers can re-theme without touching this file.
 
-$daySize: var(--jdp-day-size);
-$radius: 4px;
-$container-padding: 0.3rem;
-$rowPadding: calc($container-padding * 2);
-$calendarWidth: calc($daySize + $daySize + $daySize + $daySize + $daySize + $daySize + $daySize + $rowPadding);
-$controls-parent-width: 45%;
-$controls-btn-size: 1.5rem;
-$controls-btn-padding: math.div($controls-btn-size, 6);
 $mobileQuerySize: 481px;
+
+// Hover styles only on devices with a real pointer, so taps on touch screens don't leave "stuck" hover states.
+@mixin hover {
+	@media (hover: hover) {
+		&:hover {
+			@content;
+		}
+	}
+}
 
 jdp-overlay {
 	width: 0;
 	height: 0;
+
 	@media only screen and (max-width: $mobileQuerySize) {
 		position: fixed;
 		width: 100%;
 		height: 100%;
 		top: 0;
 		left: 0;
-		background-color: rgba(0, 0, 0, 0.3);
-		backdrop-filter: blur(2px);
-		-webkit-backdrop-filter: blur(2px);
+		background-color: rgba(24, 20, 52, 0.32);
+		backdrop-filter: blur(3px);
+		-webkit-backdrop-filter: blur(3px);
 		display: none;
 	}
 }
 
 jdp-container {
+	// Palette
+	--jdp-primary: #6d5dfc;
+	--jdp-primary-strong: #5643e6;
+	--jdp-primary-gradient: linear-gradient(135deg, #8b7bff 0%, #6d5dfc 45%, #5643e6 100%);
+	--jdp-primary-soft: #efedff;
+	--jdp-primary-soft-strong: #e3dfff;
+	--jdp-primary-text: #4a3bd1;
+	--jdp-primary-ring: rgba(109, 93, 252, 0.32);
+	--jdp-on-primary: #ffffff;
+
+	--jdp-surface: #ffffff;
+	--jdp-surface-glass: rgba(255, 255, 255, 0.86);
+	--jdp-surface-muted: #f4f3fb;
+	--jdp-surface-hover: #ebe9f8;
+	--jdp-header-tint: #f6f4ff;
+
+	--jdp-text: #1f1d33;
+	--jdp-text-muted: #77748c;
+	--jdp-text-subtle: #a19eb4;
+	--jdp-text-disabled: #c3c0d2;
+	--jdp-border: rgba(60, 52, 120, 0.1);
+	--jdp-danger: #e5484d;
+	--jdp-danger-soft: #fdecec;
+
+	--jdp-shadow:
+		0 24px 56px -16px rgba(46, 36, 120, 0.28),
+		0 10px 24px -10px rgba(46, 36, 120, 0.16),
+		inset 0 1px 0 rgba(255, 255, 255, 0.9);
+	--jdp-shadow-selected: 0 8px 16px -6px rgba(86, 67, 230, 0.6);
+	--jdp-shadow-control: 0 1px 2px rgba(31, 29, 51, 0.08), 0 1px 1px rgba(31, 29, 51, 0.04);
+
+	// Shape & size
 	--jdp-day-size: 43px;
-	--jdp-color-0: #fff;
-	--jdp-color-1: #f0f0f0;
-	--jdp-color-2: #e0e0e0;
-	--jdp-color-3: #b6b6b6;
-	--jdp-color-4: #838383;
-	--jdp-color-5: #333;
-	--jdp-primary: #569ff7;
-	--jdp-red: #f44336;
+	--jdp-day-height: 38px;
+	--jdp-radius: 22px;
+	--jdp-control-radius: 12px;
+	--jdp-day-radius: 12px;
+	--jdp-control-height: 36px;
+	--jdp-nav-size: 30px;
+	--jdp-font-family: inherit;
+	--jdp-select-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%239893b3' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+
+	// Backward-compatible aliases (pre-refresh variable names)
+	--jdp-color-0: var(--jdp-surface);
+	--jdp-color-1: var(--jdp-surface-muted);
+	--jdp-color-2: var(--jdp-surface-hover);
+	--jdp-color-3: var(--jdp-text-subtle);
+	--jdp-color-4: var(--jdp-text-muted);
+	--jdp-color-5: var(--jdp-text);
+	--jdp-red: var(--jdp-danger);
 
 	position: absolute;
-	max-width: $calendarWidth;
-	min-width: $calendarWidth;
-	background: var(--jdp-color-0);
+	min-width: calc(var(--jdp-day-size) * 7 + 1rem);
+	max-width: calc(var(--jdp-day-size) * 7 + 1rem);
 	display: none;
 	direction: rtl;
-	padding: 0.5rem 0;
-	box-shadow:
-		1px 0 0 var(--jdp-color-2),
-		-1px 0 0 var(--jdp-color-2),
-		0 1px 0 var(--jdp-color-2),
-		0 -1px 0 var(--jdp-color-2),
-		0 3px 13px var(--jdp-color-2);
-	border-radius: $radius;
+	padding: 0.75rem 0 0.65rem;
+	color: var(--jdp-text);
+	color-scheme: light;
+	font-family: var(--jdp-font-family);
+	font-size: 14px;
+	line-height: 1.5;
+	background-color: var(--jdp-surface);
+	background-image: linear-gradient(180deg, var(--jdp-header-tint) 0, rgba(255, 255, 255, 0) 92px);
+	border: 1px solid var(--jdp-border);
+	border-radius: var(--jdp-radius);
+	box-shadow: var(--jdp-shadow);
 	overflow: hidden;
 	touch-action: manipulation;
 	user-select: none;
 	-webkit-user-select: none;
-	animation: jdpOpenAnimation 300ms cubic-bezier(0.23, 1, 0.32, 1);
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: transparent;
+	animation: jdpOpenAnimation 220ms cubic-bezier(0.2, 0.9, 0.3, 1);
+
+	@supports ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+		background-color: var(--jdp-surface-glass);
+		backdrop-filter: blur(16px) saturate(160%);
+		-webkit-backdrop-filter: blur(16px) saturate(160%);
+	}
+
 	@media only screen and (max-width: $mobileQuerySize) {
+		--jdp-day-height: 44px;
+		--jdp-control-height: 44px;
+		--jdp-nav-size: 36px;
+
 		max-width: 100%;
 		width: 100%;
+		min-width: 280px;
 		left: 50% !important;
-		bottom: 0% !important;
+		bottom: 0 !important;
 		top: unset !important;
 		transform: translateX(-50%) !important;
-		min-width: 280px;
-		border-radius: $radius $radius 0 0;
-		animation: jdpOpenAnimationMobile 300ms cubic-bezier(0.23, 1, 0.32, 1);
+		padding: 1.4rem 0 calc(0.85rem + env(safe-area-inset-bottom, 0px));
+		border-bottom: 0;
+		max-height: calc(100vh - 16px);
+		max-height: calc(100dvh - 16px);
+		overflow-x: hidden;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		border-radius: 26px 26px 0 0;
+		background-color: var(--jdp-surface);
+		box-shadow: 0 -12px 40px -12px rgba(46, 36, 120, 0.3);
+		animation: jdpOpenAnimationMobile 260ms cubic-bezier(0.2, 0.9, 0.3, 1);
+
+		// Bottom-sheet grab handle (decorative)
+		&::before {
+			content: "";
+			position: absolute;
+			top: 8px;
+			left: 50%;
+			width: 40px;
+			height: 4px;
+			margin-left: -20px;
+			border-radius: 4px;
+			background: var(--jdp-surface-hover);
+		}
 	}
 
 	&,
@@ -76,308 +158,554 @@ jdp-container {
 		box-sizing: border-box;
 	}
 
-	.jdp {
-		&-icon {
-			&-plus,
-			&-minus {
-				display: inline-block;
-				text-align: center;
-				cursor: pointer;
-				vertical-align: middle;
-				overflow: hidden;
-				flex: none;
-				text-decoration: none;
-				border: 1px solid var(--jdp-color-3);
-				border-radius: $radius;
+	// ---------- Header: year & month controls ----------
 
-				svg {
-					width: $controls-btn-size;
-					height: 100%;
-					padding: $controls-btn-padding;
-					vertical-align: middle;
-				}
+	.jdp-years,
+	.jdp-months {
+		display: inline-flex;
+		align-items: center;
+		gap: 2px;
+		height: calc(var(--jdp-nav-size) + 6px);
+		margin: 0 2%;
+		padding: 3px;
+		vertical-align: middle;
+		background: var(--jdp-surface-muted);
+		border-radius: calc(var(--jdp-control-radius) + 3px);
+		color: var(--jdp-text);
+		fill: currentColor;
+		font-size: 15px;
+		font-weight: 700;
+	}
 
-				&.not-in-range {
-					cursor: not-allowed;
+	.jdp-months {
+		width: 50%;
+	}
 
-					svg {
-						opacity: 0.3;
-					}
-				}
-			}
+	.jdp-years {
+		width: 42%;
+	}
+
+	.jdp-icon-plus,
+	.jdp-icon-minus {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex: none;
+		width: var(--jdp-nav-size);
+		height: var(--jdp-nav-size);
+		overflow: hidden;
+		cursor: pointer;
+		color: var(--jdp-text-muted);
+		fill: currentColor;
+		background: var(--jdp-surface);
+		border-radius: calc(var(--jdp-control-radius) - 2px);
+		box-shadow: var(--jdp-shadow-control);
+		transition:
+			background-color 150ms ease,
+			color 150ms ease,
+			box-shadow 150ms ease;
+
+		svg {
+			width: 14px;
+			height: 14px;
+			vertical-align: middle;
 		}
 
-		&-years,
-		&-months {
-			display: inline-flex;
-			margin: 0 math.div((math.div(100%, 2)-$controls-parent-width), 2);
-			font-size: 120%;
-			color: var(--jdp-color-5);
-			fill: var(--jdp-color-5);
+		@include hover {
+			color: var(--jdp-primary-text);
+			background: var(--jdp-primary-soft);
 		}
 
-		&-months {
-			width: $controls-parent-width + 5;
+		&:active {
+			background: var(--jdp-primary-soft-strong);
 		}
 
-		&-years {
-			width: $controls-parent-width - 5;
+		&:focus-visible {
+			outline: 2px solid var(--jdp-primary);
+			outline-offset: 2px;
 		}
 
-		&-year,
-		&-month,
-		&-time {
-			&,
-			input,
-			select {
-				width: 100%;
-				height: auto;
-				text-align: center;
-				background: var(--jdp-color-0);
-				border: none;
-				border-radius: 0;
-				padding: 0;
-				margin: 0;
-				display: inline-block;
-				font-size: inherit;
-				font-family: inherit;
-				vertical-align: initial;
-				font-weight: 300;
-				color: inherit;
-				line-height: inherit;
-				outline: none;
+		&.not-in-range {
+			cursor: not-allowed;
+			color: var(--jdp-text-disabled);
+			background: transparent;
+			box-shadow: none;
 
-				&:focus,
-				&:active {
-					outline: none;
-				}
-
-				option {
-					font-size: 95%;
-					min-height: 1.3rem;
-					outline: none;
-					padding: 0;
-				}
-			}
-
-			&:hover {
-				filter: brightness(0.9);
-			}
-
-			input {
-				cursor: text;
-				-webkit-appearance: none;
-				-moz-appearance: textfield;
-
-				&::-webkit-outer-spin-button,
-				&::-webkit-inner-spin-button {
-					-webkit-appearance: none;
-				}
-			}
-
-			select {
-				cursor: pointer;
-				position: relative;
-				-webkit-appearance: menulist;
-				-moz-appearance: menulist;
+			svg {
+				opacity: 0.6;
 			}
 		}
+	}
 
-		&-days {
-			padding: 0 $container-padding $container-padding $container-padding;
-			outline: 0;
-			text-align: left;
+	.jdp-year,
+	.jdp-month {
+		flex: 1 1 auto;
+		min-width: 0;
+		height: 100%;
+		border-radius: calc(var(--jdp-control-radius) - 2px);
+		transition: background-color 150ms ease;
+
+		@include hover {
+			background: var(--jdp-surface-hover);
+		}
+
+		&:focus-within {
+			box-shadow: 0 0 0 3px var(--jdp-primary-ring);
+		}
+	}
+
+	.jdp-year,
+	.jdp-month,
+	.jdp-time {
+		input,
+		select {
+			display: block;
 			width: 100%;
-			display: inline-block;
-			display: flex;
-			flex-wrap: wrap;
-			justify-content: space-around;
-		}
-
-		&-days-header {
-			width: 100%;
-			padding: 0 $container-padding;
-			margin-top: 0.5rem;
-			background-color: var(--jdp-color-1);
-		}
-
-		&-day,
-		&-day-name {
-			background: none;
-			border: 1px solid transparent;
-			font-weight: 400;
-			width: 14.2857143%;
-			flex-basis: 14.2857143%;
-			height: calc($daySize - 11px);
-			line-height: calc($daySize - 11px);
-			margin: 2px 0;
-			display: inline-block;
-			position: relative;
-			justify-content: center;
+			height: 100%;
+			margin: 0;
+			padding: 0 4px;
+			border: 0;
+			border-radius: inherit;
+			background: transparent;
+			color: inherit;
+			font: inherit;
+			font-variant-numeric: tabular-nums;
 			text-align: center;
-			color: var(--jdp-color-5);
+			text-align-last: center;
+			line-height: normal;
+			outline: none;
+			cursor: pointer;
 
-			&.today {
-				border-color: var(--jdp-color-3);
+			&:focus-visible {
+				outline: 2px solid var(--jdp-primary);
+				outline-offset: 1px;
 			}
 
-			&.selected {
-				background-color: var(--jdp-primary) !important;
-				color: var(--jdp-color-0) !important;
-				opacity: 1 !important;
-			}
-
-			&.in-range {
-				background-color: var(--jdp-color-2);
-				border-radius: 0;
-			}
-
-			&.range-start {
-				border-radius: $radius 0 0 $radius;
-			}
-
-			&.range-end {
-				border-radius: 0 $radius $radius 0;
-			}
-
-			&.last-week,
-			&.holiday-day,
-			&.holly-day {
-				color: var(--jdp-red);
+			option {
+				font-size: 14px;
+				font-weight: 500;
+				color: var(--jdp-text);
+				background: var(--jdp-surface);
 			}
 		}
 
-		&-day {
-			&.not-in-month {
-				opacity: 0.4;
+		select {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			padding-left: 14px;
+			background-image: var(--jdp-select-arrow);
+			background-repeat: no-repeat;
+			background-position: left 4px center;
+			background-size: 10px 6px;
+		}
+
+		input {
+			cursor: text;
+			-moz-appearance: textfield;
+
+			&::-webkit-outer-spin-button,
+			&::-webkit-inner-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+		}
+	}
+
+	// ---------- Week day names ----------
+
+	.jdp-days-header {
+		display: flex;
+		width: calc(100% - 1rem);
+		margin: 0.7rem 0.5rem 0.2rem;
+		padding: 0;
+		background: transparent;
+		border-bottom: 1px solid var(--jdp-border);
+	}
+
+	// ---------- Day grid ----------
+
+	.jdp-days {
+		display: flex;
+		flex-wrap: wrap;
+		width: 100%;
+		padding: 0.15rem 0.5rem 0.35rem;
+		outline: 0;
+	}
+
+	.jdp-day,
+	.jdp-day-name {
+		position: relative;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		flex: 0 0 14.2857143%;
+		width: 14.2857143%;
+		margin: 0;
+		background: none;
+		border: 0;
+		color: var(--jdp-text);
+		text-align: center;
+	}
+
+	.jdp-day-name {
+		height: 34px;
+		font-size: 13px;
+		font-weight: 600;
+		color: var(--jdp-text-subtle);
+		cursor: default;
+
+		&.last-week,
+		&.holiday-day,
+		&.holly-day {
+			color: var(--jdp-danger);
+			opacity: 0.85;
+		}
+	}
+
+	.jdp-day {
+		height: var(--jdp-day-height);
+		margin: 1px 0;
+		border-radius: var(--jdp-day-radius);
+		font-size: 15px;
+		font-weight: 500;
+		font-variant-numeric: tabular-nums;
+		transition:
+			background-color 150ms ease,
+			color 150ms ease,
+			box-shadow 150ms ease;
+
+		&:not(.disabled-day) {
+			cursor: pointer;
+
+			@include hover {
+				background: var(--jdp-primary-soft);
+				color: var(--jdp-primary-text);
 			}
 
-			&.disabled-day {
-				opacity: 0.15;
-				cursor: not-allowed;
+			&:active {
+				background: var(--jdp-primary-soft-strong);
 			}
+		}
+
+		&:focus-visible {
+			outline: 2px solid var(--jdp-primary);
+			outline-offset: 1px;
+			z-index: 1;
+		}
+
+		&.last-week,
+		&.holiday-day,
+		&.holly-day {
+			color: var(--jdp-danger);
 
 			&:not(.disabled-day) {
-				cursor: pointer;
-				border-radius: $radius;
-				transition: linear 0.1s;
-
-				&:hover {
-					background: var(--jdp-color-2);
-					transform: scale(1.15);
-					z-index: 1;
+				@include hover {
+					background: var(--jdp-danger-soft);
+					color: var(--jdp-danger);
 				}
 			}
 		}
 
-		&-day-name {
+		&.not-in-month {
+			opacity: 0.38;
+		}
+
+		&.disabled-day {
+			color: var(--jdp-text-disabled);
+			cursor: not-allowed;
+			text-decoration: line-through;
+			text-decoration-color: rgba(161, 158, 180, 0.45);
+		}
+
+		&.not-in-month.disabled-day {
+			opacity: 0.5;
+			text-decoration: none;
+		}
+
+		// Today: accent text + dot, never confused with selected
+		&.today {
+			color: var(--jdp-primary-text);
+			font-weight: 700;
+
+			&::after {
+				content: "";
+				position: absolute;
+				bottom: 5px;
+				left: 50%;
+				width: 4px;
+				height: 4px;
+				margin-left: -2px;
+				border-radius: 50%;
+				background: currentColor;
+			}
+		}
+
+		// Range (middle part)
+		&.in-range {
 			border-radius: 0;
-			font-weight: 900;
-			font-size: 90%;
-			cursor: default;
-		}
+			background: var(--jdp-primary-soft);
+			color: var(--jdp-primary-text);
 
-		&-footer {
-			padding: 0.5rem 0.5rem 0 0.5rem;
-			outline: 0;
-			width: 100%;
-			display: flex;
-			justify-content: space-between;
-
-			@media only screen and (max-width: $mobileQuerySize) {
-				margin: 0.5rem 0;
+			@include hover {
+				background: var(--jdp-primary-soft-strong);
 			}
 		}
 
-		&-btn {
-			&-today,
-			&-empty,
-			&-close {
-				background: var(--jdp-primary);
-				font-size: 90%;
-				padding: 0.3em 0.6em;
-				border-radius: 5px;
-				font-weight: 400;
-				display: inline-block;
-				text-align: center;
-				color: var(--jdp-color-0);
-				cursor: pointer;
+		// Selected: strongest state
+		&.selected {
+			background: var(--jdp-primary-gradient) !important;
+			color: var(--jdp-on-primary) !important;
+			opacity: 1 !important;
+			font-weight: 700;
+			box-shadow: var(--jdp-shadow-selected);
+			z-index: 1;
 
-				@media only screen and (max-width: $mobileQuerySize) {
-					padding: 0.5em 0.8em;
-					font-size: 100%;
-				}
-
-				&.disabled-btn {
-					opacity: 0.2;
-					cursor: not-allowed;
-				}
-			}
-
-			&-today ~ .jdp-btn-empty {
-				@media only screen and (max-width: $mobileQuerySize) {
-					margin-right: 1em;
-					margin-left: auto;
-				}
+			&::after {
+				background: var(--jdp-on-primary);
 			}
 		}
 
-		&-time-container {
-			display: flex;
-			padding: 0;
+		// Range ends use logical corners so they follow RTL/LTR
+		&.range-start {
+			border-start-end-radius: 0;
+			border-end-end-radius: 0;
+		}
+
+		&.range-end {
+			border-start-start-radius: 0;
+			border-end-start-radius: 0;
+		}
+
+		&.range-start.range-end {
+			border-radius: var(--jdp-day-radius);
+		}
+	}
+
+	// ---------- Time picker ----------
+
+	.jdp-time-container {
+		display: flex;
+		align-items: center;
+		gap: 14px;
+		margin: 0.35rem 0.75rem 0;
+		padding: 4px;
+		background: var(--jdp-surface-muted);
+		border-radius: calc(var(--jdp-control-radius) + 4px);
+
+		.jdp-time {
+			position: relative;
+			flex: 1 1 0;
+			min-width: 0;
+			height: var(--jdp-control-height);
+			margin: 0;
+			color: var(--jdp-text);
+			font-size: 16px;
+			font-weight: 700;
+
+			select {
+				background-color: var(--jdp-surface);
+				border-radius: var(--jdp-control-radius);
+				box-shadow: var(--jdp-shadow-control);
+				transition: box-shadow 150ms ease;
+
+				@include hover {
+					box-shadow: 0 0 0 1px var(--jdp-primary-soft-strong), var(--jdp-shadow-control);
+				}
+
+				&:focus-visible {
+					outline: none;
+					box-shadow: 0 0 0 3px var(--jdp-primary-ring);
+				}
+			}
+
+			// Separator between hour / minute / second
+			&::after {
+				content: ":";
+				position: absolute;
+				top: 50%;
+				right: -10px;
+				transform: translateY(-55%);
+				font-size: 18px;
+				font-weight: 700;
+				line-height: 1;
+				color: var(--jdp-text-subtle);
+			}
+
+			&:first-child::after {
+				display: none;
+			}
+		}
+
+		&.jdp-only-time {
+			margin-top: 0.1rem;
+			padding: 6px;
 
 			.jdp-time {
-				flex: auto;
-				margin: 0 0.5rem;
-				position: relative;
+				height: 56px;
+				font-size: 24px;
 
-				select {
-					padding: 0.5rem 1rem 0.5rem 7px;
-					background: var(--jdp-color-1);
-					border-radius: 5px;
-				}
-
-				&:after {
-					content: ":";
-					position: absolute;
-					right: -0.7rem;
-					top: 50%;
-					transform: translateY(-50%);
-					font-size: 1.5rem;
-					height: 100%;
-				}
-
-				&:first-child:after {
-					display: none;
-				}
-			}
-
-			&.jdp-only-time {
-				.jdp-time {
-					select {
-						padding: 0.8rem 1rem 0.8rem 7px;
-						font-size: 1.5rem;
-					}
-
-					&:after {
-						position: absolute;
-						right: -0.8rem;
-						font-size: 2.3rem;
-					}
+				&::after {
+					font-size: 26px;
 				}
 			}
 		}
+	}
+
+	// ---------- Footer ----------
+
+	.jdp-footer {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		width: 100%;
+		padding: 0.65rem 0.75rem 0;
+		outline: 0;
+	}
+
+	.jdp-btn-today,
+	.jdp-btn-empty,
+	.jdp-btn-close {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		height: var(--jdp-control-height);
+		padding: 0 1rem;
+		border: 1px solid transparent;
+		border-radius: var(--jdp-control-radius);
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1;
+		white-space: nowrap;
+		text-align: center;
+		cursor: pointer;
+		transition:
+			background-color 150ms ease,
+			color 150ms ease,
+			box-shadow 150ms ease,
+			transform 150ms ease;
+
+		&:focus-visible {
+			outline: 2px solid var(--jdp-primary);
+			outline-offset: 2px;
+		}
+
+		&:active {
+			transform: translateY(1px);
+		}
+
+		&.disabled-btn {
+			opacity: 0.45;
+			cursor: not-allowed;
+			box-shadow: none;
+			transform: none;
+		}
+	}
+
+	.jdp-btn-today {
+		min-width: 84px;
+		color: var(--jdp-on-primary);
+		background: var(--jdp-primary-gradient);
+		box-shadow: var(--jdp-shadow-selected);
+
+		@include hover {
+			background: var(--jdp-primary-strong);
+		}
+
+		&.disabled-btn {
+			@include hover {
+				background: var(--jdp-primary-gradient);
+			}
+		}
+	}
+
+	.jdp-btn-empty,
+	.jdp-btn-close {
+		color: var(--jdp-text-muted);
+		background: var(--jdp-surface);
+		border-color: var(--jdp-border);
+
+		@include hover {
+			color: var(--jdp-text);
+			background: var(--jdp-surface-muted);
+		}
+	}
+
+	.jdp-btn-close {
+		@include hover {
+			color: var(--jdp-danger);
+			background: var(--jdp-danger-soft);
+		}
+	}
+
+	// Primary action on the start side, secondary actions grouped on the end side
+	.jdp-btn-today ~ .jdp-btn-empty {
+		margin-right: auto;
+	}
+
+	@media only screen and (max-width: $mobileQuerySize) {
+		.jdp-years,
+		.jdp-months {
+			font-size: 16px;
+		}
+
+		.jdp-day {
+			font-size: 16px;
+		}
+
+		.jdp-footer {
+			padding: 0.85rem 0.75rem 0;
+		}
+
+		.jdp-btn-today,
+		.jdp-btn-empty,
+		.jdp-btn-close {
+			flex: 1 1 0;
+			font-size: 15px;
+		}
+
+		.jdp-btn-today ~ .jdp-btn-empty {
+			margin-right: 0;
+		}
+	}
+
+	// Small phones (e.g. 320px): tighten the header so the year never collides with its arrow
+	@media only screen and (max-width: 360px) {
+		--jdp-nav-size: 32px;
+
+		.jdp-years,
+		.jdp-months {
+			margin: 0 1.5%;
+			font-size: 15px;
+		}
+
+		.jdp-year select,
+		.jdp-month select {
+			padding-left: 12px;
+			padding-right: 0;
+			background-position: left 2px center;
+		}
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	jdp-container,
+	jdp-container *,
+	jdp-overlay {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
 	}
 }
 
 @keyframes jdpOpenAnimation {
 	from {
 		opacity: 0;
-		transform: scale(0.8);
+		transform: translateY(6px) scale(0.98);
 	}
 	to {
 		opacity: 1;
-		transform: scale(1);
+		transform: translateY(0) scale(1);
 	}
 }
 
@@ -387,7 +715,7 @@ jdp-container {
 		opacity: 0;
 	}
 	to {
-		margin-bottom: 0%;
+		margin-bottom: 0;
 		opacity: 1;
 	}
 }
